@@ -1,0 +1,108 @@
+
+body{
+    background-color: #eee;
+}
+
+.custom-nav i{
+    font-size: 25px;
+}
+
+.custom-nav li {
+    padding: 0 10px;
+}
+
+.custom-nav li .cutom-drop-nav{
+    padding: 0;
+    padding: 4px 9px;
+}
+
+.custom-nav li .cutom-drop-nav i{
+    padding-bottom: 5px;
+}
+
+.custom-drop-down .dropdown-menu {
+    left: -110px !important;
+}
+
+nav .toggle-btn i{
+    font-size: 25px;
+    padding: 4px 4px 0 0;
+}
+
+#sidebar {
+    width: 450px;
+    position: fixed;
+    top: 0;
+    right: -500px;
+    height: 100vh;
+    z-index: 999;
+    background: #fff;
+    transition: all 0.3s;
+    overflow-y: auto;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#sidebar.active {
+    right: 0;
+}
+
+#dismiss {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: #fff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+#dismiss:hover {
+    background: #fff;
+    color: #7386D5;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 998;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+#sidebar .sidebar-body {
+    padding: 72px 20px 20px;
+}
+
+.sidebar-body .card .card-body a i{
+    font-size: 30px;
+    padding: 10px;
+    color: rgb(255, 130, 130);
+}
+
+@media screen and (max-width: 450px) {
+    #sidebar {
+        width: 250px;  
+    }
+    nav .toggle-btn i{
+        font-size: 25px;
+        padding: 4px 0px 0 9px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .custom-nav i{
+        padding: 20px 10px 10px;
+    }
+}
