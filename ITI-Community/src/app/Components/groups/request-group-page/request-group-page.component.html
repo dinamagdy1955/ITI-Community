@@ -1,0 +1,324 @@
+<section class="groups-page">
+    <div class="container">
+        <div class="content-groups">
+            <!-- <div class="head-groups-page">
+                <a href="#" class="btn btn-sm btn-outline-info float-right">Create New Group</a>
+                <ul class="nav group-tabs">
+                    <li class="nav-item">
+                        <a id="GroupsDisc" class="nav-link btn btn-sm active">Groups</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="GroupsRequests" class="nav-link btn-sm btn">Requests</a>
+                    </li>
+                </ul> 
+
+
+
+
+
+                <div class="d-flex bd-highlight group-tabs">
+                    <div class="bd-highlight">
+                        <a id="GroupsDisc" class="nav-link btn btn-sm active">Groups</a>
+                    </div>
+                    <div class="bd-highlight">
+                        <a id="GroupsRequests" class="nav-link btn-sm btn">Requests</a>
+                    </div>
+                    <div class="ml-auto bd-highlight">
+                        <a href="#" class="btn btn-sm btn-outline-info">Create Group</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-0"> -->
+
+
+            <!-- if there are no groups the user has been joined -->
+            <!-- <div id="GroupsDiscover" class="Groups-content-display1 text-center">
+                <h3>Discover groups</h3>
+                <img src="img/discGroups.jpg" width="80%" class="py-5">
+                <p>Find other trusted communities that share and support your goals.</p>
+                <a href="#" class="btn btn-outline-info">Discover</a>
+            </div> -->
+            <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                <li ngbNavItem>
+                    <a ngbNavLink>Groups</a>
+                    <ng-template ngbNavContent>
+                        <div id="GroupsDiscover" class="Groups-content-display1">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a [routerLink]="['/Group/group-profile']">Group1</a>
+                                            </h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <div ngbDropdown container="body">
+                                            <button type="button" class="btn btn-default btn-sm mt-3" ngbDropdownToggle>
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div ngbDropdownMenu>
+                                                <button ngbDropdownItem>Edit</button>
+                                                <button ngbDropdownItem>Duplicate</button>
+                                                <button ngbDropdownItem>Move</button>
+                                                <div class="dropdown-divider"></div>
+                                                <button ngbDropdownItem>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a [routerLink]="['/Group/group-profile']">Group1</a>
+                                            </h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <div ngbDropdown container="body">
+                                            <button type="button" class="btn btn-default btn-sm mt-3" ngbDropdownToggle>
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div ngbDropdownMenu>
+                                                <button ngbDropdownItem>Edit</button>
+                                                <button ngbDropdownItem>Duplicate</button>
+                                                <button ngbDropdownItem>Move</button>
+                                                <div class="dropdown-divider"></div>
+                                                <button ngbDropdownItem>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a href="#">Group1</a></h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <div ngbDropdown container="body">
+                                            <button type="button" class="btn btn-default btn-sm mt-3" ngbDropdownToggle>
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div ngbDropdownMenu>
+                                                <button ngbDropdownItem>Edit</button>
+                                                <button ngbDropdownItem>Duplicate</button>
+                                                <button ngbDropdownItem>Move</button>
+                                                <div class="dropdown-divider"></div>
+                                                <button ngbDropdownItem>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a href="#">Group1</a></h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <div ngbDropdown container="body">
+                                            <button type="button" class="btn btn-default btn-sm mt-3" ngbDropdownToggle>
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div ngbDropdownMenu>
+                                                <button ngbDropdownItem>Edit</button>
+                                                <button ngbDropdownItem>Duplicate</button>
+                                                <button ngbDropdownItem>Move</button>
+                                                <div class="dropdown-divider"></div>
+                                                <button ngbDropdownItem>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a href="#">Group1</a></h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <div ngbDropdown container="body">
+                                            <button type="button" class="btn btn-default btn-sm mt-3" ngbDropdownToggle>
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div ngbDropdownMenu>
+                                                <button ngbDropdownItem>Edit</button>
+                                                <button ngbDropdownItem>Duplicate</button>
+                                                <button ngbDropdownItem>Move</button>
+                                                <div class="dropdown-divider"></div>
+                                                <button ngbDropdownItem>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a href="#">Group1</a></h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <div ngbDropdown container="body">
+                                            <button type="button" class="btn btn-default btn-sm mt-3" ngbDropdownToggle>
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div ngbDropdownMenu>
+                                                <button ngbDropdownItem>Edit</button>
+                                                <button ngbDropdownItem>Duplicate</button>
+                                                <button ngbDropdownItem>Move</button>
+                                                <div class="dropdown-divider"></div>
+                                                <button ngbDropdownItem>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a href="#">Group1</a></h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <div ngbDropdown container="body">
+                                            <button type="button" class="btn btn-default btn-sm mt-3" ngbDropdownToggle>
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div ngbDropdownMenu>
+                                                <button ngbDropdownItem>Edit</button>
+                                                <button ngbDropdownItem>Duplicate</button>
+                                                <button ngbDropdownItem>Move</button>
+                                                <div class="dropdown-divider"></div>
+                                                <button ngbDropdownItem>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a href="#">Group1</a></h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <div ngbDropdown container="body">
+                                            <button type="button" class="btn btn-default btn-sm mt-3" ngbDropdownToggle>
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div ngbDropdownMenu>
+                                                <button ngbDropdownItem>Edit</button>
+                                                <button ngbDropdownItem>Duplicate</button>
+                                                <button ngbDropdownItem>Move</button>
+                                                <div class="dropdown-divider"></div>
+                                                <button ngbDropdownItem>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a href="#">Group1</a></h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <div ngbDropdown container="body">
+                                            <button type="button" class="btn btn-default btn-sm mt-3" ngbDropdownToggle>
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div ngbDropdownMenu>
+                                                <button ngbDropdownItem>Edit</button>
+                                                <button ngbDropdownItem>Duplicate</button>
+                                                <button ngbDropdownItem>Move</button>
+                                                <div class="dropdown-divider"></div>
+                                                <button ngbDropdownItem>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a href="#">Group1</a></h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <div ngbDropdown container="body">
+                                            <button type="button" class="btn btn-default btn-sm mt-3" ngbDropdownToggle>
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div ngbDropdownMenu>
+                                                <button ngbDropdownItem>Edit</button>
+                                                <button ngbDropdownItem>Duplicate</button>
+                                                <button ngbDropdownItem>Move</button>
+                                                <div class="dropdown-divider"></div>
+                                                <button ngbDropdownItem>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a href="#">Group1</a></h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <div ngbDropdown container="body">
+                                            <button type="button" class="btn btn-default btn-sm mt-3" ngbDropdownToggle>
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div ngbDropdownMenu>
+                                                <button ngbDropdownItem>Edit</button>
+                                                <button ngbDropdownItem>Duplicate</button>
+                                                <button ngbDropdownItem>Move</button>
+                                                <div class="dropdown-divider"></div>
+                                                <button ngbDropdownItem>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </ng-template>
+                </li>
+                <li ngbNavItem>
+                    <a ngbNavLink>Requests</a>
+                    <ng-template ngbNavContent>
+                        <div id="GroupsDRequest" class="Groups-content-display2">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a [routerLink]="['/Group/group-profile']">Group1</a>
+                                            </h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <button type="button" class="btn btn-outline-dark btn-sm mt-3">Withdraw</button>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <div class="media-body">
+                                            <h6 class="mt-2 mb-1"><a [routerLink]="['/Group/group-profile']">Group1</a>
+                                            </h6>
+                                            <small class="text-muted"><span>244,444</span> members</small>
+                                        </div>
+                                        <button type="button" class="btn btn-outline-dark btn-sm mt-3">Withdraw</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </ng-template>
+                </li>
+                <div class="ml-auto bd-highlight">
+                    <a href="#" class="btn btn-sm btn-outline-info">Create Group</a>
+                </div>
+            </ul>
+
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+    </div>
+</section>
