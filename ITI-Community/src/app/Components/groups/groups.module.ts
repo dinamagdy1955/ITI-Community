@@ -4,6 +4,9 @@ import { RequestGroupPageComponent } from './request-group-page/request-group-pa
 import { GroupProfilePageComponent } from './group-profile-page/group-profile-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LeftSideGroupComponent } from './left-side-group/left-side-group.component';
+import { CenterGroupPageComponent } from './center-group-page/center-group-page.component';
+import { RightSideGroupComponent } from './right-side-group/right-side-group.component';
 
 const groupRoutes: Routes = [
   { path: 'all-groups', component: RequestGroupPageComponent },
@@ -15,7 +18,10 @@ const groupRoutes: Routes = [
 @NgModule({
   declarations: [
     RequestGroupPageComponent,
-    GroupProfilePageComponent
+    GroupProfilePageComponent,
+    LeftSideGroupComponent,
+    CenterGroupPageComponent,
+    RightSideGroupComponent,
   ],
   imports: [
     CommonModule,

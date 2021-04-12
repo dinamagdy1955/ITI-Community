@@ -106,3 +106,26 @@ nav .toggle-btn i{
         padding: 20px 10px 10px;
     }
 }
+
+
+.visible-dot {
+    position: relative;
+}
+
+.container__indicator {
+    /* Shown at the bottom right corner */
+    top: 0;
+    position: absolute;
+    right: 0;
+    transform: translate(-159%, 0%);
+    border-radius: 9999px;
+    height: 0px;
+    width: 9px;
+    font-size: 15px;
+    /* Background color */
+    color:#a5272d;
+}
+
+.container__indicator i {
+    font-size: 15px;
+}
