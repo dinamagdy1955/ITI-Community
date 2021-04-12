@@ -1,0 +1,54 @@
+
+section.groups-page .content-groups{
+    border: 1px solid;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+
+section.groups-page .content-groups .group-tabs a:not(:last-child){
+    border:none;
+    transition: 0.3s;
+}
+
+section.groups-page .content-groups .group-tabs a:not(:last-child):hover {
+    background-color: #eee;
+}
+
+section.groups-page .content-groups .head-groups-page .group-tabs a.active{
+    border-bottom: 2px solid rgb(125, 192, 255);
+    font-weight: bold;
+}
+
+section.groups-page .content-groups .Groups-content-display2 {
+    padding: 6px 12px;
+    // display: none;
+}
+
+.custom-left-side-group {
+    position: relative;
+}
+
+
+.custom-left-side-group .card-body {
+    position: absolute;
+    top: 60px
+}
+
+.content-groups .Groups-content-display1 .list-group-item,
+.content-groups .Groups-content-display2 .list-group-item {
+    padding: 0.75rem 0.25rem;
+}
+
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+  }
