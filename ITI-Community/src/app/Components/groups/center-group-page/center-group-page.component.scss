@@ -1,0 +1,32 @@
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  
+.dropdown-toggle::after {
+    display: none;
+}
+
+.profile-group-content {
+    background-color: white;
+}
+
+.profile-group-content .profile-group-header{
+    position: relative;
+}
+
+
+.profile-group-content .profile-group-header .profile-group-img{
+    position: absolute;
+    top: 50%;
+}
+
+
+@media screen and (max-width: 450px){
+    .profile-group-content .profile-group-header .profile-group-img {
+        top: 10%;
+        right: 42%;
+        width: 33%;
+    }
+}

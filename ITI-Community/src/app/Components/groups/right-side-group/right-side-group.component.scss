@@ -1,0 +1,34 @@
+$color-grey-1: #999999;
+$color-grey-2: #3d3d3d;
+$color-white-1: #ffffff;
+
+
+.avatar-container-item {
+  background: $color-grey-1;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid $color-white-1;
+  margin-left: -10px;
+  transition: .7s all ease-in-out;
+  transform: scale(1);
+  
+  &:hover {
+      background: lighten($color-grey-2, 50%);
+      cursor: pointer;
+      transform: scale(1.5);
+      z-index: 2;
+  }
+}
+
+.avatar-container-more {
+  font-size: 20px;
+  padding: 0 10px;
+  color: $color-grey-2;
+  content: "...";
+  
+  &:hover {
+    color: lighten($color-grey-2, 20%);
+    cursor: pointer;
+  }
+}

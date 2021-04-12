@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './Components/MainHeader/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomePageComponent } from './Components/home-page/home-page.component';
 import { HomeAddToYourFeedComponent } from './Components/home-page/home-add-to-your-feed/home-add-to-your-feed.component';
@@ -11,6 +10,7 @@ import { HomePostBodyComponent } from './Components/home-page/home-post-body/hom
 import { HomeProfileCardComponent } from './Components/home-page/home-profile-card/home-profile-card.component';
 import { HomeWritePostComponent } from './Components/home-page/home-write-post/home-write-post.component';
 import { HomePostModelComponent } from './Components/home-page/home-post-model/home-post-model.component';
+import { HeaderComponent } from './Components/MainHeader/header/header.component';
 
 @NgModule({
   declarations: [
