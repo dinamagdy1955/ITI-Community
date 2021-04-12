@@ -1,0 +1,41 @@
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create a post</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div style="padding-left: .8em;">
+
+            <img class="card-img-top" src="../../../../assets/2.png" alt="Card image" style="width:10%;border-radius:50%;">
+
+            <div style="display: inline-block;">
+              <span><strong>marwa tag</strong>
+                <div ngbDropdown>
+                    <button class="btn btn-outline-primary" id="dropdownConfig" ngbDropdownToggle style=" color:black; border-radius: 1.2em;background-color:rgba(255, 255, 255, 0.453); border: 1px solid rgba(148, 140, 140, 0.261);">select Privacy</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+                      <button ngbDropdownItem> <i class="fas fa-globe-americas usersIcon  usersIconGroup1"></i> Anyone</button>
+                      <button ngbDropdownItem> <i class="fas fa-globe-americas usersIcon  usersIconGroup1"></i>Connections only</button>
+                      <button ngbDropdownItem> <i class="fas fa-users usersIcon  usersIconGroup1"></i> <span class="iconSpan"></span>Group members</button>
+                    </div>
+                  </div>
+              </span>
+            </div>
+          </div>
+        <hr>
+        <div class="form-group">
+        
+          <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="what do you want to talk about ? " style="height: 200px;">
+        
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+    </div>
+  </ng-template>
+
+  
+  <button id="HModelBtn" class="btn btn-lg btn-outline-primary" (click)="open(content)" >start a post</button>
