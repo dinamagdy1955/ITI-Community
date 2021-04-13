@@ -1,0 +1,22 @@
+.card {
+  font-size: .9em;
+    border-radius: .6em;
+   
+    width: 100%;
+    height: auto;
+    align-items: center;
+    padding: 0px;
+
+  }
+
+  .media-body,
+  .border,
+  .p-3,
+  .jumbotron {
+    background-color: #fff;
+    border-radius: .6em;
+  }
+
+  .card:hover {
+    box-shadow: 1px 1px 10px rgba(143, 140, 140, 0.452);
+  }
