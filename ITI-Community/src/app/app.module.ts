@@ -12,6 +12,7 @@ import { HomeProfileCardComponent } from './Components/home-page/home-profile-ca
 import { HomeWritePostComponent } from './Components/home-page/home-write-post/home-write-post.component';
 import { HomePostModelComponent } from './Components/home-page/home-post-model/home-post-model.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import { HomePostModelComponent } from './Components/home-page/home-post-model/h
     HomePostBodyComponent,
     HomeProfileCardComponent,
     HomeWritePostComponent,
-    HomePostModelComponent
+    HomePostModelComponent,
+  
   ],
   imports: [
     BrowserModule,

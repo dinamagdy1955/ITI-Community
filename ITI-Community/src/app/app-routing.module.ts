@@ -4,12 +4,20 @@ import { HomePageComponent } from './Components/home-page/home-page.component';
 
 const routes: Routes = [
 
-  {path: 'HOME', component:HomePageComponent},
+  {
+    path: 'HOME', component:HomePageComponent
+  },
+
+  {
+    path: 'FullNetwork',
+    loadChildren: () => import('./Components/network/network.module').then(m => m.NetworkModule)
+  },
+
   {
     path: 'Group',
-    loadChildren: () => import('./Components/groups/groups.module')
-      .then(m => m.GroupsModule)
+    loadChildren: () => import('./Components/groups/groups.module').then(m => m.GroupsModule)
   },
+
 
 
 ];
