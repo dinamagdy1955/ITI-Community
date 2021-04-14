@@ -1,0 +1,58 @@
+<div class="container-fluid">
+    <div class="row signInContent">
+        <div class="col-sm-10 col-md-6 col-lg-4 loginForm">
+            <a href="" id="loginLogo">
+                <img class="header__logo" src="../../../../assets/iti-logo.png">
+                <div class="header__separator"></div>
+                <span class="header__title">Information Technology Institute</span>
+            </a>
+            <div class="card signinForm">
+                <div class="card-header signinHeader">
+                    <h1>Sign in</h1>
+                    <p>
+                        Stay updated on your professional world
+                    </p>
+                </div>
+                <div class="card-body">
+                    <form action="/action_page.php">
+                        <div class="form-group">
+                            <input type="email" class="form-control inputText" placeholder="Email or Phone" id="email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control inputText" placeholder="Password" id="pwd">
+                        </div>
+                        <div id="forgetPassword" class="form-group forgetPassword">
+                            <a href="">Forget Password ?</a>
+                        </div>
+                        <button type="submit" id="signinButton" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <div id="newIn">
+                <div>
+                    New to LinkedIn? <div id="joinNow"><a href="">Join Now</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid footerSignIn">
+    <div id="footerSignInLinks">
+        <a href="">User Agreement</a>
+        <a href="">Privacy Policy</a>
+        <a href="">Community Guidelines</a>
+        <a href="">Cookie Policy</a>
+        <a href="">Copyright Policy</a>
+        <a href="">Send Feedback</a>
+        <span ngbDropdown class="dropup languageDropup" placement="top-right">
+            <a class="btn" id="dropdownConfig" ngbDropdownToggle>
+                Language
+            </a>
+            <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+                <a ngbDropdownItem>Arabic</a>
+                <a ngbDropdownItem>English</a>
+            </div>
+
+        </span>
+    </div>
+</div>
