@@ -11,7 +11,8 @@ import { HomeProfileCardComponent } from './Components/home-page/home-profile-ca
 import { HomeWritePostComponent } from './Components/home-page/home-write-post/home-write-post.component';
 import { HomePostModelComponent } from './Components/home-page/home-post-model/home-post-model.component';
 import { HeaderComponent } from './Components/MainHeader/header/header.component';
-
+import { LoginComponent } from './Components/login/login.component';
+import { ErrorComponent } from './Components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -24,14 +25,11 @@ import { HeaderComponent } from './Components/MainHeader/header/header.component
     HomeProfileCardComponent,
     HomeWritePostComponent,
     HomePostModelComponent,
-  
+    LoginComponent,
+    ErrorComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, NgbModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

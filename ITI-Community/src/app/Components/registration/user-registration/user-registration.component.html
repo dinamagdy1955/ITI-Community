@@ -1,0 +1,86 @@
+<div class="container-fluid">
+    <div class="row registerContent">
+        <div class="col-sm-10 col-md-6 col-lg-4 mt-2 mb-2 userRegisterContainer">
+            <a href="" id="loginLogo">
+                <img class="header__logo" src="../../../../assets/iti-logo.png">
+                <div class="header__separator"></div>
+                <span class="header__title">Information Technology Institute</span>
+            </a>
+            <form>
+                <div class="mb-2">
+                    <label class="form-label text-black-50" for="userRegisterNationalID">
+                        National ID
+                    </label>
+                    <input type="text" id="userRegisterNationalID" minlength="14" maxlength="14"
+                        class="form-control border border-dark">
+                </div>
+                <div class="mb-2">
+                    <label for="userRegisterEmail" class="form-label text-black-50">Email address</label>
+                    <input type="email" class="form-control border border-dark" id="userRegisterEmail"
+                        aria-describedby="emailHelp">
+                    <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+                </div>
+                <div class="mb-2">
+                    <label for="userRegisterPassword" class="form-label text-black-50">
+                        Password (6 or more characters)
+                    </label>
+                    <input type="password" class="form-control border border-dark" id="userRegisterPassword">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label text-black-50" for="userRegisterBranch">
+                        Branch
+                    </label>
+                    <select id="userRegisterBranch" class="form-control border border-dark">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label text-black-50" for="userRegisterTrack">
+                        Track
+                    </label>
+                    <select id="userRegisterTrack" class="form-control border border-dark">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label text-black-50" for="userRegisterScholarshipDuration">
+                        Scholarship Duration
+                    </label>
+                    <select id="userRegisterScholarshipDuration" class="form-control border border-dark">
+                        <option></option>
+                    </select>
+                </div>
+                <button type="submit" id="registerButton" class="btn fs-6 col-12 rounded-pill mt-2">
+                    Agree & Join
+                </button>
+                <div class="text-center mt-2 ">
+                    Already on ITI Community?
+                    <div id="signin">
+                        <a href="#" class="text-decoration-none  fs-6 fw-bold">
+                            Sign in
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="container-fluid footerSignIn">
+            <div id="footerSignInLinks">
+                <a href="">User Agreement</a>
+                <a href="">Privacy Policy</a>
+                <a href="">Community Guidelines</a>
+                <a href="">Cookie Policy</a>
+                <a href="">Copyright Policy</a>
+                <a href="">Send Feedback</a>
+                <span ngbDropdown class="dropup languageDropup" placement="top-right">
+                    <a class="btn" id="dropdownConfig" ngbDropdownToggle>
+                        Language
+                    </a>
+                    <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+                        <a ngbDropdownItem>Arabic</a>
+                        <a ngbDropdownItem>English</a>
+                    </div>
+
+                </span>
+            </div>
+        </div>
+    </div>
