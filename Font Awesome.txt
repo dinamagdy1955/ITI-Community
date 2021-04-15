@@ -8,5 +8,6 @@
 <i class="fas fa-bell d-lg-block"></i>
 <i class="fab fa-facebook-square"></i>
 <i class="fas fa-user-friends"></i>
-=======
+<i class="fas fa-comments"></i>
+
 

@@ -33,6 +33,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./Components/groups/groups.module').then((m) => m.GroupsModule),
   },
+    
+  {
+    path: 'profile',
+    loadChildren: () => import('./Components/profile/profile.module').then(m => m.ProfileModule)
+  },
   {
     path: '',
     redirectTo: '/HOME',
