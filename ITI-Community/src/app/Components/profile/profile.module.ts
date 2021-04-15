@@ -13,6 +13,11 @@ import { ProfileBodyExpComponent } from './profile-body/profile-body-exp/profile
 import { ExperienceProfileComponent } from './profile-body/profile-body-exp/Experience-profile/Experience-profile.component';
 import { ProfileBodyAccomplishmentsComponent } from './profile-body/profile-body-Accomplishments/profile-body-Accomplishments.component';
 import { AccomplishmentsProfileComponent } from './profile-body/profile-body-Accomplishments/accomplishments-profile/accomplishments-profile.component';
+import { ProfileSideImgComponent } from './profile-side/profile-side-img/profile-side-img.component';
+import { ProfileSideViewedComponent } from './profile-side/profile-side-viewed/profile-side-viewed.component';
+import { PeopleAlsoViewedComponent } from './profile-side/profile-side-viewed/people-also-viewed/people-also-viewed.component';
+import { ProfileSideKnowComponent } from './profile-side/profile-side-know/profile-side-know.component';
+import { PeopleYouMayKnowComponent } from './profile-side/profile-side-know/people-you-may-know/people-you-may-know.component';
 
 
 const mainProfileRoute:Routes=[{path:'',component:MainProfileComponent}] 
@@ -32,7 +37,12 @@ const mainProfileRoute:Routes=[{path:'',component:MainProfileComponent}]
     ProfileBodyExpComponent,
     ExperienceProfileComponent,
     ProfileBodyAccomplishmentsComponent,
-    AccomplishmentsProfileComponent
+    AccomplishmentsProfileComponent,
+    ProfileSideComponent,
+    ProfileSideImgComponent,ProfileSideViewedComponent,
+    PeopleAlsoViewedComponent,
+    ProfileSideKnowComponent,
+    PeopleYouMayKnowComponent
   ]
 })
 export class ProfileModule { }
