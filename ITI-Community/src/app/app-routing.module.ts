@@ -1,32 +1,56 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ErrorComponent } from './Components/error/error.component';
 import { HomePageComponent } from './Components/home-page/home-page.component';
+import { LoginComponent } from './Components/login/login.component';
 
 const routes: Routes = [
-
   {
-    path: 'HOME', component:HomePageComponent
+    path: 'HOME',
+    component: HomePageComponent,
   },
-
+  {
+    path: 'Login',
+    component: LoginComponent,
+  },
+  {
+    path: 'Register',
+    loadChildren: () =>
+      import('./Components/registration/registration.module').then(
+        (m) => m.RegistrationModule
+      ),
+  },
   {
     path: 'FullNetwork',
-    loadChildren: () => import('./Components/network/network.module').then(m => m.NetworkModule)
+    loadChildren: () =>
+      import('./Components/network/network.module').then(
+        (m) => m.NetworkModule
+      ),
   },
 
   {
     path: 'Group',
-    loadChildren: () => import('./Components/groups/groups.module').then(m => m.GroupsModule)
+    loadChildren: () =>
+      import('./Components/groups/groups.module').then((m) => m.GroupsModule),
   },
-
+    
   {
     path: 'profile',
     loadChildren: () => import('./Components/profile/profile.module').then(m => m.ProfileModule)
   },
-
+  {
+    path: '',
+    redirectTo: '/HOME',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    component: ErrorComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
