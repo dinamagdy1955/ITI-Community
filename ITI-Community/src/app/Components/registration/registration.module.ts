@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 const registrationRoutes: Routes = [
   { path: 'User', component: UserRegistrationComponent },
@@ -13,6 +14,11 @@ const registrationRoutes: Routes = [
 
 @NgModule({
   declarations: [UserRegistrationComponent],
-  imports: [CommonModule, RouterModule.forChild(registrationRoutes), NgbModule],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(registrationRoutes),
+    NgbModule,
+    FormsModule,
+  ],
 })
 export class RegistrationModule {}

@@ -1,6 +1,7 @@
 <div class="container-fluid">
     <div class="row signInContent">
         <div class="col-sm-10 col-md-6 col-lg-4 loginForm">
+            <!--<img class="header__logo" src="iti_logocopy.png">-->
             <a href="" id="loginLogo">
                 <img class="header__logo" src="../../../../assets/iti-logo.png">
                 <div class="header__separator"></div>
@@ -14,18 +15,18 @@
                     </p>
                 </div>
                 <div class="card-body">
-                    <form action="/action_page.php">
-                        <div class="form-group">
-                            <input type="email" class="form-control inputText" placeholder="Email or Phone" id="email">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control inputText" placeholder="Password" id="pwd">
-                        </div>
-                        <div id="forgetPassword" class="form-group forgetPassword">
-                            <a href="">Forget Password ?</a>
-                        </div>
-                        <button type="submit" id="signinButton" class="btn btn-primary">Submit</button>
-                    </form>
+                    <div class="form-group">
+                        <input type="email" class="form-control inputText" placeholder="Email or Phone" id="email"
+                            [(ngModel)]="emailSignIn">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control inputText" placeholder="Password" id="pwd"
+                            [(ngModel)]="passwordSignIn">
+                    </div>
+                    <div id="forgetPassword" class="form-group forgetPassword">
+                        <a href="">Forget Password ?</a>
+                    </div>
+                    <button type="button" id="signinButton" class="btn btn-primary" (click)="SignIn()">Submit</button>
                 </div>
             </div>
             <div id="newIn">
@@ -44,15 +45,14 @@
         <a href="">Cookie Policy</a>
         <a href="">Copyright Policy</a>
         <a href="">Send Feedback</a>
-        <span ngbDropdown class="dropup languageDropup" placement="top-right">
-            <a class="btn" id="dropdownConfig" ngbDropdownToggle>
+        <span class="dropup">
+            <button type="button" class="dropdown-toggle languageDropup" data-toggle="dropdown">
                 Language
-            </a>
-            <div ngbDropdownMenu aria-labelledby="dropdownConfig">
-                <a ngbDropdownItem>Arabic</a>
-                <a ngbDropdownItem>English</a>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item Language" href="#">Arabic</a>
+                <a class="dropdown-item" href="#">English</a>
             </div>
-
         </span>
     </div>
 </div>

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './Components/error/error.component';
 import { HomePageComponent } from './Components/home-page/home-page.component';
 import { LoginComponent } from './Components/login/login.component';
+import { NotificationComponent } from './Components/notification/notification.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'Login',
     component: LoginComponent,
+  },
+  {
+    path: 'Notification',
+    component: NotificationComponent,
   },
   {
     path: 'Register',
