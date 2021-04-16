@@ -33,6 +33,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('./Components/groups/groups.module').then((m) => m.GroupsModule),
   },
+
+  {
+    path: 'Messages',
+    loadChildren: () =>
+      import('./Components/messages/messages.module').then((m) => m.MessagesModule),
+  },
   {
     path: '',
     redirectTo: '/HOME',
@@ -48,4 +54,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

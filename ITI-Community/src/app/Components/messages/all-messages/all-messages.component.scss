@@ -1,0 +1,135 @@
+
+section.groups-page .content-groups{
+    border: 1px solid;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+
+section.groups-page .content-groups .group-tabs a:not(:last-child){
+    border:none;
+    transition: 0.3s;
+}
+
+section.groups-page .content-groups .group-tabs a:not(:last-child):hover {
+    background-color: #eee;
+}
+
+section.groups-page .content-groups .head-groups-page .group-tabs a.active{
+    border-bottom: 2px solid rgb(125, 192, 255);
+    font-weight: bold;
+}
+
+section.groups-page .content-groups .Groups-content-display2 {
+    padding: 6px 12px;
+    // display: none;
+}
+
+.custom-left-side-group {
+    position: relative;
+}
+
+
+.custom-left-side-group .card-body {
+    position: absolute;
+    top: 60px
+}
+
+.content-groups .Groups-content-display1 .list-group-item,
+.content-groups .Groups-content-display2 .list-group-item {
+    padding: 0.75rem 0.25rem;
+}
+
+.masseges-head-user {
+    position: relative;
+}
+
+.masseges-head-user .messages-control {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+
+.active{
+    background-color: #7ec5ff;
+}
+
+.sender, .reciever {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}
+
+.sender a {
+    background: #42a5f5;
+    color: #fff !important;
+    border-radius: 20px 20px 3px 20px;
+    display: block;
+    max-width: 75%;
+    padding: 7px 13px 7px 13px;
+    text-decoration: none;
+}
+
+.sender:before {
+    content: attr(data-is);
+    position: absolute;
+    right: 15px;
+    bottom: -0.8em;
+    display: block;
+    font-size: .750rem;
+    color: rgba(84, 110, 122,1.0);
+}
+
+.reciever a {
+    background: #f1f1f1;
+    color: #000 !important;
+    border-radius: 20px 20px 20px 3px;
+    display: block;
+    max-width: 75%;
+    padding: 7px 13px 7px 13px;
+    text-decoration: none;
+}
+
+.reciever:before {
+    content: attr(data-is);
+    position: absolute;
+    left: 13px;
+    bottom: -0.8em;
+    display: block;
+    font-size: .750rem;
+    color: rgba(84, 110, 122,1.0);
+}
+
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+
+.left-side-messages {
+}
