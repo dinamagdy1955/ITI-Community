@@ -6,62 +6,66 @@
                 <div class="header__separator"></div>
                 <span class="header__title">Information Technology Institute</span>
             </a>
-            <form>
-                <div class="mb-2">
-                    <label class="form-label text-black-50" for="userRegisterNationalID">
-                        National ID
-                    </label>
-                    <input type="text" id="userRegisterNationalID" minlength="14" maxlength="14"
-                        class="form-control border border-dark">
+            <div class="mb-2">
+                <label class="form-label text-black-50" for="userRegisterNationalID">
+                    National ID
+                </label>
+                <input type="text" [(ngModel)]="nationalIDRegister" minlength="14" maxlength="14"
+                    class="form-control border border-dark">
+            </div>
+            <div class="mb-2">
+                <label for="userRegisterEmail" class="form-label text-black-50">Email address</label>
+                <input type="email" class="form-control border border-dark" [(ngModel)]="emailRegister"
+                    aria-describedby="emailHelp">
+                <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+            </div>
+            <div class="mb-2">
+                <label for="userRegisterPassword" class="form-label text-black-50">
+                    Password (6 or more characters)
+                </label>
+                <input type="password" class="form-control border border-dark" [(ngModel)]="passwordRegister">
+            </div>
+            <div class="mb-2">
+                <label class="form-label text-black-50" for="userRegisterBranch">
+                    Branch
+                </label>
+                <select class="form-control border border-dark">
+                    <option value="-1"></option>
+                    <option *ngFor="let branch of branches; let i = index;" value={{i}}>{{branch.location}}
+                    </option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label text-black-50">
+                    Track
+                </label>
+                <select class="form-control border border-dark">
+                    <option value="-1"></option>
+                    <option *ngFor="let track of tracks; let i = index;" value={{i}}>{{track.name}}</option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label text-black-50">
+                    Scholarship Duration
+                </label>
+                <select class="form-control border border-dark">
+                    <option value="-1"></option>
+                    <option *ngFor="let duration of durations; let i = index;" value={{i}}>{{duration.textDescription}}
+                    </option>
+                </select>
+            </div>
+            <button class="btn fs-6 col-12 rounded-pill mt-2" (click)="register()">
+                Agree & Join
+            </button>
+            <div class="text-center mt-2 ">
+                Already on ITI Community?
+                <div id="signin">
+                    <a [routerLink]="['/Login']" routerLinkActive="router-link-active"
+                        class="text-decoration-none  fs-6 fw-bold">
+                        Sign in
+                    </a>
                 </div>
-                <div class="mb-2">
-                    <label for="userRegisterEmail" class="form-label text-black-50">Email address</label>
-                    <input type="email" class="form-control border border-dark" id="userRegisterEmail"
-                        aria-describedby="emailHelp">
-                    <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
-                </div>
-                <div class="mb-2">
-                    <label for="userRegisterPassword" class="form-label text-black-50">
-                        Password (6 or more characters)
-                    </label>
-                    <input type="password" class="form-control border border-dark" id="userRegisterPassword">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label text-black-50" for="userRegisterBranch">
-                        Branch
-                    </label>
-                    <select id="userRegisterBranch" class="form-control border border-dark">
-                        <option></option>
-                    </select>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label text-black-50" for="userRegisterTrack">
-                        Track
-                    </label>
-                    <select id="userRegisterTrack" class="form-control border border-dark">
-                        <option></option>
-                    </select>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label text-black-50" for="userRegisterScholarshipDuration">
-                        Scholarship Duration
-                    </label>
-                    <select id="userRegisterScholarshipDuration" class="form-control border border-dark">
-                        <option></option>
-                    </select>
-                </div>
-                <button type="submit" id="registerButton" class="btn fs-6 col-12 rounded-pill mt-2">
-                    Agree & Join
-                </button>
-                <div class="text-center mt-2 ">
-                    Already on ITI Community?
-                    <div id="signin">
-                        <a href="#" class="text-decoration-none  fs-6 fw-bold">
-                            Sign in
-                        </a>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
         <div class="container-fluid footerSignIn">
             <div id="footerSignInLinks">

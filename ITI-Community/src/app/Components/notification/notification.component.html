@@ -1,0 +1,401 @@
+<div class="container-fluid savedJobMain">
+    <div class="container-xl">
+        <div class="row savedJobContainer">
+            <div class="col-lg-3 mainContainer">
+
+                <a type="button" class="card-body itiBranchesHeader" (click)="collapse.toggle()"
+                    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                    <i class="fas fa-university"></i> ITI Branches
+                </a>
+
+                <div #collapse="ngbCollapse" class="btn-group-vertical" [(ngbCollapse)]="isCollapsed">
+
+                    <a type="button" class="card-body itiBranchesHeader" href="#">
+                        Smart Villege
+                        <span class="branchLocation">
+                            <i class="fas fa-location-arrow"></i>
+                        </span>
+                    </a>
+
+                    <a type="button" class="card-body itiBranchesHeader" href="#">
+                        Smart Villege
+                        <span class="branchLocation">
+                            <i class="fas fa-location-arrow"></i>
+                        </span>
+                    </a>
+
+                </div>
+
+
+
+
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <a class="list-group-item itiBranchesHeader" data-toggle="collapse" href="#collapse1">
+                                    <i class="fas fa-university"></i> ITI Branches
+                                </a>
+                            </div>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <ul class="list-group itiBranchesCollapse">
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Smart Villege
+                                    <span class="branchLocation">
+                                        <i class="fas fa-location-arrow"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Assuit
+                                    <span class="branchLocation">
+                                        <i class="fas fa-location-arrow"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Aswan
+                                    <span class="branchLocation">
+                                        <i class="fas fa-location-arrow"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Sohag
+                                    <span class="branchLocation">
+                                        <i class="fas fa-location-arrow"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Qena
+                                    <span class="branchLocation">
+                                        <i class="fas fa-location-arrow"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Menofia
+                                    <span class="branchLocation">
+                                        <i class="fas fa-location-arrow"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Mansoura
+                                    <span class="branchLocation">
+                                        <i class="fas fa-location-arrow"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Alexendria
+                                    <span class="branchLocation">
+                                        <i class="fas fa-location-arrow"></i>
+                                    </span>
+                                </a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <a class="list-group-item itiBranchesHeader" data-toggle="collapse" href="#collapse2">
+                                    <i class="fas fa-user-graduate"></i> ITI Tracks
+                                </a>
+                            </div>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <ul class="list-group itiBranchesCollapse">
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Software Development Fundamentals
+                                    <span class="branchLocation">
+                                        <i class="fas fa-laptop-code"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Full Stack Web Development Using .Net
+                                    <span class="branchLocation">
+                                        <i class="fas fa-laptop-code"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Frontend & Cross-Platform Mob Developer
+                                    <span class="branchLocation">
+                                        <i class="fas fa-laptop-code"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Embedded Systems
+                                    <span class="branchLocation">
+                                        <i class="fas fa-laptop-code"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Big Data Specialist
+                                    <span class="branchLocation">
+                                        <i class="fas fa-laptop-code"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Business Data Intelligence
+                                    <span class="branchLocation">
+                                        <i class="fas fa-laptop-code"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Fullstack Web Development Using Python
+                                    <span class="branchLocation">
+                                        <i class="fas fa-laptop-code"></i>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    Social Media Marketing
+                                    <span class="branchLocation">
+                                        <i class="fas fa-laptop-code"></i>
+                                    </span>
+                                </a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 mainContainer">
+                <div class="list-group mySavedListItems">
+                    <div class="list-group-item list-group-item-action mySavedItem newNotification">
+                        <div class="mySavedItemContent">
+                            <img src="../../../../assets/1.jpg" class="rounded-circle profileImg">
+                        </div>
+                        <div class="mySavedItemContent">
+                            <div class="notificationTextContent">
+                                <div>
+                                    Congratulate Sondos for <a href="#">starting a new position</a> as Senior
+                                    Electrical Technical Office
+                                    Engineer at REDCON Construction Co. S.A.E
+                                </div>
+                                <button class="notificationBtn">Say Congrat !!!</button>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
+                            <div class="notificationTime">27m</div>
+                            <a ngbDropdownToggle type="text" class="btnMoreDetailsDots" id="dropdownMenuButton"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </a>
+                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                                <a ngbDropdownItem href="#">
+                                    <i class="far fa-trash-alt"></i>
+                                    <strong>Delete</strong>
+                                    <div>
+                                        Delete this notification
+                                    </div>
+                                </a>
+                                <a ngbDropdownItem href="#">
+                                    <i class="fas fa-times-circle"></i>
+                                    <strong>Unfollow</strong>
+                                    <div>
+                                        Stop seeing user's updates
+                                    </div>
+                                </a>
+                                <a ngbDropdownItem href="#">
+                                    <i class="fas fa-bell-slash"></i>
+                                    <strong>Turn Off</strong>
+                                    <div>
+                                        Stop receiving notifications like this
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item list-group-item-action mySavedItem newNotification">
+                        <div class="mySavedItemContent">
+                            <img src="../../../../assets/1.jpg" class="rounded-circle profileImg">
+                        </div>
+                        <div class="mySavedItemContent">
+                            <div class="notificationTextContent">
+                                <div>
+                                    ahmed gomaa, your new connection, <a href="#">shared a post</a> you may be
+                                    interested in.ahmed gomaa,
+                                    your new connection, shared a post you may be interested in.
+                                </div>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
+                            <div class="notificationTime">27m</div>
+                            <a ngbDropdownToggle type="text" class="btnMoreDetailsDots" id="dropdownMenuButton"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </a>
+                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                                <a ngbDropdownItem href="#">
+                                    <i class="far fa-trash-alt"></i>
+                                    <strong>Delete</strong>
+                                    <div>
+                                        Delete this notification
+                                    </div>
+                                </a>
+                                <a ngbDropdownItem href="#">
+                                    <i class="fas fa-times-circle"></i>
+                                    <strong>Unfollow</strong>
+                                    <div>
+                                        Stop seeing user's updates
+                                    </div>
+                                </a>
+                                <a ngbDropdownItem href="#">
+                                    <i class="fas fa-bell-slash"></i>
+                                    <strong>Turn Off</strong>
+                                    <div>
+                                        Stop receiving notifications like this
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item list-group-item-action mySavedItem">
+                        <div class="mySavedItemContent">
+                            <img src="../../../../assets/1.jpg" class="rounded-circle profileImg">
+                        </div>
+                        <div class="mySavedItemContent">
+                            <div class="notificationTextContent">
+                                <div>
+                                    Merna El katatnee <a href="#">liked your comment</a>
+                                    <div class="postContent">
+                                        Congrats Merna
+                                    </div>
+                                    <div class="postReactionsAndComments">
+                                        38 Reactions • 18 Comments
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
+                            <div class="notificationTime">27m</div>
+                            <a ngbDropdownToggle type="text" class="btnMoreDetailsDots" id="dropdownMenuButton"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </a>
+                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                                <a ngbDropdownItem href="#">
+                                    <i class="far fa-trash-alt"></i>
+                                    <strong>Delete</strong>
+                                    <div>
+                                        Delete this notification
+                                    </div>
+                                </a>
+                                <a ngbDropdownItem href="#">
+                                    <i class="fas fa-times-circle"></i>
+                                    <strong>Unfollow</strong>
+                                    <div>
+                                        Stop seeing user's updates
+                                    </div>
+                                </a>
+                                <a ngbDropdownItem href="#">
+                                    <i class="fas fa-bell-slash"></i>
+                                    <strong>Turn Off</strong>
+                                    <div>
+                                        Stop receiving notifications like this
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item list-group-item-action mySavedItem">
+                        <div class="mySavedItemContent">
+                            <img src="../../../../assets/1.jpg" class="rounded-circle profileImg">
+                        </div>
+                        <div class="mySavedItemContent">
+                            <div class="notificationTextContent">
+                                <div>
+                                    Don't forget to apply to this job you saved <a href="#">3 days</a> agoDon't
+                                    forget to apply to this job you saved 3 days ago
+                                </div>
+                                <button class="notificationBtn">View Job</button>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
+                            <div class="notificationTime">27m</div>
+                            <a ngbDropdownToggle type="text" class="btnMoreDetailsDots" id="dropdownMenuButton"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </a>
+                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                                <a ngbDropdownItem href="#">
+                                    <i class="far fa-trash-alt"></i>
+                                    <strong>Delete</strong>
+                                    <div>
+                                        Delete this notification
+                                    </div>
+                                </a>
+                                <a ngbDropdownItem href="#">
+                                    <i class="fas fa-times-circle"></i>
+                                    <strong>Unfollow</strong>
+                                    <div>
+                                        Stop seeing user's updates
+                                    </div>
+                                </a>
+                                <a ngbDropdownItem href="#">
+                                    <i class="fas fa-bell-slash"></i>
+                                    <strong>Turn Off</strong>
+                                    <div>
+                                        Stop receiving notifications like this
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item list-group-item-action mySavedItem">
+                        <div class="mySavedItemContent">
+                            <img src="../../../../assets/1.jpg" class="rounded-circle profileImg">
+                        </div>
+                        <div class="mySavedItemContent">
+                            <div class="notificationTextContent">
+                                <div>
+                                    Congratulate Sondos for <a href="#">starting a new position</a> as Senior
+                                    Electrical Technical Office
+                                    Engineer at REDCON Construction Co. S.A.E
+                                </div>
+                                <button class="notificationBtn">Say Congrat !!!</button>
+                            </div>
+                        </div>
+                        <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
+                            <div class="notificationTime">27m</div>
+                            <a ngbDropdownToggle type="text" class="btnMoreDetailsDots" id="dropdownMenuButton"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </a>
+                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                                <a ngbDropdownItem href="#">
+                                    <i class="far fa-trash-alt"></i>
+                                    <strong>Delete</strong>
+                                    <div>
+                                        Delete this notification
+                                    </div>
+                                </a>
+                                <a ngbDropdownItem href="#">
+                                    <i class="fas fa-times-circle"></i>
+                                    <strong>Unfollow</strong>
+                                    <div>
+                                        Stop seeing user's updates
+                                    </div>
+                                </a>
+                                <a ngbDropdownItem href="#">
+                                    <i class="fas fa-bell-slash"></i>
+                                    <strong>Turn Off</strong>
+                                    <div>
+                                        Stop receiving notifications like this
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="spinnerContainer">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem; color:#B4272D;" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 mainContainer linkedinAdv">
+
+            </div>
+        </div>
+    </div>
