@@ -13,7 +13,11 @@ import { HomePostModelComponent } from './Components/home-page/home-post-model/h
 import { HeaderComponent } from './Components/MainHeader/header/header.component';
 import { LoginComponent } from './Components/login/login.component';
 import { ErrorComponent } from './Components/error/error.component';
-
+import { NotificationComponent } from './Components/notification/notification.component';
+import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,8 +31,16 @@ import { ErrorComponent } from './Components/error/error.component';
     HomePostModelComponent,
     LoginComponent,
     ErrorComponent,
+    NotificationComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, NgbModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    FormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
