@@ -39,6 +39,16 @@ const routes: Routes = [
       import('./Components/groups/groups.module').then((m) => m.GroupsModule),
   },
   {
+    path: 'Messages',
+    loadChildren: () =>
+      import('./Components/messages/messages.module').then((m) => m.MessagesModule),
+  },
+  
+  {
+    path: 'profile',
+    loadChildren: () => import('./Components/profile/profile.module').then(m => m.ProfileModule)
+  },
+  {
     path: '',
     redirectTo: '/HOME',
     pathMatch: 'full',
@@ -53,4 +63,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
