@@ -1,64 +1,77 @@
-<div class="card text-left">
-    <div class="card-body">
-        <h6 class="card-title"><span>45,500</span> members</h6>
-        <p class="card-text">including ...</p>
+<div *ngIf="Group != undefined">
+    <div class="card text-left">
+        <div class="card-body">
+            <h6 class="card-title"><span>{{Group.members.length}}</span> members</h6>
+            <p class="card-text">including ...</p>
 
-        <img class="avatar-container-item avatars-right" src="../../../../assets/nav-img.png">
-        <img class="avatar-container-item avatars-right" src="../../../../assets/nav-img.png">
-        <img class="avatar-container-item avatars-right" src="../../../../assets/nav-img.png">
-        <img class="avatar-container-item avatars-right" src="../../../../assets/nav-img.png">
-        <span class="avatar-container-more">...</span>
-        <button type="button" class="btn btn-primary btn-sm my-3">Invite Connections</button>
-    </div>
-    <div class="card-footer text-muted text-center">
-        <a href="#" class="card-link">See All</a>
-    </div>
-</div>
-<div class="card text-left mt-3">
-    <div class="card-body">
-        <h6 class="card-title">About this group</h6>
-        <p class="card-text ">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos rem quasi a
-            ad deleniti dignissimos distinctio voluptas odio aperiam perferendis? Sapiente rerum nam
-            cupiditate tempora, architecto eaque soluta amet fugiat!</p>
-    </div>
-    <div class="card-footer text-muted text-center">
-        <a href="#" class="card-link">See All</a>
-    </div>
-</div>
-<div class="card text-left mt-3">
-    <div class="card-body">
-        <h6 class="card-title">Admin</h6>
-        <div class="media">
-            <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
-            <div class="media-body">
-                <h6 class="mt-1 mb-1">
-                    <a class="text-dark text-decoration-none" href="userprofile.html">User Name</a>
-                    <span class="badge badge-secondary">Owner</span>
-                </h6>
-                <small class="text-muted">user job titles</small>
-                <small class="text-muted d-block">Job Titles</small>
-            </div>
+            <img class="avatar-container-item avatars-right" src="../../../../assets/nav-img.png">
+            <img class="avatar-container-item avatars-right" src="../../../../assets/nav-img.png">
+            <img class="avatar-container-item avatars-right" src="../../../../assets/nav-img.png">
+            <img class="avatar-container-item avatars-right" src="../../../../assets/nav-img.png">
+            <span class="avatar-container-more">...</span>
+            <button type="button" class="btn btn-primary btn-sm my-3">Invite Connections</button>
         </div>
-        <div class="media mt-3">
-            <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
-            <div class="media-body">
-                <h6 class="mt-1 mb-1"><a class="text-dark text-decoration-none" href="userprofile.html">User
-                        Name</a>
-                    <span class="badge badge-secondary">Manager</span>
-                </h6>
-                <small class="text-muted">user job titles</small>
-                <small class="text-muted d-block">Job Titles</small>
-            </div>
+        <div class="card-footer text-muted text-center">
+            <button class="btn py-0"><a (click)="openLg(content)" class="card-link">See All</a></button>
         </div>
-        <div class="media mt-3">
-            <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
-            <div class="media-body">
-                <h6 class="mt-1 mb-1"><a class="text-dark text-decoration-none" href="userprofile.html">User
-                        Name</a>
-                    <span class="badge badge-secondary">Manager</span>
-                </h6>
-                <small class="text-muted">user job titles</small>
-                <small class="text-muted d-block">Job Titles</small>
+        <ng-template #content let-modal>
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-basic-title">Group Members</h6>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h1>Write Here</h1>
+            </div>
+
+        </ng-template>
+    </div>
+    <div class="card text-left mt-3">
+        <div class="card-body">
+            <h6 class="card-title">About This Group</h6>
+            <p class="card-text">{{Group.About}}</p>
+        </div>
+        <div class="card-footer text-muted text-center">
+            <a href="#" class="card-link">See All</a>
+        </div>
+    </div>
+    <div class="card text-left mt-3">
+        <div class="card-body">
+            <h6 class="card-title">Admin</h6>
+            <div class="media">
+                <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
+                <div class="media-body">
+                    <h6 class="mt-1 mb-1">
+                        <a class="text-dark text-decoration-none" href="userprofile.html">User Name</a>
+                        <span class="badge badge-secondary">Owner</span>
+                    </h6>
+                    <small class="text-muted">user job titles</small>
+                    <small class="text-muted d-block">Job Titles</small>
+                </div>
+            </div>
+            <div class="media mt-3">
+                <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
+                <div class="media-body">
+                    <h6 class="mt-1 mb-1">
+                        <a class="text-dark text-decoration-none" href="userprofile.html">User
+                            Name</a>
+                        <span class="badge badge-secondary">Manager</span>
+                    </h6>
+                    <small class="text-muted">user job titles</small>
+                    <small class="text-muted d-block">Job Titles</small>
+                </div>
+            </div>
+            <div class="media mt-3">
+                <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
+                <div class="media-body">
+                    <h6 class="mt-1 mb-1"><a class="text-dark text-decoration-none" href="userprofile.html">User
+                            Name</a>
+                        <span class="badge badge-secondary">Manager</span>
+                    </h6>
+                    <small class="text-muted">user job titles</small>
+                    <small class="text-muted d-block">Job Titles</small>
+                </div>
             </div>
         </div>
     </div>

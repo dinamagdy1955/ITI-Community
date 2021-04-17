@@ -17,7 +17,7 @@ import { NotificationComponent } from './Components/notification/notification.co
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,8 +40,10 @@ import { FormsModule } from '@angular/forms';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     FormsModule,
+    ReactiveFormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
