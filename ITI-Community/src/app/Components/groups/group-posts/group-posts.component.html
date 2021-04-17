@@ -1,0 +1,46 @@
+<div class="card mt-3" *ngFor="let post of postGroupList">
+    <div class="card-body">
+        <div class="media">
+            <img class="mr-4 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
+            <div class="media-body">
+                <h6 class="mt-1 mb-1"><a class="text-dark text-decoration-none" href="userprofile.html">User
+                        Name</a></h6>
+                <small class="text-muted">user job titles</small>
+                <small class="text-muted d-block">7h</small>
+            </div>
+            <div ngbDropdown container="body" class="d-inline">
+                <button type="button" class="btn btn-default" ngbDropdownToggle>
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+                <div ngbDropdownMenu>
+                    <button ngbDropdownItem>Edit</button>
+                    <button ngbDropdownItem>Test</button>
+                    <button ngbDropdownItem>Move</button>
+                    <div class="dropdown-divider"></div>
+                    <button ngbDropdownItem>Delete</button>
+                </div>
+            </div>
+        </div>
+        <div class="p-1 mb-2">
+            {{post.Post}}
+        </div>
+        <div class="users-post-groups row" *ngFor="let img of post.postImg">
+            <img class="img-fluid col-md-6" [src]="img" alt="">
+        </div>
+        <div class="text-secondary pt-2">
+            <small>{{post.Likes}} Likes</small>
+        </div>
+        <div class="post-actions-groups mt-2">
+            <button class="btn btn-default" (click)="Like(post.Likes +1 , post.id)">
+                <i class="far fa-thumbs-up mr-2"></i>Like
+            </button>
+            <button class="btn"><i class="fal fa-comment-lines mr-2"></i>Comment</button>
+        </div>
+        <div class="user-right-comments row mt-3">
+            <img src="../../../../assets/nav-img.png" class="rounded-circle col-2">
+            <div class=" col-9 mt-md-4 mt-lg-2 mr-2">
+                <input class="form-control" type="text" placeholder="Start a Conversation in this Group">
+            </div>
+        </div>
+    </div>
+</div>
