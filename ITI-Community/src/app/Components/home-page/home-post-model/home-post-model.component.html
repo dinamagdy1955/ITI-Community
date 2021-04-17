@@ -25,17 +25,55 @@
               </span>
             </div>
           </div>
-        <hr>
-        <div class="form-group">
-        
-          <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="what do you want to talk about ? " style="height: 200px;">
-        
-        </div>
+    
+        <textarea  rows="4" cols="50" placeholder="what do you want to talk about ? "></textarea> 
+   
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+
+    <div>
+  
+        <p >
+          <button type="button" class="btn " (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseExample">
+            <i class="fas fa-plus"></i>
+          </button>
+          <!--
+        <input type="file" style="width: 200px;">
+          -->
+          <button type="button" class="btn " >
+            <i class="far fa-image writeposticons" style="color: #70b5f9;"></i>
+          </button>
+
+          <button type="button" class="btn " >
+            <i class="fab fa-youtube writeposticons" style="color: #81c261;"></i>
+          </button>
+
+          <button type="button" class="btn " >
+            <i class="fas fa-file"style="color: #e7a33e;"> </i>
+          </button>
+ 
+        
+          
+      <button style="border-radius:2em; margin-left: 14em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">post</button>
+
+    </p>
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+          <div class="card" style="width: 100%; border-radius: .5em;background-color: #e8e8e8;">
+            <div class="card-body" style="width: 100%;border: none;">
+
+              <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">Create A poll</button>
+              <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">share it </button>
+              <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">Create A poll</button>
+              <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">share it </button>
+              
+            </div>
+          </div>
+        </div>
+
+
+      
     </div>
   </ng-template>
 
   
-  <button id="HModelBtn" class="btn btn-lg btn-outline-primary" (click)="open(content)" >start a post</button>
+  <button id="HModelBtn"  style="color: #b4272d;" class="btn btn-lg btn-outline-primary" (click)="open(content)" >start a post</button>
