@@ -10,12 +10,14 @@ import { IUserBasics } from '../ViewModels/iuser-basics';
   styleUrls: ['./user-registration.component.scss'],
 })
 export class UserRegistrationComponent implements OnInit {
+  firstNameRegister: string = '';
+  lastNameRegister: string = '';
   nationalIDRegister: string = '';
   emailRegister: string = '';
   passwordRegister: string = '';
-  branchRegister:number = -1;
-  trackRegister:number = -1;
-  scholarRegister:number = -1;
+  branchRegister: number = -1;
+  trackRegister: number = -1;
+  scholarRegister: number = -1;
   branches = [];
   tracks = [];
   durations = [];
@@ -29,21 +31,20 @@ export class UserRegistrationComponent implements OnInit {
     this.durations = this.trackDB.getScholarshipDurations();
   }
 
-
   ngOnInit(): void {}
 
-  
   register() {
-    let newUser:IUserBasics={
+    let newUser: IUserBasics = {
+      firstName: this.firstNameRegister,
+      lastName: this.lastNameRegister,
       email: this.emailRegister,
       password: this.passwordRegister,
       nationalID: this.nationalIDRegister,
       branch: this.branchRegister,
-      track:this.trackRegister,
-      scholarshipDuration:this.scholarRegister
-    }
+      track: this.trackRegister,
+      scholarshipDuration: this.scholarRegister,
+    };
     console.log(newUser);
     console.log(this.registerAuth.registerNewUser(newUser));
-     
   }
 }

@@ -6,6 +6,22 @@
                 <div class="header__separator"></div>
                 <span class="header__title">Information Technology Institute</span>
             </a>
+            <div class="row">
+                <div class="col-sm mb-2">
+                    <label class="form-label text-black-50" for="userRegisterNationalID">
+                        First Name
+                    </label>
+                    <input type="text" [(ngModel)]="firstNameRegister" minlength="14" maxlength="14"
+                        class="form-control border border-dark">
+                </div>
+                <div class="col-sm mb-2">
+                    <label class="form-label text-black-50" for="userRegisterNationalID">
+                        Last Name
+                    </label>
+                    <input type="text" [(ngModel)]="lastNameRegister" minlength="14" maxlength="14"
+                        class="form-control border border-dark">
+                </div>
+            </div>
             <div class="mb-2">
                 <label class="form-label text-black-50" for="userRegisterNationalID">
                     National ID
@@ -25,24 +41,26 @@
                 </label>
                 <input type="password" class="form-control border border-dark" [(ngModel)]="passwordRegister">
             </div>
-            <div class="mb-2">
-                <label class="form-label text-black-50" for="userRegisterBranch">
-                    Branch
-                </label>
-                <select [(ngModel)]="branchRegister" class="form-control border border-dark">
-                    <option value="-1"></option>
-                    <option *ngFor="let branch of branches; let i = index;" value={{i}}>{{branch.location}}
-                    </option>
-                </select>
-            </div>
-            <div class="mb-2">
-                <label class="form-label text-black-50">
-                    Track
-                </label>
-                <select [(ngModel)]="trackRegister" class="form-control border border-dark">
-                    <option value="-1"></option>
-                    <option *ngFor="let track of tracks; let i = index;" value={{i}}>{{track.name}}</option>
-                </select>
+            <div class="row">
+                <div class="col-sm mb-2">
+                    <label class="form-label text-black-50" for="userRegisterBranch">
+                        Branch
+                    </label>
+                    <select [(ngModel)]="branchRegister" class="form-control border border-dark">
+                        <option value="-1"></option>
+                        <option *ngFor="let branch of branches; let i = index;" value={{i}}>{{branch.location}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-sm mb-2">
+                    <label class="form-label text-black-50">
+                        Track
+                    </label>
+                    <select [(ngModel)]="trackRegister" class="form-control border border-dark">
+                        <option value="-1"></option>
+                        <option *ngFor="let track of tracks; let i = index;" value={{i}}>{{track.name}}</option>
+                    </select>
+                </div>
             </div>
             <div class="mb-2">
                 <label class="form-label text-black-50">
