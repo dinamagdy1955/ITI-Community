@@ -16,8 +16,6 @@ export class UserRegistrationComponent implements OnInit {
   branchRegister:number = -1;
   trackRegister:number = -1;
   scholarRegister:number = -1;
-
-  
   branches = [];
   tracks = [];
   durations = [];
