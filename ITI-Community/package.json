@@ -25,6 +25,7 @@
     "@ng-bootstrap/ng-bootstrap": "^9.1.0",
     "bootstrap": "^4.5.0",
     "firebase": "^8.4.1",
+    "ngx-twitter-timeline": "^0.1.5",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
