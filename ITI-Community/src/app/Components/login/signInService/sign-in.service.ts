@@ -8,27 +8,23 @@ import { SignInAuthError } from '../signInInterface/sign-in-auth-error';
 export class SignInService {
   constructor(private auth: AngularFireAuth) {}
 
-  signInAuth(email: string, password: string) {
-    this.auth.signInWithEmailAndPassword(email, password).then(
+  async signInAuth(email: string, password: string) {
+    await this.auth.signInWithEmailAndPassword(email, password).then(
       (responce) => {
+        console.log(responce);
         localStorage.setItem('userToken', responce['refreshToken']);
-        return true;
+        return SignInAuthError.Correct;
       },
       (err) => {
-        /*switch (err) {
+        switch (err) {
           case 'auth/wrong-password':
             return SignInAuthError.WrongPassword;
-            break;
           case 'auth/user-not-found':
             return SignInAuthError.UserNotFound;
-            break;
           case 'auth/invalid-email':
             return SignInAuthError.InvalidEmail;
-            break;
-            
-        }*/
-        return false;
+        }
       }
-    );
+    ).catch();
   }
 }
