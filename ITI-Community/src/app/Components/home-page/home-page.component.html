@@ -2,21 +2,32 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
 <div class="container-fluid">
     <div class="container">
-        <div class="row">
-            <div class="col-md-3 mt-4">
 
-                <app-home-profile-card></app-home-profile-card>
-                <div class="mb-1"></div>
-                <app-home-dropdowen></app-home-dropdowen>
+    <div class="row">
+        <div class="col-md-3 mt-4">
+           
+            <app-home-profile-card></app-home-profile-card>
+            <div class="mb-1"></div>
+            <app-home-dropdowen></app-home-dropdowen>
+           
+        </div>
+        <div class="col-md-6 mt-4">
+            <app-home-write-post ></app-home-write-post>
+            <div class="mb-2"></div>
+            <app-home-post-body></app-home-post-body>
+            <div class="mb-1"></div>
+            <app-home-post-body></app-home-post-body>
+            <div class="mb-1"></div>
+            
+        </div>
+       <div class="col-md-3 mt-4">
+           <div class="p-2" style="border-radius: .5em;background-color: white;">
+            <app-home-add-to-your-feed></app-home-add-to-your-feed>
+           </div>
+        
+           
+       </div>
 
-            </div>
-            <div class="col-md-6 mt-4">
-                <app-home-write-post></app-home-write-post>
-                <div class="mb-2"></div>
-                <app-home-post-body></app-home-post-body>
-                <div class="mb-1"></div>
-                <app-home-post-body></app-home-post-body>
-                <div class="mb-1"></div>
 
             </div>
             <div class="col-md-3 mt-4">
@@ -29,4 +40,5 @@
 
         </div>
     </div>
+</div>
 </div>
