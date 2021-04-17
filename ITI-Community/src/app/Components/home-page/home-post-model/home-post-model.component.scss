@@ -2,11 +2,12 @@
 {
     width: 80%;
     border-radius: 1.2em;
-    background-color: rgba(148, 140, 140, 0.261);
+    background-color: rgba(238, 225, 225, 0.261);
      border: 1px solid rgba(148, 140, 140, 0.261);
-     color: rgb(70, 67, 67) ;
+     color: #b4272d;
      padding: .35em;
      font-size: 16px;
+    //color: #b4272d;
 }
 textarea{
     width: 100%;
@@ -15,3 +16,10 @@ textarea{
 // .postOptions{
 //     float: right;
 // }
+#HModelBtn:hover{
+    color: white;
+     border: 2px solid #b4272d;
+     background-color: #b4272d !important;
+ 
+   
+}
