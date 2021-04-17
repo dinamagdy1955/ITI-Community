@@ -1,17 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { BranchDatabaseService } from '../../GeneralServices/Branches/database.service';
-import { TrackDatabaseService } from '../../GeneralServices/Tracks/database.service';
-import { RegistrationService } from '../registrationService/registration.service';
-
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { BranchDatabaseService } from '../../Branches/database.service';
+import { TrackDatabaseService } from '../../Tracks/database.service';
+import { RegistrationService } from '../Service/registration.service';
+import { SignInAuthError } from '../../login/signInInterface/sign-in-auth-error';
+import { IUserBasics } from '../ViewModels/iuser-basics';
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
   styleUrls: ['./user-registration.component.scss'],
 })
 export class UserRegistrationComponent implements OnInit {
+  firstNameRegister: string = '';
+  lastNameRegister: string = '';
   nationalIDRegister: string = '';
   emailRegister: string = '';
   passwordRegister: string = '';
+  branchRegister: number = -1;
+  trackRegister: number = -1;
+  scholarRegister: number = -1;
   branches = [];
   tracks = [];
   durations = [];
@@ -28,9 +34,17 @@ export class UserRegistrationComponent implements OnInit {
   ngOnInit(): void {}
 
   register() {
-    this.registerAuth.registerNewUser(
-      this.emailRegister,
-      this.passwordRegister
-    );
+    let newUser: IUserBasics = {
+      firstName: this.firstNameRegister,
+      lastName: this.lastNameRegister,
+      email: this.emailRegister,
+      password: this.passwordRegister,
+      nationalID: this.nationalIDRegister,
+      branch: this.branchRegister,
+      track: this.trackRegister,
+      scholarshipDuration: this.scholarRegister,
+    };
+    console.log(newUser);
+    console.log(this.registerAuth.registerNewUser(newUser));
   }
 }

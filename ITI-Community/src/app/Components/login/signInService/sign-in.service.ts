@@ -1,34 +1,50 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import { SignInAuthError } from '../signInInterface/sign-in-auth-error';
+import { UserProfileService } from './user-profile.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SignInService {
-  constructor(private auth: AngularFireAuth) {}
+  isloggedIn: boolean;
+  constructor(
+    private auth: AngularFireAuth,
+    private router: Router,
+    private profile: UserProfileService
+  ) {
+    this.isloggedIn = this.isLoggedIn();
+    if (this.isloggedIn == true) {
+      this.router.navigate(['/HOME']);
+    }
+  }
 
-  signInAuth(email: string, password: string) {
-    this.auth.signInWithEmailAndPassword(email, password).then(
+  async signInAuth(email: string, password: string) {
+    await this.auth.signInWithEmailAndPassword(email, password).then(
       (responce) => {
-        localStorage.setItem('userToken', responce['refreshToken']);
-        return true;
+        console.log(responce);
+        localStorage.setItem('userToken', responce.user.refreshToken);
+        localStorage.setItem('uid', responce.user.uid);
+        this.profile.getProfileData();
+        this.router.navigate(['/HOME']);
+        return SignInAuthError.Correct;
       },
       (err) => {
-        /*switch (err) {
+        switch (err) {
           case 'auth/wrong-password':
             return SignInAuthError.WrongPassword;
-            break;
           case 'auth/user-not-found':
             return SignInAuthError.UserNotFound;
-            break;
           case 'auth/invalid-email':
             return SignInAuthError.InvalidEmail;
-            break;
-            
-        }*/
-        return false;
+        }
       }
     );
+  }
+
+  isLoggedIn(): boolean {
+    if (localStorage.getItem('userToken') == undefined) return false;
+    else return true;
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SignInAuthError } from './signInInterface/sign-in-auth-error';
 import { SignInService } from './signInService/sign-in.service';
+import { UserProfileService } from './signInService/user-profile.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
