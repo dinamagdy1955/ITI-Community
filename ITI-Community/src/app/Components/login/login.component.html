@@ -31,7 +31,8 @@
             </div>
             <div id="newIn">
                 <div>
-                    New to LinkedIn? <div id="joinNow"><a href="">Join Now</a></div>
+                    New to LinkedIn? <div id="joinNow"><a [routerLink]="['/Register/User']"
+                            routerLinkActive="router-link-active">Join Now</a></div>
                 </div>
             </div>
         </div>
@@ -45,13 +46,13 @@
         <a href="">Cookie Policy</a>
         <a href="">Copyright Policy</a>
         <a href="">Send Feedback</a>
-        <span class="dropup">
-            <button type="button" class="dropdown-toggle languageDropup" data-toggle="dropdown">
+        <span ngbDropdown class="dropup languageDropup" placement="top-right">
+            <a class="btn" id="dropdownConfig" ngbDropdownToggle>
                 Language
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item Language" href="#">Arabic</a>
-                <a class="dropdown-item" href="#">English</a>
+            </a>
+            <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+                <a ngbDropdownItem>Arabic</a>
+                <a ngbDropdownItem>English</a>
             </div>
         </span>
     </div>
