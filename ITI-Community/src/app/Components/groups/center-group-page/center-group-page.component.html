@@ -1,8 +1,8 @@
-<section class="profile-group-content rounded">
+<section class="profile-group-content rounded border border-1" *ngIf="Group != undefined">
     <div class="profile-group-header rounded">
         <img src="../../../../assets/1200x400.jpg" class="img-fluid rounded" alt="" srcset="">
         <div class="profile-group-img">
-            <img src="../../../../assets/nav-img.png" class="img-thumbnail rounded-circle mx-3" width="150px" alt="">
+            <img [src]="Group.imgURL" class="img-thumbnail rounded-circle mx-3" width="150px" alt="">
         </div>
         <div class="float-right">
             <a class="btn"><i class="far fa-bell"></i></a>
@@ -21,31 +21,44 @@
             </div>
         </div>
     </div>
-    <h4 class="pt-5 mt-3 mt-md-5 ml-4">Jobs 4 All - Jobs in Egypt</h4>
+    <h4 class="pt-5 mt-3 mt-md-5 ml-4">{{Group.Name}}</h4>
     <span class="text-muted"><i class="fas fa-users ml-4 mr-2 mb-4"></i>Listed Group</span>
 </section>
 <section class="write-post-on-group mt-3">
-    <div class="card">
-        <div class="card-body row">
-            <img src="../../../../assets/nav-img.png" class="rounded-circle col-2">
-            <div class=" col-9 mt-md-4 mt-lg-2 mr-2">
-                <input class="form-control" type="text" placeholder="Start a Conversation in this Group">
+    <div class="media border p-3 postcontainer" style="background-color: white;  border-radius: .5em">
+        <div class="media-body" style="  align-items: center;">
+            <div>
+                <!-- The Modal -->
+                <img src="../../../../assets/nav-img.png" style="width:10%;height: auto;" alt="John Doe"
+                    class="mr-3 mt-3 rounded-circle">
+                <app-write-box-model [SelectedGroupId]="GroupId"></app-write-box-model>
             </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-2"></div>
-                    <div class="d-flex justify-content-between col-10">
-                        <div class="">
-                            <button class="btn"><i class="fas fa-image"></i> Photo</button>
-                        </div>
-                        <div>
-                            <button class="btn"><i class="fab fa-youtube"></i> Video</button>
-                        </div>
-                        <div>
-                            <button class="btn"><i class="fas fa-poll"></i> Poll</button>
-                        </div>
+            <div class="W-100%"><br></div>
+            <div style="width: 100%; text-align:center; ">
+                <a class="postIconsHover">
+                    <div class="diviconsize" style=" width: 20%; display: inline-block;">
+                        <i class="far fa-image writeposticons" style="color: #70b5f9;"></i>
+                        <span class=" writeposticonsNames"> Photos</span>
                     </div>
-                </div>
+                </a>
+                <a class="postIconsHover">
+                    <div class="diviconsize" style=" width: 20%; display: inline-block;">
+                        <i class="fab fa-youtube writeposticons" style="color: #81c261;"></i>
+                        <span class=" writeposticonsNames"> Video</span>
+                    </div>
+                </a>
+                <a class="postIconsHover">
+                    <div class="diviconsize" style=" width: 20%; display: inline-block;">
+                        <i class="far fa-calendar-check writeposticons" style="color: #e7a33e;"></i>
+                        <span class="writeposticonsNames"> Events</span>
+                    </div>
+                </a>
+                <a class="postIconsHover">
+                    <div class="diviconsize" style=" width: 20%;display: inline-block;"><i
+                            class="far fa-file-alt writeposticons" style="color: #f5987e;"></i>
+                        <span class=" writeposticonsNames"> Article</span>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -54,93 +67,6 @@
         <button class="btn btn-outline-secondary ml-3 my-3">Recommended</button>
     </div>
     <div class="group-users-posts">
-        <div class="card mt-3">
-            <div class="card-body">
-                <div class="media">
-                    <img class="mr-4 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
-                    <div class="media-body">
-                        <h6 class="mt-1 mb-1"><a class="text-dark text-decoration-none" href="userprofile.html">User
-                                Name</a></h6>
-                        <small class="text-muted">user job titles</small>
-                        <small class="text-muted d-block">7h</small>
-                    </div>
-                    <div ngbDropdown container="body" class="d-inline">
-                        <button type="button" class="btn btn-default" ngbDropdownToggle>
-                            <i class="fas fa-ellipsis-h"></i>
-                        </button>
-                        <div ngbDropdownMenu>
-                            <button ngbDropdownItem>Edit</button>
-                            <button ngbDropdownItem>Duplicate</button>
-                            <button ngbDropdownItem>Move</button>
-                            <div class="dropdown-divider"></div>
-                            <button ngbDropdownItem>Delete</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-1 mb-2">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem quos, eaque
-                    repudiandae beatae ipsum quaerat inventore neque ex nobis placeat omnis dolore in.
-                    Magni, eos eius explicabo vero esse debitis!
-                </div>
-                <div class="users-post-groups row">
-                    <img class="img-fluid col-md-6" src="../../../../assets/400x400.png" alt="">
-                    <img class="img-fluid col-md-6" src="../../../../assets/400x400.png" alt="">
-                </div>
-                <div class="post-actions-groups mt-2">
-                    <button class="btn btn-default"><i class="far fa-thumbs-up mr-2"></i>Like</button>
-                    <button class="btn"><i class="fal fa-comment-lines mr-2"></i>Comment</button>
-                </div>
-                <div class="user-right-comments row mt-3">
-                    <img src="../../../../assets/nav-img.png" class="rounded-circle col-2">
-                    <div class=" col-9 mt-md-4 mt-lg-2 mr-2">
-                        <input class="form-control" type="text" placeholder="Start a Conversation in this Group">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card mt-3">
-            <div class="card-body">
-                <div class="media">
-                    <img class="mr-4 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
-                    <div class="media-body">
-                        <h6 class="mt-1 mb-1"><a class="text-dark text-decoration-none" href="userprofile.html">User
-                                Name</a></h6>
-                        <small class="text-muted">user job titles</small>
-                        <small class="text-muted d-block">7h</small>
-                    </div>
-                    <div ngbDropdown container="body" class="d-inline">
-                        <button type="button" class="btn btn-default" ngbDropdownToggle>
-                            <i class="fas fa-ellipsis-h"></i>
-                        </button>
-                        <div ngbDropdownMenu>
-                            <button ngbDropdownItem>Edit</button>
-                            <button ngbDropdownItem>Duplicate</button>
-                            <button ngbDropdownItem>Move</button>
-                            <div class="dropdown-divider"></div>
-                            <button ngbDropdownItem>Delete</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-1 mb-2">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem quos, eaque
-                    repudiandae beatae ipsum quaerat inventore neque ex nobis placeat omnis dolore in.
-                    Magni, eos eius explicabo vero esse debitis!
-                </div>
-                <div class="users-post-groups row">
-                    <img class="img-fluid col-md-6" src="../../../../assets/400x400.png" alt="">
-                    <img class="img-fluid col-md-6" src="../../../../assets/400x400.png" alt="">
-                </div>
-                <div class="post-actions-groups mt-2">
-                    <button class="btn btn-default"><i class="far fa-thumbs-up mr-2"></i>Like</button>
-                    <button class="btn"><i class="fal fa-comment-lines mr-2"></i>Comment</button>
-                </div>
-                <div class="user-right-comments row mt-3">
-                    <img src="../../../../assets/nav-img.png" class="rounded-circle col-2">
-                    <div class=" col-9 mt-md-4 mt-lg-2 mr-2">
-                        <input class="form-control" type="text" placeholder="Start a Conversation in this Group">
-                    </div>
-                </div>
-            </div>
-        </div>
+        <app-group-posts></app-group-posts>
     </div>
 </section>

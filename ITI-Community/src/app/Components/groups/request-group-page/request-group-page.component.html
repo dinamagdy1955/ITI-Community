@@ -44,24 +44,25 @@
                     <ng-template ngbNavContent>
                         <div id="GroupsDiscover" class="Groups-content-display1">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
+                                <li class="list-group-item" *ngFor="let g of GroupList">
                                     <div class="media">
-                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <img class="mr-3" [src]="g.imgURL" alt="" width="64px">
                                         <div class="media-body">
-                                            <h6 class="mt-2 mb-1"><a [routerLink]="['/Group/group-profile']">Group1</a>
+                                            <h6 class="mt-2 mb-1"><a
+                                                    routerLink="/Group/group-profile/{{g.id}}">{{g.Name}}</a>
                                             </h6>
-                                            <small class="text-muted"><span>244,444</span> members</small>
+                                            <small class="text-muted"><span>{{g.members.length}}</span> members</small>
                                         </div>
                                         <div ngbDropdown container="body">
                                             <button type="button" class="btn btn-default btn-sm mt-3" ngbDropdownToggle>
                                                 <i class="fas fa-ellipsis-h"></i>
                                             </button>
                                             <div ngbDropdownMenu>
-                                                <button ngbDropdownItem>Edit</button>
-                                                <button ngbDropdownItem>Duplicate</button>
+                                                <button ngbDropdownItem>Request</button>
+                                                <button ngbDropdownItem></button>
                                                 <button ngbDropdownItem>Move</button>
                                                 <div class="dropdown-divider"></div>
-                                                <button ngbDropdownItem>Delete</button>
+                                                <button ngbDropdownItem>Leave</button>
                                             </div>
                                         </div>
                                     </div>

@@ -6,8 +6,55 @@
       </span>
 
      <a href="#" style="font-size: .8em;"> UI/UX User Experience / Wireframes </a>
+     <div
+     style="float: right;"
+                  class="btn-group"
+                  ngbDropdown
+                  role="group"
+                  aria-label="Button group with nested dropdown"
+                >
+                  <button class="btn btn-sm " ngbDropdownToggle>
+                    <i class="fas fa-ellipsis-h dots"></i>
+                  </button>
+                  <div class="dropdown-menu" ngbDropdownMenu>
+                    <button class="DDBtn" ngbDropdownItem>
+                      <div>
+                      <i  class="fas fa-bookmark"  aria-hidden="true"> Save </i>
+                    <br> <small> save for later </small>
+                    </div>
+                    </button>
+ 
+                    <button class="DDBtn" ngbDropdownItem>
+                      <div>
+                      <i  class="far fa-clone"  aria-hidden="true"> Copy link to post </i>
+                      </div>
+                    </button>
 
-      <a style="float: right;"><i class="fas fa-ellipsis-h dotsIcon"></i></a>
+                    <button class="DDBtn" ngbDropdownItem>
+                      <div>
+                      <i  class="fas fa-flag "  aria-hidden="true"> Report this post </i>
+                     <br> <small> post is offsensive or the account is hacked </small>
+                      </div>
+                    </button>
+
+                    <button class="DDBtn" ngbDropdownItem>
+                      <div>
+                      <i  class="fas fa-volume-mute "  aria-hidden="true"> mute FriendName </i>
+                     <br> <small> stop seeing posts from friendName in feed </small>
+                    </div>
+                    </button>
+
+                    <button class="DDBtn" ngbDropdownItem>
+                      <div>
+                      <i  class="fas fa-eye-slash "  aria-hidden="true"> I don't want to see this</i>
+                     <br> <small> let us know why you  don't want to see this post </small>
+                    </div>
+                    </button>
+                    
+                  </div>
+                </div>
+
+     
       <hr> 
       <div class="row mb-2">
         <div class="col-2 pr-1">
@@ -38,7 +85,7 @@
       <!--  posts two buttons-->
 
       <hr>
-      <div style="width: 100%; text-align:center ; font-size: .7em;">
+      <div  class="postIcons" >
 
        
        

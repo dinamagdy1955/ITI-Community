@@ -3,7 +3,8 @@ button{
    padding: 0.3em;
     padding-left: 1em; 
     padding-right: 1em; 
-    border: 1px solid #b4272d;font-size: 1vmax;
+    border: 1px solid #b4272d;
+    font-size: 11px;
     background-color: white !important;
 
     span{
@@ -23,7 +24,36 @@ small{
     border:none
 }
 
-.ATYFContain{
-    border:1px solid rgba(182, 177, 177, 0.357);
-    border-radius: .4em; 
+
+
+button:hover{
+
+    border-radius: 2em;
+    padding: 0.3em;
+     padding-left: 1em; 
+     padding-right: 1em; 
+     border: 2px solid #b4272d;font-size: 1vmax;
+     background-color: #b4272d !important;
+ 
+     span{
+         color: white;
+         font-weight: bold;
+     } 
+}
+.cardH4{
+     padding: 0.9em; 
+     font-size: 16px;
+     color: #b4272d;
+}
+img{
+ border-radius: 50% ; padding-right: 0px; width: 90%;
+}
+.jobSmall{
+    font-size: 10px
+}
+.nameH6{
+    font-size: 11px
+}
+.LineHeight{
+    line-height:13px;
 }

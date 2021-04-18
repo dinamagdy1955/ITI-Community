@@ -9,3 +9,14 @@ a,p{
 #toggle-3[title]{
     color: #b4272d;
 }
+
+/*.customclass1{
+    background-color: yellow!important;
+  }
+//   ngb-accordion /deep/ .card /deep/ [title=Recent]{
+//     background-color: yellow;
+// }
+
+ngb-accordion ::ng-deep .card ::ng-deep [role=tab]#\31 -header{
+    background-color: red !important;
+}*/

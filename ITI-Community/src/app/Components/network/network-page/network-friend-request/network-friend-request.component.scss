@@ -9,3 +9,44 @@ hr{
    color: rgba(128, 128, 128, 0.419); height: .2px;
    margin: 10px;
 }
+.invit,.name{
+color: #b4272d;
+}
+.mang,*{
+    color: #68161ad5;  
+}
+.invit,.mang{
+    font-weight: bold;
+}
+
+.AcceptBtn{
+   
+    border: 1px solid #b4272d;
+    background-color: white !important;
+    color: #68161ad5;
+    border-radius: 3em;
+    font-size: small;
+
+}
+
+
+.AcceptBtn:hover{
+
+
+    border: 2px solid #b4272d;
+    background-color: #b4272eaf !important;
+        color: white;
+        font-weight: bold;
+    
+}
+.ignoreBtn:hover{
+
+
+    
+    background-color: #b4272eaf !important;
+     
+        font-weight: bold;
+    
+}
+
+

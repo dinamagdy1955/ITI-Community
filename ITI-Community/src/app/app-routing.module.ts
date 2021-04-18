@@ -41,12 +41,24 @@ const routes: Routes = [
   {
     path: 'Messages',
     loadChildren: () =>
-      import('./Components/messages/messages.module').then((m) => m.MessagesModule),
+      import('./Components/messages/messages.module').then(
+        (m) => m.MessagesModule
+      ),
   },
-  
+
   {
     path: 'profile',
-    loadChildren: () => import('./Components/profile/profile.module').then(m => m.ProfileModule)
+    loadChildren: () =>
+      import('./Components/profile/profile.module').then(
+        (m) => m.ProfileModule
+      ),
+  },
+  {
+    path: 'jobs',
+    loadChildren: () =>
+      import('../app/Components/saved-job/jobsModule').then(
+        (m) => m.jobsModule
+      ),
   },
   {
     path: '',
@@ -63,4 +75,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
