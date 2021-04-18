@@ -23,12 +23,14 @@ export class SignInService {
   async signInAuth(email: string, password: string) {
     await this.auth.signInWithEmailAndPassword(email, password).then(
       (responce) => {
-        console.log(responce);
-        localStorage.setItem('userToken', responce.user.refreshToken);
-        localStorage.setItem('uid', responce.user.uid);
-        this.profile.getProfileData();
-        this.router.navigate(['/HOME']);
-        return SignInAuthError.Correct;
+        if (responce.user.emailVerified) {
+          console.log(responce);
+          localStorage.setItem('userToken', responce.user.refreshToken);
+          localStorage.setItem('uid', responce.user.uid);
+          this.profile.getProfileData();
+          this.router.navigate(['/HOME']);
+          return SignInAuthError.Correct;
+        }
       },
       (err) => {
         switch (err) {
