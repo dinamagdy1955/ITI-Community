@@ -4,6 +4,7 @@ import { TrackDatabaseService } from '../../Tracks/database.service';
 import { RegistrationService } from '../Service/registration.service';
 import { SignInAuthError } from '../../login/signInInterface/sign-in-auth-error';
 import { IUserBasics } from '../ViewModels/iuser-basics';
+import { IUserDetails } from '../ViewModels/iuser-details';
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
@@ -29,22 +30,37 @@ export class UserRegistrationComponent implements OnInit {
     this.branches = this.branchDB.getBranches();
     this.tracks = this.trackDB.getTracksData();
     this.durations = this.trackDB.getScholarshipDurations();
+    console.log(this.branches);
+    
   }
-
+  
   ngOnInit(): void {}
-
   register() {
-    let newUser: IUserBasics = {
-      firstName: this.firstNameRegister,
-      lastName: this.lastNameRegister,
+    console.log(this.trackRegister)
+    console.log(this.branchRegister)
+    let newUserBasic: IUserBasics = {
       email: this.emailRegister,
       password: this.passwordRegister,
+      isPeople: true,
+      isAccepted: false,
+      isRemoved: false,
+      isReported: false,
+      reports: [],
+    };
+    let newUserDetails: IUserDetails = {
+      firstName: this.firstNameRegister,
+      lastName: this.lastNameRegister,
       nationalID: this.nationalIDRegister,
       branch: this.branchRegister,
       track: this.trackRegister,
       scholarshipDuration: this.scholarRegister,
+      jobTitle: '',
+      about: '',
+      experiences: [],
+      friendList: [],
     };
-    console.log(newUser);
-    console.log(this.registerAuth.registerNewUser(newUser));
+    console.log(
+      this.registerAuth.registerNewUser(newUserBasic, newUserDetails)
+    );
   }
 }

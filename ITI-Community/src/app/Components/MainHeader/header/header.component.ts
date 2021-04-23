@@ -23,6 +23,11 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('userToken');
     localStorage.removeItem('uid');
     this.userProfile.existUserData = {
+      isPeople: true,
+      isAccepted: false,
+      isRemoved: false,
+      isReported: false,
+      reports: [],
       firstName: '',
       lastName: '',
       jobTitle: '',

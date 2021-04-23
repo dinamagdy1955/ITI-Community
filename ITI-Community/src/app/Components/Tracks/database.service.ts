@@ -13,7 +13,9 @@ export class TrackDatabaseService {
       .get()
       .subscribe((res) => {
         res.docs.forEach((doc) => {
-          tracks.push(doc.data());
+          tracks.push({
+            id:doc.id,
+            data:doc.data()});
         });
       });
     return tracks;
@@ -25,7 +27,9 @@ export class TrackDatabaseService {
       .get()
       .subscribe((res) => {
         res.docs.forEach((doc) => {
-          durations.push(doc.data());
+          durations.push({
+            id:doc.id,
+            data:doc.data()});
         });
       });
     return durations;
