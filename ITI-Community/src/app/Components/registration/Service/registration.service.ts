@@ -16,19 +16,16 @@ export class RegistrationService {
     private router: Router
   ) {}
 
-  async registerNewUser(NewUser: IUserBasics) {
+  async registerNewUser(
+    NewUserBasic: IUserBasics,
+    newUserDetails: IUserDetails
+  ) {
     let result;
     await this.auth
-      .createUserWithEmailAndPassword(NewUser.email, NewUser.password)
+      .createUserWithEmailAndPassword(NewUserBasic.email, NewUserBasic.password)
       .then(async (responce) => {
         let uid = responce.user.uid;
-        let newUserDetails: IUserDetails = {
-          jobTitle: '',
-          about: '',
-          experiences: [],
-          friendList: [],
-        };
-        this.db.collection('users-basics').doc(uid).set(NewUser);
+        this.db.collection('users-basics').doc(uid).set(NewUserBasic);
         this.db.collection('users-details').doc(uid).set(newUserDetails);
         (await this.auth.currentUser).sendEmailVerification().then((res) => {
           this.router.navigate(['/Login']);

@@ -25,11 +25,17 @@ export class SignInService {
       (responce) => {
         if (responce.user.emailVerified) {
           console.log(responce);
-          localStorage.setItem('userToken', responce.user.refreshToken);
           localStorage.setItem('uid', responce.user.uid);
           this.profile.getProfileData();
-          this.router.navigate(['/HOME']);
-          return SignInAuthError.Correct;
+          let userProfile = JSON.parse(localStorage.getItem('userData'));
+          console.log(userProfile);
+          if (userProfile.isAccepted && !userProfile.isRemoved) {
+            localStorage.setItem('userToken', responce.user.refreshToken);
+            this.router.navigate(['/HOME']);
+            return SignInAuthError.Correct;
+          } else {
+            alert('user not accepted yet or have been removed');
+          }
         }
       },
       (err) => {

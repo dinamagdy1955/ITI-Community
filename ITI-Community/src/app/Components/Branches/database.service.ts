@@ -12,7 +12,9 @@ export class BranchDatabaseService {
       .get()
       .subscribe((res) => {
         res.docs.forEach((doc) => {
-          branches.push(doc.data());
+          branches.push({
+            id:doc.id,
+            data:doc.data()});
         });
       });
     return branches;
