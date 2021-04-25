@@ -13,13 +13,15 @@ export class WriteBoxModelComponent implements OnInit {
   @Input() SelectedGroupId: string;
   getId: string;
   postForm: FormGroup
+  userID: string;
   constructor(private model: NgbModal, private grpService: GroupPostsService, private fb: FormBuilder) {
+    this.userID = localStorage.getItem("uid");
     this.postForm = this.fb.group({
       GroupId: '',
-      Likes: 0,
+      Likes: [''],
       Post: '',
       PostedDate: new Date,
-      UserId: '',
+      UserId: this.userID,
       postImg: ['']
     })
   }
@@ -45,10 +47,10 @@ export class WriteBoxModelComponent implements OnInit {
   ngOnInit(): void {
     this.postForm = this.fb.group({
       GroupId: this.SelectedGroupId,
-      Likes: 0,
+      Likes: [''],
       Post: '',
       PostedDate: new Date,
-      UserId: '6646546sdsdsd',
+      UserId: this.userID,
       postImg: ['']
     })
   }
@@ -57,10 +59,10 @@ export class WriteBoxModelComponent implements OnInit {
     this.grpService.writePost(this.postForm.value);
     this.postForm = this.fb.group({
       GroupId: this.SelectedGroupId,
-      Likes: 0,
+      Likes: [''],
       Post: '',
       PostedDate: new Date,
-      UserId: '6646546sdsdsd',
+      UserId: this.userID,
       postImg: ['']
     })
   }
