@@ -19,7 +19,11 @@ export class GroupPostsService {
       res.map((e) => {
         if (id == e.payload.doc.id) {
           this.likes = e.payload.doc.get('Likes');
-          this.likes.push(like);
+          if (this.likes.indexOf(like) != -1) {
+            this.likes.splice(this.likes.indexOf(like), 1);
+          } else {
+            this.likes.push(like);
+          }
           let LikeRef = this.db.collection('GroupPosts').doc(id);
           LikeRef.ref.update({
             Likes: this.likes,
