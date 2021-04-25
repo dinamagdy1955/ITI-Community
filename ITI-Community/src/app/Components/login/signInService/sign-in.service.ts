@@ -24,11 +24,9 @@ export class SignInService {
     await this.auth.signInWithEmailAndPassword(email, password).then(
       (responce) => {
         if (responce.user.emailVerified) {
-          console.log(responce);
           localStorage.setItem('uid', responce.user.uid);
           this.profile.getProfileData();
           let userProfile = JSON.parse(localStorage.getItem('userData'));
-          console.log(userProfile);
           if (userProfile.isAccepted && !userProfile.isRemoved) {
             localStorage.setItem('userToken', responce.user.refreshToken);
             this.router.navigate(['/HOME']);

@@ -1,6 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { BranchDatabaseService } from '../../Branches/database.service';
-import { TrackDatabaseService } from '../../Tracks/database.service';
+import { BranchDatabaseService } from '../../Branches/Services/database.service';
+import { TrackDatabaseService } from '../../Tracks/Services/database.service';
 import { RegistrationService } from '../Service/registration.service';
 import { SignInAuthError } from '../../login/signInInterface/sign-in-auth-error';
 import { IUserBasics } from '../ViewModels/iuser-basics';
@@ -31,13 +31,12 @@ export class UserRegistrationComponent implements OnInit {
     this.tracks = this.trackDB.getTracksData();
     this.durations = this.trackDB.getScholarshipDurations();
     console.log(this.branches);
-    
   }
-  
+
   ngOnInit(): void {}
   register() {
-    console.log(this.trackRegister)
-    console.log(this.branchRegister)
+    console.log(this.trackRegister);
+    console.log(this.branchRegister);
     let newUserBasic: IUserBasics = {
       email: this.emailRegister,
       password: this.passwordRegister,
