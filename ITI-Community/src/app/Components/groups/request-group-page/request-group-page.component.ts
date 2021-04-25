@@ -23,5 +23,4 @@ export class RequestGroupPageComponent implements OnInit {
       })
     })
   }
-
 }

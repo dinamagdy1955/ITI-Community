@@ -12,8 +12,9 @@ export class GroupPostsComponent implements OnInit {
   postList;
   postGroupList = [];
   GroupId: string;
+  userID: string
   constructor(private getall: GroupPostsService, private activeRoute: ActivatedRoute) {
-
+    this.userID = localStorage.getItem("uid")
   }
 
   ngOnInit(): void {
@@ -37,9 +38,8 @@ export class GroupPostsComponent implements OnInit {
       })
   }
 
-  Like(post: IPost, id) {
-
-    this.getall.giveLike(post, id)
+  Like(like, id) {
+    this.getall.giveLike(like, id)
   }
 
 }
