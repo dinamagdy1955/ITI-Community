@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { IPost } from '../ViewModel/ipost';
-import * as firestore from 'firebase/app';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class GroupPostsService {
   likes: string[];
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore) { }
 
   getGroupPost() {
     return this.db.collection('GroupPosts').snapshotChanges();
@@ -40,9 +40,14 @@ export class GroupPostsService {
         .collection('GroupPosts')
         .add(post)
         .then(
-          (res) => {},
+          (res) => { },
           (error) => rej(error)
         );
     });
   }
+
+  getPostsLikes() {
+    return this.db.collection('GroupPosts').snapshotChanges();
+  }
+
 }

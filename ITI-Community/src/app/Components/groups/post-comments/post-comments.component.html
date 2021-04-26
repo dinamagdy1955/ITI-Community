@@ -1,0 +1,28 @@
+<div *ngFor="let c of getComments">
+    <div class="container-fluid mt-1 mb-1 ">
+        <div class="justify-content-center row">
+            <div class="col-md-12">
+                <div class="py-2 px-4 mt-2 comment-design">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-row user">
+                            <img class="rounded-circle img-fluid img-responsive"
+                                src="https://i.imgur.com/Yxje2El.jpg" width="40">
+                            <div class="d-flex flex-column ml-2">
+                                <span class="font-weight-bold">@Nick</span>
+                                <small class="day text-muted">1 day ago</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-text text-justify mt-2 ml-5">
+                        <p class="mb-1">{{c.comment}}</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="p-3 bg-white mt-2 rounded text-center">
+    <h5>Join the community to comment</h5><button class="btn btn-success btn-sm px-3"
+        type="button">Signup</button>
+</div>

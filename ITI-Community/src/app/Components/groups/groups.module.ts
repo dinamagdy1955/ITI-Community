@@ -10,6 +10,8 @@ import { RightSideGroupComponent } from './right-side-group/right-side-group.com
 import { WriteBoxModelComponent } from './write-box-model/write-box-model.component';
 import { GroupPostsComponent } from './group-posts/group-posts.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PostCommentsComponent } from './post-comments/post-comments.component';
+import { CommentFormComponent } from './comment-form/comment-form.component';
 
 const groupRoutes: Routes = [
   { path: 'all-groups', component: RequestGroupPageComponent },
@@ -27,6 +29,8 @@ const groupRoutes: Routes = [
     RightSideGroupComponent,
     WriteBoxModelComponent,
     GroupPostsComponent,
+    PostCommentsComponent,
+    CommentFormComponent,
   ],
   imports: [
     CommonModule,

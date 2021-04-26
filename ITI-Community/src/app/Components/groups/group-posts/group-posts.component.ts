@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GroupPostsService } from '../Services/group-posts.service';
-import { IPost } from '../ViewModel/ipost';
 
 @Component({
   selector: 'app-group-posts',
@@ -13,9 +12,13 @@ export class GroupPostsComponent implements OnInit {
   postGroupList = [];
   GroupId: string;
   userID: string;
+  isPostLiked: boolean
+
+  liked
+
   constructor(
     private getall: GroupPostsService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
   ) {
     this.userID = localStorage.getItem('uid');
   }
@@ -39,10 +42,20 @@ export class GroupPostsComponent implements OnInit {
           this.postGroupList.push(post);
         }
       }
+
     });
+    this.postGroupList.forEach(e => {
+      if (e.Likes.find(el => el !== this.userID)) {
+        this.isPostLiked = false
+      } else {
+        this.isPostLiked = true
+      }
+    })
+
   }
 
   Like(like, id) {
     this.getall.giveLike(like, id);
   }
+
 }
