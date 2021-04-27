@@ -1,13 +1,14 @@
-<div class="card mt-3" *ngFor="let post of postGroupList">
-    <div class="card-body">
+<div class="card mt-3" *ngFor="let post of postGroupList; let i = index">
+    <div class="card-body" *ngIf="usersData[i] !== undefined">
         <div class="media">
             <img class="mr-4 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
             <div class="media-body">
                 <h6 class="mt-1 mb-1">
-                    <a class="text-dark text-decoration-none" href="userprofile.html">User
-                        Name</a>
-                    </h6>
-                <small class="text-muted">user job titles</small>
+                    <a class="text-dark text-decoration-none" href="#">
+                        {{usersData[i].data.firstName}} {{usersData[i].data.lastName}}
+                    </a>
+                </h6>
+                <small class="text-muted">{{usersData[i].data.jobTitle}}</small>
                 <small class="text-muted d-block">7h</small>
             </div>
             <div ngbDropdown container="body" class="d-inline">
