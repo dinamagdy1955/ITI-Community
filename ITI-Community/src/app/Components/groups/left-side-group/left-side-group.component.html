@@ -1,11 +1,11 @@
-<div class="card custom-left-side-group">
+<div class="card custom-left-side-group" *ngIf="userData != undefined">
     <img src="../../../../assets/cover.jpg" class="card-img-top">
     <div class="card-body text-center">
         <img src="../../../../assets/nav-img.png" width="50%">
     </div>
     <div class="text-center mt-5 mb-3">
-        <h4>User Name</h4>
-        <small class="text-muted">Joined Group: Jul 2020</small>
+        <h5>{{userData.firstName}} {{userData.lastName}}</h5>
+        <small class="text-muted">Title</small>
     </div>
 </div>
 <div class="card mt-3">

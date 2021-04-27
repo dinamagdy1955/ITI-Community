@@ -13,6 +13,7 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy {
 
   Group: IGroup;
   GroupId: string;
+
   private subscription: Subscription[] = [];
   constructor(
     private activeRoute: ActivatedRoute,
