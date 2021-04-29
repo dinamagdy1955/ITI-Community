@@ -35,7 +35,6 @@ export class CommentFormComponent implements OnInit {
 
   onSubmit() {
     this.commentService.writeComment(this.commentForm.value);
-    console.log(this.commentForm.value)
     this.commentForm = this.fb.group({
       postID: this.defPostId,
       userID: this.userID,

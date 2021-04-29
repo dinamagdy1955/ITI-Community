@@ -7,10 +7,14 @@ import { IPost } from '../ViewModel/ipost';
 })
 export class GroupPostsService {
   likes: string[];
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore) { }
 
   getGroupPost() {
-    return this.db.collection('GroupPosts').snapshotChanges();
+    return this.db.collection("GroupPosts", ref => ref.orderBy('PostedDate', 'desc')).snapshotChanges();
+  }
+
+  getPostById(id) {
+    return this.db.collection("GroupPosts").doc(id).valueChanges();
   }
 
   giveLike(like, id) {
@@ -39,7 +43,7 @@ export class GroupPostsService {
         .collection('GroupPosts')
         .add(post)
         .then(
-          (res) => {},
+          (res) => { },
           (error) => rej(error)
         );
     });
@@ -48,4 +52,15 @@ export class GroupPostsService {
   getPostsLikes() {
     return this.db.collection('GroupPosts').snapshotChanges();
   }
+
+  editPost(id, data) {
+    return this.db.collection('GroupPosts').doc(id).update({
+      Post: data
+    })
+  }
+
+  deletePost(id) {
+    return this.db.collection('GroupPosts').doc(id).delete()
+  }
+
 }

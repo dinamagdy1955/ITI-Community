@@ -10,7 +10,7 @@ import { IGroup } from '../ViewModel/igroup';
   styleUrls: ['./center-group-page.component.scss']
 })
 export class CenterGroupPageComponent implements OnInit, OnDestroy {
-
+  userID: string
   Group: IGroup;
   GroupId: string;
 
@@ -18,9 +18,11 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy {
   constructor(
     private activeRoute: ActivatedRoute,
     private GrpServ: GroupService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
+    this.userID = localStorage.getItem('uid')
     let param = this.activeRoute.paramMap.subscribe((params) => {
       this.GroupId = params.get('id');
       this.GrpServ.getGrpById(this.GroupId).subscribe(res => {
@@ -29,6 +31,11 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy {
     })
     this.subscription.push(param)
   }
+
+  requestToJoin(uid, id) {
+    this.GrpServ.sendRequest(uid, id);
+  }
+
   ngOnDestroy(): void {
     for (let subs of this.subscription) {
       subs.unsubscribe()

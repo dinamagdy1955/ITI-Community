@@ -1,71 +1,87 @@
-<section class="profile-group-content rounded border border-1" *ngIf="Group != undefined">
-    <div class="profile-group-header rounded">
-        <img src="../../../../assets/1200x400.jpg" class="img-fluid rounded" alt="" srcset="">
-        <div class="profile-group-img">
-            <img [src]="Group.ImgURL" class="img-thumbnail rounded-circle mx-3" width="150px" alt="">
-        </div>
-        <div class="float-right">
-            <a class="btn"><i class="far fa-bell"></i></a>
-            <div ngbDropdown container="body" class="d-inline">
-                <button type="button" class="btn btn-default" ngbDropdownToggle>
-                    <i class="fas fa-ellipsis-h"></i>
-                </button>
-                <div ngbDropdownMenu>
-                    <button ngbDropdownItem>Edit</button>
-                    <button ngbDropdownItem>Duplicate</button>
-                    <button ngbDropdownItem>Move</button>
-                    <div class="dropdown-divider"></div>
-                    <button ngbDropdownItem>Delete</button>
+<section *ngIf="Group != undefined">
+    <section class="profile-group-content rounded border border-1">
+        <div class="profile-group-header rounded">
+            <img src="../../../../assets/1200x400.jpg" class="img-fluid rounded" alt="" srcset="">
+            <div class="profile-group-img">
+                <img [src]="Group.ImgURL" class="img-thumbnail rounded-circle mx-3" width="150px" alt="">
+            </div>
+            <div class="float-right">
+                <a class="btn"><i class="far fa-bell"></i></a>
+                <div ngbDropdown container="body" class="d-inline">
+                    <button type="button" class="btn btn-default" ngbDropdownToggle>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                    <div ngbDropdownMenu>
+                        <button ngbDropdownItem>Edit</button>
+                        <button ngbDropdownItem>Duplicate</button>
+                        <button ngbDropdownItem>Move</button>
+                        <div class="dropdown-divider"></div>
+                        <button ngbDropdownItem>Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <h4 class="pt-5 mt-3 mt-md-5 ml-4">{{Group.Name}}</h4>
-    <span class="text-muted"><i class="fas fa-users ml-4 mr-2 mb-4"></i>Listed Group</span>
-</section>
-<section class="write-post-on-group mt-3">
-    <div class="media border p-3 postcontainer" style="background-color: white;  border-radius: .5em">
-        <div class="media-body" style="  align-items: center;">
-            <div>
-                <!-- The Modal -->
-                <img src="../../../../assets/nav-img.png" style="width:10%;height: auto;" alt="John Doe"
-                    class="mr-3 mt-3 rounded-circle">
-                <app-write-box-model [SelectedGroupId]="GroupId"></app-write-box-model>
-            </div>
-            <div class="W-100%"><br></div>
-            <div style="width: 100%; text-align:center; ">
-                <a class="postIconsHover">
-                    <div class="diviconsize" style=" width: 20%; display: inline-block;">
-                        <i class="far fa-image writeposticons" style="color: #70b5f9;"></i>
-                        <span class=" writeposticonsNames"> Photos</span>
-                    </div>
-                </a>
-                <a class="postIconsHover">
-                    <div class="diviconsize" style=" width: 20%; display: inline-block;">
-                        <i class="fab fa-youtube writeposticons" style="color: #81c261;"></i>
-                        <span class=" writeposticonsNames"> Video</span>
-                    </div>
-                </a>
-                <a class="postIconsHover">
-                    <div class="diviconsize" style=" width: 20%; display: inline-block;">
-                        <i class="far fa-calendar-check writeposticons" style="color: #e7a33e;"></i>
-                        <span class="writeposticonsNames"> Events</span>
-                    </div>
-                </a>
-                <a class="postIconsHover">
-                    <div class="diviconsize" style=" width: 20%;display: inline-block;"><i
-                            class="far fa-file-alt writeposticons" style="color: #f5987e;"></i>
-                        <span class=" writeposticonsNames"> Article</span>
-                    </div>
-                </a>
+        <h4 class="pt-5 mt-3 mt-md-5 ml-4">{{Group.Name}}</h4>
+        <span class="text-muted"><i class="fas fa-users ml-4 mr-2 mb-4"></i>Listed Group</span>
+    </section>
+    <section class="write-post-on-group mt-3"
+        *ngIf="Group.admin.includes(userID) || Group.members.includes(userID); else messegeBlock">
+        <div class="media border p-3 postcontainer" style="background-color: white;  border-radius: .5em">
+            <div class="media-body" style="  align-items: center;">
+                <div>
+                    <!-- The Modal -->
+                    <img src="../../../../assets/nav-img.png" style="width:10%;height: auto;" alt="John Doe"
+                        class="mr-3 mt-3 rounded-circle">
+                    <app-write-box-model [SelectedGroupId]="GroupId"></app-write-box-model>
+                </div>
+                <div class="W-100%"><br></div>
+                <div style="width: 100%; text-align:center; ">
+                    <a class="postIconsHover">
+                        <div class="diviconsize" style=" width: 20%; display: inline-block;">
+                            <i class="far fa-image writeposticons" style="color: #70b5f9;"></i>
+                            <span class=" writeposticonsNames"> Photos</span>
+                        </div>
+                    </a>
+                    <a class="postIconsHover">
+                        <div class="diviconsize" style=" width: 20%; display: inline-block;">
+                            <i class="fab fa-youtube writeposticons" style="color: #81c261;"></i>
+                            <span class=" writeposticonsNames"> Video</span>
+                        </div>
+                    </a>
+                    <a class="postIconsHover">
+                        <div class="diviconsize" style=" width: 20%; display: inline-block;">
+                            <i class="far fa-calendar-check writeposticons" style="color: #e7a33e;"></i>
+                            <span class="writeposticonsNames"> Events</span>
+                        </div>
+                    </a>
+                    <a class="postIconsHover">
+                        <div class="diviconsize" style=" width: 20%;display: inline-block;"><i
+                                class="far fa-file-alt writeposticons" style="color: #f5987e;"></i>
+                            <span class=" writeposticonsNames"> Article</span>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="">
-        <button class="btn btn-success my-3">All</button>
-        <button class="btn btn-outline-secondary ml-3 my-3">Recommended</button>
-    </div>
-    <div class="group-users-posts">
-        <app-group-posts></app-group-posts>
-    </div>
+        <div class="">
+            <button class="btn btn-success my-3">All</button>
+            <button class="btn btn-outline-secondary ml-3 my-3">Recommended</button>
+        </div>
+        <div class="group-users-posts">
+            <app-group-posts></app-group-posts>
+        </div>
+    </section>
+    <ng-template #messegeBlock>
+        <p class="py-3">
+            <ngb-alert [dismissible]="false">
+                <strong>Warning!</strong><br> You are not recognized yet.. Please Wait Admins To Approve Your Request Or
+                Send
+                Request To
+                <a (click)="requestToJoin(userID, GroupId)" class="font-weight-bold btn p-0">
+                    <span *ngIf="Group.subscriber.includes(userID)">Cancel</span>
+                    <span *ngIf="!Group.subscriber.includes(userID)">Join Us</span>
+                </a>
+            </ngb-alert>
+        </p>
+    </ng-template>
 </section>

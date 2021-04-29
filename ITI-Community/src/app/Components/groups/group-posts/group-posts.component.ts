@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { GroupPostsService } from '../Services/group-posts.service';
+import { GroupService } from '../Services/group.service';
 
 @Component({
   selector: 'app-group-posts',
@@ -15,13 +16,15 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
   postGroupList = [];
   GroupId: string;
   userID: string;
-
+  singleGroup
+  adminGroup
   usersData = [];
 
   constructor(
     private getall: GroupPostsService,
     private activeRoute: ActivatedRoute,
-    private usersService: UserService
+    private usersService: UserService,
+    private groupService: GroupService
   ) {
     this.userID = localStorage.getItem('uid');
   }
@@ -32,6 +35,14 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
       this.GroupId = res.get('id');
     });
     this.subsriptions.push(param)
+
+    let sub3 = this.groupService.getGrpById(this.GroupId).subscribe(res => {
+      this.singleGroup = res
+      this.adminGroup = this.singleGroup.admin
+    })
+
+    this.subsriptions.push(sub3)
+
     let sub1 = this.getall.getGroupPost().subscribe((res) => {
       this.postList = res.map((e) => {
         return {
@@ -59,6 +70,10 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
 
   Like(like, id) {
     this.getall.giveLike(like, id);
+  }
+
+  deletePost(id) {
+    this.getall.deletePost(id)
   }
 
   ngOnDestroy(): void {

@@ -3,7 +3,7 @@ export interface IGroup {
     About?: string,
     imgURL?: string,
     createdDate?: Date,
-    admin?: [],
-    members?: [],
-    subscriber?: []
+    admin?: string[],
+    members?: string[],
+    subscriber?: string[]
 }

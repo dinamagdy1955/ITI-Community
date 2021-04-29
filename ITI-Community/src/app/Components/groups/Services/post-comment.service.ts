@@ -10,7 +10,11 @@ export class PostCommentService {
   constructor(private db: AngularFirestore) { }
 
   getPostComments() {
-    return this.db.collection('PostComments').snapshotChanges()
+    return this.db.collection('PostComments', ref => ref.orderBy('date', 'desc')).snapshotChanges()
+  }
+
+  getCommentById(id) {
+    return this.db.collection('PostComments').doc(id).valueChanges();
   }
 
   writeComment(comment: IComment) {
@@ -23,6 +27,16 @@ export class PostCommentService {
           (error) => rej(error)
         );
     });
+  }
+
+  editComment(id, data) {
+    return this.db.collection('PostComments').doc(id).update({
+      comment: data
+    })
+  }
+
+  deleteComment(id) {
+    return this.db.collection('PostComments').doc(id).delete()
   }
 
 }
