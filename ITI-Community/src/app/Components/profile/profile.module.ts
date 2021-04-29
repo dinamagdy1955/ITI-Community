@@ -18,31 +18,32 @@ import { ProfileSideViewedComponent } from './profile-side/profile-side-viewed/p
 import { PeopleAlsoViewedComponent } from './profile-side/profile-side-viewed/people-also-viewed/people-also-viewed.component';
 import { ProfileSideKnowComponent } from './profile-side/profile-side-know/profile-side-know.component';
 import { PeopleYouMayKnowComponent } from './profile-side/profile-side-know/people-you-may-know/people-you-may-know.component';
+import { FormsModule } from '@angular/forms';
 
-
-const mainProfileRoute:Routes=[{path:'',component:MainProfileComponent}] 
+const mainProfileRoute: Routes = [
+  { path: '', component: MainProfileComponent },
+];
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(mainProfileRoute)
-  ],
+  imports: [CommonModule, RouterModule.forChild(mainProfileRoute), FormsModule],
   declarations: [
     MainProfileComponent,
     ProfileBodyComponent,
     ProfileSideComponent,
     ProfileBodyDetailsComponent,
     ProfileBodyHighlightsComponent,
-    ProfileBodyAboutComponent,ActivityComponentComponent
-    ,ProfileBodyActivityComponent,
+    ProfileBodyAboutComponent,
+    ActivityComponentComponent,
+    ProfileBodyActivityComponent,
     ProfileBodyExpComponent,
     ExperienceProfileComponent,
     ProfileBodyAccomplishmentsComponent,
     AccomplishmentsProfileComponent,
     ProfileSideComponent,
-    ProfileSideImgComponent,ProfileSideViewedComponent,
+    ProfileSideImgComponent,
+    ProfileSideViewedComponent,
     PeopleAlsoViewedComponent,
     ProfileSideKnowComponent,
-    PeopleYouMayKnowComponent
-  ]
+    PeopleYouMayKnowComponent,
+  ],
 })
-export class ProfileModule { }
+export class ProfileModule {}

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { UserProfileService } from 'src/app/Components/login/signInService/user-profile.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserProfileService } from '../../Service/user-profile.service';
 
 @Component({
   selector: 'app-profile-body-about',
@@ -7,10 +8,15 @@ import { UserProfileService } from 'src/app/Components/login/signInService/user-
   styleUrls: ['./profile-body-about.component.scss'],
 })
 export class ProfileBodyAboutComponent implements OnInit {
-  about: string;
-  constructor() {
-    this.about = JSON.parse(localStorage.getItem('userData')).about;
-  }
+  @Input() about: string;
+  constructor(private modalService: NgbModal, private us: UserProfileService) {}
 
   ngOnInit() {}
+
+  open(content) {
+    this.modalService.open(content, { size: 'lg' });
+  }
+  saveChanges() {
+    this.us.updateUserAbout(localStorage.getItem('uid'), this.about);
+  }
 }
