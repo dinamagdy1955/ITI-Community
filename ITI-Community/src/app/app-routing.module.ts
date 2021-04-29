@@ -47,7 +47,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'profile',
+    path: 'profile/:id',
     loadChildren: () =>
       import('./Components/profile/profile.module').then(
         (m) => m.ProfileModule
@@ -64,6 +64,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/HOME',
     pathMatch: 'full',
+  },
+  {
+    path: 'notFound',
+    component: ErrorComponent,
   },
   {
     path: '**',

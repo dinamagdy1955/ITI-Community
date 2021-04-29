@@ -9,6 +9,7 @@ import { UserProfileService } from '../../login/signInService/user-profile.servi
 })
 export class HeaderComponent implements OnInit {
   toggleStatus: boolean = false;
+  uid = localStorage.getItem('uid');
   constructor(
     private router: Router,
     private userProfile: UserProfileService

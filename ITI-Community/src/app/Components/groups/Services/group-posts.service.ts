@@ -22,6 +22,7 @@ export class GroupPostsService {
       res.map((e) => {
         if (id == e.payload.doc.id) {
           this.likes = e.payload.doc.get('Likes');
+          console.log(this.likes);
           if (this.likes.indexOf(like) != -1) {
             this.likes.splice(this.likes.indexOf(like), 1);
           } else {
