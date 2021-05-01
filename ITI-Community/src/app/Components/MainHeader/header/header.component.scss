@@ -101,9 +101,18 @@ nav .toggle-btn i{
     }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
     .custom-nav i{
         padding: 20px 10px 10px;
+    }
+    
+    .container__indicator {
+        /* Shown at the bottom right corner */
+        transform: translate(-64%, 0%);
+        left: 35px;
+        font-size: 15px;
+        /* Background color */
+        color:#a5272d;
     }
 }
 

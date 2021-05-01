@@ -34,7 +34,6 @@ export class GroupService {
       this.db.collection('Groups').doc(id).update({
         subscriber: this.subscribers
       })
-      console.log(this.subscribers)
     })
   }
 
