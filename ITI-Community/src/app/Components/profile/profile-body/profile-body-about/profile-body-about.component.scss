@@ -1,7 +1,20 @@
 .profile-card-border {
-    border-radius: 10px;
-    border: 0.5px solid #c3c3c394;
-  }
-.profile-about-p{
-    font-size:14px;margin-top: 2%;
+  border-radius: 10px;
+  border: 0.5px solid #c3c3c394;
+}
+.profile-about-p {
+  font-size: 14px;
+  margin-top: 2%;
+}
+
+.circleBtn {
+  border-radius: 50%;
+  border-width: 0;
+  font-size: 1.3rem;
+}
+
+.modalHeaderIcon {
+  padding: 0% 2%;
+  font-size: 1.5rem;
+  color: #901b20;
 }

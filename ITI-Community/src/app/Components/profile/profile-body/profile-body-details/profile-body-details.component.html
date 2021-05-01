@@ -1,48 +1,74 @@
 <div class="card card-custom bg-white border-white border-0 rofile-card-border">
   <div class="card-custom-img" style="background-image:url(../../../../../assets/1200x400.jpg);"></div>
-  <div class="card-custom-avatar">
-    <img class="img-fluid" src="../../../../../assets/nav-img.png">
+  <div class="card-custom-avatar" (click)="openImage(contentImg)">
+    <img class="img-fluid" [src]="imgUrl">
+    <ng-template #contentImg let-modal>
+      <div class="modal-header">
+        <span class="modalHeaderIcon">
+          <i class="fas fa-images"></i>
+        </span>
+        <h4 class="modal-title" id="modal-basic-title">Edit Profile Image</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type='file' (change)="processFile($event)">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');">Save</button>
+      </div>
+    </ng-template>
+
+
+
+
+
   </div>
   <div class="card-body mt-5" style="overflow-y: auto">
     <div class="container">
       <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-11">
           <h4 class="card-title">{{userDetails.firstName}} {{userDetails.lastName}}</h4>
           <p class="card-text">{{userDetails.jobTitle}}</p>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-1">
           <ng-template #content let-modal>
             <div class="modal-header">
+              <span class="modalHeaderIcon">
+                <i class="fas fa-id-card"></i>
+              </span>
               <h4 class="modal-title" id="modal-basic-title">Edit Personal Data</h4>
               <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="firstName">First Name:</label>
-                <input type="text" class="form-control" name="firstName" id="firstName" placeholder=""
-                  [(ngModel)]="userDetails.firstName">
-              </div>
-              <div class="form-group">
-                <label for="lastName">Last Name:</label>
-                <input type="text" class="form-control" name="lastName" id="lastName" placeholder=""
-                  [(ngModel)]="userDetails.lastName">
-              </div>
-              <div class="form-group">
-                <label for="jobTitle">Job Title:</label>
-                <input type="text" class="form-control" name="jobTitle" id="jobTitle" placeholder=""
-                  [(ngModel)]="userDetails.jobTitle">
-              </div>
+            <form [formGroup]="editPersonalData" (ngSubmit)='saveChanges()'>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="firstName">First Name *</label>
+                  <input formControlName="firstName" type="text" class="form-control" name="firstName" id="firstName"
+                    placeholder="" required>
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Last Name *</label>
+                  <input formControlName="lastName" type="text" class="form-control" name="lastName" id="lastName"
+                    placeholder="" required>
+                </div>
+                <div class="form-group">
+                  <label for="jobTitle">Job Title *</label>
+                  <input formControlName="jobTitle" type="text" class="form-control" name="jobTitle" id="jobTitle"
+                    placeholder="" required>
+                </div>
 
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline-dark"
-                (click)="saveChanges();modal.close('Save click');">Save</button>
-            </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click');">Save</button>
+              </div>
+            </form>
           </ng-template>
 
-          <button class="btn btn-outline-dark" (click)="open(content)">Edit</button>
+          <button class="btn btn-outline-dark circleBtn" (click)="open(content)"><i class="fas fa-edit"></i></button>
         </div>
 
       </div>

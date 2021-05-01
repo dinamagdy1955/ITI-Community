@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/MainServices/User.service';
+import { IExperience } from './ViewModels/iexperience';
 import { IUserProfileData } from './ViewModels/iuser-profile-data';
 
 @Component({
@@ -16,6 +17,7 @@ export class ProfileBodyComponent implements OnInit {
     lastName: '',
     jobTitle: '',
   };
+  experiences: IExperience[];
   uid;
   constructor(
     private userService: UserService,
@@ -52,6 +54,7 @@ export class ProfileBodyComponent implements OnInit {
                 this.UserDetails.firstName = this.userData.firstName;
                 this.UserDetails.lastName = this.userData.lastName;
                 this.UserDetails.jobTitle = this.userData.jobTitle;
+                this.experiences = this.userData.experiences;
                 console.log('in fetch');
               });
           }

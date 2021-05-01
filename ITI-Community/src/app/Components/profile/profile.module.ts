@@ -18,13 +18,18 @@ import { ProfileSideViewedComponent } from './profile-side/profile-side-viewed/p
 import { PeopleAlsoViewedComponent } from './profile-side/profile-side-viewed/people-also-viewed/people-also-viewed.component';
 import { ProfileSideKnowComponent } from './profile-side/profile-side-know/profile-side-know.component';
 import { PeopleYouMayKnowComponent } from './profile-side/profile-side-know/people-you-may-know/people-you-may-know.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const mainProfileRoute: Routes = [
   { path: '', component: MainProfileComponent },
 ];
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(mainProfileRoute), FormsModule],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(mainProfileRoute),
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   declarations: [
     MainProfileComponent,
     ProfileBodyComponent,
