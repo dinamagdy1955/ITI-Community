@@ -1,26 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { GroupService } from '../Services/group.service';
 import { IGroup } from '../ViewModel/igroup';
 
 @Component({
-  selector: 'app-request-group-page',
-  templateUrl: './request-group-page.component.html',
-  styleUrls: ['./request-group-page.component.scss']
+  selector: 'app-discover',
+  templateUrl: './discover.component.html',
+  styleUrls: ['./discover.component.scss']
 })
-export class RequestGroupPageComponent implements OnInit, OnDestroy {
+export class DiscoverComponent implements OnInit, OnDestroy {
 
-  GroupList: IGroup[];
+  GroupList;
   userID: string
   subscription: Subscription[] = []
-  constructor(private GrpServ: GroupService) { }
+  constructor(private groupService: GroupService) { }
 
 
   ngOnInit(): void {
     this.userID = localStorage.getItem('uid')
-    let sub = this.GrpServ.getAllGroups().subscribe((resp) => {
-      this.GroupList = resp.map(e => {
+    let sub = this.groupService.getAllGroups().subscribe(res => {
+      this.GroupList = res.map(e => {
         return {
           id: e.payload.doc.id,
           ...(e.payload.doc.data() as object)
@@ -30,8 +29,8 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
     this.subscription.push(sub)
   }
 
-  JoinOut(user, id) {
-    this.GrpServ.DeleteMembers(user, id)
+  sendRequest(user, id) {
+    this.groupService.sendRequest(user, id);
   }
 
   ngOnDestroy(): void {

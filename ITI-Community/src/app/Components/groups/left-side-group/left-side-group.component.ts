@@ -10,7 +10,7 @@ import { UserService } from 'src/app/MainServices/User.service';
 export class LeftSideGroupComponent implements OnInit, OnDestroy {
   userID: string
   userData
-  subscripion: Subscription[] = []
+  // subscripion: Subscription[] = []
   constructor(private user: UserService) {
     this.userID = localStorage.getItem('uid');
   }
@@ -18,14 +18,15 @@ export class LeftSideGroupComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     let sub1 = this.user.getUserData(this.userID).subscribe((res) => {
       this.userData = res.payload.data()
+      sub1.unsubscribe()
     })
-    this.subscripion.push(sub1)
+    // this.subscripion.push(sub1)
   }
 
   ngOnDestroy(): void {
-    for (let i of this.subscripion) {
-      i.unsubscribe();
-    }
+    // for (let i of this.subscripion) {
+    //   i.unsubscribe();
+    // }
   }
 
 
