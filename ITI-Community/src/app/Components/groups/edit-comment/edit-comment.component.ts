@@ -22,8 +22,6 @@ export class EditCommentComponent implements OnInit {
   ngOnInit(): void {
     let sub = this.commentService.getCommentById(this.commentID).subscribe(res => {
       this.singleComment = res
-      console.log(this.singleComment);
-
       this.editCommentForm = this.FB.group({
         comment: this.singleComment.comment
       })

@@ -16,7 +16,6 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
   Group
   adminGroup
   subscriptions: Subscription[] = []
-  postID
   commentList
   getComments = []
   usersData = []

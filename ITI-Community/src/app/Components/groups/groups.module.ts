@@ -15,9 +15,11 @@ import { CommentFormComponent } from './comment-form/comment-form.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { EditPostComponent } from './edit-post/edit-post.component';
 import { EditCommentComponent } from './edit-comment/edit-comment.component';
+import { DiscoverComponent } from './discover/discover.component';
 
 const groupRoutes: Routes = [
   { path: 'all-groups', component: RequestGroupPageComponent },
+  { path: 'discover-groups', component: DiscoverComponent },
   { path: 'group-profile/:id', component: GroupProfilePageComponent },
   { path: '', redirectTo: '/Group/all-groups', pathMatch: 'full' },
   { path: '**', redirectTo: '/Home', pathMatch: 'full' }
@@ -36,6 +38,7 @@ const groupRoutes: Routes = [
     CommentFormComponent,
     EditPostComponent,
     EditCommentComponent,
+    DiscoverComponent,
   ],
   imports: [
     CommonModule,
