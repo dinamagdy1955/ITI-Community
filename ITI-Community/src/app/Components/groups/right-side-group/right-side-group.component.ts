@@ -8,26 +8,26 @@ import { IGroup } from '../ViewModel/igroup';
 @Component({
   selector: 'app-right-side-group',
   templateUrl: './right-side-group.component.html',
-  styleUrls: ['./right-side-group.component.scss'],
+  styleUrls: ['./right-side-group.component.scss']
 })
 export class RightSideGroupComponent implements OnInit, OnDestroy {
+
   Group: IGroup;
   @Input() GroupId: string;
 
-  admins = [];
-  members = [];
-  subscribers = [];
+  allUsers
+  admins = []
+  members = []
+  subscribers = []
+  userID
 
-  userID;
-
-  keyWordsSearch;
-
+  keyWordsSearch
   private subscription: Subscription[] = [];
   constructor(
     private GrpServ: GroupService,
     private modalService: NgbModal,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.userID = localStorage.getItem('uid');
@@ -37,37 +37,44 @@ export class RightSideGroupComponent implements OnInit, OnDestroy {
       this.members = [];
       this.subscribers = [];
 
-      for (let i of this.Group.admin) {
-        let sub1 = this.userService.getUserData(i).subscribe((res) => {
-          this.subscription.push(sub1);
-          this.admins.push({
-            id: res.payload.id,
-            data: res.payload.data(),
-          });
-        });
-        this.subscription.push(sub1);
-      }
+      let sub2 = this.userService.getAllUsersData().pipe().subscribe((res) => {
+        console.log('aa')
 
-      for (let i of this.Group.members) {
-        let sub2 = this.userService.getUserData(i).subscribe((res) => {
-          this.subscription.push(sub2);
-          this.members.push({
-            id: res.payload.id,
-            data: res.payload.data(),
+        this.allUsers = res
+        this.Group.admin.filter(s => {
+          this.allUsers.forEach(e => {
+            if (s == e.payload.doc.id) {
+              this.admins.push({
+                id: e.payload.doc.id,
+                data: e.payload.doc.data()
+              })
+            }
           });
-        });
-        this.subscription.push(sub2);
-      }
-      for (let i of this.Group.subscriber) {
-        let sub2 = this.userService.getUserData(i).subscribe((res) => {
-          this.subscription.push(sub2);
-          this.subscribers.push({
-            id: res.payload.id,
-            data: res.payload.data(),
+        })
+
+        this.Group.members.filter(s => {
+          this.allUsers.forEach(e => {
+            if (s == e.payload.doc.id) {
+              this.members.push({
+                id: e.payload.doc.id,
+                data: e.payload.doc.data()
+              })
+            }
           });
-        });
-        this.subscription.push(sub2);
-      }
+        })
+
+        this.Group.subscriber.filter(s => {
+          this.allUsers.forEach(e => {
+            if (s == e.payload.doc.id) {
+              this.subscribers.push({
+                id: e.payload.doc.id,
+                data: e.payload.doc.data()
+              })
+            }
+          });
+        })
+      })
+      this.subscription.push(sub2);
     });
     this.subscription.push(sub);
   }
@@ -75,9 +82,9 @@ export class RightSideGroupComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     for (let subs of this.subscription) {
       subs.unsubscribe();
-      this.admins = [];
-      this.members = [];
-      this.subscribers = [];
+      this.admins = []
+      this.members = []
+      this.subscribers = []
     }
   }
 
@@ -90,10 +97,11 @@ export class RightSideGroupComponent implements OnInit, OnDestroy {
   }
 
   makeMember(uid, id) {
-    this.GrpServ.updateRequests(uid, id);
+    this.GrpServ.updateRequests(uid, id)
   }
 
   deleteUser(uid, id) {
-    this.GrpServ.DeleteMembers(uid, id);
+    this.GrpServ.DeleteMembers(uid, id)
   }
+
 }

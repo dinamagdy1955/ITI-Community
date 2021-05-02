@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -14,7 +14,7 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
   subsriptions: Subscription[] = []
   postList;
   postGroupList = [];
-  GroupId: string;
+  @Input() GroupId: string;
   userID: string;
   singleGroup
   adminGroup
@@ -31,11 +31,6 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    let param = this.activeRoute.paramMap.subscribe((res) => {
-      this.GroupId = res.get('id');
-    });
-    this.subsriptions.push(param)
-
     let sub3 = this.groupService.getGrpById(this.GroupId).subscribe(res => {
       this.singleGroup = res
       this.adminGroup = this.singleGroup.admin

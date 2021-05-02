@@ -5,10 +5,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore) { }
 
   getUserData(uid): Observable<any> {
     return this.db.collection('users-details').doc(uid).snapshotChanges();
+  }
+
+  getAllUsersData(): Observable<any> {
+    return this.db.collection('users-details').snapshotChanges();
   }
 
   getUserBasic(uid): Observable<any> {
