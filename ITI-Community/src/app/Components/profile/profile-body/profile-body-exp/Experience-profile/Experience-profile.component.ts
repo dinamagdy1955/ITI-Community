@@ -10,7 +10,8 @@ import { IExperience } from '../../ViewModels/iexperience';
   styleUrls: ['./Experience-profile.component.scss'],
 })
 export class ExperienceProfileComponent implements OnInit {
-  @Input() experience;
+  @Input() userExperience;
+  uidLocal = localStorage.getItem('uid');
   editExp: FormGroup;
   today: string = new Date().toISOString().substring(0, 10);
   checked: boolean = false;
@@ -21,26 +22,28 @@ export class ExperienceProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this.userExperience);
+
     this.editExp = this.FB.group({
-      id: this.experience.id,
-      companyName: this.experience.companyName,
-      from: this.experience.from,
-      to: this.experience.to,
-      location: this.experience.location,
-      description: this.experience.description,
-      degree: this.experience.degree,
+      id: this.userExperience.experience.id,
+      companyName: this.userExperience.experience.companyName,
+      from: this.userExperience.experience.from,
+      to: this.userExperience.experience.to,
+      location: this.userExperience.experience.location,
+      description: this.userExperience.experience.description,
+      degree: this.userExperience.experience.degree,
     });
   }
 
   open(content) {
     this.editExp = this.FB.group({
-      id: this.experience.id,
-      companyName: this.experience.companyName,
-      from: this.experience.from,
-      to: this.experience.to,
-      location: this.experience.location,
-      description: this.experience.description,
-      degree: this.experience.degree,
+      id: this.userExperience.experience.id,
+      companyName: this.userExperience.experience.companyName,
+      from: this.userExperience.experience.from,
+      to: this.userExperience.experience.to,
+      location: this.userExperience.experience.location,
+      description: this.userExperience.experience.description,
+      degree: this.userExperience.experience.degree,
     });
     if (this.editExp.value.to == 'present') {
       this.checked = true;
@@ -75,6 +78,9 @@ export class ExperienceProfileComponent implements OnInit {
   }
 
   deleteExp() {
-    this.us.deleteUserExp(localStorage.getItem('uid'), this.experience.id);
+    this.us.deleteUserExp(
+      localStorage.getItem('uid'),
+      this.userExperience.experience.id
+    );
   }
 }

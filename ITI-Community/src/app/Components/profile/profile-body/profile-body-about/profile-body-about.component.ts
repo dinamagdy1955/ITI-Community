@@ -9,8 +9,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./profile-body-about.component.scss'],
 })
 export class ProfileBodyAboutComponent implements OnInit {
-  @Input() about: string;
+  @Input() userAbout;
   editAbout: FormGroup;
+  userLocal = localStorage.getItem('uid');
   constructor(
     private modalService: NgbModal,
     private us: UserProfileService,
@@ -19,13 +20,13 @@ export class ProfileBodyAboutComponent implements OnInit {
 
   ngOnInit() {
     this.editAbout = this.FB.group({
-      about: this.about,
+      about: this.userAbout.about,
     });
   }
 
   open(content) {
     this.editAbout = this.FB.group({
-      about: this.about,
+      about: this.userAbout.about,
     });
     this.modalService.open(content, { size: 'lg' });
   }

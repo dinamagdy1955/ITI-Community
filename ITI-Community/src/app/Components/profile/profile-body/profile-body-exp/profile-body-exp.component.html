@@ -1,9 +1,9 @@
 <div class="card mt-3 boo" style="width: 100%;">
   <div class="card-body" style="width: 100%;">
     <h5 class="card-title mb-2 text-muted">Experience</h5>
-    <div *ngIf="experiences != undefined">
-      <div *ngFor="let item of experiences">
-        <app-Experience-profile [experience]="item"></app-Experience-profile>
+    <div *ngIf="userExperiences != undefined">
+      <div *ngFor="let item of userExperiences.experiences;let i = index;">
+        <app-Experience-profile [userExperience]="{id:userExperiences.id,experience:item}"></app-Experience-profile>
       </div>
     </div>
     <hr class="more" style="display: none; margin-bottom: 0;">
@@ -63,8 +63,8 @@
       </form>
     </ng-template>
     <div style="text-align: center; padding: 10px;">
-      <button type="button" class="btn btn-outline-dark" style="border-radius:18px;" (click)="open(content)"><i
-          class="fas fa-plus"></i></button>
+      <button type="button" class="btn btn-outline-dark" style="border-radius:18px;" (click)="open(content)"
+        *ngIf="uidLocal == userExperiences.id"><i class="fas fa-plus"></i></button>
     </div>
   </div>
 </div>

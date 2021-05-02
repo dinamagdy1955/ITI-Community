@@ -60,19 +60,16 @@
                   <input formControlName="jobTitle" type="text" class="form-control" name="jobTitle" id="jobTitle"
                     placeholder="" required>
                 </div>
-
               </div>
               <div class="modal-footer">
                 <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click');">Save</button>
               </div>
             </form>
           </ng-template>
-
-          <button class="btn btn-outline-dark circleBtn" (click)="open(content)"><i class="fas fa-edit"></i></button>
+          <button class="btn btn-outline-dark circleBtn" (click)="open(content)" *ngIf="uidLocal == userDetails.id"><i
+              class="fas fa-edit"></i></button>
         </div>
-
       </div>
     </div>
-
   </div>
 </div>

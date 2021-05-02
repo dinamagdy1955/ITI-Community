@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/MainServices/User.service';
-import { IExperience } from './ViewModels/iexperience';
 import { IUserProfileData } from './ViewModels/iuser-profile-data';
 
 @Component({
@@ -9,23 +15,29 @@ import { IUserProfileData } from './ViewModels/iuser-profile-data';
   templateUrl: './profile-body.component.html',
   styleUrls: ['./profile-body.component.scss'],
 })
-export class ProfileBodyComponent implements OnInit {
+export class ProfileBodyComponent implements OnInit, OnChanges {
   userData: IUserProfileData;
-  UserAbout: string = '';
+  UserAbout = {
+    id: '',
+    about: '',
+  };
   UserDetails = {
+    id: '',
     firstName: '',
     lastName: '',
     jobTitle: '',
   };
-  experiences: IExperience[];
-  uid;
-  constructor(
-    private userService: UserService,
-    private actvRout: ActivatedRoute,
-    private router: Router
-  ) {
-    this.actvRout.paramMap.subscribe((params) => {
-      this.uid = params.get('id');
+  UserExperiences = {
+    id: '',
+    experiences: [],
+  };
+  @Input() uid;
+
+  uidLocal = localStorage.getItem('uid');
+  constructor(private userService: UserService, private router: Router) {}
+  ngOnInit() {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.uid != undefined) {
       let sub1 = this.userService
         .getUserBasic(this.uid)
         .subscribe((userBasic) => {
@@ -50,17 +62,17 @@ export class ProfileBodyComponent implements OnInit {
                   experiences: userDetails.payload.get('experiences'),
                   friendList: userDetails.payload.get('friendList'),
                 };
-                this.UserAbout = this.userData.about;
+                this.UserAbout.id = this.uid;
+                this.UserAbout.about = this.userData.about;
+                this.UserDetails.id = this.uid;
                 this.UserDetails.firstName = this.userData.firstName;
                 this.UserDetails.lastName = this.userData.lastName;
                 this.UserDetails.jobTitle = this.userData.jobTitle;
-                this.experiences = this.userData.experiences;
-                console.log('in fetch');
+                this.UserExperiences.id = this.uid;
+                this.UserExperiences.experiences = this.userData.experiences;
               });
           }
         });
-    });
+    }
   }
-
-  ngOnInit() {}
 }

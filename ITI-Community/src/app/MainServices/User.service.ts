@@ -30,7 +30,9 @@ export class UserService {
   //       console.log(this.user);
   //       subUser.unsubscribe();
   //     });
+
   //this code for get users data by giving it array of users ids
+
   // let usersData = [];
   // userids.map((user) => {
   //   let sub = this.getUserData(user).subscribe((u) => {

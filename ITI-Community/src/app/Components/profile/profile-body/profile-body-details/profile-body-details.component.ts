@@ -2,8 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileService } from '../../Service/user-profile.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/firestore';
-
 @Component({
   selector: 'app-profile-body-details',
   templateUrl: './profile-body-details.component.html',
@@ -13,11 +11,11 @@ export class ProfileBodyDetailsComponent implements OnInit {
   @Input() userDetails;
   editPersonalData: FormGroup;
   imgUrl: string | ArrayBuffer = '../../../../../assets/nav-img.png';
+  uidLocal = localStorage.getItem('uid');
   constructor(
     private modalService: NgbModal,
     private us: UserProfileService,
-    private FB: FormBuilder,
-    private fire: AngularFirestore
+    private FB: FormBuilder
   ) {}
 
   ngOnInit() {

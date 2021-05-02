@@ -5,7 +5,8 @@
         <h4 class="card-subtitle mb-2 text-muted">About</h4>
       </div>
       <div class="col-sm-1">
-        <button class="btn btn-outline-dark circleBtn" (click)="open(content)"><i class="fas fa-edit"></i></button>
+        <button class="btn btn-outline-dark circleBtn" (click)="open(content)" *ngIf="userLocal == userAbout.id"><i
+            class="fas fa-edit"></i></button>
       </div>
     </div>
     <ng-template #content let-modal>
@@ -30,7 +31,7 @@
         </div>
       </form>
     </ng-template>
-    <p class="card-text profile-about-p">{{about}} </p>
+    <p class="card-text profile-about-p">{{userAbout.about}} </p>
     <!-- <a class="d-flex"><div>a</div><div>2</div></a> -->
   </div>
 </div>
