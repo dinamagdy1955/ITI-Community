@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import {
+  AngularFireStorage,
+  AngularFireStorageReference,
+  AngularFireUploadTask,
+} from '@angular/fire/storage';
+import { Observable } from 'rxjs';
 import { IExperience } from '../profile-body/ViewModels/iexperience';
-
+import { finalize } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
 export class UserProfileService {
-  constructor(private db: AngularFirestore) {}
+  downloadURL: any;
+  constructor(
+    private db: AngularFirestore,
+    private afStorage: AngularFireStorage
+  ) {}
 
   updatePersonalData(
     uid: string,
@@ -67,5 +77,51 @@ export class UserProfileService {
           experiences: updatedExp,
         });
       });
+  }
+
+  async uploadImg(event) {
+    // let downloadURL: Observable<string>;
+    // let ref: AngularFireStorageReference;
+    // let task: AngularFireUploadTask;
+
+    // let img;
+    // const id = Math.random().toString(36).substring(2);
+    // this.afStorage.upload('/images' + id + event, event).then((res) => {
+    //   console.log(res);
+    // });
+    // task = ref.put(event);
+    // // downloadURL = ref.getDownloadURL();
+    // // console.log(downloadURL);
+    // task.snapshotChanges().pipe(
+    //   finalize(() => {
+    //     this.downloadURL = ref.getDownloadURL();
+    //     // this.fs.addTest(this.forma.value)
+    //     console.log(this.downloadURL);
+    //   })
+    // );
+
+    const filePath = `proyectos4/` + event.name;
+    const fileRef = this.afStorage.ref(filePath);
+    const task = this.afStorage.upload(filePath, event);
+
+    // observe percentage changes
+    // get notified when the download URL is available
+    let s = await task.snapshotChanges().subscribe(
+      async (res) => {
+        console.log(res);
+        let si = await fileRef.getDownloadURL().subscribe(
+          async (r) => {
+            console.log(r);
+          },
+          (err) => {
+            console.log('l');
+          }
+        );
+      },
+
+      (err) => {
+        console.log('k');
+      }
+    );
   }
 }
