@@ -19,6 +19,12 @@ export class UserService {
     return this.db.collection('users-basics').doc(uid).snapshotChanges();
   }
 
+  getUserDataList(arr): Observable<any> {
+    return this.db
+      .collection('users-details', (ref) => ref.where('__name__', 'in', arr))
+      .get();
+  }
+
   // to call this function for get one user by id
   // import { UserService } from 'src/app/MainServices/User.service';
   // private us: UserService

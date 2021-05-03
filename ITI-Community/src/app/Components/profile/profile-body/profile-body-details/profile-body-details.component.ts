@@ -30,18 +30,6 @@ export class ProfileBodyDetailsComponent implements OnInit {
     this.modalService.open(contentImg, { size: 'lg' });
   }
 
-  processFile(event) {
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      // read file as data url
-      reader.onload = (event) => {
-        // called once readAsDataURL is completed
-        this.imgUrl = event.target.result;
-      };
-    }
-  }
-
   open(content) {
     this.editPersonalData = this.FB.group({
       firstName: this.userDetails.firstName,
@@ -57,5 +45,9 @@ export class ProfileBodyDetailsComponent implements OnInit {
       this.editPersonalData.value.lastName,
       this.editPersonalData.value.jobTitle
     );
+  }
+
+  upload(event) {
+    this.us.uploadImg(event.target.files[0]);
   }
 }
