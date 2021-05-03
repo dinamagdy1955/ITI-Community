@@ -22,55 +22,157 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h1>Write Here</h1>
-            </div>
+                <div class="form-group has-search">
+                    <span class="fa fa-search form-control-feedback"></span>
+                    <input type="text" name="search" class="form-control" [(ngModel)]="keyWordsSearch"
+                        placeholder="What Do You Have Searching For ?...">
+                </div>
+                <div class="row">
+                    <h5 class="text-muted p-2">Admins</h5>
+                    <div class="col-md-12">
+                        <div *ngFor="let a of admins | filter:keyWordsSearch" class="mb-3">
+                            <img src="../../../../assets/nav-img.png" width="60">
+                            <a href="#" class="font-weight-bold btn">{{a.data.firstName}} {{a.data.lastName}}
+                                <span class="badge badge-secondary ml-2">Admin</span>
+                            </a>
+                            <div class="float-right pt-3">
+                                <div class="btn-group mr-3">
+                                    <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
+                                    <div class="btn-group" ngbDropdown role="group"
+                                        aria-label="Button group with nested dropdown"
+                                        *ngIf="Group.admin.includes(userID)">
+                                        <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
+                                            ngbDropdownToggle></button>
+                                        <div class="dropdown-menu" ngbDropdownMenu>
+                                            <div>
+                                                <button ngbDropdownItem (click)="MemberRole(a.id, GroupId)">
+                                                    Member
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button ngbDropdownItem (click)="deleteUser(a.id, GroupId)">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <h5 class="text-muted p-2">Members</h5>
+                    <div class="col-md-12">
+                        <div *ngFor="let a of members | filter:keyWordsSearch" class="mb-3">
+                            <img src="../../../../assets/nav-img.png" width="60">
+                            <a href="#" class="font-weight-bold btn">{{a.data.firstName}} {{a.data.lastName}}
+                                <span class="badge badge-secondary ml-2">Member</span>
+                            </a>
+                            <div class="float-right pt-3">
+                                <div class="btn-group mr-3">
+                                    <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
+                                    <div class="btn-group" ngbDropdown role="group"
+                                        aria-label="Button group with nested dropdown"
+                                        *ngIf="Group.admin.includes(userID)">
+                                        <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
+                                            ngbDropdownToggle></button>
+                                        <div class="dropdown-menu" ngbDropdownMenu>
+                                            <div>
+                                                <button ngbDropdownItem (click)="MemberRole(a.id, GroupId)">
+                                                    Admin
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button ngbDropdownItem (click)="makeMember(a.id, GroupId)">
+                                                    Subscriber
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button ngbDropdownItem (click)="deleteUser(a.id, GroupId)">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="text-muted p-2">Subscribers</h5>
+                    <div class="col-md-12">
+                        <div *ngFor="let a of subscribers | filter:keyWordsSearch" class="mb-3">
+                            <img src="../../../../assets/nav-img.png" width="60">
+                            <a href="#" class="font-weight-bold btn">{{a.data.firstName}} {{a.data.lastName}}
+                                <span class="badge badge-secondary ml-2">Subscriber</span>
+                            </a>
+                            <div class="float-right pt-3">
+                                <div class="btn-group mr-3">
+                                    <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
+                                    <div class="btn-group" ngbDropdown role="group"
+                                        aria-label="Button group with nested dropdown"
+                                        *ngIf="Group.admin.includes(userID)">
+                                        <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
+                                            ngbDropdownToggle></button>
+                                        <div class="dropdown-menu" ngbDropdownMenu>
+                                            <div>
+                                                <button ngbDropdownItem (click)="makeMember(a.id, GroupId)">
+                                                    Member
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button ngbDropdownItem (click)="deleteUser(a.id, GroupId)">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </ng-template>
     </div>
     <div class="card text-left mt-3">
         <div class="card-body">
             <h6 class="card-title">About This Group</h6>
-            <p class="card-text">{{Group.About}}</p>
+            <p class="card-text">{{Group.About.slice(0, 200)}}...</p>
         </div>
         <div class="card-footer text-muted text-center">
-            <a href="#" class="card-link">See All</a>
+            <button class="btn py-0"><a (click)="openLg(about)" class="card-link">See All</a></button>
         </div>
     </div>
+    <ng-template #about let-modal>
+        <div class="modal-header">
+            <h6 class="modal-title" id="modal-basic-title">Description Group</h6>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="p-3 ">
+            <h4>Group Name: {{Group.Name}}</h4>
+            <h4>Group specialty: ....</h4>
+            <hr>
+            <h6 class="text-muted">Group Description</h6>
+            <p>{{Group.About}}</p>
+        </div>
+    </ng-template>
     <div class="card text-left mt-3">
         <div class="card-body">
-            <h6 class="card-title">Admin</h6>
-            <div class="media">
+            <h6 class="card-title">Admins : {{Group.admin.length}}</h6>
+            <div class="media mt-3" *ngFor="let a of admins">
                 <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
                 <div class="media-body">
                     <h6 class="mt-1 mb-1">
-                        <a class="text-dark text-decoration-none" href="userprofile.html">User Name</a>
-                        <span class="badge badge-secondary">Owner</span>
-                    </h6>
-                    <small class="text-muted">user job titles</small>
-                    <small class="text-muted d-block">Job Titles</small>
-                </div>
-            </div>
-            <div class="media mt-3">
-                <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
-                <div class="media-body">
-                    <h6 class="mt-1 mb-1">
-                        <a class="text-dark text-decoration-none" href="userprofile.html">User
-                            Name</a>
+                        <a class="text-dark text-decoration-none" href="#">
+                            {{a.data.firstName}}
+                            {{a.data.lastName}}
+                        </a>
                         <span class="badge badge-secondary">Manager</span>
                     </h6>
-                    <small class="text-muted">user job titles</small>
-                    <small class="text-muted d-block">Job Titles</small>
-                </div>
-            </div>
-            <div class="media mt-3">
-                <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
-                <div class="media-body">
-                    <h6 class="mt-1 mb-1"><a class="text-dark text-decoration-none" href="userprofile.html">User
-                            Name</a>
-                        <span class="badge badge-secondary">Manager</span>
-                    </h6>
-                    <small class="text-muted">user job titles</small>
-                    <small class="text-muted d-block">Job Titles</small>
+                    <small class="text-muted">{{jobTitle}}</small>
                 </div>
             </div>
         </div>

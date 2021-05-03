@@ -9,12 +9,14 @@ import { UserProfileService } from '../../login/signInService/user-profile.servi
 })
 export class HeaderComponent implements OnInit {
   toggleStatus: boolean = false;
+  public isMenuCollapsed = true
+  uid = localStorage.getItem('uid');
   constructor(
     private router: Router,
     private userProfile: UserProfileService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   toggleSideBar() {
     this.toggleStatus = !this.toggleStatus;

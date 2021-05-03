@@ -1,13 +1,89 @@
-<a class="d-flex" style="margin-top:20px;padding-left: 8px;" href="#">
-  <div><img src="../../../../../../assets/nav-img.png" alt="ss" class="profile-exp-borderImg"></div>
-  <div style="margin-left: 8px;">
+<div class="row" style="margin-top:20px;padding-left: 8px;">
+  <div class="col-sm-1"><img src="../../../../../../assets/nav-img.png" alt="ss" class="profile-exp-borderImg"></div>
+  <div class="col-sm-9" style="margin-left: 8px; width: 50%;">
     <div style="margin-bottom: 4px;">
-      <h4>goooooo</h4>
+      <h5>{{userExperience.experience.companyName}}</h5>
     </div>
-    <div class="profile-small-text"> 14/12/2021 and aasdsdasvga <br> 15/10/1925
-      <br> Egypt
+    <div class="expDegree">
+      <i class="fas fa-certificate iconExp"></i>{{userExperience.experience.degree}}
     </div>
+    <div class="profile-small-text">
+      <i class="far fa-calendar-alt iconExp"></i>{{userExperience.experience.from}} -
+      {{userExperience.experience.to}}<br>
+      <i class="fas fa-location-arrow iconExp"></i> {{userExperience.experience.location}}
+    </div>
+    <p style="margin-top: 2%;"><i class="fas fa-pen-fancy iconExp"></i>{{userExperience.experience.description}}</p>
   </div>
-</a>
-<p style="margin-left: 10%;margin-top: 2%;">(Logistics service center, sokhna) MTS is a Private Shareholding company in charge of Developing and Implementing The Single Window Project which Computerized all the Customs operations in Egypt.</p>
+  <div class="col-sm-1" *ngIf="userExperience.id == uidLocal">
+    <button class="btn btn-outline-dark circleBtn" (click)="open(content)"><i class="fas fa-edit"></i></button>
+    <span>
+      <button class="btn btn-outline-dark circleBtn" (click)="deleteExp()"><i class="fas fa-trash-alt"></i></button>
+    </span>
+  </div>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <span class="modalHeaderIcon">
+        <i class="fas fa-tasks"></i>
+      </span>
+      <h4 class="modal-title" id="modal-basic-title">Edit Experience</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form [formGroup]="editExp" (ngSubmit)='saveChanges()'>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="companyName">Company Name*</label>
+          <input formControlName="companyName" type="text" name="companyName" id="companyName" class="form-control"
+            placeholder="" required>
+        </div>
+        <div class="row">
+          <div class="col-sm-5 form-group">
+            <label for="from">From*</label>
+            <input formControlName="from" type="date" name="from" id="from" class="form-control" placeholder=""
+              max={{today}} required>
+          </div>
+          <div class="col-sm-5 form-group">
+            <label for="to">To*</label>
+            <input formControlName="to" type="date" name="to" id="to" class="form-control" placeholder="" max={{today}}>
+          </div>
+          <div class="col-sm-2 form-group presentRadio">
+            <input class="form-check-input" type="checkbox" name="present" id="present" value="present"
+              [checked]="checked" (change)="ch()">
+            <label class="form-check-label" for="inlineRadio1">Present</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="location">Location*</label>
+          <input formControlName="location" type="text" name="location" id="location" class="form-control"
+            placeholder="" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description*</label>
+          <textarea formControlName="description" name="description" id="description" class="form-control"
+            placeholder="" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="degree">Degree*</label>
+          <input formControlName="degree" type="text" name="degree" id="degree" class="form-control" placeholder=""
+            required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+      </div>
+    </form>
+  </ng-template>
+</div>
 <hr>
+
+
+
+
+
+
+
+
+<!-- <a class="d-flex" style="margin-top:20px;padding-left: 8px;" href="#">
+  
+</a> -->

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/MainServices/User.service';
 import { SignInAuthError } from '../signInInterface/sign-in-auth-error';
-import { UserProfileService } from './user-profile.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class SignInService {
   constructor(
     private auth: AngularFireAuth,
     private router: Router,
-    private profile: UserProfileService
+    private profile: UserService
   ) {
     this.isloggedIn = this.isLoggedIn();
     if (this.isloggedIn == true) {
@@ -20,20 +20,22 @@ export class SignInService {
     }
   }
 
-  async signInAuth(email: string, password: string) {
-    await this.auth.signInWithEmailAndPassword(email, password).then(
+  signInAuth(email: string, password: string) {
+    this.auth.signInWithEmailAndPassword(email, password).then(
       (responce) => {
         if (responce.user.emailVerified) {
+          console.log(responce);
           localStorage.setItem('uid', responce.user.uid);
-          this.profile.getProfileData();
-          let userProfile = JSON.parse(localStorage.getItem('userData'));
-          if (userProfile.isAccepted && !userProfile.isRemoved) {
-            localStorage.setItem('userToken', responce.user.refreshToken);
-            this.router.navigate(['/HOME']);
-            return SignInAuthError.Correct;
-          } else {
-            alert('user not accepted yet or have been removed');
-          }
+          this.profile.getUserBasic(responce.user.uid).subscribe((res) => {
+            let userProfile = res.payload.data();
+            if (userProfile.isAccepted && !userProfile.isRemoved) {
+              localStorage.setItem('userToken', responce.user.refreshToken);
+              this.router.navigate(['/HOME']);
+              return SignInAuthError.Correct;
+            } else {
+              alert('user not accepted yet or have been removed');
+            }
+          });
         }
       },
       (err) => {

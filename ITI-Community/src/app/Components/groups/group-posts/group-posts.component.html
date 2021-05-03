@@ -1,46 +1,57 @@
-<div class="card mt-3" *ngFor="let post of postGroupList">
-    <div class="card-body">
+<div class="card mt-3" *ngFor="let post of postGroupList; let i = index">
+    <div class="card-body" *ngIf="usersData[i] !== undefined">
         <div class="media">
             <img class="mr-4 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
             <div class="media-body">
-                <h6 class="mt-1 mb-1"><a class="text-dark text-decoration-none" href="userprofile.html">User
-                        Name</a></h6>
-                <small class="text-muted">user job titles</small>
-                <small class="text-muted d-block">7h</small>
+                <h6 class="mt-1 mb-1">
+                    <a class="text-dark text-decoration-none" href="#">
+                        {{usersData[i].data.firstName}} {{usersData[i].data.lastName}}
+                    </a>
+                </h6>
+                <small class="text-muted">{{usersData[i].data.jobTitle}}</small>
+                <small class="text-muted d-block">{{post.PostedDate.toDate() | date}}</small>
             </div>
-            <div ngbDropdown container="body" class="d-inline">
-                <button type="button" class="btn btn-default" ngbDropdownToggle>
-                    <i class="fas fa-ellipsis-h"></i>
-                </button>
-                <div ngbDropdownMenu>
-                    <button ngbDropdownItem>Edit</button>
-                    <button ngbDropdownItem>Test</button>
-                    <button ngbDropdownItem>Move</button>
-                    <div class="dropdown-divider"></div>
-                    <button ngbDropdownItem>Delete</button>
+            <div *ngIf="adminGroup.includes(userID) || post.UserId === userID">
+                <div ngbDropdown container="body" class="d-inline">
+                    <button type="button" class="btn btn-default" ngbDropdownToggle>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                    <div ngbDropdownMenu>
+                        <div>
+                            <app-edit-post [postID]='post.id'></app-edit-post>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <button ngbDropdownItem (click)="deletePost(post.id)">Delete</button>
+                        <button ngbDropdownItem>Report</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="p-1 mb-2">
+        <div class="p-1 my-2">
             {{post.Post}}
         </div>
         <div class="users-post-groups row" *ngFor="let img of post.postImg">
             <img class="img-fluid col-md-6" [src]="img" alt="">
         </div>
         <div class="text-secondary pt-2">
-            <small>{{post.Likes}} Likes</small>
+            <small>{{post.Likes.length}} Likes</small>
         </div>
         <div class="post-actions-groups mt-2">
             <button class="btn btn-default" (click)="Like(userID , post.id)">
-                <i class="far fa-thumbs-up mr-2"></i>Like
+                <span *ngIf="!post.Likes.includes(userID)"><i class="far fa-thumbs-up mr-2"></i> Like</span>
+                <span *ngIf="post.Likes.includes(userID)" class="font-weight-bold"><i class="fas fa-thumbs-up mr-2"></i>
+                    Like</span>
             </button>
-            <button class="btn"><i class="fal fa-comment-lines mr-2"></i>Comment</button>
+            <label for="comment" class="btn mb-0"><i class="far fa-comment mr-2"></i>Comment</label>
         </div>
         <div class="user-right-comments row mt-3">
             <img src="../../../../assets/nav-img.png" class="rounded-circle col-2">
             <div class=" col-9 mt-md-4 mt-lg-2 mr-2">
-                <input class="form-control" type="text" placeholder="Start a Conversation in this Group">
+                <app-comment-form [defPostId]="post.id"></app-comment-form>
             </div>
         </div>
+
+        <app-post-comments [PostID]="post.id"></app-post-comments>
+
     </div>
 </div>

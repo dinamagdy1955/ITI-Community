@@ -30,7 +30,6 @@ export class UserRegistrationComponent implements OnInit {
     this.branches = this.branchDB.getBranches();
     this.tracks = this.trackDB.getTracksData();
     this.durations = this.trackDB.getScholarshipDurations();
-    console.log(this.branches);
   }
 
   ngOnInit(): void {}

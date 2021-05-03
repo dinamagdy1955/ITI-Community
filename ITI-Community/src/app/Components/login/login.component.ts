@@ -10,11 +10,12 @@ import { UserProfileService } from './signInService/user-profile.service';
 export class LoginComponent implements OnInit {
   emailSignIn: string = '';
   passwordSignIn: string = '';
-  constructor(private signIn: SignInService) {}
+  constructor(private signIn: SignInService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   SignIn() {
     console.log(this.signIn.signInAuth(this.emailSignIn, this.passwordSignIn));
+    this.signIn.signInAuth(this.emailSignIn, this.passwordSignIn);
   }
 }

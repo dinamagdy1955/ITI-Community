@@ -1,0 +1,40 @@
+<div *ngFor="let c of getComments; let i = index">
+    <div class="container-fluid mt-1 mb-1" *ngIf="usersData[i] !== undefined">
+        <div class="justify-content-center row">
+            <div class="col-md-12">
+                <div class="py-2 px-4 mt-2 comment-design">
+                    <div class="">
+                        <div class="d-flex flex-row user">
+                            <img class="rounded-circle img-fluid img-responsive" src="../../../../assets/nav-img.png"
+                                width="40">
+                            <div class="d-flex flex-column ml-2">
+                                <span class="font-weight-bold">
+                                    {{usersData[i].data.firstName}} {{usersData[i].data.lastName}}
+                                </span>
+                                <small class="day text-muted">{{c.date.toDate() | date}}</small>
+                            </div>
+                            <div *ngIf="adminGroup != undefined" class="d-flex flex-column ml-auto">
+                                <div *ngIf="adminGroup.includes(userID) || c.userID === userID">
+                                    <div ngbDropdown container="body">
+                                        <a type="button" class="btn btn-default" ngbDropdownToggle>
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </a>
+                                        <div ngbDropdownMenu>
+                                            <app-edit-comment [commentID]="c.id"></app-edit-comment>
+                                            <div class="dropdown-divider"></div>
+                                            <button ngbDropdownItem (click)="deleteComment(c.id)">Delete</button>
+                                            <button ngbDropdownItem>Report</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-text text-justify mt-2 ml-5">
+                        <p class="mb-1">{{c.comment}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

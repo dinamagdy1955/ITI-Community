@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { IPost } from '../ViewModel/ipost';
-import * as firestore from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GroupPostsService {
   likes: string[];
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore) { }
 
   getGroupPost() {
-    return this.db.collection('GroupPosts').snapshotChanges();
+    return this.db.collection("GroupPosts", ref => ref.orderBy('PostedDate', 'desc')).snapshotChanges();
+  }
+
+  getPostById(id) {
+    return this.db.collection("GroupPosts").doc(id).valueChanges();
   }
 
   giveLike(like, id) {
@@ -19,6 +22,7 @@ export class GroupPostsService {
       res.map((e) => {
         if (id == e.payload.doc.id) {
           this.likes = e.payload.doc.get('Likes');
+          console.log(this.likes);
           if (this.likes.indexOf(like) != -1) {
             this.likes.splice(this.likes.indexOf(like), 1);
           } else {
@@ -40,9 +44,24 @@ export class GroupPostsService {
         .collection('GroupPosts')
         .add(post)
         .then(
-          (res) => {},
+          (res) => { },
           (error) => rej(error)
         );
     });
   }
+
+  getPostsLikes() {
+    return this.db.collection('GroupPosts').snapshotChanges();
+  }
+
+  editPost(id, data) {
+    return this.db.collection('GroupPosts').doc(id).update({
+      Post: data
+    })
+  }
+
+  deletePost(id) {
+    return this.db.collection('GroupPosts').doc(id).delete()
+  }
+
 }

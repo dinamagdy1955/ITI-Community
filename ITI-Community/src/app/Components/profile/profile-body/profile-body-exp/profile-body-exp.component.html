@@ -1,11 +1,70 @@
 <div class="card mt-3 boo" style="width: 100%;">
-
   <div class="card-body" style="width: 100%;">
     <h5 class="card-title mb-2 text-muted">Experience</h5>
-    <app-Experience-profile>
-
-    </app-Experience-profile>
-    <app-Experience-profile></app-Experience-profile>
-  <hr class="more" style="display: none; margin-bottom: 0;">
-  <div onclick="ex()" style="text-align: center; padding: 10px;"><button type="button" class="btn btn-outline-dark" style="border-radius:18px;">more</button></div>
+    <div *ngIf="userExperiences != undefined">
+      <div *ngFor="let item of userExperiences.experiences;let i = index;">
+        <app-Experience-profile [userExperience]="{id:userExperiences.id,experience:item}"></app-Experience-profile>
+      </div>
+    </div>
+    <hr class="more" style="display: none; margin-bottom: 0;">
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <span class="modalHeaderIcon">
+          <i class="fas fa-tasks"></i>
+        </span>
+        <h4 class="modal-title" id="modal-basic-title">Add New Experience</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="addExperience" (ngSubmit)='saveChanges()'>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="companyName">Company Name*</label>
+            <input formControlName="companyName" type="text" name="companyName" id="companyName" class="form-control"
+              placeholder="" required>
+          </div>
+          <div class="row">
+            <div class="col-sm-5 form-group">
+              <label for="from">From*</label>
+              <input formControlName="from" type="date" name="from" id="from" class="form-control" placeholder=""
+                max={{today}} required>
+            </div>
+            <div class="col-sm-5 form-group">
+              <label for="to">To*</label>
+              <input formControlName="to" type="date" name="to" id="to" class="form-control" placeholder=""
+                max={{today}}>
+            </div>
+            <div class="col-sm-2 form-group presentRadio">
+              <input class="form-check-input" type="checkbox" name="present" id="present" value="present"
+                [checked]="checked" (change)="ch()">
+              <label class="form-check-label" for="inlineRadio1">Present</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="location">Location*</label>
+            <input formControlName="location" type="text" name="location" id="location" class="form-control"
+              placeholder="" required>
+          </div>
+          <div class="form-group">
+            <label for="description">Description*</label>
+            <textarea formControlName="description" name="description" id="description" class="form-control"
+              placeholder="" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="degree">Degree*</label>
+            <input formControlName="degree" type="text" name="degree" id="degree" class="form-control" placeholder=""
+              required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+        </div>
+      </form>
+    </ng-template>
+    <div style="text-align: center; padding: 10px;">
+      <button type="button" class="btn btn-outline-dark" style="border-radius:18px;" (click)="open(content)"
+        *ngIf="uidLocal == userExperiences.id"><i class="fas fa-plus"></i></button>
+    </div>
+  </div>
 </div>

@@ -9,10 +9,17 @@ import { CenterGroupPageComponent } from './center-group-page/center-group-page.
 import { RightSideGroupComponent } from './right-side-group/right-side-group.component';
 import { WriteBoxModelComponent } from './write-box-model/write-box-model.component';
 import { GroupPostsComponent } from './group-posts/group-posts.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PostCommentsComponent } from './post-comments/post-comments.component';
+import { CommentFormComponent } from './comment-form/comment-form.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { EditPostComponent } from './edit-post/edit-post.component';
+import { EditCommentComponent } from './edit-comment/edit-comment.component';
+import { DiscoverComponent } from './discover/discover.component';
 
 const groupRoutes: Routes = [
   { path: 'all-groups', component: RequestGroupPageComponent },
+  { path: 'discover-groups', component: DiscoverComponent },
   { path: 'group-profile/:id', component: GroupProfilePageComponent },
   { path: '', redirectTo: '/Group/all-groups', pathMatch: 'full' },
   { path: '**', redirectTo: '/Home', pathMatch: 'full' }
@@ -27,13 +34,19 @@ const groupRoutes: Routes = [
     RightSideGroupComponent,
     WriteBoxModelComponent,
     GroupPostsComponent,
+    PostCommentsComponent,
+    CommentFormComponent,
+    EditPostComponent,
+    EditCommentComponent,
+    DiscoverComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(groupRoutes),
     NgbModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    Ng2SearchPipeModule,
+    FormsModule
   ]
 })
 export class GroupsModule { }
