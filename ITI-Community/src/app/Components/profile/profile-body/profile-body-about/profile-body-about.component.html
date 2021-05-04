@@ -1,12 +1,11 @@
-<div class="card mt-3 profile-card-border" style="width: 100%;">
-  <div class="card-body">
+<div class="card profile-card-border mt-3 " style="width: 100%;">
+  <div class="card-body profile-Card-About">
     <div class="row">
       <div class="col-sm-11">
         <h4 class="card-subtitle mb-2 text-muted">About</h4>
       </div>
       <div class="col-sm-1">
-        <button class="btn btn-outline-dark circleBtn" (click)="open(content)" *ngIf="userLocal == userAbout.id"><i
-            class="fas fa-edit"></i></button>
+        <a class="profile-Card-Edit" (click)="open(content)" *ngIf="userLocal == userAbout.id"><i class="fas fa-user-edit"></i></a>
       </div>
     </div>
     <ng-template #content let-modal>

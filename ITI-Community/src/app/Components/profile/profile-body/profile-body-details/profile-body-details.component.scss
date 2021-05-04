@@ -8,7 +8,7 @@
 }
 .card-custom {
   overflow: hidden;
-  min-height: 350px;
+  min-height: 250px;
   max-height: 380px;
   width: 100%;
   height: 100%;
@@ -17,8 +17,8 @@
 }
 
 .card-custom-img {
-  height: 180px;
-  min-height: 180px;
+  height: 120px;
+  min-height: 120px;
   /* border-color: inherit; */
   background-size: auto;
 }
@@ -31,11 +31,11 @@
 
 .card-custom-avatar img {
   border-radius: 50%;
-  border: 4px solid white;
+  border: 3px solid  white;
   box-shadow: 0 0 15px rgba(10, 10, 10, 0.3);
   position: absolute;
-  top: 75px;
-  left: 1.75rem;
+  top: 20%;
+  left: 2rem;
   width: 14%;
   height: auto;
 }
@@ -53,8 +53,28 @@
 }
 
 .modalImg {
-  width: 50%;
-  height: 90vh;
+  width: 40%;
+  height: auto;
   display: block;
   margin: auto;
 }
+.user-Name
+{
+  margin: 0;
+}
+.user-JobTitel{
+  font-size: 0.8rem  !important;
+  color: #6e6d6de7;
+  margin: 0;
+  margin-top: 3px;
+}
+.profile-Card-Edit {
+  opacity: 0;
+  color: #801818;
+  transition:  0.8s;
+}
+.profile-Card-UserDetails:hover  .profile-Card-Edit 
+{
+  transition:  0.8s;
+  opacity: 1;
+ }

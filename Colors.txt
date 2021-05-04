@@ -1,1 +1,6 @@
 https://colorhunt.co/palette/282267
+#801818
+#e4e1e1
+#340c0c
+#000000
+#c3c3c394
