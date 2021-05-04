@@ -39,13 +39,19 @@ export class SignInService {
                       'userToken',
                       responce.user.refreshToken
                     );
-                    let userData = {
-                      firstName: res.payload.data().firstName,
-                      lastName: res.payload.data().lastName,
-                      jobTitle: res.payload.data().jobTitle,
-                      avatar: res.payload.data().avatar,
-                    };
-                    localStorage.setItem('userData', JSON.stringify(userData));
+                    localStorage.setItem(
+                      'firstName',
+                      res.payload.data().firstName
+                    );
+                    localStorage.setItem(
+                      'lastName',
+                      res.payload.data().lastName
+                    );
+                    localStorage.setItem(
+                      'jobTitle',
+                      res.payload.data().jobTitle
+                    );
+                    localStorage.setItem('avatar', res.payload.data().avatar);
                     this.router.navigate(['/HOME']);
                     return SignInAuthError.Correct;
                   });

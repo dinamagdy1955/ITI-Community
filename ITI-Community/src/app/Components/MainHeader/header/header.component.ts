@@ -11,6 +11,11 @@ export class HeaderComponent implements OnInit {
   toggleStatus: boolean = false;
   public isMenuCollapsed = true;
   uid = localStorage.getItem('uid');
+  firstName: string = localStorage.getItem('firstName');
+  lastName: string = localStorage.getItem('lastName');
+  jobTitle: string = localStorage.getItem('jobTitle');
+  avatar: string = localStorage.getItem('avatar');
+
   constructor(
     private router: Router,
     private userProfile: UserProfileService
@@ -22,9 +27,7 @@ export class HeaderComponent implements OnInit {
     this.toggleStatus = !this.toggleStatus;
   }
   signOut() {
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('uid');
-    localStorage.removeItem('userData');
+    localStorage.clear();
     this.router.navigate(['/Login']);
   }
 }
