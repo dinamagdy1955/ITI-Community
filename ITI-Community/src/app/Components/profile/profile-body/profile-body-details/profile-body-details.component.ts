@@ -27,6 +27,7 @@ export class ProfileBodyDetailsComponent implements OnInit {
   }
 
   openImage(contentImg) {
+    this.previewedImg = undefined;
     this.modalService.open(contentImg, { size: 'lg' });
   }
 
@@ -65,7 +66,6 @@ export class ProfileBodyDetailsComponent implements OnInit {
       userData.avatar = url;
       localStorage.setItem('userData', JSON.stringify(userData));
       this.userDetails.avatar = url;
-      this.previewedImg = undefined;
     });
   }
 }
