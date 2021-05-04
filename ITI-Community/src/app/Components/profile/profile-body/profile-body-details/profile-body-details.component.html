@@ -1,31 +1,38 @@
 <div class="card card-custom bg-white border-white border-0 rofile-card-border">
   <div class="card-custom-img" style="background-image:url(../../../../../assets/1200x400.jpg);"></div>
   <div class="card-custom-avatar">
-    <img class="img-fluid" [src]="this.userDetails.avatar" (click)="openImage(contentImg)">
-    <ng-template #contentImg let-modal>
-      <div class="modal-header">
-        <span class="modalHeaderIcon">
-          <i class="fas fa-images"></i>
-        </span>
-        <h4 class="modal-title" id="modal-basic-title">Edit Profile Image</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div>
-          <img class="modalImg" [src]="previewedImg||this.userDetails.avatar">
+    <div *ngIf="uidLocal == userDetails.id; then localusr else visitor"></div>
+    <ng-template #localusr>
+      <img class="img-fluid" [src]="this.userDetails.avatar" (click)="openImage(contentImg)">
+      <ng-template #contentImg let-modal>
+        <div class="modal-header">
+          <span class="modalHeaderIcon">
+            <i class="fas fa-images"></i>
+          </span>
+          <h4 class="modal-title" id="modal-basic-title">Edit Profile Image</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="fileInput.click()">
-          <span><i class="fas fa-edit"></i></span>
-          <input #fileInput id="img" type="file" style="display:none;" accept=".png,.jpg"
-            (change)="preview(fileInput.files)" />
-        </button>
-        <button type="submit" class="btn btn-outline-dark" (click)="upload();modal.close('Save click');">Save</button>
-      </div>
+        <div class="modal-body">
+          <div>
+            <img class="modalImg" [src]="previewedImg||this.userDetails.avatar">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="fileInput.click()">
+            <span><i class="fas fa-edit"></i></span>
+            <input #fileInput id="img" type="file" style="display:none;" accept=".png,.jpg"
+              (change)="preview(fileInput.files)" />
+          </button>
+          <button type="submit" class="btn btn-outline-dark" (click)="upload();modal.close('Save click');">Save</button>
+        </div>
+      </ng-template>
     </ng-template>
+    <ng-template #visitor>
+      <img class="img-fluid" [src]="this.userDetails.avatar">
+    </ng-template>
+
     <div class="card-body mt-5" style="overflow-y: auto">
       <div class="container">
         <div class="row">
