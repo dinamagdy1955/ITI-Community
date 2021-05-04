@@ -34,12 +34,13 @@
       </div>
     </ng-template>
 
-    <div class="card-body mt-5" style="overflow-y: auto">
+    <div class="card-body mt-4 profile-Card-UserDetails" style="overflow-y: auto">
       <div class="container">
         <div class="row">
           <div class="col-sm-11">
-            <h4 class="card-title">{{userDetails.firstName}} {{userDetails.lastName}}</h4>
-            <p class="card-text">{{userDetails.jobTitle}}</p>
+            <h4 class="user-Name card-title">{{userDetails.firstName}} {{userDetails.lastName}}</h4>
+            <p class="user-JobTitel">{{userDetails.jobTitle}}</p>
+            <p class="user-JobTitel"><i class="fas fa-university"></i>bransh  <i class="fas fa-book-open"></i> track</p>
           </div>
           <div class="col-sm-1">
             <ng-template #content let-modal>
@@ -75,8 +76,7 @@
                 </div>
               </form>
             </ng-template>
-            <button class="btn btn-outline-dark circleBtn" (click)="open(content)" *ngIf="uidLocal == userDetails.id"><i
-                class="fas fa-edit"></i></button>
+            <a class="profile-Card-Edit" (click)="open(content)" *ngIf="uidLocal == userDetails.id"><i class="fas fa-user-edit"></i></a>
           </div>
         </div>
       </div>
