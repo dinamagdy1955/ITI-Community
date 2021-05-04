@@ -17,6 +17,12 @@ export class GroupPostsService {
     return this.db.collection("GroupPosts").doc(id).valueChanges();
   }
 
+
+  // test(id) {
+  //   let userRef = this.db.collection('users-details').
+  //   return this.db.collection('GroupPosts', ref=>  ref.where('UserId', '==', ''))
+  // }
+
   giveLike(like, id) {
     let sub = this.getGroupPost().subscribe((res) => {
       res.map((e) => {

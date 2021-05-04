@@ -26,13 +26,13 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
     firstName: '',
     lastName: '',
     jobTitle: '',
+    avatar: '',
   };
   UserExperiences = {
     id: '',
     experiences: [],
   };
   @Input() uid;
-
   uidLocal = localStorage.getItem('uid');
   constructor(private userService: UserService, private router: Router) {}
   ngOnInit() {}
@@ -61,12 +61,14 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
                   track: userDetails.payload.get('track'),
                   experiences: userDetails.payload.get('experiences'),
                   friendList: userDetails.payload.get('friendList'),
+                  avatar: userDetails.payload.get('avatar'),
                 };
                 this.UserAbout.id = this.uid;
                 this.UserAbout.about = this.userData.about;
                 this.UserDetails.id = this.uid;
                 this.UserDetails.firstName = this.userData.firstName;
                 this.UserDetails.lastName = this.userData.lastName;
+                this.UserDetails.avatar = this.userData.avatar;
                 this.UserDetails.jobTitle = this.userData.jobTitle;
                 this.UserExperiences.id = this.uid;
                 this.UserExperiences.experiences = this.userData.experiences;

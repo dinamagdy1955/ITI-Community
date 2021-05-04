@@ -22,8 +22,6 @@ export class ExperienceProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.userExperience);
-
     this.editExp = this.FB.group({
       id: this.userExperience.experience.id,
       companyName: this.userExperience.experience.companyName,

@@ -14,4 +14,5 @@ export interface IUserProfileData {
   track: number;
   experiences: IExperience[];
   friendList: [];
+  avatar: string;
 }

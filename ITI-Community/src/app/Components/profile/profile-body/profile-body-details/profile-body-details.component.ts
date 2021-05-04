@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileService } from '../../Service/user-profile.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -10,8 +10,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class ProfileBodyDetailsComponent implements OnInit {
   @Input() userDetails;
   editPersonalData: FormGroup;
-  imgUrl: string | ArrayBuffer = '../../../../../assets/nav-img.png';
   uidLocal = localStorage.getItem('uid');
+  previewedImg = undefined;
   constructor(
     private modalService: NgbModal,
     private us: UserProfileService,
@@ -47,7 +47,25 @@ export class ProfileBodyDetailsComponent implements OnInit {
     );
   }
 
-  upload(event) {
-    this.us.uploadImg(event.target.files[0]);
+  preview(files) {
+    var reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.previewedImg = reader.result;
+    };
+  }
+
+  async upload() {
+    const selectedImg = (<HTMLInputElement>document.getElementById('img'))
+      .files;
+    const img = await this.us.uploadImg(selectedImg[0]);
+    await img.ref.getDownloadURL().subscribe(async (url) => {
+      this.us.editUserAvatar(this.uidLocal, url);
+      let userData = JSON.parse(localStorage.getItem('userData'));
+      userData.avatar = url;
+      localStorage.setItem('userData', JSON.stringify(userData));
+      this.userDetails.avatar = url;
+      this.previewedImg = undefined;
+    });
   }
 }
