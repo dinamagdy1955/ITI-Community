@@ -22,7 +22,6 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
 
   constructor(
     private getall: GroupPostsService,
-    private activeRoute: ActivatedRoute,
     private usersService: UserService,
     private groupService: GroupService
   ) {
@@ -61,7 +60,11 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
       }
     });
     this.subsriptions.push(sub1)
+
+
   }
+
+
 
   Like(like, id) {
     this.getall.giveLike(like, id);
