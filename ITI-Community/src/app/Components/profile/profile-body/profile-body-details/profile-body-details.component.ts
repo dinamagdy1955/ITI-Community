@@ -23,7 +23,6 @@ export class ProfileBodyDetailsComponent implements OnInit {
       lastName: this.userDetails.lastName,
       jobTitle: this.userDetails.jobTitle,
     });
-    console.log(this.userDetails);
   }
 
   openImage(contentImg) {

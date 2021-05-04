@@ -11,17 +11,21 @@ export class ProfileSideViewedComponent implements OnInit {
   friendList = [];
   constructor(private us: UserService) {
     let sub = this.us.getUserData(this.uid).subscribe((res) => {
-      let sub2 = this.us
-        .getUserDataList(res.payload.data()['friendList'])
-        .subscribe((e) => {
-          e.docs.map((f) => {
-            this.friendList.push({
-              id: f.id,
-              data: f.data(),
+      if (res.payload.data()['friendList'] > 0) {
+        let sub2 = this.us
+          .getUserDataList(res.payload.data()['friendList'])
+          .subscribe((e) => {
+            console.log('e', e.docs);
+            e.docs.map((f) => {
+              console.log('f', f);
+              this.friendList.push({
+                id: f.id,
+                data: f.data(),
+              });
             });
+            sub2.unsubscribe();
           });
-          sub2.unsubscribe();
-        });
+      }
       sub.unsubscribe();
     });
   }
