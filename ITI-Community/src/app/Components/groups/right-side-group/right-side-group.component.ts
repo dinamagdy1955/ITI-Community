@@ -37,9 +37,7 @@ export class RightSideGroupComponent implements OnInit, OnDestroy {
       this.members = [];
       this.subscribers = [];
 
-      let sub2 = this.userService.getAllUsersData().pipe().subscribe((res) => {
-        console.log('aa')
-
+      let sub2 = this.userService.getAllUsersData().subscribe((res) => {
         this.allUsers = res
         this.Group.admin.filter(s => {
           this.allUsers.forEach(e => {
@@ -73,8 +71,40 @@ export class RightSideGroupComponent implements OnInit, OnDestroy {
             }
           });
         })
+        sub2.unsubscribe()
       })
-      this.subscription.push(sub2);
+
+      // for (let i of this.Group.admin) {
+      //   let sub1 = this.userService.getUserData(i).subscribe((res) => {
+      //     this.subscription.push(sub1);
+      //     this.admins.push({
+      //       id: res.payload.id,
+      //       data: res.payload.data(),
+      //     });
+      //   });
+      //   this.subscription.push(sub1);
+      // }
+
+      // for (let i of this.Group.members) {
+      //   let sub2 = this.userService.getUserData(i).subscribe((res) => {
+      //     this.subscription.push(sub2);
+      //     this.members.push({
+      //       id: res.payload.id,
+      //       data: res.payload.data(),
+      //     });
+      //   });
+      //   this.subscription.push(sub2);
+      // }
+      // for (let i of this.Group.subscriber) {
+      //   let sub2 = this.userService.getUserData(i).subscribe((res) => {
+      //     this.subscription.push(sub2);
+      //     this.subscribers.push({
+      //       id: res.payload.id,
+      //       data: res.payload.data(),
+      //     });
+      //   });
+      //   this.subscription.push(sub2);
+      // }
     });
     this.subscription.push(sub);
   }
