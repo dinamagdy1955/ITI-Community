@@ -88,7 +88,11 @@ export class UserProfileService {
       if (i == imgNameArr.length - 1) break;
       else imgName += imgNameArr[i];
     }
-    const filePath = 'UsersProfileImages/' + imgName; //+ '-' + n;
+    const filePath =
+      'UsersProfileImages/' +
+      imgName +
+      '_' +
+      (Math.random() * 1024 * 1024).toString(36).substring(2); //+ '-' + n;
     const fileRef = this.afStorage.ref(filePath);
     const task = await this.afStorage.upload(filePath, img);
     return {
