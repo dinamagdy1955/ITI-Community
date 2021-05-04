@@ -1,6 +1,6 @@
 <a routerLink="/profile/{{Friend.id}}" routerLinkActive="router-link-active" class="d-flex"
   style="margin-top:20px;padding-left: 8px;" href="#">
-  <div><img src="../../../../../../assets/2.png" class="borderImg"></div>
+  <div><img [src]="Friend.data.avatar" class="borderImg"></div>
   <div style="margin-left: 8px;">
     <div style="margin-bottom: 4px;">
       <p style="font-size: 14px; margin-left: 8px;margin-bottom: 0px;">{{Friend.data.firstName}}

@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { IExperience } from '../profile-body/ViewModels/iexperience';
 import { finalize } from 'rxjs/operators';
+import { promise } from 'selenium-webdriver';
 @Injectable({
   providedIn: 'root',
 })
@@ -79,49 +80,24 @@ export class UserProfileService {
       });
   }
 
-  async uploadImg(event) {
-    // let downloadURL: Observable<string>;
-    // let ref: AngularFireStorageReference;
-    // let task: AngularFireUploadTask;
-
-    // let img;
-    // const id = Math.random().toString(36).substring(2);
-    // this.afStorage.upload('/images' + id + event, event).then((res) => {
-    //   console.log(res);
-    // });
-    // task = ref.put(event);
-    // // downloadURL = ref.getDownloadURL();
-    // // console.log(downloadURL);
-    // task.snapshotChanges().pipe(
-    //   finalize(() => {
-    //     this.downloadURL = ref.getDownloadURL();
-    //     // this.fs.addTest(this.forma.value)
-    //     console.log(this.downloadURL);
-    //   })
-    // );
-
-    const filePath = `proyectos4/` + event.name;
+  async uploadImg(img) {
+    let n = Date.now();
+    let imgNameArr = img.name.split('.');
+    let imgName = '';
+    for (let i = 0; i <= imgNameArr.length; i++) {
+      if (i == imgNameArr.length - 1) break;
+      else imgName += imgNameArr[i];
+    }
+    const filePath = 'UsersProfileImages/' + imgName; //+ '-' + n;
     const fileRef = this.afStorage.ref(filePath);
-    const task = this.afStorage.upload(filePath, event);
+    const task = await this.afStorage.upload(filePath, img);
+    return {
+      ref: fileRef,
+      task: task,
+    };
+  }
 
-    // observe percentage changes
-    // get notified when the download URL is available
-    let s = await task.snapshotChanges().subscribe(
-      async (res) => {
-        console.log(res);
-        let si = await fileRef.getDownloadURL().subscribe(
-          async (r) => {
-            console.log(r);
-          },
-          (err) => {
-            console.log('l');
-          }
-        );
-      },
-
-      (err) => {
-        console.log('k');
-      }
-    );
+  editUserAvatar(uid: string, url: string) {
+    this.db.collection('users-details').doc(uid).update({ avatar: url });
   }
 }
