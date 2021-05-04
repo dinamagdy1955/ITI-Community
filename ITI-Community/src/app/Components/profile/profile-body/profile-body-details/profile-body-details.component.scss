@@ -17,14 +17,14 @@
 }
 
 .card-custom-img {
-  height: 120px;
-  min-height: 120px;
+  height: 100%;
+  // min-height: 120px;
   /* border-color: inherit; */
   background-size: auto;
 }
 .card-custom-img-com {
-  height: 120px;
-  min-height: 120px;
+  height: 5rem;
+  //min-height: 120px;
   /* border-color: inherit; */
   background-size: auto;
 }
@@ -36,7 +36,7 @@
   position: absolute;
   top: 20%;
   left: 2rem;
-  width: 14%;
+  width: 10%;
   height: auto;
 }
 
@@ -77,4 +77,8 @@
 {
   transition:  0.8s;
   opacity: 1;
+ }
+ .imgTop{
+   max-height: 100px !important;
+   width: 100%;
  }
