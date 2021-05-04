@@ -11,6 +11,7 @@ export class ProfileBodyDetailsComponent implements OnInit {
   @Input() userDetails;
   editPersonalData: FormGroup;
   uidLocal = localStorage.getItem('uid');
+  previewedImg = undefined;
   constructor(
     private modalService: NgbModal,
     private us: UserProfileService,
@@ -46,6 +47,14 @@ export class ProfileBodyDetailsComponent implements OnInit {
     );
   }
 
+  preview(files) {
+    var reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.previewedImg = reader.result;
+    };
+  }
+
   async upload() {
     const selectedImg = (<HTMLInputElement>document.getElementById('img'))
       .files;
@@ -56,6 +65,7 @@ export class ProfileBodyDetailsComponent implements OnInit {
       userData.avatar = url;
       localStorage.setItem('userData', JSON.stringify(userData));
       this.userDetails.avatar = url;
+      this.previewedImg = undefined;
     });
   }
 }

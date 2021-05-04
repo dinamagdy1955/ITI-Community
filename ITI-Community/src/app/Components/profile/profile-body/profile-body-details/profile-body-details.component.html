@@ -14,13 +14,14 @@
       </div>
       <div class="modal-body">
         <div>
-          <img class="modalImg" [src]="this.userDetails.avatar">
+          <img class="modalImg" [src]="previewedImg||this.userDetails.avatar">
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="fileInput.click()">
           <span><i class="fas fa-edit"></i></span>
-          <input #fileInput id="img" type="file" style="display:none;" accept=".png,.jpg" />
+          <input #fileInput id="img" type="file" style="display:none;" accept=".png,.jpg"
+            (change)="preview(fileInput.files)" />
         </button>
         <button type="submit" class="btn btn-outline-dark" (click)="upload();modal.close('Save click');">Save</button>
       </div>
