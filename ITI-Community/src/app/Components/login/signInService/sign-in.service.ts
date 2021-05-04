@@ -26,16 +26,35 @@ export class SignInService {
         if (responce.user.emailVerified) {
           console.log(responce);
           localStorage.setItem('uid', responce.user.uid);
-          this.profile.getUserBasic(responce.user.uid).subscribe((res) => {
-            let userProfile = res.payload.data();
-            if (userProfile.isAccepted && !userProfile.isRemoved) {
-              localStorage.setItem('userToken', responce.user.refreshToken);
-              this.router.navigate(['/HOME']);
-              return SignInAuthError.Correct;
-            } else {
-              alert('user not accepted yet or have been removed');
-            }
-          });
+          let sub = this.profile
+            .getUserBasic(responce.user.uid)
+            .subscribe((res) => {
+              let userProfileBasic = res.payload.data();
+              if (userProfileBasic.isAccepted && !userProfileBasic.isRemoved) {
+                let sub2 = this.profile
+                  .getUserData(responce.user.uid)
+                  .subscribe((res) => {
+                    sub2.unsubscribe();
+                    localStorage.setItem(
+                      'userToken',
+                      responce.user.refreshToken
+                    );
+                    let userData = {
+                      firstName: res.payload.data().firstName,
+                      lastName: res.payload.data().lastName,
+                      jobTitle: res.payload.data().jobTitle,
+                      avatar: res.payload.data().avatar,
+                    };
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                    this.router.navigate(['/HOME']);
+                    return SignInAuthError.Correct;
+                  });
+              } else {
+                localStorage.removeItem('uid');
+                alert('user not accepted yet or have been removed');
+              }
+              sub.unsubscribe();
+            });
         }
       },
       (err) => {
