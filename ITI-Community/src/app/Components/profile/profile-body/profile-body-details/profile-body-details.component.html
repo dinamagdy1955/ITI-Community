@@ -3,7 +3,7 @@
   <div class="card-custom-avatar">
     <div *ngIf="uidLocal == userDetails.id; then localusr else visitor"></div>
     <ng-template #localusr>
-      <img class="img-fluid" [src]="this.userDetails.avatar" (click)="openImage(contentImg)">
+      <img  [src]="this.userDetails.avatar" (click)="openImage(contentImg)">
       <ng-template #contentImg let-modal>
         <div class="modal-header">
           <span class="modalHeaderIcon">
