@@ -7,16 +7,19 @@
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form> -->
-        <button class="navbar-toggler" type="button" (click)='isMenuCollapsed = !isMenuCollapsed' data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" (click)='isMenuCollapsed = !isMenuCollapsed' data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse justify-content-end" [ngbCollapse]="isMenuCollapsed" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse justify-content-end" [ngbCollapse]="isMenuCollapsed"
+            id="navbarSupportedContent">
             <ul class="navbar-nav text-lg-center custom-nav">
                 <li class="nav-item">
 
-                    <a class="nav-link visible-dot" [routerLink]="['HOME']" routerLinkActive="active" (click)="isMenuCollapsed = true">
+                    <a class="nav-link visible-dot" [routerLink]="['HOME']" routerLinkActive="active"
+                        (click)="isMenuCollapsed = true">
                         <i class="fas fa-home d-lg-block"></i>
                         <div class="container__indicator">
                             <i class="fas fa-dot-circle"></i>
@@ -25,51 +28,52 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/Group']" routerLinkActive="active" (click)="isMenuCollapsed = true"><i
-                            class="fas fa-users d-lg-block"></i>Groups
+                    <a class="nav-link" [routerLink]="['/Group']" routerLinkActive="active"
+                        (click)="isMenuCollapsed = true"><i class="fas fa-users d-lg-block"></i>Groups
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['FullNetwork']" routerLinkActive="active" (click)="isMenuCollapsed = true"><i
-                            class="fas fa-user-friends"></i><span class="d-lg-block">Network</span>
+                    <a class="nav-link" [routerLink]="['FullNetwork']" routerLinkActive="active"
+                        (click)="isMenuCollapsed = true"><i class="fas fa-user-friends"></i><span
+                            class="d-lg-block">Network</span>
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/jobs/savedjobs']" routerLinkActive="router-link-active" (click)="isMenuCollapsed = true"><i
-                            class="fas fa-archive d-lg-block"></i>Jobs
+                    <a class="nav-link" [routerLink]="['/jobs/savedjobs']" routerLinkActive="router-link-active"
+                        (click)="isMenuCollapsed = true"><i class="fas fa-archive d-lg-block"></i>Jobs
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/Messages']" routerLinkActive="active" (click)="isMenuCollapsed = true">
+                    <a class="nav-link" [routerLink]="['/Messages']" routerLinkActive="active"
+                        (click)="isMenuCollapsed = true">
                         <i class="fas fa-comment-dots d-lg-block"></i>
                         Messaging
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['Notification']" routerLinkActive="router-link-active" (click)="isMenuCollapsed = true"><i
-                            class="fas fa-bell d-lg-block"></i>Notifications
+                    <a class="nav-link" [routerLink]="['Notification']" routerLinkActive="router-link-active"
+                        (click)="isMenuCollapsed = true"><i class="fas fa-bell d-lg-block"></i>Notifications
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
 
                 <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
                     <a class="nav-link" ngbDropdownToggle id="navbarDropdown3" role="button">
-                        <img src="../../../../assets/nav-img.png" width="30" height="30" class="d-lg-block align-top"
-                            alt="">
+                        <img [src]="avatar" width="30" height="30" class="d-lg-block align-top" alt="">
                         Me
                     </a>
                     <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu pt-0">
                         <a class="dropdown-item text-center py-3" routerLink="/profile/{{uid}}"
                             routerLinkActive="router-link-active" (click)="isMenuCollapsed = true">
-                            <img src="../../../../assets/nav-img.png" class="mx-auto" width="100" alt="" srcset="">
-                            <h3 class="">Student Name</h3>
-                            <h6 class="">Track Name</h6>
+                            <img [src]="avatar" class="mx-auto" width="100" alt="" srcset="">
+                            <h3 class="">{{firstName}} {{lastName}}</h3>
+                            <h6 class="">{{jobTitle}}</h6>
                         </a>
                         <div class="dropdown-divider mt-0"></div>
                         <h6 class="ml-3">Account</h6>

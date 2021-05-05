@@ -27,6 +27,7 @@ export class ProfileBodyDetailsComponent implements OnInit {
   }
 
   openImage(contentImg) {
+    this.previewedImg = undefined;
     this.modalService.open(contentImg, { size: 'lg' });
   }
 
@@ -61,11 +62,8 @@ export class ProfileBodyDetailsComponent implements OnInit {
     const img = await this.us.uploadImg(selectedImg[0]);
     await img.ref.getDownloadURL().subscribe(async (url) => {
       this.us.editUserAvatar(this.uidLocal, url);
-      let userData = JSON.parse(localStorage.getItem('userData'));
-      userData.avatar = url;
-      localStorage.setItem('userData', JSON.stringify(userData));
+      localStorage.setItem('avatar', url);
       this.userDetails.avatar = url;
-      this.previewedImg = undefined;
     });
   }
 }
