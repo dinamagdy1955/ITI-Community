@@ -6,85 +6,88 @@
                 <div class="header__separator"></div>
                 <span class="header__title">Information Technology Institute</span>
             </a>
-            <div class="row">
-                <div class="col-sm mb-2">
+            <form [formGroup]="registerNewUser" (ngSubmit)='register()'>
+                <div class="row">
+                    <div class="col-sm mb-2">
+                        <label class="form-label text-black-50" for="userRegisterNationalID">
+                            First Name
+                        </label>
+                        <input formControlName="firstName" type="text" minlength="14" maxlength="14"
+                            class="form-control border border-dark">
+                    </div>
+                    <div class="col-sm mb-2">
+                        <label class="form-label text-black-50" for="userRegisterNationalID">
+                            Last Name
+                        </label>
+                        <input formControlName="lastName" type="text" minlength="14" maxlength="14"
+                            class="form-control border border-dark">
+                    </div>
+                </div>
+                <div class="mb-2">
                     <label class="form-label text-black-50" for="userRegisterNationalID">
-                        First Name
+                        National ID
                     </label>
-                    <input type="text" [(ngModel)]="firstNameRegister" minlength="14" maxlength="14"
+                    <input formControlName="nationalID" type="text" minlength="14" maxlength="14"
                         class="form-control border border-dark">
                 </div>
-                <div class="col-sm mb-2">
-                    <label class="form-label text-black-50" for="userRegisterNationalID">
-                        Last Name
-                    </label>
-                    <input type="text" [(ngModel)]="lastNameRegister" minlength="14" maxlength="14"
-                        class="form-control border border-dark">
+                <div class="mb-2">
+                    <label for="userRegisterEmail" class="form-label text-black-50">Email address</label>
+                    <input formControlName="email" type="email" class="form-control border border-dark"
+                        aria-describedby="emailHelp">
+                    <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
                 </div>
-            </div>
-            <div class="mb-2">
-                <label class="form-label text-black-50" for="userRegisterNationalID">
-                    National ID
-                </label>
-                <input type="text" [(ngModel)]="nationalIDRegister" minlength="14" maxlength="14"
-                    class="form-control border border-dark">
-            </div>
-            <div class="mb-2">
-                <label for="userRegisterEmail" class="form-label text-black-50">Email address</label>
-                <input type="email" class="form-control border border-dark" [(ngModel)]="emailRegister"
-                    aria-describedby="emailHelp">
-                <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
-            </div>
-            <div class="mb-2">
-                <label for="userRegisterPassword" class="form-label text-black-50">
-                    Password (6 or more characters)
-                </label>
-                <input type="password" class="form-control border border-dark" [(ngModel)]="passwordRegister">
-            </div>
-            <div class="row">
-                <div class="col-sm mb-2">
-                    <label class="form-label text-black-50" for="userRegisterBranch">
-                        Branch
+                <div class="mb-2">
+                    <label for="userRegisterPassword" class="form-label text-black-50">
+                        Password (6 or more characters)
                     </label>
-                    <select [(ngModel)]="branchRegister" class="form-control border border-dark">
-                        <option value="-1"></option>
-                        <option *ngFor="let branch of branches;" value={{branch.id}}>{{branch.data.name}}
-                        </option>
-                    </select>
+                    <input formControlName="password" type="password" class="form-control border border-dark">
                 </div>
-                <div class="col-sm mb-2">
+                <div class="row">
+                    <div class="col-sm mb-2">
+                        <label class="form-label text-black-50" for="userRegisterBranch">
+                            Branch
+                        </label>
+                        <select formControlName="branch" class="form-control border border-dark">
+                            <option value="-1"></option>
+                            <option *ngFor="let branch of branches;" value={{branch.id}}>{{branch.data.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm mb-2">
+                        <label class="form-label text-black-50">
+                            Track
+                        </label>
+                        <select formControlName="track" class="form-control border border-dark">
+                            <option value="-1"></option>
+                            <option *ngFor="let track of tracks;" value={{track.id}}>{{track.data.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-2">
                     <label class="form-label text-black-50">
-                        Track
+                        Scholarship Duration
                     </label>
-                    <select [(ngModel)]="trackRegister" class="form-control border border-dark">
+                    <select formControlName="scholar" class="form-control border border-dark">
                         <option value="-1"></option>
-                        <option *ngFor="let track of tracks;" value={{track.id}}>{{track.data.name}}
+                        <option *ngFor="let duration of durations;" value={{duration.id}}>
+                            {{duration.data.textDescription}}
                         </option>
                     </select>
                 </div>
-            </div>
-            <div class="mb-2">
-                <label class="form-label text-black-50">
-                    Scholarship Duration
-                </label>
-                <select [(ngModel)]="scholarRegister" class="form-control border border-dark">
-                    <option value="-1"></option>
-                    <option *ngFor="let duration of durations;" value={{duration.id}}>{{duration.data.textDescription}}
-                    </option>
-                </select>
-            </div>
-            <button id="registerButton" class="btn fs-6 col-12 rounded-pill mt-2" (click)="register()">
-                Agree & Join
-            </button>
-            <div class="text-center mt-2 ">
-                Already on ITI Community?
-                <div id="signin">
-                    <a [routerLink]="['/Login']" routerLinkActive="router-link-active"
-                        class="text-decoration-none  fs-6 fw-bold">
-                        Sign in
-                    </a>
+                <button type="submit" id="registerButton" class="btn fs-6 col-12 rounded-pill mt-2">
+                    Agree & Join
+                </button>
+                <div class="text-center mt-2 ">
+                    Already on ITI Community?
+                    <div id="signin">
+                        <a [routerLink]="['/Login']" routerLinkActive="router-link-active"
+                            class="text-decoration-none  fs-6 fw-bold">
+                            Sign in
+                        </a>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
         <div class="container-fluid footerSignIn">
             <div id="footerSignInLinks">
