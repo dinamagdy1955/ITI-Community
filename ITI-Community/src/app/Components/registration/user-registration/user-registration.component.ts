@@ -56,6 +56,8 @@ export class UserRegistrationComponent implements OnInit {
       about: '',
       experiences: [],
       friendList: [],
+      avatar:
+        'https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2F2?alt=media&token=61809273-cae4-44bd-b88e-e665032829cc',
     };
     console.log(
       this.registerAuth.registerNewUser(newUserBasic, newUserDetails)

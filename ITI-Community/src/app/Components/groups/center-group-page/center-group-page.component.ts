@@ -25,9 +25,10 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy {
     this.userID = localStorage.getItem('uid')
     let param = this.activeRoute.paramMap.subscribe((params) => {
       this.GroupId = params.get('id');
-      this.GrpServ.getGrpById(this.GroupId).subscribe(res => {
+      let sub = this.GrpServ.getGrpById(this.GroupId).subscribe(res => {
         this.Group = res;
       })
+      this.subscription.push(sub)
     })
     this.subscription.push(param)
   }
@@ -37,8 +38,8 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    for (let subs of this.subscription) {
-      subs.unsubscribe()
+    for (let i of this.subscription) {
+      i.unsubscribe();
     }
   }
 }

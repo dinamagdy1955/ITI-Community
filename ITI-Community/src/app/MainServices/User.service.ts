@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore) { }
 
   getUserData(uid): Observable<any> {
     return this.db.collection('users-details').doc(uid).snapshotChanges();
@@ -19,6 +19,7 @@ getAllFriendRequests() {
   return this.db.collection('users-details').snapshotChanges();
 }
 
+
 //friendList
 getAllFriendsList() {
   return this.db.collection('users-details').snapshotChanges();
@@ -29,9 +30,19 @@ create_NewRequest(uid,fn) {
   const Request = { friendRequest: [{"firstName":fn,"id":uid,"reqState":false}] };
   return this.db.collection('users-details').doc(uid).update({ ...Request });
 }
-// ///////////////////////////
+
+  getAllUsersData(): Observable<any> {
+    return this.db.collection('users-details').snapshotChanges();
+  }
+
   getUserBasic(uid): Observable<any> {
     return this.db.collection('users-basics').doc(uid).snapshotChanges();
+  }
+
+  getUserDataList(arr): Observable<any> {
+    return this.db
+      .collection('users-details', (ref) => ref.where('__name__', 'in', arr))
+      .get();
   }
 
   // to call this function for get one user by id
@@ -52,6 +63,7 @@ create_NewRequest(uid,fn) {
 
 
   //this code for get users data by giving it array of users ids
+
   // let usersData = [];
   // userids.map((user) => {
   //   let sub = this.getUserData(user).subscribe((u) => {

@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -14,19 +13,17 @@ import { IGroup } from '../ViewModel/igroup';
 export class RightSideGroupComponent implements OnInit, OnDestroy {
 
   Group: IGroup;
-  GroupId: string;
+  @Input() GroupId: string;
 
+  allUsers
   admins = []
   members = []
   subscribers = []
-
   userID
 
   keyWordsSearch
-
   private subscription: Subscription[] = [];
   constructor(
-    private activeRoute: ActivatedRoute,
     private GrpServ: GroupService,
     private modalService: NgbModal,
     private userService: UserService
@@ -34,48 +31,90 @@ export class RightSideGroupComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userID = localStorage.getItem('uid');
-    let param = this.activeRoute.paramMap.subscribe((params) => {
-      this.GroupId = params.get('id');
-      this.GrpServ.getGrpById(this.GroupId).subscribe(res => {
-        this.Group = res;
-        this.admins = []
-        this.members = []
-        this.subscribers = []
-        for (let i of this.Group.admin) {
-          let sub1 = this.userService.getUserData(i).subscribe((res) => {
-            this.subscription.push(sub1)
-            this.admins.push({
-              id: res.payload.id,
-              data: res.payload.data()
-            })
-          })
-        }
-        for (let i of this.Group.members) {
-          let sub2 = this.userService.getUserData(i).subscribe((res) => {
-            this.subscription.push(sub2)
-            this.members.push({
-              id: res.payload.id,
-              data: res.payload.data()
-            })
-          })
-        }
-        for (let i of this.Group.subscriber) {
-          let sub2 = this.userService.getUserData(i).subscribe((res) => {
-            this.subscription.push(sub2)
-            this.subscribers.push({
-              id: res.payload.id,
-              data: res.payload.data()
-            })
-          })
-        }
+    let sub = this.GrpServ.getGrpById(this.GroupId).subscribe((res) => {
+      this.Group = res;
+      this.admins = [];
+      this.members = [];
+      this.subscribers = [];
+
+      let sub2 = this.userService.getAllUsersData().subscribe((res) => {
+        this.allUsers = res
+        this.Group.admin.filter(s => {
+          this.allUsers.forEach(e => {
+            if (s == e.payload.doc.id) {
+              this.admins.push({
+                id: e.payload.doc.id,
+                data: e.payload.doc.data()
+              })
+            }
+          });
+        })
+
+        this.Group.members.filter(s => {
+          this.allUsers.forEach(e => {
+            if (s == e.payload.doc.id) {
+              this.members.push({
+                id: e.payload.doc.id,
+                data: e.payload.doc.data()
+              })
+            }
+          });
+        })
+
+        this.Group.subscriber.filter(s => {
+          this.allUsers.forEach(e => {
+            if (s == e.payload.doc.id) {
+              this.subscribers.push({
+                id: e.payload.doc.id,
+                data: e.payload.doc.data()
+              })
+            }
+          });
+        })
+        sub2.unsubscribe()
       })
-    })
-    this.subscription.push(param);
+
+      // for (let i of this.Group.admin) {
+      //   let sub1 = this.userService.getUserData(i).subscribe((res) => {
+      //     this.subscription.push(sub1);
+      //     this.admins.push({
+      //       id: res.payload.id,
+      //       data: res.payload.data(),
+      //     });
+      //   });
+      //   this.subscription.push(sub1);
+      // }
+
+      // for (let i of this.Group.members) {
+      //   let sub2 = this.userService.getUserData(i).subscribe((res) => {
+      //     this.subscription.push(sub2);
+      //     this.members.push({
+      //       id: res.payload.id,
+      //       data: res.payload.data(),
+      //     });
+      //   });
+      //   this.subscription.push(sub2);
+      // }
+      // for (let i of this.Group.subscriber) {
+      //   let sub2 = this.userService.getUserData(i).subscribe((res) => {
+      //     this.subscription.push(sub2);
+      //     this.subscribers.push({
+      //       id: res.payload.id,
+      //       data: res.payload.data(),
+      //     });
+      //   });
+      //   this.subscription.push(sub2);
+      // }
+    });
+    this.subscription.push(sub);
   }
 
   ngOnDestroy(): void {
     for (let subs of this.subscription) {
       subs.unsubscribe();
+      this.admins = []
+      this.members = []
+      this.subscribers = []
     }
   }
 

@@ -1,23 +1,18 @@
-<div class="row" style="margin-top:20px;padding-left: 8px;">
+<div class="row profile-Card-Exp" style="margin-top:20px;padding-left: 8px;">
   <div class="col-sm-1"><img src="../../../../../../assets/nav-img.png" alt="ss" class="profile-exp-borderImg"></div>
-  <div class="col-sm-9" style="margin-left: 8px; width: 50%;">
-    <div style="margin-bottom: 4px;">
-      <h5>{{experience.companyName}}</h5>
+  <div class="col-sm-9" style="margin-left: 8px; width: 100%;">
+    <div class="profile-Exp-Titel" style="margin-bottom: 4px;">
+      <h5>{{userExperience.experience.companyName}}</h5>
+      <p>{{userExperience.experience.degree}}
+      <p class="profile-Exp-title-2ndColor">{{userExperience.experience.from}} -
+      {{userExperience.experience.to}}</p>
+      <p class="profile-Exp-title-2ndColor"> {{userExperience.experience.location}}</p>
     </div>
-    <div class="expDegree">
-      <i class="fas fa-certificate iconExp"></i>{{experience.degree}}
-    </div>
-    <div class="profile-small-text">
-      <i class="far fa-calendar-alt iconExp"></i>{{experience.from}} - {{experience.to}}<br>
-      <i class="fas fa-location-arrow iconExp"></i> {{experience.location}}
-    </div>
-    <p style="margin-top: 2%;"><i class="fas fa-pen-fancy iconExp"></i>{{experience.description}}</p>
+    <p style="margin-top: 2%;"><i class="fas fa-pen-fancy iconExp"></i>{{userExperience.experience.description}}</p>
   </div>
-  <div class="col-sm-1">
-    <button class="btn btn-outline-dark circleBtn" (click)="open(content)"><i class="fas fa-edit"></i></button>
-    <span>
-      <button class="btn btn-outline-dark circleBtn" (click)="deleteExp()"><i class="fas fa-trash-alt"></i></button>
-    </span>
+  <div class="col-sm-1 profile-Exp-Edit" *ngIf="userExperience.id == uidLocal">
+    <a (click)="open(content)"><i class="fas fa-edit"></i></a>
+      <a (click)="deleteExp()"><i class="fas fa-trash-alt"></i></a>
   </div>
   <ng-template #content let-modal>
     <div class="modal-header">

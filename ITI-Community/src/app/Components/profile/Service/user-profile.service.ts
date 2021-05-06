@@ -1,12 +1,23 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import {
+  AngularFireStorage,
+  AngularFireStorageReference,
+  AngularFireUploadTask,
+} from '@angular/fire/storage';
+import { Observable } from 'rxjs';
 import { IExperience } from '../profile-body/ViewModels/iexperience';
-
+import { finalize } from 'rxjs/operators';
+import { promise } from 'selenium-webdriver';
 @Injectable({
   providedIn: 'root',
 })
 export class UserProfileService {
-  constructor(private db: AngularFirestore) {}
+  downloadURL: any;
+  constructor(
+    private db: AngularFirestore,
+    private afStorage: AngularFireStorage
+  ) {}
 
   updatePersonalData(
     uid: string,
@@ -67,5 +78,30 @@ export class UserProfileService {
           experiences: updatedExp,
         });
       });
+  }
+
+  async uploadImg(img) {
+    let n = Date.now();
+    let imgNameArr = img.name.split('.');
+    let imgName = '';
+    for (let i = 0; i <= imgNameArr.length; i++) {
+      if (i == imgNameArr.length - 1) break;
+      else imgName += imgNameArr[i];
+    }
+    const filePath =
+      'UsersProfileImages/' +
+      imgName +
+      '_' +
+      (Math.random() * 1024 * 1024).toString(36).substring(2); //+ '-' + n;
+    const fileRef = this.afStorage.ref(filePath);
+    const task = await this.afStorage.upload(filePath, img);
+    return {
+      ref: fileRef,
+      task: task,
+    };
+  }
+
+  editUserAvatar(uid: string, url: string) {
+    this.db.collection('users-details').doc(uid).update({ avatar: url });
   }
 }

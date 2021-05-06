@@ -1,10 +1,10 @@
 <!-- <div class="container"> -->
-  <div class="row ml-5 mr-5 mt-5">
-    <div class="col-sm-8">
-      <app-profile-body></app-profile-body>
-    </div>
-    <div class="col-sm-4 pl-5">
-      <app-profile-side></app-profile-side>
-    </div>
+<div class="row ml-5 mr-5 mt-5">
+  <div class="col-sm-8">
+    <app-profile-body [uid]="uid"></app-profile-body>
   </div>
+  <div class="col-sm-4 pl-2">
+    <app-profile-side [uid]="uid"></app-profile-side>
+  </div>
+</div>
 <!-- </div> -->

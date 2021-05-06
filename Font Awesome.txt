@@ -21,3 +21,5 @@
 <i class="fas fa-flag"></i>
 <i class="fas fa-volume-mute"></i>
 <i class="fas fa-eye-slash"></i>
+<i class="fas fa-university"></i>
+<i class="fas fa-book-open"></i>

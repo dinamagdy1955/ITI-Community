@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { IUser } from '../ViewModel/ipost';
 
 @Injectable({
   providedIn: 'root'
@@ -11,32 +12,97 @@ export class GroupService {
   members: string[]
   admins: string[]
 
+
   constructor(private db: AngularFirestore) { }
-  getAllGroups() {
-    return this.db.collection('Groups').snapshotChanges();
+
+  getGroups() {
+    return this.db.collection('Groups2').snapshotChanges();
   }
 
   getGrpById(id) {
     return this.db.collection('Groups').doc(id).valueChanges();
   }
 
+  getGroupUsers(id) {
+    return {
+      admins: this.db.collection('Groups2').doc(id).collection('Admins').snapshotChanges(),
+      members: this.db.collection('Groups2').doc(id).collection('Members').snapshotChanges(),
+      subscribers: this.db.collection('Groups2').doc(id).collection('Subscribers').snapshotChanges(),
+    }
+  }
+
   sendRequest(user, id) {
-    this.subscribers = []
-    let sub1 = this.getGrpById(id).subscribe((res) => {
-      this.singleGroup = res
-      this.subscribers = this.singleGroup.subscriber
-      if (!this.singleGroup.subscriber.includes(user)) {
-        this.subscribers.push(user)
-      } else {
-        this.subscribers.splice(this.subscribers.indexOf(user), 1)
-      }
-      sub1.unsubscribe()
-      this.db.collection('Groups').doc(id).update({
-        subscriber: this.subscribers
-      })
-      console.log(this.subscribers)
+    this.db.collection('Groups2').doc(id).collection('Subscribers', ref => ref.where('__name__', '!=', user)).doc(user).set({
+      firstName: localStorage.getItem('firstName'),
+      lastName: localStorage.getItem('lastName'),
+      avatar: localStorage.getItem('avatar'),
+      jobTitle: localStorage.getItem('jobTitle'),
     })
   }
+
+  DeleteRequest(user, id) {
+    this.db.collection('Groups2').doc(id).collection('Subscribers', ref => ref.where('__name__', '==', user)).doc(user).delete()
+  }
+
+  leaveGroup(user, id) {
+    this.db.collection('Groups2').doc(id).collection('Members', ref => ref.where('__name__', '==', user)).doc(user).delete()
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  getAllGroups() {
+    return this.db.collection('Groups').snapshotChanges();
+  }
+
+
+
 
   updateRequests(user, id) {
     this.subscribers = []

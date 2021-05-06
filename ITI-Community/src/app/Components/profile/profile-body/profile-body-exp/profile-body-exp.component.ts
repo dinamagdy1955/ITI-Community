@@ -9,7 +9,8 @@ import { IExperience } from '../ViewModels/iexperience';
   styleUrls: ['./profile-body-exp.component.scss'],
 })
 export class ProfileBodyExpComponent implements OnInit {
-  @Input() experiences;
+  @Input() userExperiences;
+  uidLocal = localStorage.getItem('uid');
   today: string = new Date().toISOString().substring(0, 10);
   checked: boolean = false;
   addExperience: FormGroup;
@@ -59,8 +60,11 @@ export class ProfileBodyExpComponent implements OnInit {
     if (this.checked) {
       this.addExperience.value.to = 'present';
     }
-    this.experiences.push(this.addExperience.value);
-    this.us.addUserExp(localStorage.getItem('uid'), this.experiences);
+    this.userExperiences.experiences.push(this.addExperience.value);
+    this.us.addUserExp(
+      localStorage.getItem('uid'),
+      this.userExperiences.experiences
+    );
   }
 
   ch() {

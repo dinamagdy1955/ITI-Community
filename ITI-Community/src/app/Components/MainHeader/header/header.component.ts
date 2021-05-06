@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserProfileService } from '../../login/signInService/user-profile.service';
+import { UserProfileService } from '../../profile/Service/user-profile.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +9,13 @@ import { UserProfileService } from '../../login/signInService/user-profile.servi
 })
 export class HeaderComponent implements OnInit {
   toggleStatus: boolean = false;
+  public isMenuCollapsed = true;
   uid = localStorage.getItem('uid');
+  firstName: string = localStorage.getItem('firstName');
+  lastName: string = localStorage.getItem('lastName');
+  jobTitle: string = localStorage.getItem('jobTitle');
+  avatar: string = localStorage.getItem('avatar');
+
   constructor(
     private router: Router,
     private userProfile: UserProfileService
@@ -21,24 +27,7 @@ export class HeaderComponent implements OnInit {
     this.toggleStatus = !this.toggleStatus;
   }
   signOut() {
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('uid');
-    this.userProfile.existUserData = {
-      isPeople: true,
-      isAccepted: false,
-      isRemoved: false,
-      isReported: false,
-      reports: [],
-      firstName: '',
-      lastName: '',
-      jobTitle: '',
-      about: '',
-      branch: -1,
-      track: -1,
-      experiences: [],
-      friendList: [],
-    };
-    localStorage.removeItem('userData');
+    localStorage.clear();
     this.router.navigate(['/Login']);
   }
 }

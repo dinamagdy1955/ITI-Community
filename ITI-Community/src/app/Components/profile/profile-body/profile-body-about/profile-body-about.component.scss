@@ -1,6 +1,9 @@
 .profile-card-border {
+  overflow: hidden; 
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 15px rgba(3, 3, 3, 0.2);
   border-radius: 10px;
-  border: 0.5px solid #c3c3c394;
 }
 .profile-about-p {
   font-size: 14px;
@@ -18,3 +21,13 @@
   font-size: 1.5rem;
   color: #901b20;
 }
+.profile-Card-Edit {
+  opacity: 0;
+  color: #801818;
+  transition:  0.8s;
+}
+.profile-Card-About:hover  .profile-Card-Edit 
+{
+  transition:  0.8s;
+  opacity: 1;
+ }

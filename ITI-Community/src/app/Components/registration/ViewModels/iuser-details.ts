@@ -11,7 +11,7 @@ export interface IUserDetails {
   about: string;
   experiences: IExperience[];
   friendList: [];
-  friendRequests ?:[
+  friendRequests ?:[];
+  avatar: string;
 
-  ];
 }

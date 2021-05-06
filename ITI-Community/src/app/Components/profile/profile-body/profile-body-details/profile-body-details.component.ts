@@ -1,9 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileService } from '../../Service/user-profile.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/firestore';
-
 @Component({
   selector: 'app-profile-body-details',
   templateUrl: './profile-body-details.component.html',
@@ -12,12 +10,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class ProfileBodyDetailsComponent implements OnInit {
   @Input() userDetails;
   editPersonalData: FormGroup;
-  imgUrl: string | ArrayBuffer = '../../../../../assets/nav-img.png';
+  uidLocal = localStorage.getItem('uid');
+  previewedImg = undefined;
   constructor(
     private modalService: NgbModal,
     private us: UserProfileService,
-    private FB: FormBuilder,
-    private fire: AngularFirestore
+    private FB: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -29,19 +27,8 @@ export class ProfileBodyDetailsComponent implements OnInit {
   }
 
   openImage(contentImg) {
+    this.previewedImg = undefined;
     this.modalService.open(contentImg, { size: 'lg' });
-  }
-
-  processFile(event) {
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      // read file as data url
-      reader.onload = (event) => {
-        // called once readAsDataURL is completed
-        this.imgUrl = event.target.result;
-      };
-    }
   }
 
   open(content) {
@@ -59,5 +46,24 @@ export class ProfileBodyDetailsComponent implements OnInit {
       this.editPersonalData.value.lastName,
       this.editPersonalData.value.jobTitle
     );
+  }
+
+  preview(files) {
+    var reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.previewedImg = reader.result;
+    };
+  }
+
+  async upload() {
+    const selectedImg = (<HTMLInputElement>document.getElementById('img'))
+      .files;
+    const img = await this.us.uploadImg(selectedImg[0]);
+    await img.ref.getDownloadURL().subscribe(async (url) => {
+      this.us.editUserAvatar(this.uidLocal, url);
+      localStorage.setItem('avatar', url);
+      this.userDetails.avatar = url;
+    });
   }
 }
