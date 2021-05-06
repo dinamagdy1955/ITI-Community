@@ -10,6 +10,26 @@ export class UserService {
   getUserData(uid): Observable<any> {
     return this.db.collection('users-details').doc(uid).snapshotChanges();
   }
+// ////////////////////////////////////
+getAllUserData() {
+  return this.db.collection('users-details').snapshotChanges();
+}
+
+getAllFriendRequests() {
+  return this.db.collection('users-details').snapshotChanges();
+}
+
+
+//friendList
+getAllFriendsList() {
+  return this.db.collection('users-details').snapshotChanges();
+}
+
+//create request
+create_NewRequest(uid,fn) {
+  const Request = { friendRequest: [{"firstName":fn,"id":uid,"reqState":false}] };
+  return this.db.collection('users-details').doc(uid).update({ ...Request });
+}
 
   getAllUsersData(): Observable<any> {
     return this.db.collection('users-details').snapshotChanges();
@@ -41,6 +61,7 @@ export class UserService {
   //       subUser.unsubscribe();
   //     });
 
+
   //this code for get users data by giving it array of users ids
 
   // let usersData = [];
@@ -54,4 +75,22 @@ export class UserService {
   //     sub.unsubscribe();
   //   });
   // });
+/*
+  // updateDoc(_id: string, _value: string) {
+  //   let doc = this.db.collection('users-details', ref => ref.where('id', '==', _id));
+  //   doc.snapshotChanges().pipe(
+  //     map(actions => actions.map(a => {                                                      
+  //       const data = a.payload.doc.data();
+  //       const id = a.payload.doc.id;
+  //       return { id, ...data };
+  //     }))).subscribe((_doc: any) => {
+  //      let id = _doc[0].payload.doc.id; //first result of query [0]
+  //      this.db.doc(`users-details/${id}`).update({rating: _value});
+  //     })
+  // }
+*/
+
+
 }
+
+

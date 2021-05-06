@@ -1,21 +1,24 @@
-<div class="media border p-3 postcontainer">
+<div class="media border p-3 ">
   <div class="media-body" style="align-items: center;color: #68161ad5; ">
     Industry leaders in Egypt you may know
     <a class="seeall" style="float: right;color: #b4272d;"> See all</a>
 
     <div class="W-100%"><br></div>
-    <div class="row">
-      <div class="col-md-3 " style="align-items: center;padding: 8px;">
+    <div *ngIf="usersData !=undefined" class="row">
+      <div  *ngFor="let item of usersData" class="col-md-3 " style="align-items: center;padding: 8px;">
         <div class="card mb-3 " style="border-top: solid 70px #b4272d ;" >
           <img class="card-img-top mb-1" src="../../../../../assets/n.jpg" alt="Card image" style="width: 60%; border-radius: 50% ;margin-top: -50px;">
+         
           <div style="text-align: center">
-            <a href="#" style="color: black"><strong class="Name">Marwa Tag</strong>
+            <a routerLink="/profile/{{item.id}}"  style="color: black">
+              <strong class="Name">{{item.firstName}}</strong>
             </a>
             <br>
-            <span class="Job">Electrical power Engineer at SVU</span>
+            <span  class="Job">{{item.jobTitle}}</span>
             <br>
             <div class="W-100%"><br></div>
-            <button type="button" class="btn btn-outline-primary">
+            <button  style="width: 90px;" type="button" class="btn btn-outline-primary"
+              (click)="sendRequest(item.id,item.firstName)">
               Connect
             </button>
             <br>
@@ -23,63 +26,6 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 " style="align-items: center;padding: 8px;">
-        <div class="card mb-3 " style="border-top: solid 70px #b4272d ;" >
-          <img class="card-img-top mb-1" src="../../../../../assets/n.jpg" alt="Card image" style="width: 60%; border-radius: 50% ;margin-top: -50px;">
-          <div style="text-align: center">
-            <a href="#" style="color: black"><strong class="Name">Marwa Tag</strong>
-            </a>
-            <br>
-            <span class="Job">Electrical power Engineer at SVU</span>
-            <br>
-            <div class="W-100%"><br></div>
-            <button type="button" class="btn btn-outline-primary">
-              Connect
-            </button>
-            <br>
-            <div class="W-100%"><br></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 " style="align-items: center;padding: 8px;">
-        <div class="card mb-3 " style="border-top: solid 70px #b4272d ;" >
-          <img class="card-img-top mb-1" src="../../../../../assets/n.jpg" alt="Card image" style="width: 60%; border-radius: 50% ;margin-top: -50px;">
-          <div style="text-align: center">
-            <a href="#" style="color: black"><strong class="Name">Marwa Tag</strong>
-            </a>
-            <br>
-            <span class="Job">Electrical power Engineer at SVU</span>
-            <br>
-            <div class="W-100%"><br></div>
-            <button type="button" class="btn btn-outline-primary">
-              Connect
-            </button>
-            <br>
-            <div class="W-100%"><br></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 " style="align-items: center;padding: 8px;">
-        <div class="card mb-3 " style="border-top: solid 70px #b4272d ;" >
-          <img class="card-img-top mb-1" src="../../../../../assets/n.jpg" alt="Card image" style="width: 60%; border-radius: 50% ;margin-top: -50px;">
-          <div style="text-align: center">
-            <a href="#" style="color: black"><strong class="Name">Marwa Tag</strong>
-            </a>
-            <br>
-            <span class="Job">Electrical power Engineer at SVU</span>
-            <br>
-            <div class="W-100%"><br></div>
-            <button type="button" class="btn btn-outline-primary">
-              Connect
-            </button>
-            <br>
-            <div class="W-100%"><br></div>
-          </div>
-        </div>
-      </div>
-
-
-
     </div>
   </div>
 </div>
