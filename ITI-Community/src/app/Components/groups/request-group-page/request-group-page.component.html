@@ -16,18 +16,21 @@
                             <h1 class="px-2 text-muted">Your Groups</h1>
                             <ul class="list-group list-group-flush" *ngFor="let g of GroupList">
                                 <li class="list-group-item"
-                                    *ngIf="g.members.includes(userID) || g.admin.includes(userID)">
+                                    *ngIf="g.member.includes(userID) || g.admin.includes(userID)">
                                     <div class="media">
                                         <img class="mr-3" [src]="g.ImgURL" alt="" width="64px">
                                         <div class="media-body">
                                             <h6 class="mt-2 mb-1">
                                                 <a routerLink="/Group/group-profile/{{g.id}}">{{g.Name}}</a>
                                             </h6>
-                                            <small class="text-muted"><span>{{g.members.length}}</span> members</small>
+                                            <small class="text-muted"><span>{{g.Specialty}}</span></small>
                                         </div>
-                                        <button class="btn btn-outline-danger btn-sm rounded-pill mt-3 px-3"
-                                            (click)='JoinOut(userID, g.id)'><i class="fas fa-sign-out-alt"></i> Leave
-                                        </button>
+                                        <div *ngIf="!g.admin.includes(userID)">
+                                            <button class="btn btn-outline-danger btn-sm rounded-pill mt-3 px-3"
+                                                (click)='leaveGroup(userID, g.id)'><i class="fas fa-sign-out-alt"></i>
+                                                Leave
+                                            </button>
+                                        </div>
                                     </div>
                                 </li>
                             </ul>
@@ -47,10 +50,10 @@
                                             <h6 class="mt-2 mb-1"><a
                                                     [routerLink]="['/Group/group-profile/{{g.id}}']">{{g.Name}}</a>
                                             </h6>
-                                            <small class="text-muted"><span>{{g.members.length}}</span> members</small>
+                                            <small class="text-muted"><span>{{g.Specialty}}</span> members</small>
                                         </div>
                                         <button type="button" class="btn btn-outline-dark btn-sm rounded-pill px-3 mt-3"
-                                            (click)='JoinOut(userID, g.id)'><i class="fas fa-undo"></i>
+                                            (click)='JoinOut(userID, g.id);'><i class="fas fa-undo"></i>
                                             Withdraw</button>
                                     </div>
                                 </li>
@@ -63,9 +66,7 @@
                         class="btn btn-sm btn-outline-primary rounded-pill px-3">Discover Groups</a>
                 </div>
             </ul>
-
             <div [ngbNavOutlet]="nav" class="mt-2"></div>
-
         </div>
     </div>
 </section>

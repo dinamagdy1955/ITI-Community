@@ -6,6 +6,7 @@ export interface IPost {
 }
 
 export interface IUser {
+    id: string,
     UserId: string,
     firstName: string,
     lastName: string,
