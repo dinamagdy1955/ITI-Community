@@ -3,7 +3,7 @@
         <div class="profile-group-header rounded">
             <img src="../../../../assets/1200x400.jpg" class="img-fluid rounded" alt="" srcset="">
             <div class="profile-group-img">
-                <img [src]="Group.ImgURL" class="img-thumbnail rounded-circle mx-3" width="150px" alt="">
+                <img [src]="Group.Img" class="img-thumbnail rounded-circle mx-3" width="150px" alt="">
             </div>
             <div class="float-right">
                 <a class="btn"><i class="far fa-bell"></i></a>
@@ -25,15 +25,12 @@
         <span class="text-muted"><i class="fas fa-users ml-4 mr-2 mb-4"></i>Listed Group</span>
     </section>
     <section class="write-post-on-group mt-3"
-        *ngIf="Group.admin.includes(userID) || Group.members.includes(userID); else messegeBlock">
+        *ngIf="admin.includes(userID) || member.includes(userID); else messegeBlock">
         <div class="media border p-3 postcontainer" style="background-color: white;  border-radius: .5em">
             <div class="media-body" style="  align-items: center;">
-                <div>
-                    <!-- The Modal -->
-                    <img src="../../../../assets/nav-img.png" style="width:10%;height: auto;" alt="John Doe"
-                        class="mr-3 mt-3 rounded-circle">
-                    <app-write-box-model [SelectedGroupId]="GroupId"></app-write-box-model>
-                </div>
+                <img src="../../../../assets/nav-img.png" style="width:10%;height: auto;" alt="John Doe"
+                    class="mr-3 mt-3 rounded-circle">
+                <app-write-box-model [SelectedGroupId]="GroupId"></app-write-box-model>
                 <div class="W-100%"><br></div>
                 <div style="width: 100%; text-align:center; ">
                     <a class="postIconsHover">
@@ -78,8 +75,9 @@
                 Send
                 Request To
                 <a (click)="requestToJoin(userID, GroupId)" class="font-weight-bold btn p-0">
-                    <span *ngIf="Group.subscriber.includes(userID)">Cancel</span>
-                    <span *ngIf="!Group.subscriber.includes(userID)">Join Us</span>
+                    <span *ngIf="subscribe.includes(userID)">Cancel</span>
+                    <span *ngIf="!subscribe.includes(userID)">Join
+                        Us</span>
                 </a>
             </ngb-alert>
         </p>
