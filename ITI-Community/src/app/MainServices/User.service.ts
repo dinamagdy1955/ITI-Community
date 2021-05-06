@@ -108,7 +108,7 @@ create_NewRequest(uid) {
      "reqState":false};
      this.db.collection('users-details').doc(data.id).collection('MySentfriendRequests').doc(uid).set({ uid})
    this.db.collection('users-details').doc(uid).collection('friendRequest').doc(data.id).set({ ...Request })
-   return
+   
 }
 
   getAllUsersData(): Observable<any> {

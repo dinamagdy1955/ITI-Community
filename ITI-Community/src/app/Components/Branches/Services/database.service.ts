@@ -19,4 +19,10 @@ export class BranchDatabaseService {
       });
     return branches;
   }
+  getBrancheById(id):any {
+    return this.db
+      .collection('Branches')
+      .doc(id).get()
+  }
+
 }

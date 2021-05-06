@@ -8,6 +8,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/MainServices/User.service';
+import { BranchDatabaseService } from '../../Branches/Services/database.service';
+import { TrackDatabaseService } from '../../Tracks/Services/database.service';
 import { IUserProfileData } from './ViewModels/iuser-profile-data';
 
 @Component({
@@ -27,6 +29,8 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
     lastName: '',
     jobTitle: '',
     avatar: '',
+    branch:"",
+    track:"",
   };
   UserExperiences = {
     id: '',
@@ -34,7 +38,7 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
   };
   @Input() uid;
   uidLocal = localStorage.getItem('uid');
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router, private br :BranchDatabaseService, private tr :TrackDatabaseService) {}
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges): void {
     if (this.uid != undefined) {
@@ -70,6 +74,15 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
                 this.UserDetails.lastName = this.userData.lastName;
                 this.UserDetails.avatar = this.userData.avatar;
                 this.UserDetails.jobTitle = this.userData.jobTitle;
+                 this.br.getBrancheById(this.userData.branch).subscribe((res) => {
+                  this.UserDetails.branch = res.data()["name"] ;
+                 }
+
+                 );
+                
+                this.tr.getTrackById(this.userData.track).subscribe((res)=>{
+                  this.UserDetails.track = res.data()["name"] ;
+                })
                 this.UserExperiences.id = this.uid;
                 this.UserExperiences.experiences = this.userData.experiences;
               });
