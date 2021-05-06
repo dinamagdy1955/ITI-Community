@@ -1,7 +1,7 @@
 <section class="container sec_container mt-3">
   <div class="container" style="background-color: white">
     <div class="row rowBB">
-      <h5 class="pt-3" style="color: #b4272d">17 Connections</h5>
+      <h5 class="pt-3" style="color: #b4272d">{{frindsList.length}} connects</h5>
       <ul _ngcontent-exd-c114="" class="list-group list-group-flush">
         <li _ngcontent-exd-c114="" class="list-group-item">
           <div _ngcontent-exd-c114="" class="media">
@@ -47,7 +47,7 @@
             <div _ngcontent-exd-c114="" class="media">
               <img
                 _ngcontent-exd-c114=""
-                src="../../../../assets/fiver.jpg"
+                src= {{item.avatar}} 
                 alt=""
                 width="70px"
                 class="mr-3"
@@ -56,7 +56,7 @@
               <div class="media-body">
                 <h6  class="mt-2 mb-1 UserName">
                   <a   routerLink="/profile/{{item.id}}">
-                    {{item.firstName}}
+                    {{item.firstName}}  {{item.lastName}}
         
                   </a>
                 </h6>
@@ -85,8 +85,8 @@
                     <i class="fas fa-ellipsis-h dots"></i>
                   </button>
                   <div class="dropdown-menu" ngbDropdownMenu>
-                    <button ngbDropdownItem>
-                      <i class="fas fa-trash-alt"></i>
+                    <button ngbDropdownItem (click)="DeleteFriend(item.id)" >
+                  <i class="fas fa-trash-alt">   Delete  </i>
                     </button>
                   </div>
                 </div>

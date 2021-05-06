@@ -7,7 +7,7 @@ import { UserService } from 'src/app/MainServices/User.service';
   styleUrls: ['./connections.component.scss']
 })
 export class ConnectionsComponent implements OnInit {
-  frindsList:any[]
+  frindsList:any[]=[]
   constructor(
     private usrs:UserService,
   ) { }
@@ -20,9 +20,10 @@ export class ConnectionsComponent implements OnInit {
       this.frindsList = data.map(e => {
         return {
           id: e.payload.doc.id,
-          friendList:e.payload.doc.data()['friendList'],
-          firstName: e.payload.doc.data()['firstName']+' '+e.payload.doc.data()['lastName'],
+          firstName: e.payload.doc.data()['firstName'],
+          lastName:e.payload.doc.data()['lastName'],
           jobTitle: e.payload.doc.data()['jobTitle'],
+          avatar:e.payload.doc.data()['avatar'],
         };
       
       });
@@ -36,5 +37,9 @@ export class ConnectionsComponent implements OnInit {
 
 
   }
+  DeleteFriend(id){
+    this.usrs.deleteFriend(id)
+  }
+
 
 }

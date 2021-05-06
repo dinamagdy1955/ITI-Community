@@ -5,19 +5,19 @@
       Add your feed
     </h4>
   </div>
-  <div class="card  " >
+  <div class="card "*ngFor="let item of usersData " >
     <div class="row g-0">
 
       <div class="col-md-4 m-1" style=" padding-right: 0px;">
-        <img class="card-img-top" src="../../../../assets/2.png"alt="Card image" />
+        <img class="card-img-top" src={{item.avatar}} alt="Card image" />
       </div>
 
       <div class="col-md-7" style="margin: 0px;padding: 0px;">
         <div class="card-body pb-0 LineHeight"style="padding-left: 0px;padding-right:2px; text-align: center;" >
 
-          <h6  class="card-title m-0 nameH6">EISAC Automation</h6>
+          <h6  class="card-title m-0 nameH6" *ngIf="i==3">{{item.firstName}}</h6>
           <p class="card-text mb-2"> 
-             <small class="jobSmall"> EISAC Automation Egypt </small>
+             <small class="jobSmall" > {{item.jobTitle}} </small>
              </p>
          <button data-control-name="sidebar_follow_actor_follow_toggle" aria-pressed="false" aria-label="Follow"
             id="ember135"
@@ -25,64 +25,12 @@
           ><span  aria-hidden="true"><i class="fas fa-plus"></i> Follow</span>
         </button>
 
-
-
         </div>
       </div>
     </div>
+    <hr>
   </div>
-  <div class="card  " >
-    <div class="row g-0">
 
-      <div class="col-md-4 m-1" style=" padding-right: 0px;">
-        <img class="card-img-top" src="../../../../assets/2.png"alt="Card image" />
-      </div>
-
-      <div class="col-md-7" style="margin: 0px;padding: 0px;">
-        <div class="card-body pb-0 LineHeight"style="padding-left: 0px;padding-right:2px; text-align: center;" >
-
-          <h6  class="card-title m-0 nameH6">EISAC Automation</h6>
-          <p class="card-text mb-2"> 
-             <small class="jobSmall"> EISAC Automation Egypt </small>
-             </p>
-         <button data-control-name="sidebar_follow_actor_follow_toggle" aria-pressed="false" aria-label="Follow"
-            id="ember135"
-            class="follow ember-view feed-follows-module-recommendation__follow-btn artdeco-button artdeco-button--secondary artdeco-button--2 artdeco-button--muted"
-          ><span  aria-hidden="true"><i class="fas fa-plus"></i> Follow</span>
-        </button>
-
-
-
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="card mb-3 " >
-    <div class="row g-0">
-
-      <div class="col-md-4 m-1" style=" padding-right: 0px;">
-        <img class="card-img-top" src="../../../../assets/2.png"alt="Card image" />
-      </div>
-
-      <div class="col-md-7" style="margin: 0px;padding: 0px;">
-        <div class="card-body pb-0 LineHeight"style="padding-left: 0px;padding-right:2px; text-align: center;" >
-
-          <h6  class="card-title m-0 nameH6">EISAC Automation</h6>
-          <p class="card-text mb-2"> 
-             <small class="jobSmall"> EISAC Automation Egypt </small>
-             </p>
-         <button data-control-name="sidebar_follow_actor_follow_toggle" aria-pressed="false" aria-label="Follow"
-            id="ember135"
-            class="follow ember-view feed-follows-module-recommendation__follow-btn artdeco-button artdeco-button--secondary artdeco-button--2 artdeco-button--muted"
-          ><span  aria-hidden="true"><i class="fas fa-plus"></i> Follow</span>
-        </button>
-
-
-
-        </div>
-      </div>
-    </div>
-  </div>
 
 
 
