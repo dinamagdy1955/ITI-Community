@@ -4,14 +4,15 @@
             <h1 class="text-muted py-2">Discover Groups</h1>
             <div id="GroupsDiscover" class="Groups-content-display1">
                 <ul class="list-group list-group-flush" *ngFor="let g of GroupList">
-                    <li class="list-group-item"
-                        *ngIf="!g.members.includes(userID) && !g.admin.includes(userID) && !g.subscriber.includes(userID)">
+                    <li class="list-group-item" *ngIf="!g.users.includes(userID)">
                         <div class="media">
-                            <img class="mr-3" [src]="g.ImgURL" alt="" width="64px">
+                            <img class="mr-3" [src]="g.Img" alt="" width="64px">
                             <div class="media-body">
-                                <h6 class="mt-2 mb-1"><a routerLink="/Group/group-profile/{{g.id}}">{{g.Name}}</a>
+                                <h6 class="mt-0 mb-1"><a class="text-decoration-none"
+                                        routerLink="/Group/group-profile/{{g.id}}">{{g.Name}}</a>
                                 </h6>
-                                <small class="text-muted"><span>{{g.members.length}}</span> members</small>
+                                <small class="text-muted">{{g.Specialty}}</small><br>
+                                <small class="text-muted"><span>{{g.users.length}}</span> members</small>
                             </div>
                             <button class="btn btn-outline-success btn-sm rounded-pill px-3 mt-3"
                                 (click)="sendRequest(userID, g.id)">Request To Join</button>

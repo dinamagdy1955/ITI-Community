@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/MainServices/User.service';
 
 @Component({
   selector: 'app-manag-my-network-card',
@@ -6,10 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./manag-my-network-card.component.scss']
 })
 export class ManagMyNetworkCardComponent implements OnInit {
+  frindsList:any[]=[];
+  constructor(
+private usrs:UserService
 
-  constructor() { }
+  ) { }
 
   ngOnInit(): void {
-  }
+    this.usrs.getAllFriendsList().subscribe(data => {
+     this.frindsList= data.map(e =>
+       {
+         let id= e.payload.doc.id
+        return id
+        
+       
+      }
+      );
+    })
 
+}
 }
