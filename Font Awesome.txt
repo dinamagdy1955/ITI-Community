@@ -9,6 +9,8 @@
 <i class="fab fa-facebook-square"></i>
 <i class="fas fa-user-friends"></i>
 <i class="fas fa-comments"></i>
+<i class="fas fa-comment"></i>
+<i class="fas fa-user-plus"></i>
 
 <i class="far fa-file-alt "></i>
 <i class="far fa-calendar-check"> </i>
