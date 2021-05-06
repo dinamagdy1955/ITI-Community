@@ -9,7 +9,7 @@ import { UserService } from 'src/app/MainServices/User.service';
   styleUrls: ['./network-sugesstion-card.component.scss']
 })
 export class NetworkSugesstionCardComponent implements OnInit {
-  usersData:any[]
+  usersinCardData:any[]
   friendRequest:any[]
   firstName:'marwa';
     lastName:'taag';
@@ -20,9 +20,66 @@ export class NetworkSugesstionCardComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.usrs.getAllUserData().subscribe(data => {
+
+  
+      let friendData:any[];
+      let  Requests:any[];
+  
+    let uid=localStorage.getItem("uid");
+    this.usrs.getAllFriendRequests().subscribe(data => {
+      Requests= data.map(e => {
+       // if(e.payload.doc.id)
+      let id= e.payload.doc.id
+        return id
+        
+       
+      });
+      console.log(Requests);
+    
+      this.usrs.getAllFriendsList().subscribe(data => {
+       friendData= data.map(e => {
+        // if(e.payload.doc.id)
+       let id= e.payload.doc.id
+         return id
+         
+        
+       });
+       console.log(friendData);
+
+     this.usrs.notINCard(Requests.concat(friendData)).subscribe(data =>{
+      this.usersinCardData= data.map(e => {
+       
+         return {
+          id:e.payload.doc.id,
+          firstName: e.payload.doc.data()['firstName']+' '+e.payload.doc.data()['lastName'],
+          jobTitle: e.payload.doc.data()['jobTitle'],
+          avatar: e.payload.doc.data()['avatar'],
+          
+         }
+         
+        
+       });
+       console.log(friendData);
+     })
+       
+     });
+      
+    });
+    
+  
+    
+
+
+
+
+
+
+
+//////////////////////////////////////
+   /* this.usrs.getAllUserData().subscribe(data => {
 
       this.usersData = data.map(e => {
+       // if(e.payload.doc.id)
         return {
           id: e.payload.doc.id,
           firstName: e.payload.doc.data()['firstName']+' '+e.payload.doc.data()['lastName'],
@@ -35,49 +92,18 @@ export class NetworkSugesstionCardComponent implements OnInit {
       
     });
 
-
+*/
     ////////////////////////////////
    
 
     
 
   }
-  
-  // sendRequest() {
-    // this.usrs.getAllFriendRequests().subscribe(data => {
 
-    //   this.friendRequest = data.map(e => {
-    //     return {
-    //       id: e.payload.doc.id,
-    //       firstName: e.payload.doc.data()['firstName'],
-    //      // lastName: e.payload.doc.data()['lastName'],
-    //      // jobTitle: e.payload.doc.data()['jobTitle'],
-    //     };
-    //   });
-    //   console.log(this.friendRequest);
-    
-    // });
-// console.log("marwa")
-
-//  }
-sendRequest(id,fn) {
-  // console.log(id);
+sendRequest(id) {
    console.log(id);
-  let Request = {};
-  // Request['firstName'] = this.firstName;
-  // Request['lastName'] = this.lastName;
-// Request['id'] = this.id;
-  this.usrs.create_NewRequest(id,fn);
-  // .then(resp => {
-  //   this.firstName = "marwa";
-  //  this.lastName = "taag";
-  //   this.id =id;
-  //   console.log(resp);
-  //   console.log("request done");
-  // })
-  //   .catch(error => {
-  //     console.log(error);
-  //   });
+  this.usrs.create_NewRequest(id);
+
 }
 
 
