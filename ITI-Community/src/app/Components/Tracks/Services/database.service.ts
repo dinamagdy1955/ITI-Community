@@ -34,4 +34,10 @@ export class TrackDatabaseService {
       });
     return durations;
   }
+  getTrackById(id):any {
+    return this.db
+      .collection('Tracks')
+      .doc(id).get()
+  }
+
 }

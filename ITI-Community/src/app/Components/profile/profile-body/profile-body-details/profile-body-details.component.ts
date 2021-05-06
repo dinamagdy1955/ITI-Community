@@ -2,6 +2,8 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileService } from '../../Service/user-profile.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { BranchDatabaseService } from 'src/app/Components/Branches/Services/database.service';
+import { UserService } from 'src/app/MainServices/User.service';
 @Component({
   selector: 'app-profile-body-details',
   templateUrl: './profile-body-details.component.html',
@@ -12,11 +14,16 @@ export class ProfileBodyDetailsComponent implements OnInit {
   editPersonalData: FormGroup;
   uidLocal = localStorage.getItem('uid');
   previewedImg = undefined;
+  branch;
+  track="";
   constructor(
     private modalService: NgbModal,
     private us: UserProfileService,
-    private FB: FormBuilder
-  ) {}
+    private FB: FormBuilder,
+    private ur: UserService
+  ) {
+  
+  }
 
   ngOnInit() {
     this.editPersonalData = this.FB.group({
@@ -24,7 +31,11 @@ export class ProfileBodyDetailsComponent implements OnInit {
       lastName: this.userDetails.lastName,
       jobTitle: this.userDetails.jobTitle,
     });
-  }
+ console.log(this.userDetails.branch);
+  
+    
+    }
+  
 
   openImage(contentImg) {
     this.previewedImg = undefined;
@@ -65,5 +76,8 @@ export class ProfileBodyDetailsComponent implements OnInit {
       localStorage.setItem('avatar', url);
       this.userDetails.avatar = url;
     });
+  }
+  addRequset(){
+this.ur.create_NewRequest(this.userDetails.id)
   }
 }

@@ -16,23 +16,17 @@ export class RegistrationService {
     private router: Router
   ) {}
 
-  async registerInDB(
-    uid,
-    NewUserBasic: IUserBasics,
-    newUserDetails: IUserDetails
-  ) {
+  registerInDB(uid, NewUserBasic: IUserBasics, newUserDetails: IUserDetails) {
     this.db.collection('users-basics').doc(uid).set(NewUserBasic);
     this.db.collection('users-details').doc(uid).set(newUserDetails);
-    (
-      await this.auth.signInWithEmailAndPassword(
-        NewUserBasic.email,
-        NewUserBasic.password
-      )
-    ).user
-      .sendEmailVerification()
+    this.auth
+      .signInWithEmailAndPassword(NewUserBasic.email, NewUserBasic.password)
       .then((res) => {
-        this.router.navigate(['/Login']);
-        return SignInAuthError.Correct;
+        console.log(res);
+        res.user.sendEmailVerification().then(() => {
+          this.router.navigate(['/Login']);
+          return SignInAuthError.Correct;
+        });
       });
   }
 
@@ -50,7 +44,6 @@ export class RegistrationService {
           )
           .then(async (responce) => {
             this.registerInDB(responce.user.uid, NewUserBasic, newUserDetails);
-            //result = 'auth/correct';
           })
           .catch((error) => {
             result = error.code;
@@ -67,37 +60,8 @@ export class RegistrationService {
             }
           });
       } else {
-        this.db
-          .collection('users-basics', (ref) =>
-            ref.where('email', '==', NewUserBasic.email)
-          )
-          .get()
-          .subscribe((responce) => {
-            if (responce.docs.length == 0) {
-              this.db
-                .collection('admins', (ref) =>
-                  ref.where('email', '==', NewUserBasic.email)
-                )
-                .get()
-                .subscribe((res) => {
-                  res.docs.map((admin) => {
-                    this.registerInDB(admin.id, NewUserBasic, newUserDetails);
-                  });
-                });
-            }
-          });
+        return SignInAuthError.EmailAlreadyInUse;
       }
     });
-
-    /*(result)=>{
-      switch (result) {
-        case 'auth/wrong-password':
-          return SignInAuthError.WrongPassword;
-        case 'auth/user-not-found':
-          return SignInAuthError.UserNotFound;
-        case 'auth/invalid-email':
-          return SignInAuthError.InvalidEmail;
-      }
-    }*/
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/MainServices/User.service';
 
 @Component({
   selector: 'app-connections',
@@ -6,10 +7,39 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./connections.component.scss']
 })
 export class ConnectionsComponent implements OnInit {
-
-  constructor() { }
+  frindsList:any[]=[]
+  constructor(
+    private usrs:UserService,
+  ) { }
 
   ngOnInit(): void {
+
+
+    this.usrs.getAllFriendsList().subscribe(data => {
+
+      this.frindsList = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          firstName: e.payload.doc.data()['firstName'],
+          lastName:e.payload.doc.data()['lastName'],
+          jobTitle: e.payload.doc.data()['jobTitle'],
+          avatar:e.payload.doc.data()['avatar'],
+        };
+      
+      });
+      
+      console.log(this.frindsList);
+           
+    
+      
+      
+    });
+
+
   }
+  DeleteFriend(id){
+    this.usrs.deleteFriend(id)
+  }
+
 
 }

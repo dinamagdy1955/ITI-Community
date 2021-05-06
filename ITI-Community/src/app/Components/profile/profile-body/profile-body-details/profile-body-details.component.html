@@ -30,32 +30,7 @@
       </ng-template>
     </ng-template>
     <ng-template #visitor>
-      <img class="img-fluid" [src]="userDetails.avatar">
-    </ng-template>
-
-    <ng-template #contentImg let-modal>
-      <div class="modal-header">
-        <span class="modalHeaderIcon">
-          <i class="fas fa-images"></i>
-        </span>
-        <h4 class="modal-title" id="modal-basic-title">Edit Profile Image</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div>
-          <img class="modalImg" [src]="previewedImg||this.userDetails.avatar">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="fileInput.click()">
-          <span><i class="fas fa-edit"></i></span>
-          <input #fileInput id="img" type="file" style="display:none;" accept=".png,.jpg"
-            (change)="preview(fileInput.files)" />
-        </button>
-        <button type="submit" class="btn btn-outline-dark" (click)="upload();modal.close('Save click');">Save</button>
-      </div>
+      <img class="img-fluid" [src]="this.userDetails.avatar">
     </ng-template>
 
     <div class="card-body mt-4 profile-Card-UserDetails" style="overflow-y: auto">
@@ -64,7 +39,7 @@
           <div class="col-sm-11">
             <h4 class="user-Name card-title">{{userDetails.firstName}} {{userDetails.lastName}}</h4>
             <p class="user-JobTitel">{{userDetails.jobTitle}}</p>
-            <p class="user-JobTitel"><i class="fas fa-university"></i>bransh  <i class="fas fa-book-open"></i> track</p>
+            <p class="user-JobTitel"><i class="fas fa-university"></i>{{userDetails.branch}}  <i class="fas fa-book-open"></i> {{userDetails.track}}</p>
           </div>
           <div class="col-sm-1">
             <ng-template #content let-modal>
@@ -100,7 +75,14 @@
                 </div>
               </form>
             </ng-template>
-            <a class="profile-Card-Edit" (click)="open(content)" *ngIf="uidLocal == userDetails.id"><i class="fas fa-user-edit"></i></a>
+            <div></div>
+            <a class="profile-Card-Edit" (click)="open(content)" *ngIf="uidLocal == userDetails.id ;else visitorInvite"><i class="fas fa-user-edit"></i></a>
+            <ng-template #visitorInvite>
+              <div class="d-flex ">
+                <a type="button" class="profile-Card-Edit pt-2" [routerLink]="['/Messages']"><i class="fas fa-comment"></i></a>
+              <a type="button" class="profile-Card-Edit p-2" (click)="addRequset()"><i class="fas fa-user-plus"></i></a>
+            </div>
+            </ng-template>
           </div>
         </div>
       </div>
