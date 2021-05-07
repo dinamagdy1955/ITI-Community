@@ -29,8 +29,9 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
     lastName: '',
     jobTitle: '',
     avatar: '',
-    branch:"",
-    track:"",
+    branch: "",
+    track: "",
+    request:[]
   };
   UserExperiences = {
     id: '',
@@ -38,8 +39,8 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
   };
   @Input() uid;
   uidLocal = localStorage.getItem('uid');
-  constructor(private userService: UserService, private router: Router, private br :BranchDatabaseService, private tr :TrackDatabaseService) {}
-  ngOnInit() {}
+  constructor(private userService: UserService, private router: Router, private br: BranchDatabaseService, private tr: TrackDatabaseService,private main:UserService) { }
+  ngOnInit() { }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.uid != undefined) {
       let sub1 = this.userService
@@ -74,16 +75,25 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
                 this.UserDetails.lastName = this.userData.lastName;
                 this.UserDetails.avatar = this.userData.avatar;
                 this.UserDetails.jobTitle = this.userData.jobTitle;
-                 this.br.getBrancheById(this.userData.branch).subscribe((res) => {
-                  this.UserDetails.branch = res.data()["name"] ;
-                 }
+                this.br.getBrancheById(this.userData.branch).subscribe((res) => {
+                  this.UserDetails.branch = res.data()["name"];
+                }
 
-                 );
-                
-                this.tr.getTrackById(this.userData.track).subscribe((res)=>{
-                  this.UserDetails.track = res.data()["name"] ;
+                );
+
+                this.tr.getTrackById(this.userData.track).subscribe((res) => {
+                  this.UserDetails.track = res.data()["name"];
                 })
+                this.main.getFriendRequests(this.uid).subscribe(data=>{
+                  this.UserDetails.request= data.map(e =>
+                    {
+                      let id= e.payload.doc.id
+                     return id
+                    } 
+                )
+              })
                 this.UserExperiences.id = this.uid;
+
                 this.UserExperiences.experiences = this.userData.experiences;
               });
           }
