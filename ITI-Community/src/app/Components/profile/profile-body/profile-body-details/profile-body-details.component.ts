@@ -16,6 +16,7 @@ export class ProfileBodyDetailsComponent implements OnInit {
   previewedImg = undefined;
   branch;
   track="";
+  friendsRequest=[];
   constructor(
     private modalService: NgbModal,
     private us: UserProfileService,
@@ -31,9 +32,6 @@ export class ProfileBodyDetailsComponent implements OnInit {
       lastName: this.userDetails.lastName,
       jobTitle: this.userDetails.jobTitle,
     });
- console.log(this.userDetails.branch);
-  
-    
     }
   
 
@@ -80,4 +78,5 @@ export class ProfileBodyDetailsComponent implements OnInit {
   addRequset(){
 this.ur.create_NewRequest(this.userDetails.id)
   }
+
 }

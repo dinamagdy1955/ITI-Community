@@ -43,6 +43,11 @@ getAllFriendRequests() {
   
 }
 
+getFriendRequests(uid)
+{
+  return this.db.collection('users-details').doc(uid).collection('friendRequest').snapshotChanges()
+}
+
 // Ignore friend Request
 ignore(id){
   let uid=localStorage.getItem("uid");
