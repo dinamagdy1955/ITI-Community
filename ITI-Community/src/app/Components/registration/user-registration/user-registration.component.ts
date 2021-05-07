@@ -5,7 +5,13 @@ import { RegistrationService } from '../Service/registration.service';
 import { SignInAuthError } from '../../login/signInInterface/sign-in-auth-error';
 import { IUserBasics } from '../ViewModels/iuser-basics';
 import { IUserDetails } from '../ViewModels/iuser-details';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { formatCurrency } from '@angular/common';
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
@@ -13,7 +19,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class UserRegistrationComponent implements OnInit {
   registerNewUser: FormGroup;
-
   branches = [];
   tracks = [];
   durations = [];
@@ -27,50 +32,47 @@ export class UserRegistrationComponent implements OnInit {
     this.tracks = this.trackDB.getTracksData();
     this.durations = this.trackDB.getScholarshipDurations();
     this.registerNewUser = this.FB.group({
-      firstName: [
-        '',
-        // [
-        //   // Validators.required,
-        //   // Validators.pattern(/[a-zA-Z]{3,}/)
-        // ],
-      ],
-      lastName: [
-        '',
-        // [
-        //   // Validators.required,
-        //   // Validators.pattern(/[a-zA-Z]{3,}/)
-        // ],
-      ],
-      nationalID: [
-        '',
-        // [
-        //   Validators.required,
-        //   // Validators.pattern(/^[0-9]{14}$/)/)
-        // ],
-      ],
-      email: [
-        '',
-        // [
-        //   Validators.required,
-        //   // Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{3,4}$/),
-        // ],
-      ],
-      password: [
-        '',
-        // Validators.required
-      ],
-      branch: [
-        -1,
-        // [Validators.required, Validators.pattern(/[0-9]{1,2}/)]
-      ],
-      track: [
-        -1,
-        // [Validators.required, Validators.pattern(/[0-9]{1,2}/)]
-      ],
-      scholar: [
-        -1,
-        // [Validators.required, Validators.pattern(/[0-9]{1,2}/)]
-      ],
+      firstName: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]{3,}$/),
+        Validators.minLength(3),
+      ]),
+      lastName: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]\s{0,1}[a-zA-Z]{3,}$/),
+        Validators.minLength(3),
+      ]),
+      nationalID: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[0-9]{14}$/),
+      ]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{3,4}$/),
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z][a-zA-Z0-9]{7,} $/),
+        Validators.minLength(8),
+      ]),
+      branch: new FormControl(-1, [
+        Validators.required,
+        Validators.pattern(/[0-9]{1,2}/),
+        Validators.min(1),
+        Validators.max(100),
+      ]),
+      track: new FormControl(-1, [
+        Validators.required,
+        Validators.pattern(/[0-9]{1,2}/),
+        Validators.min(1),
+        Validators.max(100),
+      ]),
+      scholar: new FormControl(-1, [
+        Validators.required,
+        Validators.pattern(/[0-9]{1,2}/),
+        Validators.min(1),
+        Validators.max(100),
+      ]),
     });
   }
 
@@ -83,7 +85,6 @@ export class UserRegistrationComponent implements OnInit {
         invalid.push(name);
       }
     }
-
     console.log(invalid);
 
     if (this.registerNewUser.valid) {

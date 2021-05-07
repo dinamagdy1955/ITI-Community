@@ -3,16 +3,15 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { IUser } from '../ViewModel/ipost';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GroupService {
+  singleGroup;
+  subscribers: string[];
+  members: string[];
+  admins: string[];
 
-  singleGroup
-  subscribers: string[]
-  members: string[]
-  admins: string[]
-
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore) {}
 
   getGroups() {
     return this.db.collection('Groups2').snapshotChanges();
@@ -24,148 +23,207 @@ export class GroupService {
 
   getGroupUsers(id) {
     return {
-      admins: this.db.collection('Groups2').doc(id).collection('Admins').snapshotChanges(),
-      members: this.db.collection('Groups2').doc(id).collection('Members').snapshotChanges(),
-      subscribers: this.db.collection('Groups2').doc(id).collection('Subscribers').snapshotChanges(),
-    }
+      admins: this.db
+        .collection('Groups2')
+        .doc(id)
+        .collection('Admins')
+        .snapshotChanges(),
+      members: this.db
+        .collection('Groups2')
+        .doc(id)
+        .collection('Members')
+        .snapshotChanges(),
+      subscribers: this.db
+        .collection('Groups2')
+        .doc(id)
+        .collection('Subscribers')
+        .snapshotChanges(),
+    };
   }
 
   sendRequest(user, id) {
-    this.db.collection('Groups2').doc(id).collection('Subscribers', ref => ref.where('__name__', '!=', user)).doc(user).set({
-      firstName: localStorage.getItem('firstName'),
-      lastName: localStorage.getItem('lastName'),
-      avatar: localStorage.getItem('avatar'),
-      jobTitle: localStorage.getItem('jobTitle'),
-    })
+    this.db
+      .collection('Groups2')
+      .doc(id)
+      .collection('Subscribers', (ref) => ref.where('__name__', '!=', user))
+      .doc(user)
+      .set({
+        firstName: localStorage.getItem('firstName'),
+        lastName: localStorage.getItem('lastName'),
+        avatar: localStorage.getItem('avatar'),
+        jobTitle: localStorage.getItem('jobTitle'),
+      });
   }
 
   DeleteRequest(user, id) {
-    this.db.collection('Groups2').doc(id).collection('Subscribers', ref => ref.where('__name__', '==', user)).doc(user).delete()
+    this.db
+      .collection('Groups2')
+      .doc(id)
+      .collection('Subscribers', (ref) => ref.where('__name__', '==', user))
+      .doc(user)
+      .delete();
   }
 
   leaveGroup(user, id) {
-    this.db.collection('Groups2').doc(id).collection('Members', ref => ref.where('__name__', '==', user)).doc(user).delete()
+    this.db
+      .collection('Groups2')
+      .doc(id)
+      .collection('Members', (ref) => ref.where('__name__', '==', user))
+      .doc(user)
+      .delete();
   }
 
-
   updateMembers(user, id) {
-    console.log('Member to Admin')
-    this.db.collection('Groups2').doc(id).collection('Members').doc(user).snapshotChanges().subscribe(res => {
-      let switcher = res.payload.data();
-      if (switcher != undefined)
-        this.db.collection('Groups2').doc(id).collection('Admins', ref => ref.where('__name__', '!=', user)).doc(user).set(switcher)
-      if (user != undefined)
-        this.db.collection('Groups2').doc(id).collection('Members', ref => ref.where('__name__', '==', user)).doc(user).delete()
-    })
+    console.log('Member to Admin');
+    this.db
+      .collection('Groups2')
+      .doc(id)
+      .collection('Members')
+      .doc(user)
+      .snapshotChanges()
+      .subscribe((res) => {
+        let switcher = res.payload.data();
+        if (switcher != undefined)
+          this.db
+            .collection('Groups2')
+            .doc(id)
+            .collection('Admins', (ref) => ref.where('__name__', '!=', user))
+            .doc(user)
+            .set(switcher);
+        if (user != undefined)
+          this.db
+            .collection('Groups2')
+            .doc(id)
+            .collection('Members', (ref) => ref.where('__name__', '==', user))
+            .doc(user)
+            .delete();
+      });
   }
 
   ChangeMembers(user, id) {
-    this.db.collection('Groups2').doc(id).collection('Admins').doc(user).snapshotChanges().subscribe(res => {
-      let switcher = res.payload.data();
-      if (switcher != undefined)
-        this.db.collection('Groups2').doc(id).collection('Members', ref => ref.where('__name__', '!=', user)).doc(user).set(switcher)
-      if (user != undefined)
-        this.db.collection('Groups2').doc(id).collection('Admins', ref => ref.where('__name__', '==', user)).doc(user).delete()
-    })
+    this.db
+      .collection('Groups2')
+      .doc(id)
+      .collection('Admins')
+      .doc(user)
+      .snapshotChanges()
+      .subscribe((res) => {
+        let switcher = res.payload.data();
+        if (switcher != undefined)
+          this.db
+            .collection('Groups2')
+            .doc(id)
+            .collection('Members', (ref) => ref.where('__name__', '!=', user))
+            .doc(user)
+            .set(switcher);
+        if (user != undefined)
+          this.db
+            .collection('Groups2')
+            .doc(id)
+            .collection('Admins', (ref) => ref.where('__name__', '==', user))
+            .doc(user)
+            .delete();
+      });
   }
 
   updateRequests(user, id) {
-    this.db.collection('Groups2').doc(id).collection('Subscribers').doc(user).snapshotChanges().subscribe(res => {
-      let switcher = res.payload.data();
-      if (switcher != undefined)
-        this.db.collection('Groups2').doc(id).collection('Members', ref => ref.where('__name__', '!=', user)).doc(user).set(switcher)
-      if (user != undefined)
-        this.db.collection('Groups2').doc(id).collection('Subscribers', ref => ref.where('__name__', '==', user)).doc(user).delete()
-    })
+    this.db
+      .collection('Groups2')
+      .doc(id)
+      .collection('Subscribers')
+      .doc(user)
+      .snapshotChanges()
+      .subscribe((res) => {
+        let switcher = res.payload.data();
+        if (switcher != undefined)
+          this.db
+            .collection('Groups2')
+            .doc(id)
+            .collection('Members', (ref) => ref.where('__name__', '!=', user))
+            .doc(user)
+            .set(switcher);
+        if (user != undefined)
+          this.db
+            .collection('Groups2')
+            .doc(id)
+            .collection('Subscribers', (ref) =>
+              ref.where('__name__', '==', user)
+            )
+            .doc(user)
+            .delete();
+      });
   }
 
   changeSub(user, id) {
-    this.db.collection('Groups2').doc(id).collection('Members').doc(user).snapshotChanges().subscribe(res => {
-      let switcher = res.payload.data();
-      if (switcher != undefined)
-        this.db.collection('Groups2').doc(id).collection('Subscribers', ref => ref.where('__name__', '!=', user)).doc(user).set(switcher)
-      if (user != undefined)
-        this.db.collection('Groups2').doc(id).collection('Members', ref => ref.where('__name__', '==', user)).doc(user).delete()
-    })
+    this.db
+      .collection('Groups2')
+      .doc(id)
+      .collection('Members')
+      .doc(user)
+      .snapshotChanges()
+      .subscribe((res) => {
+        let switcher = res.payload.data();
+        if (switcher != undefined)
+          this.db
+            .collection('Groups2')
+            .doc(id)
+            .collection('Subscribers', (ref) =>
+              ref.where('__name__', '!=', user)
+            )
+            .doc(user)
+            .set(switcher);
+        if (user != undefined)
+          this.db
+            .collection('Groups2')
+            .doc(id)
+            .collection('Members', (ref) => ref.where('__name__', '==', user))
+            .doc(user)
+            .delete();
+      });
   }
 
   MembersRole(user, id, role) {
-    if (role === 'MemToAdm')
-      this.updateMembers(user, id)
-    else if (role === 'AdminToMember')
-      this.ChangeMembers(user, id)
-    else if (role === 'SubToMem')
-      this.updateRequests(user, id)
-    else if (role === 'MemToSub')
-      this.changeSub(user, id)
-    else
-      return
+    if (role === 'MemToAdm') this.updateMembers(user, id);
+    else if (role === 'AdminToMember') this.ChangeMembers(user, id);
+    else if (role === 'SubToMem') this.updateRequests(user, id);
+    else if (role === 'MemToSub') this.changeSub(user, id);
+    else return;
   }
 
   DeleteMembers(user, id, Role) {
     switch (Role) {
       case 'Admin':
-        this.db.collection('Groups2').doc(id).collection('Admins', ref => ref.where('__name__', '==', user)).doc(user).delete()
+        this.db
+          .collection('Groups2')
+          .doc(id)
+          .collection('Admins', (ref) => ref.where('__name__', '==', user))
+          .doc(user)
+          .delete();
         break;
       case 'Member':
-        this.db.collection('Groups2').doc(id).collection('Members', ref => ref.where('__name__', '==', user)).doc(user).delete()
+        this.db
+          .collection('Groups2')
+          .doc(id)
+          .collection('Members', (ref) => ref.where('__name__', '==', user))
+          .doc(user)
+          .delete();
         break;
       case 'Subscriber':
-        this.db.collection('Groups2').doc(id).collection('Subscribers', ref => ref.where('__name__', '==', user)).doc(user).delete()
+        this.db
+          .collection('Groups2')
+          .doc(id)
+          .collection('Subscribers', (ref) => ref.where('__name__', '==', user))
+          .doc(user)
+          .delete();
         break;
       default:
         break;
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   getAllGroups() {
     return this.db.collection('Groups').snapshotChanges();
   }
-
-
-
 
   // updateRequests(user, id) {
   //   this.subscribers = []
@@ -235,5 +293,4 @@ export class GroupService {
   //     })
   //   })
   // }
-
 }

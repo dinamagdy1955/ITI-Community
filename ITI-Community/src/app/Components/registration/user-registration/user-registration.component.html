@@ -9,42 +9,40 @@
             <form [formGroup]="registerNewUser" (ngSubmit)='register()'>
                 <div class="row">
                     <div class="col-sm mb-2">
-                        <label class="form-label text-black-50" for="userRegisterNationalID">
+                        <label class="form-label text-black-50">
                             First Name
                         </label>
-                        <input formControlName="firstName" type="text" minlength="14" maxlength="14"
-                            class="form-control border border-dark">
+                        <input formControlName="firstName" type="text" class="form-control border border-dark">
                     </div>
                     <div class="col-sm mb-2">
-                        <label class="form-label text-black-50" for="userRegisterNationalID">
+                        <label class="form-label text-black-50">
                             Last Name
                         </label>
-                        <input formControlName="lastName" type="text" minlength="14" maxlength="14"
-                            class="form-control border border-dark">
+                        <input formControlName="lastName" type="text" class="form-control border border-dark">
                     </div>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label text-black-50" for="userRegisterNationalID">
+                    <label class="form-label text-black-50">
                         National ID
                     </label>
                     <input formControlName="nationalID" type="text" minlength="14" maxlength="14"
                         class="form-control border border-dark">
                 </div>
                 <div class="mb-2">
-                    <label for="userRegisterEmail" class="form-label text-black-50">Email address</label>
+                    <label class="form-label text-black-50">Email address</label>
                     <input formControlName="email" type="email" class="form-control border border-dark"
                         aria-describedby="emailHelp">
                     <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
                 </div>
                 <div class="mb-2">
-                    <label for="userRegisterPassword" class="form-label text-black-50">
-                        Password (6 or more characters)
+                    <label class="form-label text-black-50">
+                        Password (8 or more characters and numbers)
                     </label>
                     <input formControlName="password" type="password" class="form-control border border-dark">
                 </div>
                 <div class="row">
                     <div class="col-sm mb-2">
-                        <label class="form-label text-black-50" for="userRegisterBranch">
+                        <label class="form-label text-black-50">
                             Branch
                         </label>
                         <select formControlName="branch" class="form-control border border-dark">
