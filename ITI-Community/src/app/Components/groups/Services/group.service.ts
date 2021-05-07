@@ -49,43 +49,50 @@ export class GroupService {
 
 
   updateMembers(user, id) {
-    console.log('Member to Admin')
-    this.db.collection('Groups2').doc(id).collection('Members').doc(user).snapshotChanges().subscribe(res => {
+    let sub = this.db.collection('Groups2').doc(id).collection('Members').doc(user).snapshotChanges().subscribe(res => {
       let switcher = res.payload.data();
       if (switcher != undefined)
         this.db.collection('Groups2').doc(id).collection('Admins', ref => ref.where('__name__', '!=', user)).doc(user).set(switcher)
-      if (user != undefined)
+      if (user != undefined) {
+        sub.unsubscribe()
         this.db.collection('Groups2').doc(id).collection('Members', ref => ref.where('__name__', '==', user)).doc(user).delete()
+      }
     })
   }
 
   ChangeMembers(user, id) {
-    this.db.collection('Groups2').doc(id).collection('Admins').doc(user).snapshotChanges().subscribe(res => {
+    let sub = this.db.collection('Groups2').doc(id).collection('Admins').doc(user).snapshotChanges().subscribe(res => {
       let switcher = res.payload.data();
       if (switcher != undefined)
         this.db.collection('Groups2').doc(id).collection('Members', ref => ref.where('__name__', '!=', user)).doc(user).set(switcher)
-      if (user != undefined)
+      if (user != undefined) {
+        sub.unsubscribe()
         this.db.collection('Groups2').doc(id).collection('Admins', ref => ref.where('__name__', '==', user)).doc(user).delete()
+      }
     })
   }
 
   updateRequests(user, id) {
-    this.db.collection('Groups2').doc(id).collection('Subscribers').doc(user).snapshotChanges().subscribe(res => {
+    let sub = this.db.collection('Groups2').doc(id).collection('Subscribers').doc(user).snapshotChanges().subscribe(res => {
       let switcher = res.payload.data();
       if (switcher != undefined)
         this.db.collection('Groups2').doc(id).collection('Members', ref => ref.where('__name__', '!=', user)).doc(user).set(switcher)
-      if (user != undefined)
+      if (user != undefined) {
+        sub.unsubscribe()
         this.db.collection('Groups2').doc(id).collection('Subscribers', ref => ref.where('__name__', '==', user)).doc(user).delete()
+      }
     })
   }
 
   changeSub(user, id) {
-    this.db.collection('Groups2').doc(id).collection('Members').doc(user).snapshotChanges().subscribe(res => {
+    let sub = this.db.collection('Groups2').doc(id).collection('Members').doc(user).snapshotChanges().subscribe(res => {
       let switcher = res.payload.data();
       if (switcher != undefined)
         this.db.collection('Groups2').doc(id).collection('Subscribers', ref => ref.where('__name__', '!=', user)).doc(user).set(switcher)
-      if (user != undefined)
+      if (user != undefined) {
+        sub.unsubscribe()
         this.db.collection('Groups2').doc(id).collection('Members', ref => ref.where('__name__', '==', user)).doc(user).delete()
+      }
     })
   }
 
