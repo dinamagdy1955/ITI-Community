@@ -104,4 +104,8 @@ export class UserProfileService {
   editUserAvatar(uid: string, url: string) {
     this.db.collection('users-details').doc(uid).update({ avatar: url });
   }
+
+  editUserCoverAvatar(uid: string, url: string) {
+    this.db.collection('users-details').doc(uid).update({ avatarCover: url });
+  }
 }

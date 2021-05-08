@@ -36,39 +36,48 @@
   font-size: 1.5rem;
   color: #901b20;
 }
-.profile-Exp-Titel{
+.profile-Exp-Titel {
   display: block;
 }
 
-.profile-Exp-Titel p{
+.profile-Exp-Titel p {
   display: block;
   margin: 0;
-  
 }
-.profile-Exp-Titel h5{
+.profile-Exp-Titel h5 {
   display: block;
   margin-bottom: 1px;
-
 }
-.profile-Exp-title-2ndColor{
+.profile-Exp-title-2ndColor {
   color: #6e6d6de7;
   font-size: 0.8rem;
 }
-.profile-Exp-Edit{
+.profile-Exp-Edit {
   display: flex;
   padding: 0;
   opacity: 0;
-transition:  0.8s;
-  
+  transition: 0.8s;
 }
-.profile-Exp-Edit a{
-margin-left: 10px;
-color: #801818;
-
+.profile-Exp-Edit a {
+  margin-left: 10px;
+  color: #801818;
 }
 
-.profile-Card-Exp:hover  .profile-Exp-Edit 
-{
-  transition:  0.8s;
+.profile-Card-Exp:hover .profile-Exp-Edit {
+  transition: 0.8s;
   opacity: 1;
- }
+}
+
+input.ng-dirty.ng-valid.ng-touched:not(form),
+input.ng-pristine.ng-valid.ng-touched:not(form),
+textarea.ng-dirty.ng-valid.ng-touched:not(form),
+textarea.ng-pristine.ng-valid.ng-touched:not(form) {
+  border-left: 5px solid #42a948 !important;
+}
+
+input.ng-touched.ng-dirty.ng-invalid:not(form),
+input.ng-touched.ng-pristine.ng-invalid:not(form),
+textarea.ng-touched.ng-dirty.ng-invalid:not(form),
+textarea.ng-touched.ng-pristine.ng-invalid:not(form) {
+  border-left: 5px solid #a94442 !important;
+}

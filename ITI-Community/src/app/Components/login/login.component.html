@@ -15,18 +15,25 @@
                     </p>
                 </div>
                 <div class="card-body">
-                    <div class="form-group">
-                        <input type="email" class="form-control inputText" placeholder="Email or Phone" id="email"
-                            [(ngModel)]="emailSignIn">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control inputText" placeholder="Password" id="pwd"
-                            [(ngModel)]="passwordSignIn">
-                    </div>
-                    <div id="forgetPassword" class="form-group forgetPassword">
-                        <a href="">Forget Password ?</a>
-                    </div>
-                    <button type="button" id="signinButton" class="btn btn-primary" (click)="SignIn()">Submit</button>
+                    <form [formGroup]="loginUser" (ngSubmit)='SignIn()'>
+                        <div class="form-group">
+                            <label class="form-label text-black-50">Email address *</label>
+                            <input formControlName="email" type="email" class="form-control"
+                                ngbTooltip="Email is not correct">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label text-black-50">
+                                Password *
+                            </label>
+                            <input formControlName="password" type="password" class="form-control" minlength="8"
+                                maxlength="8"
+                                ngbTooltip="Password must started with charater and contain characters and numberswith 8 digits length">
+                        </div>
+                        <div id="forgetPassword" class="form-group forgetPassword">
+                            <a href="">Forget Password ?</a>
+                        </div>
+                        <button type="submit" id="signinButton" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
             </div>
             <div id="newIn">

@@ -76,6 +76,22 @@
   box-shadow: none;
 }
 
+input.ng-dirty.ng-valid.ng-touched:not(form) {
+  border-left: 5px solid #42a948 !important;
+}
+
+input.ng-touched.ng-dirty.ng-invalid:not(form) {
+  border-left: 5px solid #a94442 !important;
+}
+
+input.ng-touched.ng-pristine.ng-invalid:not(form) {
+  border-left: 5px solid #a94442 !important;
+}
+
+::ng-deep .tooltip-inner {
+  background-color: #a94442;
+}
+
 #forgetPassword,
 #joinNow {
   font-size: 1rem;
@@ -121,7 +137,7 @@
 }
 
 #newIn {
-  padding: 10% 0 10% 0;
+  padding: 8% 0 8% 0;
 }
 
 #newIn div {

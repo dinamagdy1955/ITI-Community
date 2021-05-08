@@ -1,18 +1,20 @@
 <div class="row profile-Card-Exp" style="margin-top:20px;padding-left: 8px;">
-  <div class="col-sm-1"><img src="../../../../../../assets/nav-img.png" alt="ss" class="profile-exp-borderImg"></div>
+  <div class="col-sm-1"><img
+      src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2Fistockphoto-915109728-612x612.jpg?alt=media&token=211eb9bc-9146-40a7-9778-c1da2b7758e9"
+      alt="ss" class="profile-exp-borderImg"></div>
   <div class="col-sm-9" style="margin-left: 8px; width: 100%;">
     <div class="profile-Exp-Titel" style="margin-bottom: 4px;">
       <h5>{{userExperience.experience.companyName}}</h5>
       <p>{{userExperience.experience.degree}}
       <p class="profile-Exp-title-2ndColor">{{userExperience.experience.from}} -
-      {{userExperience.experience.to}}</p>
+        {{userExperience.experience.to}}</p>
       <p class="profile-Exp-title-2ndColor"> {{userExperience.experience.location}}</p>
     </div>
     <p style="margin-top: 2%;"><i class="fas fa-pen-fancy iconExp"></i>{{userExperience.experience.description}}</p>
   </div>
   <div class="col-sm-1 profile-Exp-Edit" *ngIf="userExperience.id == uidLocal">
-    <a (click)="open(content)"><i class="fas fa-edit"></i></a>
-      <a (click)="deleteExp()"><i class="fas fa-trash-alt"></i></a>
+    <a (click)="openEditExperience(content)"><i class="fas fa-edit"></i></a>
+    <a (click)="deleteExp()"><i class="fas fa-trash-alt"></i></a>
   </div>
   <ng-template #content let-modal>
     <div class="modal-header">
@@ -44,7 +46,7 @@
           <div class="col-sm-2 form-group presentRadio">
             <input class="form-check-input" type="checkbox" name="present" id="present" value="present"
               [checked]="checked" (change)="ch()">
-            <label class="form-check-label" for="inlineRadio1">Present</label>
+            <label class="form-check-label" for="present">Present</label>
           </div>
         </div>
         <div class="form-group">
@@ -55,16 +57,15 @@
         <div class="form-group">
           <label for="description">Description*</label>
           <textarea formControlName="description" name="description" id="description" class="form-control"
-            placeholder="" required></textarea>
+            minlength="10" required></textarea>
         </div>
         <div class="form-group">
           <label for="degree">Degree*</label>
-          <input formControlName="degree" type="text" name="degree" id="degree" class="form-control" placeholder=""
-            required>
+          <input formControlName="degree" type="text" name="degree" id="degree" class="form-control" required>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+        <button type="submit" class="btn btn-outline-dark">Save</button>
       </div>
     </form>
   </ng-template>

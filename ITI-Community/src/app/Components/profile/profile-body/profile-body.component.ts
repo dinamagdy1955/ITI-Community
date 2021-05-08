@@ -29,8 +29,9 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
     lastName: '',
     jobTitle: '',
     avatar: '',
-    branch:"",
-    track:"",
+    branch: '',
+    track: '',
+    avatarCover: '',
   };
   UserExperiences = {
     id: '',
@@ -38,9 +39,14 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
   };
   @Input() uid;
   uidLocal = localStorage.getItem('uid');
-  constructor(private userService: UserService, private router: Router, private br :BranchDatabaseService, private tr :TrackDatabaseService) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private br: BranchDatabaseService,
+    private tr: TrackDatabaseService
+  ) {}
   ngOnInit() {}
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (this.uid != undefined) {
       let sub1 = this.userService
         .getUserBasic(this.uid)
@@ -66,6 +72,7 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
                   experiences: userDetails.payload.get('experiences'),
                   friendList: userDetails.payload.get('friendList'),
                   avatar: userDetails.payload.get('avatar'),
+                  avatarCover: userDetails.payload.get('avatarCover'),
                 };
                 this.UserAbout.id = this.uid;
                 this.UserAbout.about = this.userData.about;
@@ -74,15 +81,16 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
                 this.UserDetails.lastName = this.userData.lastName;
                 this.UserDetails.avatar = this.userData.avatar;
                 this.UserDetails.jobTitle = this.userData.jobTitle;
-                 this.br.getBrancheById(this.userData.branch).subscribe((res) => {
-                  this.UserDetails.branch = res.data()["name"] ;
-                 }
+                this.UserDetails.avatarCover = this.userData.avatarCover;
+                this.br
+                  .getBrancheById(this.userData.branch)
+                  .subscribe((res) => {
+                    this.UserDetails.branch = res.data()['name'];
+                  });
 
-                 );
-                
-                this.tr.getTrackById(this.userData.track).subscribe((res)=>{
-                  this.UserDetails.track = res.data()["name"] ;
-                })
+                this.tr.getTrackById(this.userData.track).subscribe((res) => {
+                  this.UserDetails.track = res.data()['name'];
+                });
                 this.UserExperiences.id = this.uid;
                 this.UserExperiences.experiences = this.userData.experiences;
               });

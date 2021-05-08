@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ProfileBodyHighlightsComponent implements OnInit {
   @Input() firstName;
+  uid = localStorage.getItem('uid');
   constructor() {}
 
   ngOnInit() {}

@@ -1,7 +1,12 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileService } from '../../Service/user-profile.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { BranchDatabaseService } from 'src/app/Components/Branches/Services/database.service';
 import { UserService } from 'src/app/MainServices/User.service';
 @Component({
@@ -14,35 +19,40 @@ export class ProfileBodyDetailsComponent implements OnInit {
   editPersonalData: FormGroup;
   uidLocal = localStorage.getItem('uid');
   previewedImg = undefined;
+  previewedCoverImg = undefined;
   branch;
-  track="";
+  track = '';
   constructor(
     private modalService: NgbModal,
     private us: UserProfileService,
     private FB: FormBuilder,
     private ur: UserService
-  ) {
-  
-  }
-
+  ) {}
   ngOnInit() {
     this.editPersonalData = this.FB.group({
-      firstName: this.userDetails.firstName,
-      lastName: this.userDetails.lastName,
-      jobTitle: this.userDetails.jobTitle,
+      firstName: new FormControl(this.userDetails.firstName, [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]{3,}[a-zA-Z_ ]*$/),
+      ]),
+      lastName: new FormControl(this.userDetails.lastName, [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]{3,}[a-zA-Z_ ]*$/),
+      ]),
+      jobTitle: new FormControl(this.userDetails.jobTitle, [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]{3,}[a-zA-Z_ ]*$/),
+      ]),
     });
- console.log(this.userDetails.branch);
-  
-    
-    }
-  
-
+  }
+  openCoverImage(contentCoverImg) {
+    this.previewedCoverImg = undefined;
+    this.modalService.open(contentCoverImg, { size: 'lg' });
+  }
   openImage(contentImg) {
     this.previewedImg = undefined;
     this.modalService.open(contentImg, { size: 'lg' });
   }
-
-  open(content) {
+  openPersonalData(content) {
     this.editPersonalData = this.FB.group({
       firstName: this.userDetails.firstName,
       lastName: this.userDetails.lastName,
@@ -51,33 +61,41 @@ export class ProfileBodyDetailsComponent implements OnInit {
     this.modalService.open(content, { size: 'lg' });
   }
   saveChanges() {
-    this.us.updatePersonalData(
-      localStorage.getItem('uid'),
-      this.editPersonalData.value.firstName,
-      this.editPersonalData.value.lastName,
-      this.editPersonalData.value.jobTitle
-    );
+    if (this.editPersonalData.valid) {
+      this.modalService.dismissAll();
+      this.us.updatePersonalData(
+        localStorage.getItem('uid'),
+        this.editPersonalData.value.firstName,
+        this.editPersonalData.value.lastName,
+        this.editPersonalData.value.jobTitle
+      );
+    }
   }
-
-  preview(files) {
+  preview(files, type) {
     var reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = (_event) => {
-      this.previewedImg = reader.result;
+      if (type == 'avatar') this.previewedImg = reader.result;
+      else if (type == 'avatarCover') this.previewedCoverImg = reader.result;
     };
   }
-
-  async upload() {
+  async upload(type) {
     const selectedImg = (<HTMLInputElement>document.getElementById('img'))
       .files;
     const img = await this.us.uploadImg(selectedImg[0]);
     await img.ref.getDownloadURL().subscribe(async (url) => {
-      this.us.editUserAvatar(this.uidLocal, url);
-      localStorage.setItem('avatar', url);
-      this.userDetails.avatar = url;
+      if (type == 'avatar') {
+        this.us.editUserAvatar(this.uidLocal, url);
+        localStorage.setItem('avatar', url);
+        this.userDetails.avatar = url;
+      } else if (type == 'avatarCover') {
+        this.us.editUserCoverAvatar(this.uidLocal, url);
+        localStorage.setItem('avatarCover', url);
+        this.userDetails.avatarCover = url;
+      }
     });
   }
-  addRequset(){
-this.ur.create_NewRequest(this.userDetails.id)
+  addRequset() {
+    this.ur.create_NewRequest(this.userDetails.id);
   }
 }
