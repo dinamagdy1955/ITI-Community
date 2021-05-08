@@ -10,6 +10,7 @@ import { IGroup2 } from '../ViewModel/igroup';
 })
 export class CenterGroupPageComponent implements OnInit, OnDestroy, OnChanges {
   userID: string
+  avatar: string
   Group: IGroup2;
   @Input() GroupId: string;
   @Input() admins = []
@@ -17,7 +18,6 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy, OnChanges {
   @Input() subscribers = []
   @Input() adminRole = []
 
-  admins2
   admin = []
   member = []
   subscribe = []
@@ -31,6 +31,7 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit(): void {
     this.userID = localStorage.getItem('uid')
+    this.avatar = localStorage.getItem('avatar')
     let sub = this.GrpServ.getGrpById(this.GroupId).subscribe(res => {
       this.Group = res;
     })
@@ -55,7 +56,6 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy, OnChanges {
     for (let i of this.admins) {
       this.admin.push(i.id)
     }
-    console.log(this.admin)
     for (let i of this.members) {
       this.member.push(i.id)
     }
@@ -66,6 +66,10 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy, OnChanges {
 
   requestToJoin(uid, id) {
     this.GrpServ.sendRequest(uid, id);
+  }
+
+  cancelRequest(uid, id, role) {
+    this.GrpServ.DeleteMembers(uid, id, role)
   }
 
   ngOnDestroy(): void {

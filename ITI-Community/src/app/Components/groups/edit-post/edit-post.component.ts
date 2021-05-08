@@ -10,30 +10,30 @@ import { GroupPostsService } from '../Services/group-posts.service';
 })
 export class EditPostComponent implements OnInit {
   closeResult = '';
-
   editPostForm: FormGroup
   @Input() postID
   singlePost
   constructor(private model: NgbModal, private FB: FormBuilder, private postService: GroupPostsService) {
     this.editPostForm = this.FB.group({
-      Post: ''
+      Body: ''
     })
   }
 
   ngOnInit(): void {
-    let sub = this.postService.getPostById(this.postID).subscribe((res) => {
-      this.singlePost = res
-      this.editPostForm = this.FB.group({
-        Post: this.singlePost.Post
-      })
-      sub.unsubscribe();
+    this.postService.PostById(this.postID).subscribe(res => {
+      this.singlePost = res.payload.data()
+      if (this.singlePost != undefined) {
+        this.editPostForm = this.FB.group({
+          Body: this.singlePost.Body
+        })
+      }
     })
   }
 
   updatePost() {
-    this.postService.editPost(this.postID, this.editPostForm.value.Post);
+    this.postService.editPost(this.postID, this.editPostForm.value.Body);
     this.editPostForm = this.FB.group({
-      Post: ''
+      Body: ''
     })
   }
 

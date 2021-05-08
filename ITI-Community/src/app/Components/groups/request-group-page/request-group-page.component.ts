@@ -69,12 +69,12 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
     // this.subscription.push(sub)
   }
 
-  JoinOut(user, id) {
-    this.GrpServ.DeleteRequest(user, id)
+  JoinOut(user, id, role) {
+    this.GrpServ.DeleteMembers(user, id, role)
   }
 
-  leaveGroup(user, id) {
-    this.GrpServ.leaveGroup(user, id)
+  leaveGroup(user, id, role) {
+    this.GrpServ.DeleteMembers(user, id, role)
   }
 
   ngOnDestroy(): void {
