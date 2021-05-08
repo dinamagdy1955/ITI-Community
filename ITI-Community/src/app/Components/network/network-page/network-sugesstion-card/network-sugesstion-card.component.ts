@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //import { userInfo } from 'node:os';
 import { IUserDetails } from 'src/app/Components/registration/ViewModels/iuser-details';
-import { UserService } from 'src/app/MainServices/User.service';
+import { UserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-network-sugesstion-card',
@@ -24,29 +24,33 @@ export class NetworkSugesstionCardComponent implements OnInit {
   
       let friendData:any[];
       let  Requests:any[];
+      let SentfriendRequest:any[];
   
     let uid=localStorage.getItem("uid");
     this.usrs.getAllFriendRequests().subscribe(data => {
       Requests= data.map(e => {
-       // if(e.payload.doc.id)
       let id= e.payload.doc.id
         return id
-        
-       
       });
+
       console.log(Requests);
     
       this.usrs.getAllFriendsList().subscribe(data => {
-       friendData= data.map(e => {
-        // if(e.payload.doc.id)
-       let id= e.payload.doc.id
-         return id
-         
-        
-       });
-       console.log(friendData);
+        friendData= data.map(e => {
+        let id= e.payload.doc.id
+          return id
+        });
+        console.log(friendData);
 
-     this.usrs.notINCard(Requests.concat(friendData)).subscribe(data =>{
+        this.usrs.getMySentfriendRequests().subscribe(data => {
+          SentfriendRequest= data.map(e => {
+          let id= e.payload.doc.id
+            return id
+          });
+          console.log(SentfriendRequest);
+
+
+     this.usrs.notINCard(Requests.concat(friendData,SentfriendRequest)).subscribe(data =>{
       this.usersinCardData= data.map(e => {
        
          return {
@@ -64,7 +68,8 @@ export class NetworkSugesstionCardComponent implements OnInit {
        
      });
       
-    });
+    }); 
+   });
     
   
     

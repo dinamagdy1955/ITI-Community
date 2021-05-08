@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/MainServices/User.service';
+import { UserService } from '../../network/Services/user.service';
 
 @Component({
   selector: 'app-home-profile-card',

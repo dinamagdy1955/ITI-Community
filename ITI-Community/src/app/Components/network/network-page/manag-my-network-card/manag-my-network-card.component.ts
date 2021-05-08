@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/MainServices/User.service';
+import { UserService } from '../../Services/user.service';
+
 
 @Component({
   selector: 'app-manag-my-network-card',
