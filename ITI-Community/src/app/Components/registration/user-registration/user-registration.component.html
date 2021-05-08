@@ -10,53 +10,52 @@
                 <div class="row">
                     <div class="col-sm mb-2">
                         <label class="form-label text-black-50">
-                            First Name
+                            First Name *
                         </label>
-                        <input formControlName="firstName" type="text" class="form-control border border-dark">
+                        <input formControlName="firstName" type="text" class="form-control"
+                            ngbTooltip="First Name must be 3 charaters or more">
                     </div>
                     <div class="col-sm mb-2">
                         <label class="form-label text-black-50">
-                            Last Name
+                            Last Name *
                         </label>
-                        <input formControlName="lastName" type="text" class="form-control border border-dark">
+                        <input formControlName="lastName" type="text" class="form-control"
+                            ngbTooltip="Last Name must be 3 charaters or more">
                     </div>
                 </div>
                 <div class="mb-2">
                     <label class="form-label text-black-50">
-                        National ID
+                        National ID *
                     </label>
-                    <input formControlName="nationalID" type="text" minlength="14" maxlength="14"
-                        class="form-control border border-dark">
+                    <input formControlName="nationalID" type="text" minlength="14" maxlength="14" class="form-control"
+                        ngbTooltip="National ID must be 14 number">
                 </div>
                 <div class="mb-2">
-                    <label class="form-label text-black-50">Email address</label>
-                    <input formControlName="email" type="email" class="form-control border border-dark"
-                        aria-describedby="emailHelp">
-                    <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+                    <label class="form-label text-black-50">Email address *</label>
+                    <input formControlName="email" type="email" class="form-control" ngbTooltip="Email is not correct">
                 </div>
                 <div class="mb-2">
                     <label class="form-label text-black-50">
-                        Password (8 or more characters and numbers)
+                        Password (8 or more characters and numbers) *
                     </label>
-                    <input formControlName="password" type="password" class="form-control border border-dark">
+                    <input formControlName="password" type="password" class="form-control" minlength="8" maxlength="8"
+                        ngbTooltip="Password must started with charater and contain characters and numberswith 8 digits length">
                 </div>
                 <div class="row">
                     <div class="col-sm mb-2">
                         <label class="form-label text-black-50">
-                            Branch
+                            Branch *
                         </label>
-                        <select formControlName="branch" class="form-control border border-dark">
-                            <option value="-1"></option>
+                        <select formControlName="branch" class="form-control" ngbTooltip="You must choose your branch">
                             <option *ngFor="let branch of branches;" value={{branch.id}}>{{branch.data.name}}
                             </option>
                         </select>
                     </div>
                     <div class="col-sm mb-2">
                         <label class="form-label text-black-50">
-                            Track
+                            Track *
                         </label>
-                        <select formControlName="track" class="form-control border border-dark">
-                            <option value="-1"></option>
+                        <select formControlName="track" class="form-control" ngbTooltip="You must choose your track">
                             <option *ngFor="let track of tracks;" value={{track.id}}>{{track.data.name}}
                             </option>
                         </select>
@@ -64,10 +63,9 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label text-black-50">
-                        Scholarship Duration
+                        Scholarship Duration *
                     </label>
-                    <select formControlName="scholar" class="form-control border border-dark">
-                        <option value="-1"></option>
+                    <select formControlName="scholar" class="form-control" ngbTooltip="You must choose your scholar">
                         <option *ngFor="let duration of durations;" value={{duration.id}}>
                             {{duration.data.textDescription}}
                         </option>

@@ -10,8 +10,7 @@ export interface IUserDetails {
   jobTitle: string;
   about: string;
   experiences: IExperience[];
-  friendList: [];
-  friendRequests ?:[];
+  friendList?: [];
+  friendRequests?: [];
   avatar: string;
-
 }

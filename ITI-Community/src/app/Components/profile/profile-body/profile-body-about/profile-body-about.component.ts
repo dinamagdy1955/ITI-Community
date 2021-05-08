@@ -1,7 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileService } from '../../Service/user-profile.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-profile-body-about',
@@ -17,23 +22,27 @@ export class ProfileBodyAboutComponent implements OnInit {
     private us: UserProfileService,
     private FB: FormBuilder
   ) {}
-
   ngOnInit() {
     this.editAbout = this.FB.group({
-      about: this.userAbout.about,
+      about: new FormControl(this.userAbout.about, [
+        Validators.required,
+        Validators.minLength(10),
+      ]),
     });
   }
-
-  open(content) {
+  openAbout(content) {
     this.editAbout = this.FB.group({
       about: this.userAbout.about,
     });
     this.modalService.open(content, { size: 'lg' });
   }
   saveChanges() {
-    this.us.updateUserAbout(
-      localStorage.getItem('uid'),
-      this.editAbout.value.about
-    );
+    if (this.editAbout.valid) {
+      this.modalService.dismissAll('Save click');
+      this.us.updateUserAbout(
+        localStorage.getItem('uid'),
+        this.editAbout.value.about
+      );
+    }
   }
 }

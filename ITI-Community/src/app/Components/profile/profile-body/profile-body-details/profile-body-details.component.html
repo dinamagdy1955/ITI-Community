@@ -1,9 +1,40 @@
 <div class="card card-custom bg-white border-white border-0 rofile-card-border">
-  <img class="imgTop" src="../../../../../assets/1200x400.jpg">
+  <div *ngIf="uidLocal == userDetails.id; then localUsrCoverImg else visitorCoverImg"></div>
+  <ng-template #localUsrCoverImg>
+    <img class="imgTop" [src]="this.userDetails.avatarCover" (click)="openCoverImage(contentCoverImg)">
+    <ng-template #contentCoverImg let-modal>
+      <div class="modal-header">
+        <span class="modalHeaderIcon">
+          <i class="fas fa-images"></i>
+        </span>
+        <h4 class="modal-title" id="modal-basic-title">Edit Cover Picture</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <img class="modalCoverImg" [src]="previewedCoverImg||this.userDetails.avatarCover">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="fileInput.click()">
+          <span><i class="fas fa-edit"></i></span>
+          <input #fileInput id="img" type="file" style="display:none;" accept=".png,.jpg"
+            (change)="preview(fileInput.files,'avatarCover')" />
+        </button>
+        <button type="submit" class="btn btn-outline-dark"
+          (click)="upload('avatarCover');modal.close('Save click');">Save</button>
+      </div>
+    </ng-template>
+  </ng-template>
+  <ng-template #visitorCoverImg>
+    <img class="imgTop" [src]="this.userDetails.avatarCover" (click)="openCoverImage(contentCoverImg)">
+  </ng-template>
   <div class="card-custom-avatar">
     <div *ngIf="uidLocal == userDetails.id; then localusr else visitor"></div>
     <ng-template #localusr>
-      <img  [src]="this.userDetails.avatar" (click)="openImage(contentImg)">
+      <img [src]="this.userDetails.avatar" (click)="openImage(contentImg)">
       <ng-template #contentImg let-modal>
         <div class="modal-header">
           <span class="modalHeaderIcon">
@@ -22,10 +53,11 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-dark" (click)="fileInput.click()">
             <span><i class="fas fa-edit"></i></span>
-            <input #fileInput id="img" type="file" style="display:none;" accept=".png,.jpg"
-              (change)="preview(fileInput.files)" />
+            <input #fileCoverInput id="img" type="file" style="display:none;" accept=".png,.jpg"
+              (change)="preview(fileCoverInput.files,'avatar')" />
           </button>
-          <button type="submit" class="btn btn-outline-dark" (click)="upload();modal.close('Save click');">Save</button>
+          <button type="submit" class="btn btn-outline-dark"
+            (click)="upload('avatar');modal.close('Save click');">Save</button>
         </div>
       </ng-template>
     </ng-template>
@@ -39,7 +71,8 @@
           <div class="col-sm-11">
             <h4 class="user-Name card-title">{{userDetails.firstName}} {{userDetails.lastName}}</h4>
             <p class="user-JobTitel">{{userDetails.jobTitle}}</p>
-            <p class="user-JobTitel"><i class="fas fa-university"></i>{{userDetails.branch}}  <i class="fas fa-book-open"></i> {{userDetails.track}}</p>
+            <p class="user-JobTitel"><i class="fas fa-university"></i>{{userDetails.branch}} <i
+                class="fas fa-book-open"></i> {{userDetails.track}}</p>
           </div>
           <div class="col-sm-1">
             <ng-template #content let-modal>
@@ -56,27 +89,24 @@
                 <div class="modal-body">
                   <div class="form-group">
                     <label for="firstName">First Name *</label>
-                    <input formControlName="firstName" type="text" class="form-control" name="firstName" id="firstName"
-                      placeholder="" required>
+                    <input formControlName="firstName" type="text" class="form-control" minlength="3" required>
                   </div>
                   <div class="form-group">
                     <label for="lastName">Last Name *</label>
-                    <input formControlName="lastName" type="text" class="form-control" name="lastName" id="lastName"
-                      placeholder="" required>
+                    <input formControlName="lastName" type="text" class="form-control" minlength="3" required>
                   </div>
                   <div class="form-group">
                     <label for="jobTitle">Job Title *</label>
-                    <input formControlName="jobTitle" type="text" class="form-control" name="jobTitle" id="jobTitle"
-                      placeholder="" required>
+                    <input formControlName="jobTitle" type="text" class="form-control" minlength="3" required>
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click');">Save</button>
+                  <button type="submit" class="btn btn-outline-dark">Save</button>
                 </div>
               </form>
             </ng-template>
-            <div></div>
-            <a class="profile-Card-Edit" (click)="open(content)" *ngIf="uidLocal == userDetails.id ;else visitorInvite"><i class="fas fa-user-edit"></i></a>
+            <a class="profile-Card-Edit" (click)="openPersonalData(content)"
+              *ngIf="uidLocal == userDetails.id ;else visitorInvite"><i class="fas fa-user-edit"></i></a>
             <ng-template #visitorInvite>
               <div class="d-flex ">
                 <a type="button" class="profile-Card-Edit pt-2" [routerLink]="['/Messages']"><i class="fas fa-comment"></i></a>

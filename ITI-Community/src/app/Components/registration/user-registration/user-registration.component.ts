@@ -34,12 +34,11 @@ export class UserRegistrationComponent implements OnInit {
     this.registerNewUser = this.FB.group({
       firstName: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z]{3,}$/),
-        Validators.minLength(3),
+        Validators.pattern(/^[a-zA-Z]{3,}[a-zA-Z_ ]*$/),
       ]),
       lastName: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z]\s{0,1}[a-zA-Z]{3,}$/),
+        Validators.pattern(/^[a-zA-Z]{3,}[a-zA-Z_ ]*$/),
         Validators.minLength(3),
       ]),
       nationalID: new FormControl('', [
@@ -48,45 +47,20 @@ export class UserRegistrationComponent implements OnInit {
       ]),
       email: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{3,4}$/),
+        Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z][a-zA-Z0-9]{7,} $/),
-        Validators.minLength(8),
+        Validators.pattern(/^[a-zA-Z][a-zA-Z0-9]{7,}$/),
       ]),
-      branch: new FormControl(-1, [
-        Validators.required,
-        Validators.pattern(/[0-9]{1,2}/),
-        Validators.min(1),
-        Validators.max(100),
-      ]),
-      track: new FormControl(-1, [
-        Validators.required,
-        Validators.pattern(/[0-9]{1,2}/),
-        Validators.min(1),
-        Validators.max(100),
-      ]),
-      scholar: new FormControl(-1, [
-        Validators.required,
-        Validators.pattern(/[0-9]{1,2}/),
-        Validators.min(1),
-        Validators.max(100),
-      ]),
+      branch: new FormControl(-1, [Validators.required, Validators.min(0)]),
+      track: new FormControl(-1, [Validators.required, Validators.min(0)]),
+      scholar: new FormControl(-1, [Validators.required, Validators.min(0)]),
     });
   }
 
   ngOnInit(): void {}
   register() {
-    const invalid = [];
-    const controls = this.registerNewUser.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-      }
-    }
-    console.log(invalid);
-
     if (this.registerNewUser.valid) {
       let newUserBasic: IUserBasics = {
         email: this.registerNewUser.value.email,
@@ -107,13 +81,10 @@ export class UserRegistrationComponent implements OnInit {
         jobTitle: '',
         about: '',
         experiences: [],
-        friendList: [],
         avatar:
-          'https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2F2?alt=media&token=61809273-cae4-44bd-b88e-e665032829cc',
+          'https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2Fnav-img_qv.fa2p71r?alt=media&token=131e5508-aa20-4b51-ac1a-a9e212eadc4f',
       };
-      // console.log(
-      //   this.registerAuth.registerNewUser(newUserBasic, newUserDetails)
-      // );
+      this.registerAuth.registerNewUser(newUserBasic, newUserDetails);
     }
   }
 }

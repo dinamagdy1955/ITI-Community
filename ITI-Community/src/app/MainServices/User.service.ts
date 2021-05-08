@@ -1,25 +1,28 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { LocalUserData } from '../ViewModel/local-user-data';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  public localUserData = new Subject<LocalUserData>();
+  data = {
+    id: localStorage.getItem('uid'),
+    firstName: localStorage.getItem('firstName'),
+    lastName: localStorage.getItem('lastName'),
+    jobTitle: localStorage.getItem('jobTitle'),
+    avatar: localStorage.getItem('avatar'),
+  };
+  constructor(private db: AngularFirestore) {}
 
-   data ={
-    id:localStorage.getItem("uid"),
-    firstName:localStorage.getItem("firstName"),
-    lastName:localStorage.getItem("lastName"),
-    jobTitle:localStorage.getItem("jobTitle"),
-    avatar:localStorage.getItem("avatar"),
-  
-  } ;
-  constructor(private db: AngularFirestore) { }
-  
-
+  setlocalUserData(value) {
+    this.localUserData.next(value);
+  }
  getUserData(uid): Observable<any> {
     return this.db.collection('users-details').doc(uid).snapshotChanges();
   }
+
 // ////////////////////////////////////
 getAllUserData() {
   return this.db.collection('users-details').snapshotChanges();
@@ -49,7 +52,15 @@ ignore(id){
   let uid=localStorage.getItem("uid");
   return this.db.collection('users-details').doc(uid).collection('friendRequest').doc(id).delete()
 
-}
+  notINCard(arr: any[]) {
+    let uid = localStorage.getItem('uid');
+    arr.push(uid);
+    return this.db
+      .collection('users-details', (ref) =>
+        ref.where('__name__', 'not-in', arr)
+      )
+      .snapshotChanges();
+  }
 
 // deleteFriend(id){
 //   let uid=localStorage.getItem("uid");
@@ -112,6 +123,7 @@ create_NewRequest(uid) {
    
 }
 
+
 getMySentfriendRequests(){
   let uid=localStorage.getItem("uid");
 return this.db.collection('users-details').doc(uid).collection('MySentfriendRequests').snapshotChanges()
@@ -147,7 +159,6 @@ return this.db.collection('users-details').doc(uid).collection('MySentfriendRequ
   //       subUser.unsubscribe();
   //     });
 
-
   //this code for get users data by giving it array of users ids
 
   // let usersData = [];
@@ -161,7 +172,7 @@ return this.db.collection('users-details').doc(uid).collection('MySentfriendRequ
   //     sub.unsubscribe();
   //   });
   // });
-/*
+  /*
   // updateDoc(_id: string, _value: string) {
   //   let doc = this.db.collection('users-details', ref => ref.where('id', '==', _id));
   //   doc.snapshotChanges().pipe(
@@ -175,8 +186,4 @@ return this.db.collection('users-details').doc(uid).collection('MySentfriendRequ
   //     })
   // }
 */
-
-
 }
-
-

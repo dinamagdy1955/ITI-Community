@@ -1,5 +1,5 @@
 .profile-card-border {
-  overflow: hidden; 
+  overflow: hidden;
   width: 100%;
   height: 100%;
   box-shadow: 0 0 15px rgba(3, 3, 3, 0.2);
@@ -24,10 +24,21 @@
 .profile-Card-Edit {
   opacity: 0;
   color: #801818;
-  transition:  0.8s;
+  transition: 0.8s;
 }
-.profile-Card-About:hover  .profile-Card-Edit 
-{
-  transition:  0.8s;
+.profile-Card-About:hover .profile-Card-Edit {
+  transition: 0.8s;
   opacity: 1;
- }
+}
+
+textarea.ng-dirty.ng-valid.ng-touched:not(form) {
+  border-left: 5px solid #42a948 !important;
+}
+
+textarea.ng-touched.ng-dirty.ng-invalid:not(form) {
+  border-left: 5px solid #a94442 !important;
+}
+
+textarea.ng-touched.ng-pristine.ng-invalid:not(form) {
+  border-left: 5px solid #a94442 !important;
+}

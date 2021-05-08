@@ -22,7 +22,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const mainProfileRoute: Routes = [
   { path: '', component: MainProfileComponent },
- 
 ];
 @NgModule({
   imports: [

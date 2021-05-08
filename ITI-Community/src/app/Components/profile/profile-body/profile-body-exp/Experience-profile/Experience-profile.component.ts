@@ -1,5 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { validateEventsArray } from '@angular/fire/firestore';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileService } from '../../../Service/user-profile.service';
 import { IExperience } from '../../ViewModels/iexperience';
@@ -23,17 +29,35 @@ export class ExperienceProfileComponent implements OnInit {
 
   ngOnInit() {
     this.editExp = this.FB.group({
-      id: this.userExperience.experience.id,
-      companyName: this.userExperience.experience.companyName,
-      from: this.userExperience.experience.from,
-      to: this.userExperience.experience.to,
-      location: this.userExperience.experience.location,
-      description: this.userExperience.experience.description,
-      degree: this.userExperience.experience.degree,
+      id: new FormControl(this.userExperience.experience.id),
+      companyName: new FormControl(this.userExperience.experience.companyName, [
+        Validators.required,
+        Validators.minLength(2),
+      ]),
+      from: new FormControl(this.userExperience.experience.from, [
+        Validators.required,
+      ]),
+      to: new FormControl(
+        this.userExperience.experience.to,
+        Validators.required
+      ),
+      location: new FormControl(this.userExperience.experience.location, [
+        Validators.required,
+        Validators.minLength(10),
+      ]),
+      description: new FormControl(this.userExperience.experience.description, [
+        Validators.required,
+        Validators.minLength(10),
+      ]),
+      degree: new FormControl(this.userExperience.experience.degree, [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(10),
+      ]),
     });
   }
 
-  open(content) {
+  openEditExperience(content) {
     this.editExp = this.FB.group({
       id: this.userExperience.experience.id,
       companyName: this.userExperience.experience.companyName,
@@ -53,19 +77,22 @@ export class ExperienceProfileComponent implements OnInit {
   }
 
   saveChanges() {
-    if (this.checked) {
-      this.editExp.value.to = 'present';
+    if (this.editExp.valid) {
+      if (this.checked) {
+        this.editExp.value.to = 'present';
+      }
+      let exp: IExperience = {
+        id: this.editExp.value.id,
+        companyName: this.editExp.value.companyName,
+        from: this.editExp.value.from,
+        to: this.editExp.value.to,
+        location: this.editExp.value.location,
+        description: this.editExp.value.description,
+        degree: this.editExp.value.degree,
+      };
+      this.modalService.dismissAll();
+      this.us.updateUserExp(localStorage.getItem('uid'), exp);
     }
-    let exp: IExperience = {
-      id: this.editExp.value.id,
-      companyName: this.editExp.value.companyName,
-      from: this.editExp.value.from,
-      to: this.editExp.value.to,
-      location: this.editExp.value.location,
-      description: this.editExp.value.description,
-      degree: this.editExp.value.degree,
-    };
-    this.us.updateUserExp(localStorage.getItem('uid'), exp);
   }
 
   ch() {

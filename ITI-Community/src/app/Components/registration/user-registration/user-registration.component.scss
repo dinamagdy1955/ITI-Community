@@ -1,19 +1,17 @@
 #loginLogo {
   display: flex;
   flex-direction: row;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 }
 
 .header__logo {
   height: 5rem;
-  margin-bottom: 0.9rem;
   margin-right: 0.3rem;
 }
 
 .header__separator {
   border-right: 0.2rem solid #901b20;
   height: 5.2rem;
-  margin-top: 0.8rem;
 }
 
 .header__title {
@@ -24,7 +22,7 @@
   text-transform: capitalize;
   word-spacing: 0;
   color: #6c757d;
-  margin: 1rem 0 0 0.5rem;
+  margin: 0.5rem 0 0 0.5rem;
   width: 254px;
 }
 
@@ -90,6 +88,34 @@
 
 #signin:hover a {
   color: #94151b !important;
+}
+
+input.ng-dirty.ng-valid.ng-touched:not(form) {
+  border-left: 5px solid #42a948 !important;
+}
+
+input.ng-touched.ng-dirty.ng-invalid:not(form) {
+  border-left: 5px solid #a94442 !important;
+}
+
+input.ng-touched.ng-pristine.ng-invalid:not(form) {
+  border-left: 5px solid #a94442 !important;
+}
+
+select.ng-dirty.ng-valid.ng-touched:not(form) {
+  border-left: 5px solid #42a948 !important;
+}
+
+select.ng-pristine.ng-invalid.ng-touched:not(form) {
+  border-left: 5px solid #a94442 !important;
+}
+
+select.ng-touched.ng-pristine.ng-invalid:not(form) {
+  border-left: 5px solid #a94442 !important;
+}
+
+::ng-deep .tooltip-inner {
+  background-color: #a94442;
 }
 
 .footerSignIn {

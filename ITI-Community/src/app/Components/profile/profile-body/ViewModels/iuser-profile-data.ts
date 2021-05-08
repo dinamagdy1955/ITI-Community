@@ -15,4 +15,5 @@ export interface IUserProfileData {
   experiences: IExperience[];
   friendList: [];
   avatar: string;
+  avatarCover: string;
 }
