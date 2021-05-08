@@ -12,29 +12,33 @@ export class EditCommentComponent implements OnInit {
   closeResult = ''
   editCommentForm: FormGroup
   @Input() commentID
+  @Input() postID
   singleComment
   constructor(private model: NgbModal, private FB: FormBuilder, private commentService: PostCommentService) {
     this.editCommentForm = this.FB.group({
-      comment: ''
+      Body: ''
     })
   }
 
   ngOnInit(): void {
-    let sub = this.commentService.getCommentById(this.commentID).subscribe(res => {
+
+    this.commentService.getCommentById(this.postID, this.commentID).subscribe(res => {
       this.singleComment = res
-      this.editCommentForm = this.FB.group({
-        comment: this.singleComment.comment
-      })
-      sub.unsubscribe();
+      if (this.singleComment != undefined) {
+        this.editCommentForm = this.FB.group({
+          Body: this.singleComment.Body
+        })
+      }
     })
+
   }
 
 
 
   updateComment() {
-    this.commentService.editComment(this.commentID, this.editCommentForm.value.comment);
+    this.commentService.editComment(this.postID, this.commentID, this.editCommentForm.value.Body);
     this.editCommentForm = this.FB.group({
-      comment: ''
+      Body: ''
     })
   }
 

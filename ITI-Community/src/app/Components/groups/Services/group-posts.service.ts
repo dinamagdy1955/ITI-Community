@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { IPost } from '../ViewModel/ipost';
+import { IPost2 } from '../ViewModel/ipost';
 
 @Injectable({
   providedIn: 'root',
@@ -9,45 +9,26 @@ export class GroupPostsService {
   likes: string[];
   constructor(private db: AngularFirestore) { }
 
-  getGroupPost() {
-    return this.db.collection("GroupPosts", ref => ref.orderBy('PostedDate', 'desc')).snapshotChanges();
-  }
-
-  getPostById(id) {
-    return this.db.collection("GroupPosts").doc(id).valueChanges();
+  GroupPosts(id) {
+    return this.db.collection('PostGroup', ref => ref.where('GroupId', '==', id).orderBy('PostedDate', 'desc')).snapshotChanges()
   }
 
 
-  // test(id) {
-  //   let userRef = this.db.collection('users-details').
-  //   return this.db.collection('GroupPosts', ref=>  ref.where('UserId', '==', ''))
-  // }
-
-  giveLike(like, id) {
-    let sub = this.getGroupPost().subscribe((res) => {
-      res.map((e) => {
-        if (id == e.payload.doc.id) {
-          this.likes = e.payload.doc.get('Likes');
-          console.log(this.likes);
-          if (this.likes.indexOf(like) != -1) {
-            this.likes.splice(this.likes.indexOf(like), 1);
-          } else {
-            this.likes.push(like);
-          }
-          let LikeRef = this.db.collection('GroupPosts').doc(id);
-          LikeRef.ref.update({
-            Likes: this.likes,
-          });
-          sub.unsubscribe();
-        }
-      });
-    });
+  PostById(postid) {
+    return this.db.collection('PostGroup').doc(postid).snapshotChanges()
   }
 
-  writePost(post: IPost) {
+
+  editPost(id, data) {
+    return this.db.collection('PostGroup').doc(id).update({
+      Body: data
+    })
+  }
+
+  writePost(post: IPost2) {
     return new Promise<any>((res, rej) => {
       this.db
-        .collection('GroupPosts')
+        .collection('PostGroup')
         .add(post)
         .then(
           (res) => { },
@@ -56,18 +37,25 @@ export class GroupPostsService {
     });
   }
 
-  getPostsLikes() {
-    return this.db.collection('GroupPosts').snapshotChanges();
-  }
+  giveLike(like, id) {
+    let sub = this.PostById(id).subscribe(res => {
+      this.likes = res.payload.get('Likes')
+      if (this.likes.indexOf(like) != -1) {
+        this.likes.splice(this.likes.indexOf(like), 1)
+      } else {
+        this.likes.push(like)
+      }
 
-  editPost(id, data) {
-    return this.db.collection('GroupPosts').doc(id).update({
-      Post: data
+      this.db.collection('PostGroup').doc(id).update({
+        Likes: this.likes
+      })
+      sub.unsubscribe()
     })
   }
 
+
   deletePost(id) {
-    return this.db.collection('GroupPosts').doc(id).delete()
+    return this.db.collection('PostGroup').doc(id).delete()
   }
 
 }

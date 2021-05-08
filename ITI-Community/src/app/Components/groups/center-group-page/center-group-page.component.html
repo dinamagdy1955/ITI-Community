@@ -26,11 +26,11 @@
     </section>
 
     <div *ngIf="admin != undefined">
-        <section class="write-post-on-group mt-3" *ngIf="admin.includes(userID); else messegeBlock">
+        <section class="write-post-on-group mt-3"
+            *ngIf="admin.includes(userID) || member.includes(userID); else messegeBlock">
             <div class="media border p-3 postcontainer" style="background-color: white;  border-radius: .5em">
                 <div class="media-body" style="  align-items: center;">
-                    <img src="../../../../assets/nav-img.png" style="width:10%;height: auto;" alt="John Doe"
-                        class="mr-3 mt-3 rounded-circle">
+                    <img [src]="avatar" style="width:10%;height: auto;" alt="John Doe" class="mr-3 mt-3 rounded-circle">
                     <app-write-box-model [SelectedGroupId]="GroupId"></app-write-box-model>
                     <div class="W-100%"><br></div>
                     <div style="width: 100%; text-align:center; ">
@@ -77,11 +77,16 @@
                 Request Or
                 Send
                 Request To
-                <!-- <a (click)="requestToJoin(userID, GroupId)" class="font-weight-bold btn p-0">
-                    <span *ngIf="subscribe.includes(userID)">Cancel</span>
-                    <span *ngIf="!subscribe.includes(userID)">Join
-                        Us</span>
-                </a> -->
+                <span *ngIf="subscribe.includes(userID) else JoinUS">
+                    <a (click)="cancelRequest(userID, GroupId, 'Subscriber')" class="font-weight-bold btn p-0">
+                        <span *ngIf="subscribe.includes(userID)">Cancel</span>
+                    </a>
+                </span>
+                <ng-template #JoinUS>
+                    <a (click)="requestToJoin(userID, GroupId)" class="font-weight-bold btn p-0">
+                        <span *ngIf="!subscribe.includes(userID)">Join Us</span>
+                    </a>
+                </ng-template>
             </ngb-alert>
         </p>
     </ng-template>

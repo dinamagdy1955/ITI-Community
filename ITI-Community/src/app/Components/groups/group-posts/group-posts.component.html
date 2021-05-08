@@ -1,3 +1,85 @@
+<div class="card mt-3" *ngFor="let post of postGroupList">
+    <div class="card-body">
+        <div class="media">
+            <img class="mr-4 rounded-circle" [src]="post.data.Auther.avatar" alt="" width="64px">
+            <div class="media-body">
+                <h6 class="mt-1 mb-1">
+                    <a class="text-dark text-decoration-none" href="">
+                        {{post.data.Auther.firstName}} {{post.data.Auther.lastName}}
+                    </a>
+                </h6>
+                <small class="text-muted">{{post.data.Auther.jobTitle}}</small>
+                <small class="text-muted d-block">{{post.data.PostedDate.toDate() | date}}</small>
+            </div>
+            <div *ngIf="adminGroup.includes(userID) || post.data.Auther.id === userID">
+                <div ngbDropdown container="body" class="d-inline">
+                    <button type="button" class="btn btn-default" ngbDropdownToggle>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                    <div ngbDropdownMenu>
+                        <div>
+                            <app-edit-post [postID]='post.id'></app-edit-post>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <button ngbDropdownItem (click)="deletePost(post.id)">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-1 my-2">
+            {{post.data.Body}}
+        </div>
+        <div class="users-post-groups row" *ngFor="let img of post.postImg">
+            <img class="img-fluid col-md-6" [src]="img" alt="">
+        </div>
+        <div class="text-secondary pt-2">
+            <small>{{post.data.Likes.length}} Likes</small>
+        </div>
+        <div class="post-actions-groups mt-2">
+            <button class="btn btn-default" (click)="Like(userID , post.id)">
+                <span *ngIf="!post.data.Likes.includes(userID)"><i class="far fa-thumbs-up mr-2"></i> Like</span>
+                <span *ngIf="post.data.Likes.includes(userID)" class="font-weight-bold"><i
+                        class="fas fa-thumbs-up mr-2"></i>
+                    Like</span>
+            </button>
+            <label for="comment" class="btn mb-0"><i class="far fa-comment mr-2"></i>Comment</label>
+        </div>
+        <div class="user-right-comments row mt-3">
+            <img [src]="avatar" class="rounded-circle col-2">
+            <div class=" col-9 mt-md-4 mt-lg-2 mr-2">
+                <app-comment-form [defPostId]="post.id"></app-comment-form>
+            </div>
+        </div>
+
+        <app-post-comments [PostID]="post.id" [admins]="adminGroup"></app-post-comments>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+
 <div class="card mt-3" *ngFor="let post of postGroupList; let i = index">
     <div class="card-body" *ngIf="usersData[i] !== undefined">
         <div class="media">
@@ -54,4 +136,4 @@
         <app-post-comments [PostID]="post.id"></app-post-comments>
 
     </div>
-</div>
+</div> -->

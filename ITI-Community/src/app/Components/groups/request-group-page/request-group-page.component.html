@@ -27,7 +27,8 @@
                                         </div>
                                         <div *ngIf="!g.admin.includes(userID)">
                                             <button class="btn btn-outline-danger btn-sm rounded-pill mt-3 px-3"
-                                                (click)='leaveGroup(userID, g.id)'><i class="fas fa-sign-out-alt"></i>
+                                                (click)='leaveGroup(userID, g.id, "Member")'><i
+                                                    class="fas fa-sign-out-alt"></i>
                                                 Leave
                                             </button>
                                         </div>
@@ -54,7 +55,7 @@
                                             <small class="text-muted"><span>{{g.Specialty}}</span> members</small>
                                         </div>
                                         <button type="button" class="btn btn-outline-dark btn-sm rounded-pill px-3 mt-3"
-                                            (click)='JoinOut(userID, g.id);'><i class="fas fa-undo"></i>
+                                            (click)='JoinOut(userID, g.id, "Subscriber");'><i class="fas fa-undo"></i>
                                             Withdraw</button>
                                     </div>
                                 </li>
