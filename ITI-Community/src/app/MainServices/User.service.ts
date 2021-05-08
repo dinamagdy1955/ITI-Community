@@ -51,7 +51,7 @@ getFriendRequests(uid)
 ignore(id){
   let uid=localStorage.getItem("uid");
   return this.db.collection('users-details').doc(uid).collection('friendRequest').doc(id).delete()
-
+}
   notINCard(arr: any[]) {
     let uid = localStorage.getItem('uid');
     arr.push(uid);
