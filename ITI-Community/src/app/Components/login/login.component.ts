@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/MainServices/User.service';
 import { LocalUserData } from 'src/app/ViewModel/local-user-data';
 import { SignInAuthError } from './signInInterface/sign-in-auth-error';
@@ -17,11 +18,12 @@ import { SignInService } from './signInService/sign-in.service';
 })
 export class LoginComponent implements OnInit {
   loginUser: FormGroup;
-  router: any;
+
   constructor(
     private signIn: SignInService,
     private FB: FormBuilder,
-    private profile: UserService
+    private profile: UserService,
+    private router: Router
   ) {
     this.loginUser = this.FB.group({
       email: new FormControl('', [
