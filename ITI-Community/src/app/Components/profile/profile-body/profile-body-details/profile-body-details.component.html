@@ -18,10 +18,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="fileInput.click()">
+        <button type="button" class="btn btn-outline-dark" (click)="fileCoverInput.click()">
           <span><i class="fas fa-edit"></i></span>
-          <input #fileInput id="img" type="file" style="display:none;" accept=".png,.jpg"
-            (change)="preview(fileInput.files,'avatarCover')" />
+          <input #fileCoverInput id="img" type="file" style="display:none;" accept=".png,.jpg"
+            (change)="preview(fileCoverInput.files,'avatarCover')" />
         </button>
         <button type="submit" class="btn btn-outline-dark"
           (click)="upload('avatarCover');modal.close('Save click');">Save</button>
@@ -53,8 +53,8 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-dark" (click)="fileInput.click()">
             <span><i class="fas fa-edit"></i></span>
-            <input #fileCoverInput id="img" type="file" style="display:none;" accept=".png,.jpg"
-              (change)="preview(fileCoverInput.files,'avatar')" />
+            <input #fileInput id="img" type="file" style="display:none;" accept=".png,.jpg"
+              (change)="preview(fileInput.files,'avatar')" />
           </button>
           <button type="submit" class="btn btn-outline-dark"
             (click)="upload('avatar');modal.close('Save click');">Save</button>
@@ -109,9 +109,11 @@
               *ngIf="uidLocal == userDetails.id ;else visitorInvite"><i class="fas fa-user-edit"></i></a>
             <ng-template #visitorInvite>
               <div class="d-flex ">
-                <a type="button" class="profile-Card-Edit pt-2" [routerLink]="['/Messages']"><i class="fas fa-comment"></i></a>
-              <a type="button" class="profile-Card-Edit p-2" (click)="addRequset()" *ngIf="!userDetails.request.includes(uidLocal);"><i class="fas fa-user-plus"></i></a>
-            </div>
+                <a type="button" class="profile-Card-Edit pt-2" [routerLink]="['/Messages']"><i
+                    class="fas fa-comment"></i></a>
+                <a type="button" class="profile-Card-Edit p-2" (click)="addRequset()"
+                  *ngIf="!userDetails.request.includes(uidLocal);"><i class="fas fa-user-plus"></i></a>
+              </div>
             </ng-template>
           </div>
         </div>
