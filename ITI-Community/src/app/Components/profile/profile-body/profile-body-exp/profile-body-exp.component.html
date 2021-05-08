@@ -2,9 +2,19 @@
   <div class="card-body" style="width: 100%;">
     <h5 class="card-title mb-2 text-muted">Experience</h5>
     <div *ngIf="userExperiences != undefined">
-      <div *ngFor="let item of userExperiences.experiences;let i = index;">
-        <app-Experience-profile [userExperience]="{id:userExperiences.id,experience:item}"></app-Experience-profile>
+      <div *ngIf="userExperiences.experiences.length > 0; else noExp">
+        <div *ngFor="let item of userExperiences.experiences;let i = index;">
+          <app-Experience-profile [userExperience]="{id:userExperiences.id,experience:item}"></app-Experience-profile>
+        </div>
       </div>
+      <ng-template #noExp>
+        <div class="noExpImg">
+          <p>Sorry you don't add any experiences yet ...</p>
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2F221-2211998_contract-clipart-hired-experience-vector.png?alt=media&token=e5b75d3a-93d3-4b12-a3a9-da883f1836f7">
+        </div>
+        <hr>
+      </ng-template>
     </div>
     <hr class="more" style="display: none; margin-bottom: 0;">
     <ng-template #content let-modal>

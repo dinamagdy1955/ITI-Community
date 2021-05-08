@@ -11,7 +11,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { formatCurrency } from '@angular/common';
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',

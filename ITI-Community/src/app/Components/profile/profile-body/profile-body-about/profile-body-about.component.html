@@ -32,6 +32,16 @@
         </div>
       </form>
     </ng-template>
-    <p class="card-text profile-about-p">{{userAbout.about}} </p>
+    <div *ngIf="userAbout.about.length > 0; else noAbout">
+      <p class="card-text profile-about-p">{{userAbout.about}} </p>
+    </div>
+    <ng-template #noAbout>
+      <div class="noAboutImg">
+        <p>Sorry you don't add about yet ...</p>
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2F112-1120219_goal-clipart-know-yourself-myself-clipart.png?alt=media&token=a494f378-3770-4ac8-8b31-c33fac8ca15d">
+      </div>
+    </ng-template>
+
   </div>
 </div>

@@ -89,15 +89,18 @@
                 <div class="modal-body">
                   <div class="form-group">
                     <label for="firstName">First Name *</label>
-                    <input formControlName="firstName" type="text" class="form-control" minlength="3" required>
+                    <input formControlName="firstName" type="text" class="form-control"
+                      ngbTooltip="First Name must be 3 charaters or more">
                   </div>
                   <div class="form-group">
                     <label for="lastName">Last Name *</label>
-                    <input formControlName="lastName" type="text" class="form-control" minlength="3" required>
+                    <input formControlName="lastName" type="text" class="form-control"
+                      ngbTooltip="Last Name must be 3 charaters or more" minlength="3" required>
                   </div>
                   <div class="form-group">
                     <label for="jobTitle">Job Title *</label>
-                    <input formControlName="jobTitle" type="text" class="form-control" minlength="3" required>
+                    <input formControlName="jobTitle" type="text" class="form-control"
+                      ngbTooltip="Job Title must be 3 charaters or more" minlength="3" required>
                   </div>
                 </div>
                 <div class="modal-footer">
