@@ -4,5 +4,6 @@ export enum SignInAuthError {
   WrongPassword = 'auth/wrong-password',
   EmailAlreadyInUse = 'email-already-in-use',
   WeakPassword = 'auth/weak-password',
+  EmailNotVerified = 'auth/email-not-verified',
   Correct = 'auth/correct',
 }

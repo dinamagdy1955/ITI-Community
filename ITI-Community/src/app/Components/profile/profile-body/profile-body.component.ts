@@ -29,8 +29,9 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
     lastName: '',
     jobTitle: '',
     avatar: '',
-    branch: "",
-    track: "",
+    branch: '',
+    track: '',
+    avatarCover: '',
     request:[]
   };
   UserExperiences = {
@@ -67,6 +68,7 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
                   experiences: userDetails.payload.get('experiences'),
                   friendList: userDetails.payload.get('friendList'),
                   avatar: userDetails.payload.get('avatar'),
+                  avatarCover: userDetails.payload.get('avatarCover'),
                 };
                 this.UserAbout.id = this.uid;
                 this.UserAbout.about = this.userData.about;
@@ -75,6 +77,7 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
                 this.UserDetails.lastName = this.userData.lastName;
                 this.UserDetails.avatar = this.userData.avatar;
                 this.UserDetails.jobTitle = this.userData.jobTitle;
+                this.UserDetails.avatarCover = this.userData.avatarCover;
                 this.br.getBrancheById(this.userData.branch).subscribe((res) => {
                   this.UserDetails.branch = res.data()["name"];
                 }

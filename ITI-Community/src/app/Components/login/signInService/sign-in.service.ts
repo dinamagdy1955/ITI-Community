@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/MainServices/User.service';
+import { LocalUserData } from 'src/app/ViewModel/local-user-data';
 import { SignInAuthError } from '../signInInterface/sign-in-auth-error';
 
 @Injectable({
@@ -52,6 +53,19 @@ export class SignInService {
                       res.payload.data().jobTitle
                     );
                     localStorage.setItem('avatar', res.payload.data().avatar);
+                    localStorage.setItem(
+                      'avatarCover',
+                      res.payload.data().avatarCover
+                    );
+                    let localUserData: LocalUserData = {
+                      id: res.payload.id,
+                      firstName: res.payload.data().firstName,
+                      lastName: res.payload.data().lastName,
+                      jobTitle: res.payload.data().jobTitle,
+                      avatar: res.payload.data().avatar,
+                      avatarCover: res.payload.data().avatarCover,
+                    };
+                    this.profile.setlocalUserData(localUserData);
                     this.router.navigate(['/HOME']);
                     return SignInAuthError.Correct;
                   });
@@ -61,6 +75,8 @@ export class SignInService {
               }
               sub.unsubscribe();
             });
+        } else {
+          return SignInAuthError.EmailNotVerified;
         }
       },
       (err) => {
