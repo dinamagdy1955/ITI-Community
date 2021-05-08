@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/MainServices/User.service';
+import { UserService } from '../Services/user.service';
+
 
 @Component({
   selector: 'app-connections',
@@ -9,7 +10,7 @@ import { UserService } from 'src/app/MainServices/User.service';
 export class ConnectionsComponent implements OnInit {
   frindsList:any[]=[]
   constructor(
-    private usrs:UserService,
+    private usrs:UserService
   ) { }
 
   ngOnInit(): void {
