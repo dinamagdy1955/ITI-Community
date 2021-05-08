@@ -21,7 +21,8 @@ export class ProfileBodyDetailsComponent implements OnInit {
   previewedImg = undefined;
   previewedCoverImg = undefined;
   branch;
-  track = '';
+  track="";
+  friendsRequest=[];
   constructor(
     private modalService: NgbModal,
     private us: UserProfileService,
@@ -48,6 +49,7 @@ export class ProfileBodyDetailsComponent implements OnInit {
     this.previewedCoverImg = undefined;
     this.modalService.open(contentCoverImg, { size: 'lg' });
   }
+
   openImage(contentImg) {
     this.previewedImg = undefined;
     this.modalService.open(contentImg, { size: 'lg' });
@@ -98,4 +100,5 @@ export class ProfileBodyDetailsComponent implements OnInit {
   addRequset() {
     this.ur.create_NewRequest(this.userDetails.id);
   }
+
 }

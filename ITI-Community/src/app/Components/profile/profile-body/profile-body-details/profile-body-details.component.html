@@ -109,11 +109,9 @@
               *ngIf="uidLocal == userDetails.id ;else visitorInvite"><i class="fas fa-user-edit"></i></a>
             <ng-template #visitorInvite>
               <div class="d-flex ">
-                <a type="button" class="profile-Card-Edit pt-2" [routerLink]="['/Messages']"><i
-                    class="fas fa-comment"></i></a>
-                <a type="button" class="profile-Card-Edit p-2" (click)="addRequset()"><i
-                    class="fas fa-user-plus"></i></a>
-              </div>
+                <a type="button" class="profile-Card-Edit pt-2" [routerLink]="['/Messages']"><i class="fas fa-comment"></i></a>
+              <a type="button" class="profile-Card-Edit p-2" (click)="addRequset()" *ngIf="!userDetails.request.includes(uidLocal);"><i class="fas fa-user-plus"></i></a>
+            </div>
             </ng-template>
           </div>
         </div>
