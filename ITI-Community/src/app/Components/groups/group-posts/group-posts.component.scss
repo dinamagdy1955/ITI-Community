@@ -6,3 +6,13 @@
     outline: none;
     box-shadow: none;
 }
+
+.users-post-groups {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.users-post-groups img{
+    max-height: 30vh;
+}

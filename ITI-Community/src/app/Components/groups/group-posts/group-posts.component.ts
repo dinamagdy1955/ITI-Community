@@ -1,7 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { UserService } from 'src/app/MainServices/User.service';
 import { GroupPostsService } from '../Services/group-posts.service';
 import { GroupService } from '../Services/group.service';
 
@@ -20,9 +18,12 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
   adminGroup = []
   usersData = [];
   avatar
+
+  viewImg: boolean = false
+
   constructor(
     private getall: GroupPostsService,
-    private groupService: GroupService
+    private groupService: GroupService,
   ) {
     this.userID = localStorage.getItem('uid');
   }
@@ -45,7 +46,6 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
       })
     })
     this.subsriptions.push(sub4)
-
 
 
 
@@ -92,7 +92,9 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
 
   }
 
-
+  onPress() {
+    this.viewImg = !this.viewImg
+  }
 
   Like(like, usrid) {
     this.getall.giveLike(like, usrid);

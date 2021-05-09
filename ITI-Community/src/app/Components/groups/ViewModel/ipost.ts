@@ -18,7 +18,7 @@ export interface IPost2 {
     GroupId: string,
     Body: string,
     PostedDate: Date,
-    PostImgs?: string[],
+    postImgs?: string[],
     Auther?: IUser,
     Likes?: { // subcollection
         UserId: string

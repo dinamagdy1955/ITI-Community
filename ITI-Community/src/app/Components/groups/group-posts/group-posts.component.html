@@ -29,8 +29,13 @@
         <div class="p-1 my-2">
             {{post.data.Body}}
         </div>
-        <div class="users-post-groups row" *ngFor="let img of post.postImg">
-            <img class="img-fluid col-md-6" [src]="img" alt="">
+        <div class="row">
+            <div class="users-post-groups col-md-6" *ngFor="let img of post.data.postImg">
+                <button class="btn" (click)='onPress()'><img class="img-fluid" src="{{img}}" alt="" /></button>
+            </div>
+            <div *ngIf="viewImg">
+                <app-picture-view [img]='img'></app-picture-view>
+            </div>
         </div>
         <div class="text-secondary pt-2">
             <small>{{post.data.Likes.length}} Likes</small>

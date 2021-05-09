@@ -32,7 +32,6 @@ export class WriteBoxModelComponent implements OnInit {
         lastName: localStorage.getItem('lastName'),
         id: localStorage.getItem('uid'),
         jobTitle: localStorage.getItem('jobTitle'),
-
       },
       postImg: [[]]
     })
@@ -71,14 +70,26 @@ export class WriteBoxModelComponent implements OnInit {
         lastName: localStorage.getItem('lastName'),
         id: localStorage.getItem('uid'),
         jobTitle: localStorage.getItem('jobTitle'),
-
       },
       postImg: [[]]
     })
   }
 
-  onSubmit() {
-    this.grpService.writePost(this.postForm.value);
+  async onSubmit() {
+    const selectedImg = (<HTMLInputElement>document.getElementById('Img')).files;
+    const img = await this.grpService.uploadImg(selectedImg);
+    let Allimgs = []
+    let body = this.postForm.value.Body
+    for (let i = 0; i < img.ref.length; i++) {
+      await img.ref[i].getDownloadURL().subscribe(async (url) => {
+        Allimgs.push(url)
+        if (i == img.ref.length - 1) {
+          this.postForm.value.postImg = Allimgs
+          this.postForm.value.Body = body
+          this.grpService.writePost(this.postForm.value);
+        }
+      });
+    }
     this.postForm = this.fb.group({
       GroupId: this.SelectedGroupId,
       Likes: [[]],

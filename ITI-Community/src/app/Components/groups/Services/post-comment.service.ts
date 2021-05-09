@@ -11,7 +11,8 @@ export class PostCommentService {
 
 
   getPostComments2(postid) {
-    return this.db.collection('PostGroup').doc(postid).collection('Comments', ref => ref.orderBy('CommentDate', 'desc')).snapshotChanges();
+    // , ref => ref.orderBy('CommentDate', 'desc')
+    return this.db.collection('PostGroup').doc(postid).collection('Comments').snapshotChanges();
   }
 
   deleteComment(id, post) {

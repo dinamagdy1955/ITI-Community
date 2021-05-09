@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { IPost2 } from '../ViewModel/ipost';
 
 @Injectable({
@@ -7,10 +8,11 @@ import { IPost2 } from '../ViewModel/ipost';
 })
 export class GroupPostsService {
   likes: string[];
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore, private afStorage: AngularFireStorage) { }
 
   GroupPosts(id) {
-    return this.db.collection('PostGroup', ref => ref.where('GroupId', '==', id).orderBy('PostedDate', 'desc')).snapshotChanges()
+    // .orderBy('PostedDate', 'desc')
+    return this.db.collection('PostGroup', ref => ref.where('GroupId', '==', id)).snapshotChanges()
   }
 
 
@@ -35,6 +37,26 @@ export class GroupPostsService {
           (error) => rej(error)
         );
     });
+  }
+
+  async uploadImg(imgs) {
+    const fileRef = []
+    const task = []
+    for (let img of imgs) {
+      let imgNameArr = img.name.split('.');
+      let imgName = ''
+      for (let i = 0; i <= imgNameArr.length; i++) {
+        if (i == imgNameArr.length - 1) break;
+        else imgName += imgNameArr[i];
+      }
+      let filePath = 'GroupPostImg/' + imgName + '_' + (Math.random() * 1024 * 1024).toString(36).substring(2)
+      fileRef.push(this.afStorage.ref(filePath))
+      task.push(await this.afStorage.upload(filePath, img))
+    }
+    return {
+      ref: fileRef,
+      task: task
+    }
   }
 
   giveLike(like, id) {
