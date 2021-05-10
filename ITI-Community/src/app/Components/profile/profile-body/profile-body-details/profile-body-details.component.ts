@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileService } from '../../Service/user-profile.service';
 import { NetworkUserService } from '../../../network/Services/user.service';
@@ -8,7 +8,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { BranchDatabaseService } from 'src/app/Components/Branches/Services/database.service';
 import { UserService } from 'src/app/MainServices/User.service';
 @Component({
   selector: 'app-profile-body-details',
@@ -22,14 +21,14 @@ export class ProfileBodyDetailsComponent implements OnInit {
   previewedImg = undefined;
   previewedCoverImg = undefined;
   branch;
-  track="";
-  friendsRequest=[];
+  track = '';
+  friendsRequest = [];
   constructor(
     private modalService: NgbModal,
     private us: UserProfileService,
     private FB: FormBuilder,
     private ur: UserService,
-   private NUS :NetworkUserService
+    private NUS: NetworkUserService
   ) {}
   ngOnInit() {
     this.editPersonalData = this.FB.group({
@@ -73,6 +72,13 @@ export class ProfileBodyDetailsComponent implements OnInit {
         this.editPersonalData.value.lastName,
         this.editPersonalData.value.jobTitle
       );
+      this.ur.setlocalUserData({
+        ...this.ur.localUserData,
+        firstName: this.editPersonalData.value.firstName,
+        lastName: this.editPersonalData.value.lastName,
+        jobTitle: this.editPersonalData.value.jobTitle,
+      });
+      console.log(this.ur.localUserData);
     }
   }
   preview(files, type) {
@@ -102,5 +108,4 @@ export class ProfileBodyDetailsComponent implements OnInit {
   addRequset() {
     this.NUS.create_NewRequest(this.userDetails.id);
   }
-
 }

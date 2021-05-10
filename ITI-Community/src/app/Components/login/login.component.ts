@@ -96,7 +96,7 @@ export class LoginComponent implements OnInit {
                         this.profile.setlocalUserData(localUserData);
                         /////////////
                         console.log(this.profile.localUserData);
-                        this.router.navigate(['/HOME']);
+                        // this.router.navigate(['/HOME']);
                         return SignInAuthError.Correct;
                       });
                   } else {
