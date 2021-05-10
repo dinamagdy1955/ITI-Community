@@ -1,11 +1,10 @@
 <div class="card boo" style="width: 100%;margin-top: 10px;">
   <div class="card-body">
     <h5 class="card-title">Connection List</h5>
-    <div *ngIf="friendList.length > 0">
+
       <div *ngFor="let friend of friendList">
         <app-people-also-viewed [Friend]="friend"></app-people-also-viewed>
       </div>
-    </div>
     <hr style="margin-bottom:4px ;">
     <div style="text-align: center;">All Connections</div>
   </div>

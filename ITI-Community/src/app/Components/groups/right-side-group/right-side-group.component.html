@@ -1,7 +1,7 @@
 <div *ngIf="Group != undefined">
     <div class="card text-left">
         <div class="card-body">
-            <h6 class="card-title"><span>{{Group.members.length}}</span> members</h6>
+            <h6 class="card-title"><span>{{members.length + admins.length}}</span> members</h6>
             <p class="card-text">including ...</p>
 
             <img class="avatar-container-item avatars-right" src="../../../../assets/nav-img.png">
@@ -32,7 +32,8 @@
                     <div class="col-md-12">
                         <div *ngFor="let a of admins | filter:keyWordsSearch" class="mb-3">
                             <img src="../../../../assets/nav-img.png" width="60">
-                            <a href="#" class="font-weight-bold btn">{{a.data.firstName}} {{a.data.lastName}}
+                            <a href="#" class="font-weight-bold btn">
+                                {{a.data.firstName}} {{a.data.lastName}}
                                 <span class="badge badge-secondary ml-2">Admin</span>
                             </a>
                             <div class="float-right pt-3">
@@ -40,17 +41,17 @@
                                     <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
                                     <div class="btn-group" ngbDropdown role="group"
                                         aria-label="Button group with nested dropdown"
-                                        *ngIf="Group.admin.includes(userID)">
+                                        *ngIf="adminRole.includes(userID)">
                                         <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
                                             ngbDropdownToggle></button>
                                         <div class="dropdown-menu" ngbDropdownMenu>
                                             <div>
-                                                <button ngbDropdownItem (click)="MemberRole(a.id, GroupId)">
+                                                <button ngbDropdownItem (click)="Roles(a.id, GroupId, 'AdminToMember')">
                                                     Member
                                                 </button>
                                             </div>
                                             <div>
-                                                <button ngbDropdownItem (click)="deleteUser(a.id, GroupId)">
+                                                <button ngbDropdownItem (click)="deleteUser(a.id, GroupId, 'Admin')">
                                                     Delete
                                                 </button>
                                             </div>
@@ -65,7 +66,8 @@
                     <div class="col-md-12">
                         <div *ngFor="let a of members | filter:keyWordsSearch" class="mb-3">
                             <img src="../../../../assets/nav-img.png" width="60">
-                            <a href="#" class="font-weight-bold btn">{{a.data.firstName}} {{a.data.lastName}}
+                            <a href="#" class="font-weight-bold btn">
+                                {{a.data.firstName}} {{a.data.lastName}}
                                 <span class="badge badge-secondary ml-2">Member</span>
                             </a>
                             <div class="float-right pt-3">
@@ -73,22 +75,22 @@
                                     <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
                                     <div class="btn-group" ngbDropdown role="group"
                                         aria-label="Button group with nested dropdown"
-                                        *ngIf="Group.admin.includes(userID)">
+                                        *ngIf="adminRole.includes(userID)">
                                         <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
                                             ngbDropdownToggle></button>
                                         <div class="dropdown-menu" ngbDropdownMenu>
                                             <div>
-                                                <button ngbDropdownItem (click)="MemberRole(a.id, GroupId)">
+                                                <button ngbDropdownItem (click)="Roles(a.id, GroupId, 'MemToAdm')">
                                                     Admin
                                                 </button>
                                             </div>
                                             <div>
-                                                <button ngbDropdownItem (click)="makeMember(a.id, GroupId)">
+                                                <button ngbDropdownItem (click)="Roles(a.id, GroupId, 'MemToSub')">
                                                     Subscriber
                                                 </button>
                                             </div>
                                             <div>
-                                                <button ngbDropdownItem (click)="deleteUser(a.id, GroupId)">
+                                                <button ngbDropdownItem (click)="deleteUser(a.id, GroupId, 'Member')">
                                                     Delete
                                                 </button>
                                             </div>
@@ -103,7 +105,8 @@
                     <div class="col-md-12">
                         <div *ngFor="let a of subscribers | filter:keyWordsSearch" class="mb-3">
                             <img src="../../../../assets/nav-img.png" width="60">
-                            <a href="#" class="font-weight-bold btn">{{a.data.firstName}} {{a.data.lastName}}
+                            <a href="#" class="font-weight-bold btn">
+                                {{a.data.firstName}} {{a.data.lastName}}
                                 <span class="badge badge-secondary ml-2">Subscriber</span>
                             </a>
                             <div class="float-right pt-3">
@@ -111,17 +114,18 @@
                                     <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
                                     <div class="btn-group" ngbDropdown role="group"
                                         aria-label="Button group with nested dropdown"
-                                        *ngIf="Group.admin.includes(userID)">
+                                        *ngIf="adminRole.includes(userID)">
                                         <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
                                             ngbDropdownToggle></button>
                                         <div class="dropdown-menu" ngbDropdownMenu>
                                             <div>
-                                                <button ngbDropdownItem (click)="makeMember(a.id, GroupId)">
+                                                <button ngbDropdownItem (click)="Roles(a.id, GroupId, 'SubToMem')">
                                                     Member
                                                 </button>
                                             </div>
                                             <div>
-                                                <button ngbDropdownItem (click)="deleteUser(a.id, GroupId)">
+                                                <button ngbDropdownItem
+                                                    (click)="deleteUser(a.id, GroupId, 'Subscriber')">
                                                     Delete
                                                 </button>
                                             </div>
@@ -137,8 +141,8 @@
     </div>
     <div class="card text-left mt-3">
         <div class="card-body">
-            <h6 class="card-title">About This Group</h6>
-            <p class="card-text">{{Group.About.slice(0, 200)}}...</p>
+            <h6 class="card-title">Description</h6>
+            <p class="card-text">{{Group.Description.slice(0, 200)}}...</p>
         </div>
         <div class="card-footer text-muted text-center">
             <button class="btn py-0"><a (click)="openLg(about)" class="card-link">See All</a></button>
@@ -153,15 +157,15 @@
         </div>
         <div class="p-3 ">
             <h4>Group Name: {{Group.Name}}</h4>
-            <h4>Group specialty: ....</h4>
+            <h4>Group specialty: {{Group.Specialty}}</h4>
             <hr>
             <h6 class="text-muted">Group Description</h6>
-            <p>{{Group.About}}</p>
+            <p>{{Group.Description}}</p>
         </div>
     </ng-template>
     <div class="card text-left mt-3">
         <div class="card-body">
-            <h6 class="card-title">Admins : {{Group.admin.length}}</h6>
+            <h6 class="card-title">Admins : {{admins.length}}</h6>
             <div class="media mt-3" *ngFor="let a of admins">
                 <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
                 <div class="media-body">

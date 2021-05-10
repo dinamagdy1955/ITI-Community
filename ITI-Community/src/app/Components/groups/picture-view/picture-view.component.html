@@ -1,0 +1,16 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Create a post</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <img [src]="img" alt="">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-outline-danger" (click)="c('Save click')">Close</button>
+    </div>
+</ng-template>
+
+<button class="btn" (click)='open(content)'></button>

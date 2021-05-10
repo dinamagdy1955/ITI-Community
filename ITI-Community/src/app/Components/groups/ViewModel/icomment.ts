@@ -1,4 +1,7 @@
+import { IUser } from "./ipost";
+
 export interface IComment {
-    comment: string,
-    date: Date
+    Body?: string,
+    CommentDate?: Date,
+    User: IUser
 }

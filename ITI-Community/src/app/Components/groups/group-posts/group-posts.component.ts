@@ -1,7 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { UserService } from 'src/app/MainServices/User.service';
 import { GroupPostsService } from '../Services/group-posts.service';
 import { GroupService } from '../Services/group.service';
 
@@ -17,57 +15,89 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
   @Input() GroupId: string;
   userID: string;
   singleGroup
-  adminGroup
+  adminGroup = []
   usersData = [];
+  avatar
+
+  viewImg: boolean = false
 
   constructor(
     private getall: GroupPostsService,
-    private usersService: UserService,
-    private groupService: GroupService
+    private groupService: GroupService,
   ) {
     this.userID = localStorage.getItem('uid');
   }
 
 
   ngOnInit(): void {
-    let sub3 = this.groupService.getGrpById(this.GroupId).subscribe(res => {
-      this.singleGroup = res
-      this.adminGroup = this.singleGroup.admin
+    this.avatar = localStorage.getItem('avatar')
+    let sub3 = this.groupService.getGroupUsers(this.GroupId).admins.subscribe(res => {
+      res.map(e => {
+        this.adminGroup.push(e.payload.doc.id)
+      })
     })
-
     this.subsriptions.push(sub3)
-
-    let sub1 = this.getall.getGroupPost().subscribe((res) => {
-      this.postList = res.map((e) => {
+    let sub4 = this.getall.GroupPosts(this.GroupId).subscribe(res => {
+      this.postGroupList = res.map(e => {
         return {
           id: e.payload.doc.id,
-          ...(e.payload.doc.data() as object),
-        };
-      });
-      this.postGroupList = [];
-      this.usersData = [];
-      for (let post of this.postList) {
-        if (post.GroupId === this.GroupId) {
-          this.postGroupList.push(post);
-          let sub2 = this.usersService.getUserData(post.UserId).subscribe(res => {
-            this.usersData.push({
-              id: res.payload.id,
-              data: res.payload.data()
-            })
-          })
-          this.subsriptions.push(sub2)
+          data: e.payload.doc.data()
         }
-      }
-    });
-    this.subsriptions.push(sub1)
+      })
+    })
+    this.subsriptions.push(sub4)
+
+
+
+
+
+
+
+
+
+
+
+
+    // let sub3 = this.groupService.getGrpById(this.GroupId).subscribe(res => {
+    //   this.singleGroup = res
+    //   this.adminGroup = this.singleGroup.admin
+    // })
+
+    // this.subsriptions.push(sub3)
+
+    // let sub1 = this.getall.getGroupPost().subscribe((res) => {
+    //   this.postList = res.map((e) => {
+    //     return {
+    //       id: e.payload.doc.id,
+    //       ...(e.payload.doc.data() as object),
+    //     };
+    //   });
+    //   this.postGroupList = [];
+    //   this.usersData = [];
+    //   for (let post of this.postList) {
+    //     if (post.GroupId === this.GroupId) {
+    //       this.postGroupList.push(post);
+    //       let sub2 = this.usersService.getUserData(post.UserId).subscribe(res => {
+    //         this.usersData.push({
+    //           id: res.payload.id,
+    //           data: res.payload.data()
+    //         })
+    //       })
+    //       this.subsriptions.push(sub2)
+    //     }
+    //   }
+    // });
+    // this.subsriptions.push(sub1)
 
 
   }
 
+  onPress() {
+    this.viewImg = !this.viewImg
+  }
 
-
-  Like(like, id) {
-    this.getall.giveLike(like, id);
+  Like(like, usrid) {
+    this.getall.giveLike(like, usrid);
   }
 
   deletePost(id) {

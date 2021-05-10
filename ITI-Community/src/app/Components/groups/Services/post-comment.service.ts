@@ -9,34 +9,29 @@ export class PostCommentService {
 
   constructor(private db: AngularFirestore) { }
 
-  getPostComments() {
-    return this.db.collection('PostComments', ref => ref.orderBy('date', 'desc')).snapshotChanges()
+
+  getPostComments2(postid) {
+    // , ref => ref.orderBy('CommentDate', 'desc')
+    return this.db.collection('PostGroup').doc(postid).collection('Comments').snapshotChanges();
   }
 
-  getCommentById(id) {
-    return this.db.collection('PostComments').doc(id).valueChanges();
+  deleteComment(id, post) {
+    return this.db.collection('PostGroup').doc(post).collection('Comments').doc(id).delete()
   }
 
-  writeComment(comment: IComment) {
+  getCommentById(pid, cid) {
+    return this.db.collection('PostGroup').doc(pid).collection('Comments').doc(cid).valueChanges()
+  }
+
+  writeComment(comment: IComment, postId) {
     return new Promise<any>((res, rej) => {
-      this.db
-        .collection('PostComments')
-        .add(comment)
-        .then(
-          (res) => { },
-          (error) => rej(error)
-        );
+      this.db.collection('PostGroup').doc(postId).collection('Comments').add(comment).then((res) => { }, (err) => rej(err))
     });
   }
 
-  editComment(id, data) {
-    return this.db.collection('PostComments').doc(id).update({
-      comment: data
+  editComment(pid, cid, data) {
+    return this.db.collection('PostGroup').doc(pid).collection('Comments').doc(cid).update({
+      Body: data
     })
   }
-
-  deleteComment(id) {
-    return this.db.collection('PostComments').doc(id).delete()
-  }
-
 }

@@ -1,30 +1,32 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { LocalUserData } from '../ViewModel/local-user-data';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  public localUserData = new Subject<LocalUserData>();
+  data = {
+    id: localStorage.getItem('uid'),
+    firstName: localStorage.getItem('firstName'),
+    lastName: localStorage.getItem('lastName'),
+    jobTitle: localStorage.getItem('jobTitle'),
+    avatar: localStorage.getItem('avatar'),
+  };
+  constructor(private db: AngularFirestore) {}
 
-   data ={
-    id:localStorage.getItem("uid"),
-    firstName:localStorage.getItem("firstName"),
-    lastName:localStorage.getItem("lastName"),
-    jobTitle:localStorage.getItem("jobTitle"),
-    avatar:localStorage.getItem("avatar"),
-  
-  } ;
-  constructor(private db: AngularFirestore) { }
-  
-
+  setlocalUserData(value) {
+    this.localUserData.next(value);
+  }
  getUserData(uid): Observable<any> {
     return this.db.collection('users-details').doc(uid).snapshotChanges();
   }
 
+
 getAllUserData() {
   return this.db.collection('users-details').snapshotChanges();
 }
-
 
 
 
@@ -48,7 +50,7 @@ return this.db.collection('users-details').doc(uid).collection('MySentfriendRequ
       .get();
   }
 
- 
+
 
   //this code for get users data by giving it array of users ids
 
@@ -63,7 +65,7 @@ return this.db.collection('users-details').doc(uid).collection('MySentfriendRequ
   //     sub.unsubscribe();
   //   });
   // });
-/*
+  /*
   // updateDoc(_id: string, _value: string) {
   //   let doc = this.db.collection('users-details', ref => ref.where('id', '==', _id));
   //   doc.snapshotChanges().pipe(
@@ -77,8 +79,4 @@ return this.db.collection('users-details').doc(uid).collection('MySentfriendRequ
   //     })
   // }
 */
-
-
 }
-
-

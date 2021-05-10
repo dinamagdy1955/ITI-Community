@@ -5,7 +5,12 @@ import { RegistrationService } from '../Service/registration.service';
 import { SignInAuthError } from '../../login/signInInterface/sign-in-auth-error';
 import { IUserBasics } from '../ViewModels/iuser-basics';
 import { IUserDetails } from '../ViewModels/iuser-details';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
@@ -13,7 +18,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class UserRegistrationComponent implements OnInit {
   registerNewUser: FormGroup;
-
   branches = [];
   tracks = [];
   durations = [];
@@ -27,65 +31,35 @@ export class UserRegistrationComponent implements OnInit {
     this.tracks = this.trackDB.getTracksData();
     this.durations = this.trackDB.getScholarshipDurations();
     this.registerNewUser = this.FB.group({
-      firstName: [
-        '',
-        // [
-        //   // Validators.required,
-        //   // Validators.pattern(/[a-zA-Z]{3,}/)
-        // ],
-      ],
-      lastName: [
-        '',
-        // [
-        //   // Validators.required,
-        //   // Validators.pattern(/[a-zA-Z]{3,}/)
-        // ],
-      ],
-      nationalID: [
-        '',
-        // [
-        //   Validators.required,
-        //   // Validators.pattern(/^[0-9]{14}$/)/)
-        // ],
-      ],
-      email: [
-        '',
-        // [
-        //   Validators.required,
-        //   // Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{3,4}$/),
-        // ],
-      ],
-      password: [
-        '',
-        // Validators.required
-      ],
-      branch: [
-        -1,
-        // [Validators.required, Validators.pattern(/[0-9]{1,2}/)]
-      ],
-      track: [
-        -1,
-        // [Validators.required, Validators.pattern(/[0-9]{1,2}/)]
-      ],
-      scholar: [
-        -1,
-        // [Validators.required, Validators.pattern(/[0-9]{1,2}/)]
-      ],
+      firstName: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]{3,}[a-zA-Z_ ]*$/),
+      ]),
+      lastName: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]{3,}[a-zA-Z_ ]*$/),
+        Validators.minLength(3),
+      ]),
+      nationalID: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[0-9]{14}$/),
+      ]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z][a-zA-Z0-9]{7,}$/),
+      ]),
+      branch: new FormControl(-1, [Validators.required, Validators.min(0)]),
+      track: new FormControl(-1, [Validators.required, Validators.min(0)]),
+      scholar: new FormControl(-1, [Validators.required, Validators.min(0)]),
     });
   }
 
   ngOnInit(): void {}
   register() {
-    const invalid = [];
-    const controls = this.registerNewUser.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-      }
-    }
-
-    console.log(invalid);
-
     if (this.registerNewUser.valid) {
       let newUserBasic: IUserBasics = {
         email: this.registerNewUser.value.email,
@@ -106,13 +80,10 @@ export class UserRegistrationComponent implements OnInit {
         jobTitle: '',
         about: '',
         experiences: [],
-        friendList: [],
         avatar:
-          'https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2F2?alt=media&token=61809273-cae4-44bd-b88e-e665032829cc',
+          'https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2Fnav-img_qv.fa2p71r?alt=media&token=131e5508-aa20-4b51-ac1a-a9e212eadc4f',
       };
-      // console.log(
-      //   this.registerAuth.registerNewUser(newUserBasic, newUserDetails)
-      // );
+      this.registerAuth.registerNewUser(newUserBasic, newUserDetails);
     }
   }
 }

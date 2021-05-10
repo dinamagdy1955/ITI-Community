@@ -16,6 +16,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { EditPostComponent } from './edit-post/edit-post.component';
 import { EditCommentComponent } from './edit-comment/edit-comment.component';
 import { DiscoverComponent } from './discover/discover.component';
+import { PictureViewComponent } from './picture-view/picture-view.component';
 
 const groupRoutes: Routes = [
   { path: 'all-groups', component: RequestGroupPageComponent },
@@ -39,6 +40,7 @@ const groupRoutes: Routes = [
     EditPostComponent,
     EditCommentComponent,
     DiscoverComponent,
+    PictureViewComponent,
   ],
   imports: [
     CommonModule,

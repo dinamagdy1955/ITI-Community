@@ -1,6 +1,7 @@
 .boo {
   border-radius: 10px;
   border: 0.5px solid #c3c3c394;
+  box-shadow: 0 0 15px rgb(3 3 3 / 20%);
 }
 
 .presentRadio {
@@ -11,4 +12,32 @@
   padding: 0% 2%;
   font-size: 1.5rem;
   color: #901b20;
+}
+
+input.ng-dirty.ng-valid.ng-touched:not(form),
+input.ng-pristine.ng-valid.ng-touched:not(form),
+textarea.ng-dirty.ng-valid.ng-touched:not(form),
+textarea.ng-pristine.ng-valid.ng-touched:not(form) {
+  border-left: 5px solid #42a948 !important;
+}
+
+input.ng-touched.ng-dirty.ng-invalid:not(form),
+input.ng-touched.ng-pristine.ng-invalid:not(form),
+textarea.ng-touched.ng-dirty.ng-invalid:not(form),
+textarea.ng-touched.ng-pristine.ng-invalid:not(form) {
+  border-left: 5px solid #a94442 !important;
+}
+
+.noExpImg p {
+  display: block;
+  text-align: center;
+  font-size: 1.3rem;
+  color: #636363e3;
+}
+.noExpImg img {
+  width: 25%;
+  height: auto;
+  display: block;
+  margin: auto;
+  border-radius: 50%;
 }

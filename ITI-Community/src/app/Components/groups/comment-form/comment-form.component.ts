@@ -9,6 +9,9 @@ import { PostCommentService } from '../Services/post-comment.service';
 })
 export class CommentFormComponent implements OnInit {
   userID: string
+  firstName: string
+  lastName: string
+  avatar: string
   @Input() defPostId: string
   commentForm: FormGroup
   constructor(
@@ -17,29 +20,44 @@ export class CommentFormComponent implements OnInit {
   ) {
     this.userID = localStorage.getItem('uid');
     this.commentForm = this.fb.group({
-      postID: this.defPostId,
-      userID: this.userID,
-      comment: '',
-      date: new Date
+      Body: '',
+      CommentDate: new Date,
+      User: {
+        firstName: '',
+        lastName: '',
+        jobTitle: '',
+        avatar: '',
+        id: ''
+      }
     })
   }
 
   ngOnInit(): void {
     this.commentForm = this.fb.group({
-      postID: this.defPostId,
-      userID: this.userID,
-      comment: '',
-      date: new Date
+      Body: '',
+      CommentDate: new Date,
+      User: {
+        firstName: localStorage.getItem('firstName'),
+        lastName: localStorage.getItem('lastName'),
+        jobTitle: localStorage.getItem('jobTitle'),
+        avatar: localStorage.getItem('avatar'),
+        id: localStorage.getItem('uid')
+      }
     })
   }
 
   onSubmit() {
-    this.commentService.writeComment(this.commentForm.value);
+    this.commentService.writeComment(this.commentForm.value, this.defPostId);
     this.commentForm = this.fb.group({
-      postID: this.defPostId,
-      userID: this.userID,
-      comment: '',
-      date: new Date
+      Body: '',
+      CommentDate: new Date,
+      User: {
+        firstName: localStorage.getItem('firstName'),
+        lastName: localStorage.getItem('lastName'),
+        jobTitle: localStorage.getItem('jobTitle'),
+        avatar: localStorage.getItem('avatar'),
+        id: localStorage.getItem('uid')
+      }
     })
   }
 
