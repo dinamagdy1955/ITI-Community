@@ -67,6 +67,13 @@ deleteSentFriendReq(req){
   return 
 }
 
+deleteInvitation(invit){
+  let uid=localStorage.getItem("uid");
+  this.db.collection('users-details').doc(uid).collection('friendRequest').doc(invit.id).delete()
+  this.db.collection('users-details').doc(invit.id).collection('MySentfriendRequests').doc(uid).delete()
+   return 
+}
+
 // Accept friend Request
 AcceptRequest(item){
   let uid=localStorage.getItem("uid");

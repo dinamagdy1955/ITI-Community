@@ -3,8 +3,8 @@
       <div>
         <div >
           <span class="invit">invitation</span>
-          <a href="#" style="float: right">
-            <span class="mang">manage</span>
+          <a [routerLink]="['/FullNetwork/RequestsInvitation']" style="float: right">
+            <span class="mang">see all {{Requests.length}}</span>
           </a>
         </div>
 
@@ -30,13 +30,7 @@
               Accept
             </button>
           </div>
-        </div>
-        <!----------------------------->
-     
-        <hr>
-        <div class="row" style="text-align: center;font-size: medium;">
-          <a  style="color: #b4272d;" href="#">See More...</a>
-        </div>
+        </div> 
       </div>
     
     </div>
