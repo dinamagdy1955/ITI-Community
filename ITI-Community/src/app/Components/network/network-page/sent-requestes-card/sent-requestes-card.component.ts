@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../Services/user.service';
+import { NetworkUserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-sent-requestes-card',
@@ -10,7 +10,7 @@ export class SentRequestesCardComponent implements OnInit {
  sentRequests:any[]=[];
  RequestsinCardData:any[]
   constructor(
-    private usrs:UserService,
+    private usrs:NetworkUserService,
   ) { }
 
   ngOnInit(): void {

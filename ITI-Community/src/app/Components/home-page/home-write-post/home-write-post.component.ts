@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../network/Services/user.service';
+import { NetworkUserService } from '../../network/Services/user.service';
 @Component({
   selector: 'app-home-write-post',
   templateUrl: './home-write-post.component.html',
@@ -8,7 +8,7 @@ import { UserService } from '../../network/Services/user.service';
 export class HomeWritePostComponent implements OnInit {
   myData:any
   constructor(
-    private usrs:UserService
+    private usrs:NetworkUserService
   ) { }
 
   ngOnInit(): void {

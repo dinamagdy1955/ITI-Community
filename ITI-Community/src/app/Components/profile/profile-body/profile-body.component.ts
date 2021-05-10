@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/MainServices/User.service';
 import { BranchDatabaseService } from '../../Branches/Services/database.service';
+import { NetworkUserService } from '../../network/Services/user.service';
 import { TrackDatabaseService } from '../../Tracks/Services/database.service';
 import { IUserProfileData } from './ViewModels/iuser-profile-data';
 
@@ -44,7 +45,7 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
     private router: Router,
     private br: BranchDatabaseService,
     private tr: TrackDatabaseService,
-    private main: UserService
+    private network: NetworkUserService
   ) {}
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges): void {
@@ -92,7 +93,7 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
                 this.tr.getTrackById(this.userData.track).subscribe((res) => {
                   this.UserDetails.track = res.data()['name'];
                 });
-                this.main.getFriendRequests(this.uid).subscribe((data) => {
+                this.network.getAllFriendsList().subscribe((data) => {
                   this.UserDetails.request = data.map((e) => {
                     let id = e.payload.doc.id;
                     return id;
