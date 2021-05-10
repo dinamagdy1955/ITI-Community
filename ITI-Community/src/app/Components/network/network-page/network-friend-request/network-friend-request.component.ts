@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../Services/user.service';
+import { NetworkUserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-network-friend-request',
@@ -9,7 +9,7 @@ import { UserService } from '../../Services/user.service';
 export class NetworkFriendRequestComponent implements OnInit {
   Requests:any[]=[];
   constructor(
-    private usrs:UserService,
+    private usrs:NetworkUserService,
   ) { }
 
   ngOnInit(): void {

@@ -22,6 +22,7 @@
                 </button>
             </div>
             <div class="modal-body">
+
                 <div class="form-group has-search">
                     <span class="fa fa-search form-control-feedback"></span>
                     <input type="text" name="search" class="form-control" [(ngModel)]="keyWordsSearch"
@@ -30,30 +31,32 @@
                 <div class="row">
                     <h5 class="text-muted p-2">Admins</h5>
                     <div class="col-md-12">
-                        <div *ngFor="let a of admins | filter:keyWordsSearch" class="mb-3">
-                            <img src="../../../../assets/nav-img.png" width="60">
-                            <a href="#" class="font-weight-bold btn">
-                                {{a.data.firstName}} {{a.data.lastName}}
-                                <span class="badge badge-secondary ml-2">Admin</span>
-                            </a>
-                            <div class="float-right pt-3">
-                                <div class="btn-group mr-3">
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
-                                    <div class="btn-group" ngbDropdown role="group"
-                                        aria-label="Button group with nested dropdown"
-                                        *ngIf="adminRole.includes(userID)">
-                                        <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
-                                            ngbDropdownToggle></button>
-                                        <div class="dropdown-menu" ngbDropdownMenu>
-                                            <div>
-                                                <button ngbDropdownItem (click)="Roles(a.id, GroupId, 'AdminToMember')">
-                                                    Member
-                                                </button>
-                                            </div>
-                                            <div>
-                                                <button ngbDropdownItem (click)="deleteUser(a.id, GroupId, 'Admin')">
-                                                    Delete
-                                                </button>
+                        <div *ngFor="let a of users | filter:keyWordsSearch" class="mb-3">
+                            <div *ngIf="a.Role == 1">
+                                <img src="../../../../assets/nav-img.png" width="60">
+                                <a href="#" class="font-weight-bold btn">
+                                    {{a.firstName}} {{a.lastName}}
+                                    <span class="badge badge-secondary ml-2">Admin</span>
+                                </a>
+                                <div class="float-right pt-3">
+                                    <div class="btn-group mr-3">
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
+                                        <div class="btn-group" ngbDropdown role="group"
+                                            aria-label="Button group with nested dropdown"
+                                            *ngIf="adminRole.includes(userID)">
+                                            <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
+                                                ngbDropdownToggle></button>
+                                            <div class="dropdown-menu" ngbDropdownMenu>
+                                                <div>
+                                                    <button ngbDropdownItem (click)="Roles(a.id, GroupId, 2)">
+                                                        Member
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <button ngbDropdownItem (click)="deleteUser(a.id, GroupId)">
+                                                        Delete
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -64,35 +67,37 @@
 
                     <h5 class="text-muted p-2">Members</h5>
                     <div class="col-md-12">
-                        <div *ngFor="let a of members | filter:keyWordsSearch" class="mb-3">
-                            <img src="../../../../assets/nav-img.png" width="60">
-                            <a href="#" class="font-weight-bold btn">
-                                {{a.data.firstName}} {{a.data.lastName}}
-                                <span class="badge badge-secondary ml-2">Member</span>
-                            </a>
-                            <div class="float-right pt-3">
-                                <div class="btn-group mr-3">
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
-                                    <div class="btn-group" ngbDropdown role="group"
-                                        aria-label="Button group with nested dropdown"
-                                        *ngIf="adminRole.includes(userID)">
-                                        <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
-                                            ngbDropdownToggle></button>
-                                        <div class="dropdown-menu" ngbDropdownMenu>
-                                            <div>
-                                                <button ngbDropdownItem (click)="Roles(a.id, GroupId, 'MemToAdm')">
-                                                    Admin
-                                                </button>
-                                            </div>
-                                            <div>
-                                                <button ngbDropdownItem (click)="Roles(a.id, GroupId, 'MemToSub')">
-                                                    Subscriber
-                                                </button>
-                                            </div>
-                                            <div>
-                                                <button ngbDropdownItem (click)="deleteUser(a.id, GroupId, 'Member')">
-                                                    Delete
-                                                </button>
+                        <div *ngFor="let a of users | filter:keyWordsSearch" class="mb-3">
+                            <div *ngIf="a.Role == 2">
+                                <img src="../../../../assets/nav-img.png" width="60">
+                                <a href="#" class="font-weight-bold btn">
+                                    {{a.firstName}} {{a.lastName}}
+                                    <span class="badge badge-secondary ml-2">Member</span>
+                                </a>
+                                <div class="float-right pt-3">
+                                    <div class="btn-group mr-3">
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
+                                        <div class="btn-group" ngbDropdown role="group"
+                                            aria-label="Button group with nested dropdown"
+                                            *ngIf="adminRole.includes(userID)">
+                                            <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
+                                                ngbDropdownToggle></button>
+                                            <div class="dropdown-menu" ngbDropdownMenu>
+                                                <div>
+                                                    <button ngbDropdownItem (click)="Roles(a.id, GroupId, 1)">
+                                                        Admin
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <button ngbDropdownItem (click)="Roles(a.id, GroupId, 0)">
+                                                        Subscriber
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <button ngbDropdownItem (click)="deleteUser(a.id, GroupId)">
+                                                        Delete
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -103,31 +108,32 @@
 
                     <h5 class="text-muted p-2">Subscribers</h5>
                     <div class="col-md-12">
-                        <div *ngFor="let a of subscribers | filter:keyWordsSearch" class="mb-3">
-                            <img src="../../../../assets/nav-img.png" width="60">
-                            <a href="#" class="font-weight-bold btn">
-                                {{a.data.firstName}} {{a.data.lastName}}
-                                <span class="badge badge-secondary ml-2">Subscriber</span>
-                            </a>
-                            <div class="float-right pt-3">
-                                <div class="btn-group mr-3">
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
-                                    <div class="btn-group" ngbDropdown role="group"
-                                        aria-label="Button group with nested dropdown"
-                                        *ngIf="adminRole.includes(userID)">
-                                        <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
-                                            ngbDropdownToggle></button>
-                                        <div class="dropdown-menu" ngbDropdownMenu>
-                                            <div>
-                                                <button ngbDropdownItem (click)="Roles(a.id, GroupId, 'SubToMem')">
-                                                    Member
-                                                </button>
-                                            </div>
-                                            <div>
-                                                <button ngbDropdownItem
-                                                    (click)="deleteUser(a.id, GroupId, 'Subscriber')">
-                                                    Delete
-                                                </button>
+                        <div *ngFor="let a of users | filter:keyWordsSearch" class="mb-3">
+                            <div *ngIf="a.Role == 0">
+                                <img src="../../../../assets/nav-img.png" width="60">
+                                <a href="#" class="font-weight-bold btn">
+                                    {{a.firstName}} {{a.lastName}}
+                                    <span class="badge badge-secondary ml-2">Subscriber</span>
+                                </a>
+                                <div class="float-right pt-3">
+                                    <div class="btn-group mr-3">
+                                        <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
+                                        <div class="btn-group" ngbDropdown role="group"
+                                            aria-label="Button group with nested dropdown"
+                                            *ngIf="adminRole.includes(userID)">
+                                            <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
+                                                ngbDropdownToggle></button>
+                                            <div class="dropdown-menu" ngbDropdownMenu>
+                                                <div>
+                                                    <button ngbDropdownItem (click)="Roles(a.id, GroupId, 2)">
+                                                        Member
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <button ngbDropdownItem (click)="deleteUser(a.id, GroupId)">
+                                                        Delete
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

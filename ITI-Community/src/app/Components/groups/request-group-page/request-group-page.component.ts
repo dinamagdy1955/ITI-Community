@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GroupService } from '../Services/group.service';
-import { IGroup, IGroup2 } from '../ViewModel/igroup';
 
 @Component({
   selector: 'app-request-group-page',
@@ -11,70 +10,52 @@ import { IGroup, IGroup2 } from '../ViewModel/igroup';
 export class RequestGroupPageComponent implements OnInit, OnDestroy {
 
   GroupList;
+  GroupList2
   userID: string
-  admins
-  members
   subscribers
+  users = []
   subscription: Subscription[] = []
   constructor(private GrpServ: GroupService) { }
 
 
   ngOnInit(): void {
     this.userID = localStorage.getItem('uid')
+    this.GroupList = [];
+
     let sub1 = this.GrpServ.getGroups().subscribe((res) => {
-      this.GroupList = res.map((e) => {
+      this.GroupList2 = res.map((e) => {
         return {
           id: e.payload.doc.id,
           ...(e.payload.doc.data() as object)
         }
       })
-      this.admins = []
-      this.members = []
       this.subscribers = []
-      for (let i of this.GroupList) {
-        i.admin = []
-        i.member = []
-        i.subscriber = []
-        let sub = this.GrpServ.getGroupUsers(i.id).admins.subscribe(res => {
-          i.admin = []
-          res.map(e => i.admin.push(e.payload.doc.id))
-          this.admins.concat(i.admin)
-        })
-        let sub2 = this.GrpServ.getGroupUsers(i.id).members.subscribe(res => {
-          i.member = []
-          res.map(e => i.member.push(e.payload.doc.id))
-          this.members.concat(i.member)
-        })
-        let sub3 = this.GrpServ.getGroupUsers(i.id).subscribers.subscribe(res => {
-          i.subscriber = []
-          res.map(e => i.subscriber.push(e.payload.doc.id))
-          this.subscribers.concat(i.subscriber)
+      this.users = []
+      sub1.unsubscribe()
+      for (let i of this.GroupList2) {
+        let sub = this.GrpServ.getGroupsUsers(i.id).subscribe(res => {
+          this.users = res.map(e => {
+            return {
+              id: e.payload.doc.id,
+              ...(e.payload.doc.data())
+            }
+          })
+          for (let u of this.users) {
+            if (u.id == this.userID && u.Role > 0) {
+              this.GroupList.push(i)
+            } else if (u.id == this.userID && u.Role == 0) {
+              this.subscribers.push(i)
+            }
+          }
         })
         this.subscription.push(sub)
-        this.subscription.push(sub2)
-        this.subscription.push(sub3)
       }
     })
     this.subscription.push(sub1)
-
-
-    // let sub = this.GrpServ.getAllGroups().subscribe((resp) => {
-    //   this.GroupList = resp.map(e => {
-    //     return {
-    //       id: e.payload.doc.id,
-    //       ...(e.payload.doc.data() as object)
-    //     } as IGroup
-    //   })
-    // })
-    // this.subscription.push(sub)
   }
 
-  JoinOut(user, id, role) {
-    this.GrpServ.DeleteMembers(user, id, role)
-  }
-
-  leaveGroup(user, id, role) {
-    this.GrpServ.DeleteMembers(user, id, role)
+  leaveGroup(user, id) {
+    this.GrpServ.DeleteMembers(user, id)
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../network/Services/user.service';
+import { NetworkUserService } from '../../network/Services/user.service';
 
 @Component({
   selector: 'app-home-profile-card',
@@ -10,12 +10,12 @@ export class HomeProfileCardComponent implements OnInit {
 myData:any
 frindsList:any[]=[]
   constructor(
-    private usrs:UserService
+    private usrs:NetworkUserService
   ) { }
 
   ngOnInit(): void {
    this.myData= this.usrs.data
-   console.log(this.myData.avatar)
+   //console.log(this.myData.avatar)
    this.usrs.getAllFriendsList().subscribe(data => {
 
     this.frindsList = data.map(e => {
@@ -29,7 +29,7 @@ frindsList:any[]=[]
     
     });
     
-    console.log(this.frindsList);
+   // console.log(this.frindsList);
          
   
     

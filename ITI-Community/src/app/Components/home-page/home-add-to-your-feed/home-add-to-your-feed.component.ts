@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../network/Services/user.service';
+import { NetworkUserService } from '../../network/Services/user.service';
 
 @Component({
   selector: 'app-home-add-to-your-feed',
@@ -8,7 +8,7 @@ import { UserService } from '../../network/Services/user.service';
 })
 export class HomeAddToYourFeedComponent implements OnInit {
   usersData: any[] = [];
-  constructor(private usrs: UserService) {}
+  constructor(private usrs: NetworkUserService) {}
 
   ngOnInit(): void {
     let friendData: any[];

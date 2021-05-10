@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileService } from '../../Service/user-profile.service';
+import { NetworkUserService } from '../../../network/Services/user.service';
 import {
   FormBuilder,
   FormControl,
@@ -27,7 +28,8 @@ export class ProfileBodyDetailsComponent implements OnInit {
     private modalService: NgbModal,
     private us: UserProfileService,
     private FB: FormBuilder,
-    private ur: UserService
+    private ur: UserService,
+   private NUS :NetworkUserService
   ) {}
   ngOnInit() {
     this.editPersonalData = this.FB.group({
@@ -98,7 +100,7 @@ export class ProfileBodyDetailsComponent implements OnInit {
     });
   }
   addRequset() {
-    this.ur.create_NewRequest(this.userDetails.id);
+    this.NUS.create_NewRequest(this.userDetails.id);
   }
 
 }

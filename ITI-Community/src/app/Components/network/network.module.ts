@@ -7,11 +7,16 @@ import { ManagMyNetworkCardComponent } from './network-page/manag-my-network-car
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConnectionsComponent } from './connections/connections.component';
+import { SentRequestesCardComponent } from './network-page/sent-requestes-card/sent-requestes-card.component';
+import { AllSentRequestesPageComponent } from './all-sent-requestes-page/all-sent-requestes-page.component';
+import { InvitationsPageComponent } from './invitations-page/invitations-page.component';
 
 
 const networkRoutes: Routes = [
   { path: 'Network', component:NetworkPageComponent },
   { path: 'connections', component:ConnectionsComponent },
+  { path: 'sentRequests', component:AllSentRequestesPageComponent },
+  { path: 'RequestsInvitation', component:InvitationsPageComponent },
   { path: '', redirectTo: '/FullNetwork/Network', pathMatch: 'full' },
   { path: '**', redirectTo: '/Network', pathMatch: 'full' }
 ]
@@ -22,7 +27,10 @@ const networkRoutes: Routes = [
     NetworkFriendRequestComponent,
     NetworkSugesstionCardComponent,
     ManagMyNetworkCardComponent,
-    ConnectionsComponent
+    ConnectionsComponent,
+    SentRequestesCardComponent,
+    AllSentRequestesPageComponent,
+    InvitationsPageComponent
   ],
   imports: [
     CommonModule,

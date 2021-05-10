@@ -3,8 +3,8 @@
       <div>
         <div >
           <span class="invit">invitation</span>
-          <a href="#" style="float: right">
-            <span class="mang">manage</span>
+          <a [routerLink]="['/FullNetwork/RequestsInvitation']" style="float: right">
+            <span class="mang">see all {{Requests.length}}</span>
           </a>
         </div>
 
@@ -12,7 +12,7 @@
 
         <div *ngFor="let item of Requests" class="row">
           <div class="col-md-2" style="padding-right: 0px; align-items: center">
-            <img src="../../../../../assets/n.jpg" style="width: 70%; height: auto" alt="John Doe" class="mr-3 mt-3 rounded-circle">
+            <img src={{item.avatar}} style="width: 70%; height: auto" alt="John Doe" class="mr-3 mt-3 rounded-circle">
           </div>
           <div class="col-md-6" style="padding-left: 0px">
             <br>
@@ -30,13 +30,7 @@
               Accept
             </button>
           </div>
-        </div>
-        <!----------------------------->
-     
-        <hr>
-        <div class="row" style="text-align: center;font-size: medium;">
-          <a  style="color: #b4272d;" href="#">See More...</a>
-        </div>
+        </div> 
       </div>
     
     </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //import { userInfo } from 'node:os';
 import { IUserDetails } from 'src/app/Components/registration/ViewModels/iuser-details';
-import { UserService } from '../../Services/user.service';
+import { NetworkUserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-network-sugesstion-card',
@@ -15,7 +15,7 @@ export class NetworkSugesstionCardComponent implements OnInit {
     lastName:'taag';
     id:'';
   constructor(
-    private usrs:UserService,
+    private usrs:NetworkUserService,
   ) { }
 
   ngOnInit(): void {
