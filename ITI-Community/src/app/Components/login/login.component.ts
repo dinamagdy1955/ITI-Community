@@ -84,6 +84,7 @@ export class LoginComponent implements OnInit {
                           'avatarCover',
                           res.payload.data().avatarCover
                         );
+                        //for behavioral subject
                         let localUserData: LocalUserData = {
                           id: res.payload.id,
                           firstName: res.payload.data().firstName,
@@ -93,6 +94,8 @@ export class LoginComponent implements OnInit {
                           avatarCover: res.payload.data().avatarCover,
                         };
                         this.profile.setlocalUserData(localUserData);
+                        /////////////
+                        console.log(this.profile.localUserData);
                         this.router.navigate(['/HOME']);
                         return SignInAuthError.Correct;
                       });
@@ -100,7 +103,7 @@ export class LoginComponent implements OnInit {
                     localStorage.removeItem('uid');
                     alert('user not accepted yet or have been removed');
                   }
-                  sub.unsubscribe();
+                  // sub.unsubscribe();
                 });
             } else {
               return SignInAuthError.EmailNotVerified;
