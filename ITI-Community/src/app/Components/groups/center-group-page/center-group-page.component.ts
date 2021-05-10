@@ -69,7 +69,7 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   cancelRequest(uid, id, role) {
-    this.GrpServ.DeleteMembers(uid, id, role)
+    // this.GrpServ.DeleteMembers(uid, id, role)
   }
 
   ngOnDestroy(): void {

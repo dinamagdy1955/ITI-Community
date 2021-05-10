@@ -16,6 +16,9 @@ export class GroupProfilePageComponent implements OnInit, OnDestroy {
   subscribers = []
   userID
   adminRole = []
+
+
+  users = []
   private subscription: Subscription[] = [];
 
   constructor(private activeRoute: ActivatedRoute, private GrpServ: GroupService) { }
@@ -24,6 +27,38 @@ export class GroupProfilePageComponent implements OnInit, OnDestroy {
     this.activeRoute.paramMap.subscribe((params) => {
       this.GroupId = params.get('id')
     })
+
+
+    this.GrpServ.getGroupsUsers(this.GroupId).subscribe(res => {
+      this.users = res.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...(e.payload.doc.data())
+        }
+      })
+      console.log(this.users);
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     this.admins = [];
     this.members = [];
     this.subscribers = [];
