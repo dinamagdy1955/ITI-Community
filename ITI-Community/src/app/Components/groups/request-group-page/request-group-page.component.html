@@ -15,8 +15,7 @@
                         <div id="GroupsDiscover" class="Groups-content-display1">
                             <h1 class="px-2 text-muted">Your Groups</h1>
                             <ul class="list-group list-group-flush" *ngFor="let g of GroupList">
-                                <li class="list-group-item"
-                                    *ngIf="g.member.includes(userID) || g.admin.includes(userID)">
+                                <li class="list-group-item">
                                     <div class="media">
                                         <img class="mr-3" [src]="g.ImgURL" alt="" width="64px">
                                         <div class="media-body">
@@ -25,10 +24,9 @@
                                             </h6>
                                             <small class="text-muted"><span>{{g.Specialty}}</span></small>
                                         </div>
-                                        <div *ngIf="!g.admin.includes(userID)">
+                                        <div>
                                             <button class="btn btn-outline-danger btn-sm rounded-pill mt-3 px-3"
-                                                (click)='leaveGroup(userID, g.id, "Member")'><i
-                                                    class="fas fa-sign-out-alt"></i>
+                                                (click)='leaveGroup(userID, g.id)'><i class="fas fa-sign-out-alt"></i>
                                                 Leave
                                             </button>
                                         </div>
@@ -43,8 +41,8 @@
                     <ng-template ngbNavContent>
                         <div id="GroupsDRequest" class="Groups-content-display2">
                             <h1 class="px-2 text-muted">Your Requests</h1>
-                            <ul class="list-group list-group-flush" *ngFor="let g of GroupList">
-                                <li class="list-group-item" *ngIf="g.subscriber.includes(userID)">
+                            <ul class="list-group list-group-flush" *ngFor="let g of subscribers">
+                                <li class="list-group-item">
                                     <div class="media">
                                         <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
                                         <div class="media-body">
@@ -55,7 +53,7 @@
                                             <small class="text-muted"><span>{{g.Specialty}}</span> members</small>
                                         </div>
                                         <button type="button" class="btn btn-outline-dark btn-sm rounded-pill px-3 mt-3"
-                                            (click)='JoinOut(userID, g.id, "Subscriber");'><i class="fas fa-undo"></i>
+                                            (click)='leaveGroup(userID, g.id);'><i class="fas fa-undo"></i>
                                             Withdraw</button>
                                     </div>
                                 </li>
