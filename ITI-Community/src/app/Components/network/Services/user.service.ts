@@ -30,9 +30,13 @@ getAllUserData() {
 notINCard(arr:any[]){
   let uid=localStorage.getItem("uid");
   arr.push(uid)
-  return  this.db.collection('users-details' , ref=> ref.where('__name__','not-in',arr)).snapshotChanges()
-     
-       
+  return  this.db.collection('users-details' , ref=> ref.where('__name__','not-in',arr)).snapshotChanges()      
+}
+
+notINCardRequests(arr:any[]){
+  let uid=localStorage.getItem("uid");
+  arr.push(uid)
+  return  this.db.collection('users-details' , ref=> ref.where('__name__','not-in',arr)).snapshotChanges()      
 }
 getAllFriendRequests() {
   let uid=localStorage.getItem("uid");
@@ -44,14 +48,23 @@ getAllFriendRequests() {
 // Ignore friend Request
 ignore(id){
   let uid=localStorage.getItem("uid");
-  return this.db.collection('users-details').doc(uid).collection('friendRequest').doc(id).delete()
+  this.db.collection('users-details').doc(uid).collection('friendRequest').doc(id).delete()
+  this.db.collection('users-details').doc(id).collection('MySentfriendRequests').doc(uid).delete()
 
 }
 
 deleteFriend(id){
   let uid=localStorage.getItem("uid");
-  return this.db.collection('users-details').doc(uid).collection('friendList').doc(id).delete()
+   this.db.collection('users-details').doc(uid).collection('friendList').doc(id).delete()
+   this.db.collection('users-details').doc(id).collection('friendList').doc(uid).delete()
+   return
+}
 
+deleteSentFriendReq(req){
+  let uid=localStorage.getItem("uid");
+ this.db.collection('users-details').doc(uid).collection('MySentfriendRequests').doc(req.id).delete()
+ this.db.collection('users-details').doc(req.id).collection('friendRequest').doc(uid).delete()
+  return 
 }
 
 // Accept friend Request
@@ -86,15 +99,8 @@ getAllFriendsList() {
 }
 
 //create request
-create_NewRequest(uid) {
-  let data ={
-  id:localStorage.getItem("uid"),
-  firstName:localStorage.getItem("firstName"),
-  lastName:localStorage.getItem("lastName"),
-  jobTitle:localStorage.getItem("jobTitle"),
-  avatar:localStorage.getItem("avatar"),
-
-} ;
+create_NewRequest(user) {
+  let data = this.data
   console.log(data);
   const Request =
    {
@@ -104,8 +110,8 @@ create_NewRequest(uid) {
      "jobTitle":data.jobTitle,
      "id":data.id,
      "reqState":false};
-   this.db.collection('users-details').doc(data.id).collection('MySentfriendRequests').doc(uid).set({ uid})
-   this.db.collection('users-details').doc(uid).collection('friendRequest').doc(data.id).set({ ...Request })
+   this.db.collection('users-details').doc(data.id).collection('MySentfriendRequests').doc(user.id).set(user)
+   this.db.collection('users-details').doc(user.id).collection('friendRequest').doc(data.id).set({ ...Request })
    return
 }
 

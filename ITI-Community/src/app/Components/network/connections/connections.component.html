@@ -1,4 +1,4 @@
-<section class="container sec_container mt-3">
+<section class="container sec_container mt-3"  style="background-color: white">
   <div class="container" style="background-color: white">
     <div class="row rowBB">
       <h5 class="pt-3" style="color: #b4272d">{{frindsList.length}} connects</h5>
@@ -51,7 +51,7 @@
                 alt=""
                 width="70px"
                 class="mr-3"
-                style="border-radius: 50%"
+                style="border-radius: 50% ; width:70px;height: 70px;"
               />
               <div class="media-body">
                 <h6  class="mt-2 mb-1 UserName">
@@ -67,14 +67,14 @@
                   <br />Connected 4 days ago</small
                 >
               </div>
-
+              <button
+              type="button"
+              class="btn btn-outline-primary messageBtn btn-sm mt-4"
+            >
+              Message
+            </button>
               <div class="btn-group mr-3">
-                <button
-                  type="button"
-                  class="btn btn-outline-primary messageBtn btn-sm mt-4"
-                >
-                  Message
-                </button>
+               
                 <div
                   class="btn-group"
                   ngbDropdown
@@ -84,7 +84,7 @@
                   <button class="btn btn-sm mt-4" ngbDropdownToggle>
                     <i class="fas fa-ellipsis-h dots"></i>
                   </button>
-                  <div class="dropdown-menu" ngbDropdownMenu>
+                  <div class="dropdown-menu deleteMenue" ngbDropdownMenu>
                     <button ngbDropdownItem (click)="DeleteFriend(item.id)" >
                   <i class="fas fa-trash-alt">   Delete  </i>
                     </button>
