@@ -12,7 +12,7 @@ export class PictureViewComponent implements OnInit {
   constructor(private model: NgbModal) { }
 
   ngOnInit(): void {
-
+    console.log(this.img)
   }
   open(content) {
     this.model.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
