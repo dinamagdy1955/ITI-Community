@@ -36,7 +36,6 @@ export class GroupProfilePageComponent implements OnInit, OnDestroy {
           ...(e.payload.doc.data())
         }
       })
-      console.log(this.users);
     })
 
 
@@ -59,41 +58,41 @@ export class GroupProfilePageComponent implements OnInit, OnDestroy {
 
 
 
-    this.admins = [];
-    this.members = [];
-    this.subscribers = [];
-    this.adminRole = []
-    let sub1 = this.GrpServ.getGroupUsers(this.GroupId).admins.subscribe(res => {
-      this.admins = res.map(e => {
-        return {
-          id: e.payload.doc.id,
-          data: e.payload.doc.data()
-        }
-      })
-      this.admins.map(e => {
-        this.adminRole.push(e.id)
-      })
-    })
-    this.subscription.push(sub1)
-    let sub2 = this.GrpServ.getGroupUsers(this.GroupId).members.subscribe(res => {
-      this.members = res.map(e => {
-        return {
-          id: e.payload.doc.id,
-          data: e.payload.doc.data()
-        }
-      })
-    })
-    this.subscription.push(sub2)
+    // this.admins = [];
+    // this.members = [];
+    // this.subscribers = [];
+    // this.adminRole = []
+    // let sub1 = this.GrpServ.getGroupUsers(this.GroupId).admins.subscribe(res => {
+    //   this.admins = res.map(e => {
+    //     return {
+    //       id: e.payload.doc.id,
+    //       data: e.payload.doc.data()
+    //     }
+    //   })
+    //   this.admins.map(e => {
+    //     this.adminRole.push(e.id)
+    //   })
+    // })
+    // this.subscription.push(sub1)
+    // let sub2 = this.GrpServ.getGroupUsers(this.GroupId).members.subscribe(res => {
+    //   this.members = res.map(e => {
+    //     return {
+    //       id: e.payload.doc.id,
+    //       data: e.payload.doc.data()
+    //     }
+    //   })
+    // })
+    // this.subscription.push(sub2)
 
-    let sub3 = this.GrpServ.getGroupUsers(this.GroupId).subscribers.subscribe(res => {
-      this.subscribers = res.map(e => {
-        return {
-          id: e.payload.doc.id,
-          data: e.payload.doc.data()
-        }
-      })
-    })
-    this.subscription.push(sub3)
+    // let sub3 = this.GrpServ.getGroupUsers(this.GroupId).subscribers.subscribe(res => {
+    //   this.subscribers = res.map(e => {
+    //     return {
+    //       id: e.payload.doc.id,
+    //       data: e.payload.doc.data()
+    //     }
+    //   })
+    // })
+    // this.subscription.push(sub3)
   }
   ngOnDestroy(): void {
     for (let i of this.subscription) {

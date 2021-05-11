@@ -25,13 +25,13 @@ export class GroupService {
     return this.db.collection('Groups2').doc(id).valueChanges();
   }
 
-  getGroupUsers(id) {
-    return {
-      admins: this.db.collection('Groups2').doc(id).collection('Admins').snapshotChanges(),
-      members: this.db.collection('Groups2').doc(id).collection('Members').snapshotChanges(),
-      subscribers: this.db.collection('Groups2').doc(id).collection('Subscribers').snapshotChanges(),
-    }
-  }
+  // getGroupUsers(id) {
+  //   return {
+  //     admins: this.db.collection('Groups2').doc(id).collection('Admins').snapshotChanges(),
+  //     members: this.db.collection('Groups2').doc(id).collection('Members').snapshotChanges(),
+  //     subscribers: this.db.collection('Groups2').doc(id).collection('Subscribers').snapshotChanges(),
+  //   }
+  // }
 
   sendRequest(user, id) {
     this.db.collection('Groups2').doc(id).collection('Users', ref => ref.where('__name__', '!=', user)).doc(user).set({

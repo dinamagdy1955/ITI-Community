@@ -77,18 +77,24 @@ export class WriteBoxModelComponent implements OnInit {
 
   async onSubmit() {
     const selectedImg = (<HTMLInputElement>document.getElementById('Img')).files;
-    const img = await this.grpService.uploadImg(selectedImg);
-    let Allimgs = []
-    let body = this.postForm.value.Body
-    for (let i = 0; i < img.ref.length; i++) {
-      await img.ref[i].getDownloadURL().subscribe(async (url) => {
-        Allimgs.push(url)
-        if (i == img.ref.length - 1) {
-          this.postForm.value.postImg = Allimgs
-          this.postForm.value.Body = body
-          this.grpService.writePost(this.postForm.value);
-        }
-      });
+    if (selectedImg.length > 0) {
+      const img = await this.grpService.uploadImg(selectedImg);
+      let Allimgs = []
+      let body = this.postForm.value.Body
+      for (let i = 0; i < img.ref.length; i++) {
+        await img.ref[i].getDownloadURL().subscribe(async (url) => {
+          Allimgs.push(url)
+          if (i == img.ref.length - 1) {
+            this.postForm.value.postImg = Allimgs
+            this.postForm.value.Body = body
+            this.grpService.writePost(this.postForm.value);
+          }
+        });
+      }
+    } else {
+      let body = this.postForm.value.Body
+      this.postForm.value.Body = body
+      this.grpService.writePost(this.postForm.value);
     }
     this.postForm = this.fb.group({
       GroupId: this.SelectedGroupId,

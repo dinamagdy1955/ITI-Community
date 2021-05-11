@@ -4,13 +4,11 @@
             <app-left-side-group></app-left-side-group>
         </aside>
         <div class="col-lg-6 mb-2">
-            <app-center-group-page [GroupId]='GroupId' [admins]='admins' [members]='members' [subscribers]='subscribers'
-                [adminRole]='adminRole'>
+            <app-center-group-page [GroupId]='GroupId' [users]='users'>
             </app-center-group-page>
         </div>
         <div class="col-lg-3">
-            <app-right-side-group [GroupId]='GroupId' [admins]='admins' [members]='members' [subscribers]='subscribers'
-                [adminRole]='adminRole' [users]='users'>
+            <app-right-side-group [GroupId]='GroupId' [users]='users'>
             </app-right-side-group>
         </div>
     </div>

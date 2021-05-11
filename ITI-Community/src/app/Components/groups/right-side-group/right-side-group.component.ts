@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { GroupService } from '../Services/group.service';
@@ -9,14 +9,10 @@ import { IGroup2 } from '../ViewModel/igroup';
   templateUrl: './right-side-group.component.html',
   styleUrls: ['./right-side-group.component.scss']
 })
-export class RightSideGroupComponent implements OnInit, OnDestroy {
+export class RightSideGroupComponent implements OnInit, OnChanges, OnDestroy {
 
   Group: IGroup2;
   @Input() GroupId: string;
-  @Input() admins = []
-  @Input() members = []
-  @Input() subscribers = []
-
   @Input() users = []
   userID
   @Input() adminRole = []
@@ -27,13 +23,23 @@ export class RightSideGroupComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
   ) { }
 
+
+
   ngOnInit(): void {
     this.userID = localStorage.getItem('uid');
     let sub = this.GrpServ.getGrpById(this.GroupId).subscribe((res) => {
       this.Group = res;
     });
     this.subscription.push(sub);
-    console.log(this.users)
+
+  }
+
+  ngOnChanges(): void {
+    for (let a of this.users) {
+      if (a.Role == 1) {
+        this.adminRole.push(a.id)
+      }
+    }
   }
 
   ngOnDestroy(): void {
