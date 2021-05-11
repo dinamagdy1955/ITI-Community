@@ -8,7 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/MainServices/User.service';
 import { BranchDatabaseService } from '../../Branches/Services/database.service';
-import { NetworkUserService } from '../../network/Services/user.service';
+import { NetworkService } from '../../network/Services/user.service';
 import { TrackDatabaseService } from '../../Tracks/Services/database.service';
 import { IUserProfileData } from './ViewModels/iuser-profile-data';
 
@@ -45,7 +45,7 @@ export class ProfileBodyComponent implements OnInit, OnChanges {
     private router: Router,
     private br: BranchDatabaseService,
     private tr: TrackDatabaseService,
-    private network: NetworkUserService
+    private network: NetworkService
   ) {}
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges): void {

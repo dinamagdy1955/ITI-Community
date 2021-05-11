@@ -1,4 +1,4 @@
-<section class="container sec_container mt-3"  style="background-color: white">
+<section class="container sec_container mt-3" style="background-color: white">
   <div class="container" style="background-color: white">
     <div class="row rowBB">
       <h5 class="pt-3" style="color: #b4272d">{{frindsList.length}} connects</h5>
@@ -6,17 +6,8 @@
         <li _ngcontent-exd-c114="" class="list-group-item">
           <div _ngcontent-exd-c114="" class="media">
             <div class="btn-group mr-3">
-              <div
-                class="btn-group"
-                ngbDropdown
-                role="group"
-                aria-label="Button group with nested dropdown"
-              >
-                <button
-                  class="btn btn-sm mt-4"
-                  style="margin-left: 3em"
-                  ngbDropdownToggle
-                >
+              <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                <button class="btn btn-sm mt-4" style="margin-left: 3em" ngbDropdownToggle>
                   Sort By : <i class="fas fa-ellipsis-h"></i>
                 </button>
                 <div class="dropdown-menu" ngbDropdownMenu>
@@ -27,13 +18,8 @@
               </div>
             </div>
             <div>
-              <input
-                class="form-control mt-4 searchField"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                style="width: 20erm"
-              />
+              <input class="form-control mt-4 searchField" type="text" placeholder="Search" aria-label="Search"
+                style="width: 20erm" [(ngModel)]="keyWordsSearch" />
             </div>
           </div>
         </li>
@@ -41,52 +27,35 @@
     </div>
 
     <div>
-      <div   *ngFor="let item of frindsList" class="row rowBB">
+      <div *ngFor="let item of frindsList | filter:keyWordsSearch" class="row rowBB">
         <ul _ngcontent-exd-c114="" class="list-group list-group-flush">
           <li _ngcontent-exd-c114="" class="list-group-item">
             <div _ngcontent-exd-c114="" class="media">
-              <img
-                _ngcontent-exd-c114=""
-                src= {{item.avatar}} 
-                alt=""
-                width="70px"
-                class="mr-3"
-                style="border-radius: 50% ; width:70px;height: 70px;"
-              />
+              <img _ngcontent-exd-c114="" src={{item.avatar}} alt="" width="70px" class="mr-3"
+                style="border-radius: 50% ; width:70px;height: 70px;" />
               <div class="media-body">
-                <h6  class="mt-2 mb-1 UserName">
-                  <a   routerLink="/profile/{{item.id}}">
-                    {{item.firstName}}  {{item.lastName}}
-        
+                <h6 class="mt-2 mb-1 UserName">
+                  <a routerLink="/profile/{{item.id}}">
+                    {{item.firstName}} {{item.lastName}}
+
                   </a>
                 </h6>
-                <small  class="text-muted">
-                  <span 
-                    >{{item.jobTitle}}</span
-                  >
-                  <br />Connected 4 days ago</small
-                >
+                <small class="text-muted">
+                  <span>{{item.jobTitle}}</span>
+                  <br />Connected 4 days ago</small>
               </div>
-              <button
-              type="button"
-              class="btn btn-outline-primary messageBtn btn-sm mt-4"
-            >
-              Message
-            </button>
+              <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4">
+                Message
+              </button>
               <div class="btn-group mr-3">
-               
-                <div
-                  class="btn-group"
-                  ngbDropdown
-                  role="group"
-                  aria-label="Button group with nested dropdown"
-                >
+
+                <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
                   <button class="btn btn-sm mt-4" ngbDropdownToggle>
                     <i class="fas fa-ellipsis-h dots"></i>
                   </button>
                   <div class="dropdown-menu deleteMenue" ngbDropdownMenu>
-                    <button ngbDropdownItem (click)="DeleteFriend(item.id)" >
-                  <i class="fas fa-trash-alt">   Delete  </i>
+                    <button ngbDropdownItem (click)="DeleteFriend(item.id)">
+                      <i class="fas fa-trash-alt"> Delete </i>
                     </button>
                   </div>
                 </div>
@@ -95,7 +64,7 @@
           </li>
         </ul>
       </div>
-    
+
     </div>
   </div>
 </section>

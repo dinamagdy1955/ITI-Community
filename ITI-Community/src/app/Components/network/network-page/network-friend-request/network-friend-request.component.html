@@ -1,39 +1,39 @@
 <div *ngIf="Requests.length!==0" class="media border p-3 mt-4 mb-3  postcontainer">
-  <div class="media-body" >
+  <div class="media-body">
+    <div>
       <div>
-        <div >
-          <span class="invit">invitation</span>
-          <a [routerLink]="['/FullNetwork/RequestsInvitation']" style="float: right">
-            <span class="mang">see all {{Requests.length}}</span>
-          </a>
-        </div>
-
-       <hr>
-
-        <div *ngFor="let item of Requests" class="row">
-          <div class="col-md-2" style="padding-right: 0px; align-items: center">
-            <img src={{item.avatar}} style="width: 70%; height: auto" alt="John Doe" class="mr-3 mt-3 rounded-circle">
-          </div>
-          <div class="col-md-6" style="padding-left: 0px">
-            <br>
-            <a href="#">
-              <span ><strong class="name">{{item.firstName}} {{item.lastName}} </strong></span> </a><br>
-            <span>{{item.jobTitle}}</span>
-          </div>
-          <div class="col-md-4" style="margin: auto;padding-left: 4em;">
-            <div class="W-100%"><br></div>
-
-            <button type="button" class="btn  btn-sm mr-2 ignoreBtn" (click)="IgnoreRequest(item.id)">
-              ignore
-            </button>
-            <button type="button" class="btn btn-outline-primary btn-sm AcceptBtn" (click)="AcceptRequest(item)">
-              Accept
-            </button>
-          </div>
-        </div> 
+        <span class="invit">invitation</span>
+        <a [routerLink]="['/FullNetwork/RequestsInvitation']" style="float: right">
+          <span class="mang">see all {{Requests.length}}</span>
+        </a>
       </div>
-    
+
+      <hr>
+
+      <div *ngFor="let item of Requests" class="row">
+        <div class="col-md-2" style="padding-right: 0px; align-items: center">
+          <img src={{item.avatar}} style="width: 70%; height: auto" alt="John Doe" class="mr-3 mt-3 rounded-circle">
+        </div>
+        <div class="col-md-6" style="padding-left: 0px">
+          <br>
+          <a href="#">
+            <span><strong class="name">{{item.firstName}} {{item.lastName}} </strong></span> </a><br>
+          <span>{{item.jobTitle}}</span>
+        </div>
+        <div class="col-md-4" style="margin: auto;padding-left: 4em;">
+          <div class="W-100%"><br></div>
+
+          <button type="button" class="btn  btn-sm mr-2 ignoreBtn" (click)="IgnoreRequest(item.id)">
+            ignore
+          </button>
+          <button type="button" class="btn btn-outline-primary btn-sm AcceptBtn" (click)="AcceptRequest(item)">
+            Accept
+          </button>
+        </div>
+      </div>
     </div>
-    
-    
+
+  </div>
+
+
 </div>

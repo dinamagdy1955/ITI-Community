@@ -1,26 +1,25 @@
 <div class="media border p-3 ">
   <div class="media-body" style="align-items: center;color: #68161ad5; ">
-   ITI Community Members
+    ITI Community Members
     <a class="seeall" style="float: right;color: #b4272d;"> See all</a>
-
     <div class="W-100%"><br></div>
     <div *ngIf="usersinCardData !=undefined" class="row">
-      <div  *ngFor="let item of usersinCardData" class="col-md-3 " style="align-items: center;padding: 8px;">
-        <div class="card mb-3 " style="border-top: solid 70px #b4272d ;" >
-
-          <img class="card-img-top mb-1" src= {{item.avatar}} 
-          alt="Card image" style="width: 70px;height: 70px; border-radius: 50% ;margin-top: -50px;">
-         
+      <div *ngFor="let item of usersinCardData" class="col-md-3 " style="align-items: center;padding: 8px;">
+        <div class="card mb-3 " style="display: flex; flex-direction: column;">
+          <div
+            style="background: url({{item.avatarCover}}) no-repeat; background-size: cover; height: 70px;width: 100%;border-radius: .6em .6em 0 0 ;">
+          </div>
+          <img class="card-img-top mb-1" src={{item.avatar}} alt="Card image"
+            style="width: 70px;height: 70px; border-radius: 50% ;margin-top: -50px;">
           <div style="text-align: center">
-            <a routerLink="/profile/{{item.id}}"  style="color: black">
+            <a routerLink="/profile/{{item.id}}" style="color: black">
               <strong class="Name">{{item.firstName}}</strong>
             </a>
             <br>
-            <span  class="Job">{{item.jobTitle}}</span>
+            <span class="Job">{{item.jobTitle}}</span>
             <br>
             <div class="W-100%"><br></div>
-            <button  style="width: 90px;" type="button" class="btn btn-outline-primary"
-              (click)="sendRequest(item)">
+            <button style="width: 90px;" type="button" class="btn btn-outline-primary" (click)="sendRequest(item)">
               Connect
             </button>
             <br>

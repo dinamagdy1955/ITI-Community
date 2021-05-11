@@ -1,30 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NetworkService {
-  data = {
-    id: localStorage.getItem('uid'),
-    firstName: localStorage.getItem('firstName'),
-    lastName: localStorage.getItem('lastName'),
-    jobTitle: localStorage.getItem('jobTitle'),
-    avatar: localStorage.getItem('avatar'),
-  };
   constructor(private db: AngularFirestore) {}
 
-  getUserData(uid): Observable<any> {
-    return this.db.collection('users-details').doc(uid).snapshotChanges();
-  }
-  // ////////////////////////////////////
-  getAllUserData() {
-    return this.db.collection('users-details').snapshotChanges();
-  }
-
-  notINCard(arr: any[]) {
-    let uid = localStorage.getItem('uid');
+  notINCard(arr: any[], uid) {
     arr.push(uid);
     return this.db
       .collection('users-details', (ref) =>
@@ -33,8 +16,7 @@ export class NetworkService {
       .snapshotChanges();
   }
 
-  notINCardRequests(arr: any[]) {
-    let uid = localStorage.getItem('uid');
+  notINCardRequests(arr: any[], uid) {
     arr.push(uid);
     return this.db
       .collection('users-details', (ref) =>
@@ -42,9 +24,8 @@ export class NetworkService {
       )
       .snapshotChanges();
   }
-  getAllFriendRequests() {
-    let uid = localStorage.getItem('uid');
 
+  getAllFriendRequests(uid) {
     return this.db
       .collection('users-details')
       .doc(uid)
@@ -53,8 +34,7 @@ export class NetworkService {
   }
 
   // Ignore friend Request
-  ignore(id) {
-    let uid = localStorage.getItem('uid');
+  ignore(id, uid) {
     this.db
       .collection('users-details')
       .doc(uid)
@@ -69,8 +49,7 @@ export class NetworkService {
       .delete();
   }
 
-  deleteFriend(id) {
-    let uid = localStorage.getItem('uid');
+  deleteFriend(id, uid) {
     this.db
       .collection('users-details')
       .doc(uid)
@@ -86,8 +65,7 @@ export class NetworkService {
     return;
   }
 
-  deleteSentFriendReq(req) {
-    let uid = localStorage.getItem('uid');
+  deleteSentFriendReq(req, uid) {
     this.db
       .collection('users-details')
       .doc(uid)
@@ -121,24 +99,16 @@ export class NetworkService {
   }
 
   // Accept friend Request
-  AcceptRequest(item) {
-    let uid = localStorage.getItem('uid');
+  AcceptRequest(item, uid, user) {
     let id = item.id;
     item = {
       firstName: item.firstName,
       lastName: item.lastName,
       avatar: item.avatar,
+      avatarCover: item.avatarCover,
       jobTitle: item.jobTitle,
     };
-    const friend = {
-      firstName: this.data.firstName,
-      lastName: this.data.lastName,
-      avatar: this.data.avatar,
-      jobTitle: this.data.jobTitle,
-    };
-
-    this.ignore(id);
-
+    this.ignore(id, uid);
     this.db
       .collection('users-details')
       .doc(uid)
@@ -150,14 +120,11 @@ export class NetworkService {
       .doc(id)
       .collection('friendList')
       .doc(uid)
-      .set({ ...friend });
-    return;
+      .set({ ...user });
   }
 
   //friendList
-  getAllFriendsList() {
-    let uid = localStorage.getItem('uid');
-
+  getAllFriendsList(uid) {
     return this.db
       .collection('users-details')
       .doc(uid)
@@ -166,20 +133,19 @@ export class NetworkService {
   }
 
   //create request
-  create_NewRequest(user) {
-    let data = this.data;
-    console.log(data);
+  create_NewRequest(user, userData) {
     const Request = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      avatar: data.avatar,
-      jobTitle: data.jobTitle,
-      id: data.id,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      avatar: userData.avatar,
+      avatarCover: userData.avatarCover,
+      jobTitle: userData.jobTitle,
+      id: userData.id,
       reqState: false,
     };
     this.db
       .collection('users-details')
-      .doc(data.id)
+      .doc(userData.id)
       .collection('MySentfriendRequests')
       .doc(user.id)
       .set(user);
@@ -187,31 +153,15 @@ export class NetworkService {
       .collection('users-details')
       .doc(user.id)
       .collection('friendRequest')
-      .doc(data.id)
+      .doc(userData.id)
       .set({ ...Request });
-    return;
   }
 
-  getMySentfriendRequests() {
-    let uid = localStorage.getItem('uid');
+  getMySentfriendRequests(uid) {
     return this.db
       .collection('users-details')
       .doc(uid)
       .collection('MySentfriendRequests')
       .snapshotChanges();
-  }
-
-  getAllUsersData(): Observable<any> {
-    return this.db.collection('users-details').snapshotChanges();
-  }
-
-  getUserBasic(uid): Observable<any> {
-    return this.db.collection('users-basics').doc(uid).snapshotChanges();
-  }
-
-  getUserDataList(arr): Observable<any> {
-    return this.db
-      .collection('users-details', (ref) => ref.where('__name__', 'in', arr))
-      .get();
   }
 }

@@ -1,31 +1,36 @@
-<div class="card" style="width:100%;height: auto;align-items: center; padding: 5px; border-radius: .5em;border-top: solid 80px #b4272d ;">
-    <div class="W-100%"><br></div>
-
-
-    <img class="card-img-top mb-2 " src={{myData.avatar}} alt="Card image" style="width:90px;height:auto; border-radius:50%; margin-top: -70px;">
-    <div style="text-align: center;"class="mt-2" >
-      <a href="#" style="color: #b4272d"><strong>{{myData.firstName}} {{myData.lastName}} </strong> </a>
-      <br>
-      <span style="color:#68161ad5">{{myData.jobTitle}}</span>
-      <hr>
-      <div class="profilecardsection">
-        <a [routerLink]="['/FullNetwork/connections']">
-          <span style="color:#68161ad5 "> connections <span style="color: #b4272d"> {{frindsList.length}}</span>
-        </span></a>
-        <br> <span style="font-weight: bold;color: #b4272d">Grow your network</span> <br>
-      </div>
-      <div class="profilecardsection">
-        <a href="#"> <span style="color:#68161ad5">invitation </span> <span style=" color: #b4272d">
-            1</span></a>
-      </div>
-      <hr>
-      <div class="profilecardsection">
-        <a href="#"><i class="fas fa-bookmark " style="font-size: 1em; color: #b4272d;"></i> <span style="margin:.5em; color: black;"> my items </span></a>
-      </div>
-      <br>
-      
-
-
-
-    </div>
+<div class="card" style="width:100%;height: auto;align-items: center;  border-radius: .5em; display: flex;
+  flex-direction: column;">
+  <div
+    style="background: url({{myData.avatarCover}}) no-repeat; background-size: cover; height: 90px;width: 100%;border-radius: .5em .5em 0 0 ;">
   </div>
+  <div class="W-100%"><br></div>
+  <img class="card-img-top mb-2 " src={{myData.avatar}} alt="Card image"
+    style="width:90px;height:90px; border-radius:50%; margin-top: -70px;">
+  <div style="text-align: center;" class="mt-2">
+    <a href="#" style="color: #b4272d"><strong>{{myData.firstName}} {{myData.lastName}} </strong> </a>
+    <br>
+    <span style="color:#68161ad5">{{myData.jobTitle}}</span>
+    <hr>
+    <div class="profilecardsection">
+      <a [routerLink]="['/FullNetwork/connections']">
+        <span style="color:#68161ad5 "> connections <span style="color: #b4272d"> {{frindsList.length}}</span>
+        </span>
+      </a>
+      <br>
+      <span style="font-weight: bold;color: #b4272d">Grow your network</span> <br>
+    </div>
+    <div class="profilecardsection">
+      <a href="#">
+        <span style="color:#68161ad5">invitation </span>
+        <span style=" color: #b4272d">{{Requests.length}}</span>
+      </a>
+    </div>
+    <hr>
+    <div class="profilecardsection">
+      <a href="#"><i class="fas fa-bookmark " style="font-size: 1em; color: #b4272d;"></i>
+        <span style="margin:.5em; color: black;"> my items </span>
+      </a>
+    </div>
+    <br>
+  </div>
+</div>
