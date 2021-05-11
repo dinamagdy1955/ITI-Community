@@ -78,7 +78,7 @@
                 Send
                 Request To
                 <span *ngIf="subscribe.includes(userID) else JoinUS">
-                    <a (click)="cancelRequest(userID, GroupId, 'Subscriber')" class="font-weight-bold btn p-0">
+                    <a (click)="cancelRequest(userID, GroupId)" class="font-weight-bold btn p-0">
                         <span *ngIf="subscribe.includes(userID)">Cancel</span>
                     </a>
                 </span>

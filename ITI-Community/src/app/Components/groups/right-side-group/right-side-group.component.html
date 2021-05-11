@@ -1,7 +1,7 @@
 <div *ngIf="Group != undefined">
     <div class="card text-left">
         <div class="card-body">
-            <h6 class="card-title"><span>{{members.length + admins.length}}</span> members</h6>
+            <h6 class="card-title"><span>{{users.length}}</span> members</h6>
             <p class="card-text">including ...</p>
 
             <img class="avatar-container-item avatars-right" src="../../../../assets/nav-img.png">
@@ -50,6 +50,11 @@
                                                 <div>
                                                     <button ngbDropdownItem (click)="Roles(a.id, GroupId, 2)">
                                                         Member
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <button ngbDropdownItem (click)="Roles(a.id, GroupId, 0)">
+                                                        Subscriber
                                                     </button>
                                                 </div>
                                                 <div>
@@ -125,6 +130,11 @@
                                                 ngbDropdownToggle></button>
                                             <div class="dropdown-menu" ngbDropdownMenu>
                                                 <div>
+                                                    <button ngbDropdownItem (click)="Roles(a.id, GroupId, 1)">
+                                                        Admin
+                                                    </button>
+                                                </div>
+                                                <div>
                                                     <button ngbDropdownItem (click)="Roles(a.id, GroupId, 2)">
                                                         Member
                                                     </button>
@@ -171,18 +181,20 @@
     </ng-template>
     <div class="card text-left mt-3">
         <div class="card-body">
-            <h6 class="card-title">Admins : {{admins.length}}</h6>
-            <div class="media mt-3" *ngFor="let a of admins">
-                <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
-                <div class="media-body">
-                    <h6 class="mt-1 mb-1">
-                        <a class="text-dark text-decoration-none" href="#">
-                            {{a.data.firstName}}
-                            {{a.data.lastName}}
-                        </a>
-                        <span class="badge badge-secondary">Manager</span>
-                    </h6>
-                    <small class="text-muted">{{jobTitle}}</small>
+            <h6 class="card-title">Admins : {{adminRole.length}}</h6>
+            <div class="media mt-3" *ngFor="let a of users">
+                <div *ngIf="a.Role == 1">
+                    <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
+                    <div class="media-body">
+                        <h6 class="mt-1 mb-1">
+                            <a class="text-dark text-decoration-none" href="#">
+                                {{a.firstName}}
+                                {{a.lastName}}
+                            </a>
+                            <span class="badge badge-secondary">Manager</span>
+                        </h6>
+                        <small class="text-muted">{{a.jobTitle}}</small>
+                    </div>
                 </div>
             </div>
         </div>

@@ -13,11 +13,7 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy, OnChanges {
   avatar: string
   Group: IGroup2;
   @Input() GroupId: string;
-  @Input() admins = []
-  @Input() members = []
-  @Input() subscribers = []
-  @Input() adminRole = []
-
+  @Input() users = []
   admin = []
   member = []
   subscribe = []
@@ -36,31 +32,19 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy, OnChanges {
       this.Group = res;
     })
     this.subscription.push(sub)
-
-
-    // this.GrpServ.getGroupUsers(this.GroupId).admins.subscribe(res => {
-    //   this.admins2 = res.map(e => {
-    //     return {
-    //       id: e.payload.doc.id,
-    //       data: e.payload.doc.data()
-    //     }
-    //   })
-    //   for (let i of this.admins2) {
-    //     this.admin.push(i.id)
-    //   }
-    // })
-
   }
 
   ngOnChanges(): void {
-    for (let i of this.admins) {
-      this.admin.push(i.id)
-    }
-    for (let i of this.members) {
-      this.member.push(i.id)
-    }
-    for (let i of this.subscribers) {
-      this.subscribe.push(i.id)
+    for (let u of this.users) {
+      if (u.id == this.userID && u.Role == 1) {
+        this.admin.push(u.id)
+      }
+      if (u.id == this.userID && u.Role == 2) {
+        this.member.push(u.id)
+      }
+      if (u.id == this.userID && u.Role == 0) {
+        this.subscribe.push(u.id)
+      }
     }
   }
 
@@ -68,8 +52,8 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy, OnChanges {
     this.GrpServ.sendRequest(uid, id);
   }
 
-  cancelRequest(uid, id, role) {
-    // this.GrpServ.DeleteMembers(uid, id, role)
+  cancelRequest(uid, id) {
+    this.GrpServ.DeleteMembers(uid, id)
   }
 
   ngOnDestroy(): void {
