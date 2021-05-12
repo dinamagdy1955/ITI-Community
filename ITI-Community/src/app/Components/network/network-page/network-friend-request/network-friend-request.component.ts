@@ -23,6 +23,7 @@ export class NetworkFriendRequestComponent implements OnInit {
             reqState: e.payload.doc.data()['reqState'],
             avatar: e.payload.doc.data()['avatar'],
             avatarCover: e.payload.doc.data()['avatarCover'],
+            addedDate: e.payload.doc.data()['addedDate'],
           };
         });
         console.log(this.Requests);

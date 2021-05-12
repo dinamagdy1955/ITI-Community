@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { NavigationStart, Router, Event as RouterEvent, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import {
+  NavigationStart,
+  Router,
+  Event as RouterEvent,
+  NavigationEnd,
+  NavigationCancel,
+  NavigationError,
+} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +18,11 @@ export class AppComponent {
   showHead: boolean = false;
   loader: boolean = true;
   constructor(private router: Router) {
+    if (localStorage.getItem('lang') == 'ar') {
+      document.dir = 'rtl';
+    } else {
+      document.dir = 'ltr';
+    }
     // on route change to '/login', set the variable showHead to false
     router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
@@ -26,8 +38,8 @@ export class AppComponent {
       }
     });
     router.events.subscribe((event: RouterEvent) => {
-      this.navigationInterceptor(event)
-    })
+      this.navigationInterceptor(event);
+    });
   }
 
   navigationInterceptor(event: RouterEvent): void {
@@ -41,8 +53,7 @@ export class AppComponent {
       this.loader = false;
     }
     if (event instanceof NavigationError) {
-      this.loader = false
+      this.loader = false;
     }
   }
-
 }

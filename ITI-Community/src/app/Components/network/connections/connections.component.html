@@ -11,9 +11,9 @@
                   Sort By : <i class="fas fa-ellipsis-h"></i>
                 </button>
                 <div class="dropdown-menu" ngbDropdownMenu>
-                  <button ngbDropdownItem>Recently</button>
-                  <button ngbDropdownItem>First Name</button>
-                  <button ngbDropdownItem>Last Name</button>
+                  <button ngbDropdownItem (click)="sortRecently()">Recently</button>
+                  <button ngbDropdownItem (click)="sortFirstName()">First Name</button>
+                  <button ngbDropdownItem (click)="sortLastName()">Last Name</button>
                 </div>
               </div>
             </div>
@@ -25,7 +25,6 @@
         </li>
       </ul>
     </div>
-
     <div>
       <div *ngFor="let item of frindsList | filter:keyWordsSearch" class="row rowBB">
         <ul _ngcontent-exd-c114="" class="list-group list-group-flush">
@@ -37,18 +36,16 @@
                 <h6 class="mt-2 mb-1 UserName">
                   <a routerLink="/profile/{{item.id}}">
                     {{item.firstName}} {{item.lastName}}
-
                   </a>
                 </h6>
                 <small class="text-muted">
                   <span>{{item.jobTitle}}</span>
-                  <br />Connected 4 days ago</small>
+                  <br />Connected at {{item.addedDate.toDate() | date}}</small>
               </div>
               <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4">
                 Message
               </button>
               <div class="btn-group mr-3">
-
                 <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
                   <button class="btn btn-sm mt-4" ngbDropdownToggle>
                     <i class="fas fa-ellipsis-h dots"></i>
@@ -64,7 +61,6 @@
           </li>
         </ul>
       </div>
-
     </div>
   </div>
 </section>

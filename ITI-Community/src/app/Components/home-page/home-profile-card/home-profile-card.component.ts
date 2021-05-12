@@ -21,7 +21,6 @@ export class HomeProfileCardComponent implements OnInit {
       avatar: localStorage.getItem('avatar'),
       avatarCover: localStorage.getItem('avatarCover'),
     };
-    //console.log(this.myData.avatar)
     this.usrs.getAllFriendsList(this.myData.id).subscribe((data) => {
       this.frindsList = data.map((e) => {
         return {
@@ -32,14 +31,11 @@ export class HomeProfileCardComponent implements OnInit {
           avatar: e.payload.doc.data()['avatar'],
         };
       });
-
       this.usrs.getAllFriendRequests(this.myData.id).subscribe((data) => {
         this.Requests = data.map((e) => {
           return e.payload.doc.id;
         });
       });
-
-      // console.log(this.frindsList);
     });
   }
 }

@@ -1,79 +1,70 @@
-
-
 <ng-template #content let-c="close" let-d="dismiss">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Create a post</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-        <div style="padding-left: .8em;">
-
-            <img class="card-img-top" src="../../../../assets/2.png" alt="Card image" style="width:10%;border-radius:50%;">
-
-            <div style="display: inline-block;">
-              <span><strong>marwa tag</strong>
-                <div ngbDropdown>
-                    <button class="btn btn-outline-primary" id="dropdownConfig" ngbDropdownToggle style=" color:black; border-radius: 1.2em;background-color:rgba(255, 255, 255, 0.453); border: 1px solid rgba(148, 140, 140, 0.261);">select Privacy</button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownConfig">
-                      <button ngbDropdownItem> <i class="fas fa-globe-americas usersIcon  usersIconGroup1"></i> Anyone</button>
-                      <button ngbDropdownItem> <i class="fas fa-globe-americas usersIcon  usersIconGroup1"></i>Connections only</button>
-                      <button ngbDropdownItem> <i class="fas fa-users usersIcon  usersIconGroup1"></i> <span class="iconSpan"></span>Group members</button>
-                    </div>
-                  </div>
-              </span>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create a post</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div style="padding-left: .8em;">
+      <img class="card-img-top" src="../../../../assets/2.png" alt="Card image" style="width:50px;border-radius:50%;">
+      <div style="display: inline-block;">
+        <span><strong>marwa tag</strong>
+          <div ngbDropdown>
+            <button class="btn btn-outline-primary" id="dropdownConfig" ngbDropdownToggle
+              style=" color:black; border-radius: 1.2em;background-color:rgba(255, 255, 255, 0.453); border: 1px solid rgba(148, 140, 140, 0.261);">select
+              Privacy</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+              <button ngbDropdownItem> <i class="fas fa-globe-americas usersIcon  usersIconGroup1"></i> Anyone</button>
+              <button ngbDropdownItem> <i class="fas fa-globe-americas usersIcon  usersIconGroup1"></i>Connections
+                only</button>
+              <button ngbDropdownItem> <i class="fas fa-users usersIcon  usersIconGroup1"></i> <span
+                  class="iconSpan"></span>Group members</button>
             </div>
           </div>
-    
-        <textarea  rows="4" cols="50" placeholder="what do you want to talk about ? "></textarea> 
-   
+        </span>
+      </div>
     </div>
-
-    <div>
-  
-        <p >
-          <button type="button" class="btn " (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
-            aria-controls="collapseExample">
-            <i class="fas fa-plus"></i>
-          </button>
-          <!--
+    <textarea rows="4" cols="50" placeholder="what do you want to talk about ? "></textarea>
+  </div>
+  <div>
+    <p>
+      <button type="button" class="btn " (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
+        aria-controls="collapseExample">
+        <i class="fas fa-plus"></i>
+      </button>
+      <!--
         <input type="file" style="width: 200px;">
           -->
-          <button type="button" class="btn " >
-            <i class="far fa-image writeposticons" style="color: #70b5f9;"></i>
-          </button>
-
-          <button type="button" class="btn " >
-            <i class="fab fa-youtube writeposticons" style="color: #81c261;"></i>
-          </button>
-
-          <button type="button" class="btn " >
-            <i class="fas fa-file"style="color: #e7a33e;"> </i>
-          </button>
- 
-        
-          
-      <button style="border-radius:2em; margin-left: 14em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">post</button>
-
+      <button type="button" class="btn ">
+        <i class="far fa-image writeposticons" style="color: #70b5f9;"></i>
+      </button>
+      <button type="button" class="btn ">
+        <i class="fab fa-youtube writeposticons" style="color: #81c261;"></i>
+      </button>
+      <button type="button" class="btn ">
+        <i class="fas fa-file" style="color: #e7a33e;"> </i>
+      </button>
+      <button style="border-radius:2em; margin-left: 14em;" type="button" class="btn btn-outline-dark"
+        (click)="c('Save click')">
+        post
+      </button>
     </p>
-        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-          <div class="card" style="width: 100%; border-radius: .5em;background-color: #e8e8e8;">
-            <div class="card-body" style="width: 100%;border: none;">
+    <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+      <div class="card" style="width: 100%; border-radius: .5em;background-color: #e8e8e8;">
+        <div class="card-body" style="width: 100%;border: none;">
+          <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">Create
+            A poll</button>
+          <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">share
+            it </button>
+          <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">Create
+            A poll</button>
+          <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">share
+            it </button>
 
-              <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">Create A poll</button>
-              <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">share it </button>
-              <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">Create A poll</button>
-              <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">share it </button>
-              
-            </div>
-          </div>
         </div>
-
-
-      
+      </div>
     </div>
-  </ng-template>
-
-  
-  <button id="HModelBtn"   class="btn btn-lg btn-outline-primary" (click)="open(content)" >start a post</button>
+  </div>
+</ng-template>
+<button id="HModelBtn" class="btn btn-lg btn-outline-primary" (click)="open(content)">start a post</button>

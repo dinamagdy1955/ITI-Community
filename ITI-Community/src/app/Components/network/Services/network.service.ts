@@ -101,12 +101,14 @@ export class NetworkService {
   // Accept friend Request
   AcceptRequest(item, uid, user) {
     let id = item.id;
+    user.addedDate = new Date();
     item = {
       firstName: item.firstName,
       lastName: item.lastName,
       avatar: item.avatar,
       avatarCover: item.avatarCover,
       jobTitle: item.jobTitle,
+      addedDate: new Date(),
     };
     this.ignore(id, uid);
     this.db
