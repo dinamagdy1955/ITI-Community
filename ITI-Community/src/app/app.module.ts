@@ -18,8 +18,8 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MainFooterComponent } from './Components/main-footer/main-footer.component';
 import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
+import { MainfooterModule } from './Components/main-footer/mainfooter.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +34,6 @@ import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
     LoginComponent,
     ErrorComponent,
     NotificationComponent,
-    MainFooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +44,7 @@ import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
     FormsModule,
     ReactiveFormsModule,
     NgxTwitterTimelineModule,
+    MainfooterModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
