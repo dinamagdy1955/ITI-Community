@@ -9,8 +9,8 @@
       </div>
 
       <hr>
-
-      <div *ngFor="let item of Requests" class="row">
+     
+      <div *ngFor="let item of (Requests| slice: -2) " class="row">
         <div class="col-md-2" style="padding-right: 0px; align-items: center">
           <img src={{item.avatar}} style="width: 70%; height: auto" alt="John Doe" class="mr-3 mt-3 rounded-circle">
         </div>

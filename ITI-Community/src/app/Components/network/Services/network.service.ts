@@ -136,6 +136,7 @@ export class NetworkService {
 
   //create request
   create_NewRequest(user, userData) {
+    user.addedDate = new Date();
     const Request = {
       firstName: userData.firstName,
       lastName: userData.lastName,
@@ -144,6 +145,7 @@ export class NetworkService {
       jobTitle: userData.jobTitle,
       id: userData.id,
       reqState: false,
+      addedDate: new Date(),
     };
     this.db
       .collection('users-details')
