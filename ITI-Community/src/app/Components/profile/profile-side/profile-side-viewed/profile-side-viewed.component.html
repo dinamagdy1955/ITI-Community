@@ -1,11 +1,12 @@
 <div class="card boo" style="width: 100%;margin-top: 10px;">
   <div class="card-body">
     <h5 class="card-title">Connection List</h5>
-
-      <div *ngFor="let friend of friendList">
-        <app-people-also-viewed [Friend]="friend"></app-people-also-viewed>
-      </div>
+    <div *ngFor="let friend of (friendList| slice: -3)">
+      <app-people-also-viewed [Friend]="friend"></app-people-also-viewed>
+    </div>
     <hr style="margin-bottom:4px ;">
-    <div style="text-align: center;">All Connections</div>
+    <a href="#" [routerLink]="['/FullNetwork/connections']">
+      <div style="text-align: center; color: black; text-decoration: none;">All Connections</div>
+    </a>
   </div>
 </div>

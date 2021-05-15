@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UserService } from 'src/app/MainServices/User.service';
+import { NetworkService } from 'src/app/Components/network/Services/network.service';
 
 @Component({
   selector: 'app-profile-side',
@@ -9,25 +9,18 @@ import { UserService } from 'src/app/MainServices/User.service';
 export class ProfileSideComponent implements OnInit {
   @Input() uid;
   uidLocal = localStorage.getItem('uid');
-  
   friendList = [];
-  constructor(private us: UserService) {
-    let sub = this.us.getUserData(this.uid).subscribe((res) => {
-      if (res.payload.data()['friendList'] > 0) {
-        let sub2 = this.us
-          .getUserDataList(res.payload.data()['friendList'])
-          .subscribe((e) => {
-            console.log('e', e.docs);
-            e.docs.map((f) => {
-              console.log('f', f);
-              this.friendList.push({
-                id: f.id,
-                data: f.data(),
-              });
-            });
-            sub2.unsubscribe();
-          });
-      }
+  constructor(private network: NetworkService) {
+    let sub = this.network.getAllFriendsList(this.uidLocal).subscribe((res) => {
+      this.friendList = res.map((e) => {
+        return {
+          id: e.payload.doc.data()['id'],
+          firstName: e.payload.doc.data()['firstName'],
+          lastName: e.payload.doc.data()['lastName'],
+          jobTitle: e.payload.doc.data()['jobTitle'],
+          avatar: e.payload.doc.data()['avatar'],
+        };
+      });
       sub.unsubscribe();
     });
   }

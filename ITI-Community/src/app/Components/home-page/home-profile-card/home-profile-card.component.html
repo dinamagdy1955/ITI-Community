@@ -7,7 +7,8 @@
   <img class="card-img-top mb-2 " src={{myData.avatar}} alt="Card image"
     style="width:90px;height:90px; border-radius:50%; margin-top: -70px;">
   <div style="text-align: center;" class="mt-2">
-    <a href="#" style="color: #b4272d"><strong>{{myData.firstName}} {{myData.lastName}} </strong> </a>
+    <a href="#" routerLink="/profile/{{myData.id}}" style="color: #b4272d"><strong>{{myData.firstName}}
+        {{myData.lastName}} </strong> </a>
     <br>
     <span style="color:#68161ad5">{{myData.jobTitle}}</span>
     <hr>
