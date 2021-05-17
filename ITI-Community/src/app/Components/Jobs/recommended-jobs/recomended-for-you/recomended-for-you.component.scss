@@ -1,0 +1,28 @@
+.card {
+    box-shadow: none;
+    border-radius: .6em;
+}
+.media-body,
+.border,
+.p-3,
+.jumbotron {
+  background-color: #fff;
+}
+
+.postcontainer{
+    border-radius: 1em;
+    box-shadow:1px 1px 10px rgba(128, 128, 128, 0.452);
+  }
+
+.card:hover {
+    box-shadow: 1px 1px 10px 1px rgb(211, 203, 203);
+}
+
+.b1:hover {
+    color: #b4272d;
+}
+
+.txtt {
+    color: rgb(169, 159, 159);
+    font-size: medium;
+}
