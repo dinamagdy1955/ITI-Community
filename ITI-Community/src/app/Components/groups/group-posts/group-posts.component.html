@@ -1,4 +1,4 @@
-<div class="card mt-3" *ngFor="let post of postGroupList">
+<div class="card mt-3" *ngFor="let post of postGroupList; trackBy: identify">
     <div class="card-body">
         <div class="media">
             <img class="mr-4 rounded-circle" [src]="post.data.Auther.avatar" alt="" width="64px">

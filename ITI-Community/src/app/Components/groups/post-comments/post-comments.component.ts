@@ -17,6 +17,10 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
     private commentService: PostCommentService,
   ) { }
 
+  identify(index, c) {
+    return c.id
+  }
+
   ngOnInit(): void {
     this.userID = localStorage.getItem('uid')
     let sub = this.commentService.getPostComments2(this.PostID).subscribe(res => {
