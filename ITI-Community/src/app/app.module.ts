@@ -20,6 +20,10 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainFooterComponent } from './Components/main-footer/main-footer.component';
 import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
+import { RecommendedJobsComponent } from './Components/Jobs/recommended-jobs/recommended-jobs.component';
+import { SearchNextJobComponent } from './Components/Jobs/recommended-jobs/search-next-job/search-next-job.component';
+import { JobSearchesComponent } from './Components/Jobs/recommended-jobs/job-searches/job-searches.component';
+import { RecomendedForYouComponent } from './Components/Jobs/recommended-jobs/recomended-for-you/recomended-for-you.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +39,10 @@ import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
     ErrorComponent,
     NotificationComponent,
     MainFooterComponent,
+    RecommendedJobsComponent,
+    SearchNextJobComponent,
+    JobSearchesComponent,
+    RecomendedForYouComponent,
   ],
   imports: [
     BrowserModule,
