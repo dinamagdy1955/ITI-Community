@@ -19,7 +19,7 @@ import { PeopleAlsoViewedComponent } from './profile-side/profile-side-viewed/pe
 import { ProfileSideKnowComponent } from './profile-side/profile-side-know/profile-side-know.component';
 import { PeopleYouMayKnowComponent } from './profile-side/profile-side-know/people-you-may-know/people-you-may-know.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MainFooterComponent } from '../main-footer/main-footer.component';
+import { MainfooterModule } from '../main-footer/mainfooter.module';
 
 const mainProfileRoute: Routes = [
   { path: '', component: MainProfileComponent },
@@ -30,6 +30,7 @@ const mainProfileRoute: Routes = [
     RouterModule.forChild(mainProfileRoute),
     FormsModule,
     ReactiveFormsModule,
+    MainfooterModule,
   ],
   declarations: [
     MainProfileComponent,
@@ -50,7 +51,6 @@ const mainProfileRoute: Routes = [
     PeopleAlsoViewedComponent,
     ProfileSideKnowComponent,
     PeopleYouMayKnowComponent,
-    // MainFooterComponent
   ],
 })
 export class ProfileModule {}
