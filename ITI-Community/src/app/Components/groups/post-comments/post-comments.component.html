@@ -1,4 +1,4 @@
-<div *ngFor="let c of getComments">
+<div *ngFor="let c of getComments; trackBy: identify">
     <div class="container-fluid mt-1 mb-1">
         <div class="justify-content-center row">
             <div class="col-md-12">

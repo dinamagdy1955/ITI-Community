@@ -25,6 +25,9 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
     this.userID = localStorage.getItem('uid');
   }
 
+  identify(index, post) {
+    return post.id
+  }
 
   ngOnInit(): void {
     this.avatar = localStorage.getItem('avatar')
