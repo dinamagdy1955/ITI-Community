@@ -56,7 +56,7 @@ const routes: Routes = [
   {
     path: 'jobs',
     loadChildren: () =>
-      import('../app/Components/saved-job/jobsModule').then(
+      import('./Components/Jobs/jobsModule').then(
         (m) => m.jobsModule
       ),
   },
