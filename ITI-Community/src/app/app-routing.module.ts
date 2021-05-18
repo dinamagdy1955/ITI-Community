@@ -7,7 +7,7 @@ import { NotificationComponent } from './Components/notification/notification.co
 
 const routes: Routes = [
   {
-    path: 'HOME',
+    path: 'Home',
     component: HomePageComponent,
   },
   {
@@ -62,7 +62,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/HOME',
+    redirectTo: '/Home',
     pathMatch: 'full',
   },
   {
@@ -79,4 +79,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

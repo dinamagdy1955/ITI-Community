@@ -43,7 +43,7 @@
                                         <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
                                         <div class="btn-group" ngbDropdown role="group"
                                             aria-label="Button group with nested dropdown"
-                                            *ngIf="adminRole.includes(userID)">
+                                            *ngIf="adminID.includes(userID)">
                                             <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
                                                 ngbDropdownToggle></button>
                                             <div class="dropdown-menu" ngbDropdownMenu>
@@ -84,7 +84,7 @@
                                         <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
                                         <div class="btn-group" ngbDropdown role="group"
                                             aria-label="Button group with nested dropdown"
-                                            *ngIf="adminRole.includes(userID)">
+                                            *ngIf="adminID.includes(userID)">
                                             <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
                                                 ngbDropdownToggle></button>
                                             <div class="dropdown-menu" ngbDropdownMenu>
@@ -125,7 +125,7 @@
                                         <button type="button" class="btn btn-outline-primary btn-sm">Messege</button>
                                         <div class="btn-group" ngbDropdown role="group"
                                             aria-label="Button group with nested dropdown"
-                                            *ngIf="adminRole.includes(userID)">
+                                            *ngIf="adminID.includes(userID)">
                                             <button class="btn btn-outline-primary btn-sm dropdown-toggle-split"
                                                 ngbDropdownToggle></button>
                                             <div class="dropdown-menu" ngbDropdownMenu>
@@ -182,19 +182,17 @@
     <div class="card text-left mt-3">
         <div class="card-body">
             <h6 class="card-title">Admins : {{adminRole.length}}</h6>
-            <div class="media mt-3" *ngFor="let a of users">
-                <div *ngIf="a.Role == 1">
-                    <img class="mr-2 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
-                    <div class="media-body">
-                        <h6 class="mt-1 mb-1">
-                            <a class="text-dark text-decoration-none" href="#">
-                                {{a.firstName}}
-                                {{a.lastName}}
-                            </a>
-                            <span class="badge badge-secondary">Manager</span>
-                        </h6>
-                        <small class="text-muted">{{a.jobTitle}}</small>
-                    </div>
+            <div class="media mt-3" *ngFor="let a of adminRole">
+                <div class="media-body">
+                    <img class="mr-2 rounded-circle" [src]="a.avatar" alt="" width="64px">
+                    <h6 class="mt-1 mb-1">
+                        <a class="text-dark text-decoration-none" href="#">
+                            {{a.firstName}}
+                            {{a.lastName}}
+                        </a>
+                        <span class="badge badge-secondary">Manager</span>
+                    </h6>
+                    <small class="text-muted">{{a.jobTitle}}</small>
                 </div>
             </div>
         </div>

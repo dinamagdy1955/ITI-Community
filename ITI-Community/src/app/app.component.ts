@@ -18,11 +18,12 @@ export class AppComponent {
   showHead: boolean = false;
   loader: boolean = true;
   constructor(private router: Router) {
-    if (localStorage.getItem('lang') == 'ar') {
-      document.dir = 'rtl';
-    } else {
+    if (localStorage.getItem('lang') == 'en') {
       document.dir = 'ltr';
+    } else if (localStorage.getItem('lang') == 'ar') {
+      document.dir = 'rtl';
     }
+
     // on route change to '/login', set the variable showHead to false
     router.events.forEach((event) => {
       if (event instanceof NavigationStart) {

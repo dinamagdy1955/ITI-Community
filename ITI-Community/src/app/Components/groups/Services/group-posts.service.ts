@@ -11,8 +11,7 @@ export class GroupPostsService {
   constructor(private db: AngularFirestore, private afStorage: AngularFireStorage) { }
 
   GroupPosts(id) {
-    // .orderBy('PostedDate', 'desc')
-    return this.db.collection('PostGroup', ref => ref.where('GroupId', '==', id)).snapshotChanges()
+    return this.db.collection('PostGroup', ref => ref.where('GroupId', '==', id).orderBy('PostedDate', 'desc')).snapshotChanges()
   }
 
 

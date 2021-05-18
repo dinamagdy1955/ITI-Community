@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { UserProfileService } from '../../profile/Service/user-profile.service';
 
 @Component({
@@ -7,7 +8,11 @@ import { UserProfileService } from '../../profile/Service/user-profile.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
+
+
+
 export class HeaderComponent implements OnInit {
+  selectedLang: string
   toggleStatus: boolean = false;
   public isMenuCollapsed = true;
   uid = localStorage.getItem('uid');
@@ -18,10 +23,22 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private userProfile: UserProfileService
-  ) {}
+    private userProfile: UserProfileService,
+    public translateService: TranslateService
+  ) {
+    translateService.addLangs(['en', 'ar']);
+    if (localStorage.getItem('lang') == undefined || localStorage.getItem('lang') == 'en') {
+      translateService.use('en')
+      localStorage.setItem('lang', 'en')
+      // document.dir = 'ltr';
+    } else if (localStorage.getItem('lang') == 'ar') {
+      translateService.use('ar')
+      localStorage.setItem('lang', 'ar')
+      // document.dir = 'rtl';
+    }
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   toggleSideBar() {
     this.toggleStatus = !this.toggleStatus;
@@ -29,5 +46,11 @@ export class HeaderComponent implements OnInit {
   signOut() {
     localStorage.clear();
     this.router.navigate(['/Login']);
+  }
+
+  translateSite(language: string) {
+    localStorage.setItem('lang', language)
+    this.translateService.use(language);
+    window.location.reload();
   }
 }

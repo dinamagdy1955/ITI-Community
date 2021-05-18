@@ -20,6 +20,9 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 import { MainfooterModule } from './Components/main-footer/mainfooter.module';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,8 +48,19 @@ import { MainfooterModule } from './Components/main-footer/mainfooter.module';
     ReactiveFormsModule,
     NgxTwitterTimelineModule,
     MainfooterModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: translateFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
+export function translateFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient)
+}

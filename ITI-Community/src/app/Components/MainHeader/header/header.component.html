@@ -18,18 +18,18 @@
             <ul class="navbar-nav text-lg-center custom-nav">
                 <li class="nav-item">
 
-                    <a class="nav-link visible-dot" [routerLink]="['HOME']" routerLinkActive="active"
+                    <a class="nav-link visible-dot" [routerLink]="['Home']" routerLinkActive="active"
                         (click)="isMenuCollapsed = true">
                         <i class="fas fa-home d-lg-block"></i>
                         <div class="container__indicator">
                             <i class="fas fa-dot-circle"></i>
                         </div>
-                        <span class="d-lg-block">Home</span>
+                        <span class="d-lg-block">{{'Home' | translate}}</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['/Group']" routerLinkActive="active"
-                        (click)="isMenuCollapsed = true"><i class="fas fa-users d-lg-block"></i>Groups
+                        (click)="isMenuCollapsed = true"><i class="fas fa-users d-lg-block"></i>{{'Groups' | translate}}
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -37,14 +37,14 @@
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['FullNetwork']" routerLinkActive="active"
                         (click)="isMenuCollapsed = true"><i class="fas fa-user-friends"></i><span
-                            class="d-lg-block">Network</span>
+                            class="d-lg-block">{{'Network' | translate}}</span>
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['/jobs/savedjobs']" routerLinkActive="router-link-active"
-                        (click)="isMenuCollapsed = true"><i class="fas fa-archive d-lg-block"></i>Jobs
+                        (click)="isMenuCollapsed = true"><i class="fas fa-archive d-lg-block"></i>{{'Jobs' | translate}}
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -52,13 +52,14 @@
                     <a class="nav-link" [routerLink]="['/Messages']" routerLinkActive="active"
                         (click)="isMenuCollapsed = true">
                         <i class="fas fa-comment-dots d-lg-block"></i>
-                        Messaging
+                        {{'Messaging' | translate}}
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['Notification']" routerLinkActive="router-link-active"
-                        (click)="isMenuCollapsed = true"><i class="fas fa-bell d-lg-block"></i>Notifications
+                        (click)="isMenuCollapsed = true"><i class="fas fa-bell d-lg-block"></i>{{'Notifications' |
+                        translate}}
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -66,7 +67,7 @@
                 <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
                     <a class="nav-link" ngbDropdownToggle id="navbarDropdown3" role="button">
                         <img [src]="avatar" width="30" height="30" class="d-lg-block align-top" alt="">
-                        Me
+                        {{'Me' | translate}}
                     </a>
                     <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu pt-0">
                         <a class="dropdown-item text-center py-3" routerLink="/profile/{{uid}}"
@@ -76,17 +77,30 @@
                             <h6 class="">{{jobTitle}}</h6>
                         </a>
                         <div class="dropdown-divider mt-0"></div>
-                        <h6 class="ml-3">Account</h6>
-                        <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Settings</a>
-                        <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Help</a>
-                        <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Language</a>
+                        <h6 class="ml-3">{{'Account' | translate}}</h6>
+                        <a ngbDropdownItem href="#" (click)="$event.preventDefault()">{{'Settings' | translate}}</a>
+                        <a ngbDropdownItem href="#" (click)="$event.preventDefault()">{{'Help' | translate}}</a>
+                        <!-- <span class="form-inline">
+                            <label class="pl-4 pr-2">Languages</label>
+                            <select class="form-control" #language (change)="translateSite(language.value)">
+                                <option *ngFor="let lang of translateService.getLangs()" [value]="lang"
+                                    [selected]="lang.currentLang">
+                                    {{lang}}</option>
+                            </select>
+                        </span> -->
                         <div class="dropdown-divider"></div>
-                        <h6 class="ml-3">Manage</h6>
-                        <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Posts & Activity</a>
-                        <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Posting Account</a>
-                        <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Language</a>
+                        <h6 class="ml-3">{{'Languages' | translate}}</h6>
+                        <a ngbDropdownItem href="#" (click)="$event.preventDefault(); translateSite('en')">English</a>
+                        <a ngbDropdownItem href="#" (click)="$event.preventDefault(); translateSite('ar')">العربية</a>
                         <div class="dropdown-divider"></div>
-                        <a ngbDropdownItem href="#" (click)="$event.preventDefault();signOut();">Sign Out</a>
+                        <h6 class="ml-3">{{'Manage' | translate}}</h6>
+                        <a ngbDropdownItem href="#" (click)="$event.preventDefault()">{{'Posts & Activity' |
+                            translate}}</a>
+                        <a ngbDropdownItem href="#" (click)="$event.preventDefault()">{{'Posting Account' |
+                            translate}}</a>
+                        <div class="dropdown-divider"></div>
+                        <a ngbDropdownItem href="#" (click)="$event.preventDefault();signOut();">{{'Sign Out' |
+                            translate}}</a>
 
                     </div>
                 </li>
@@ -95,7 +109,7 @@
 
             <a class="toggle-btn btn" id="sidebarCollapse" role="button" (click)="toggleSideBar()">
                 <i class="fas fa-th d-lg-block"></i>
-                <span>Work</span>
+                <span>{{'Work' | translate}}</span>
             </a>
 
         </div>
