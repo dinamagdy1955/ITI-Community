@@ -15,7 +15,8 @@ export class RightSideGroupComponent implements OnInit, OnChanges, OnDestroy {
   @Input() GroupId: string;
   @Input() users = []
   userID
-  @Input() adminRole = []
+  adminRole = []
+  adminID = []
   keyWordsSearch
   private subscription: Subscription[] = [];
   constructor(
@@ -35,9 +36,11 @@ export class RightSideGroupComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(): void {
+    this.adminRole = []
     for (let a of this.users) {
       if (a.Role == 1) {
-        this.adminRole.push(a.id)
+        this.adminRole.push(a)
+        this.adminID.push(a.id)
       }
     }
   }

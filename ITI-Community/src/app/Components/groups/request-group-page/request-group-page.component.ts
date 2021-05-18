@@ -14,7 +14,7 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
   subscribers;
   users = [];
   subscription: Subscription[] = [];
-  constructor(private GrpServ: GroupService) {}
+  constructor(private GrpServ: GroupService) { }
 
   ngOnInit(): void {
     this.userID = localStorage.getItem('uid');
@@ -47,25 +47,18 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
             this.subscribers = this.subscribers.filter((ele) => ele.id != i.id);
           } else
             for (let u of this.users) {
-              // console.log('i', i, 'u', u);
-              // console.log('gl', this.GroupList);
-              // console.log('sl', this.subscribers);
               if (u.id == this.userID && u.Role > 0) {
                 this.GroupList.push(i);
               } else if (u.id == this.userID && u.Role == 0) {
                 this.subscribers.push(i);
               } else if (u.id == this.userID && u.Role == undefined) {
                 console.log('rmv');
-                // console.log('gl', this.GroupList);
-                // console.log('sl', this.subscribers);
                 this.GroupList = this.GroupList.filter((ele) => ele.id != i.id);
                 this.subscribers = this.subscribers.filter(
                   (ele) => ele.id != i.id
                 );
               }
             }
-          console.log('aftergl', this.GroupList);
-          console.log('aftersl', this.subscribers);
         });
         this.subscription.push(sub);
       }
