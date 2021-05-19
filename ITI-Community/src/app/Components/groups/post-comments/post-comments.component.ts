@@ -13,8 +13,11 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = []
   getComments = []
   userID
+
+  turnOff: boolean = false
+  counter: number = 0
   constructor(
-    private commentService: PostCommentService,
+    public commentService: PostCommentService,
   ) { }
 
   identify(index, c) {
@@ -27,11 +30,37 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
       this.getComments = res.map(e => {
         return {
           id: e.payload.doc.id,
-          ...(e.payload.doc.data() as object)
+          ...(e.payload.doc.data() as object),
+          doc: e.payload.doc
         }
       })
+      this.hideBtn(res);
     })
     this.subscriptions.push(sub)
+  }
+
+
+  loadMore() {
+    this.counter += 5
+    let param = this.getComments[this.getComments.length - 1].doc
+    this.commentService.getPostComments2(this.PostID, param).subscribe(res => {
+      res.map(e => {
+        this.getComments.push({
+          id: e.payload.doc.id,
+          ...(e.payload.doc.data() as object),
+          doc: e.payload.doc
+        })
+      })
+      this.hideBtn(res)
+    })
+  }
+
+  hideBtn(res) {
+    if ((res.length % 5 != 0 && res.length - this.counter == 0) || res.length % 5 != 0 || res.length == 0) {
+      this.turnOff = true
+    } else {
+      this.turnOff = false
+    }
   }
 
   deleteComment(id, postId) {
