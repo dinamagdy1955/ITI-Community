@@ -13,7 +13,7 @@ export class DiscoverComponent implements OnInit, OnDestroy {
   userID: string;
   allUsers = [];
   subscription: Subscription[] = [];
-  constructor(private groupService: GroupService) {}
+  constructor(private groupService: GroupService) { }
   ngOnInit(): void {
     this.userID = localStorage.getItem('uid');
     this.GroupList = [];
@@ -39,7 +39,7 @@ export class DiscoverComponent implements OnInit, OnDestroy {
         this.subscription.push(sub);
       }
     });
-    // this.subscription.push(sub1)
+    this.subscription.push(sub1)
   }
 
   sendRequest(user, id) {
