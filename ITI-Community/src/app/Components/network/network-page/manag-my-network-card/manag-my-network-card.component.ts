@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/MainServices/User.service';
 import { NetworkService } from '../../Services/network.service';
 
 @Component({
@@ -8,7 +9,8 @@ import { NetworkService } from '../../Services/network.service';
 })
 export class ManagMyNetworkCardComponent implements OnInit {
   frindsList: any[] = [];
-  constructor(private usrs: NetworkService) {}
+  groups: any[] = [];
+  constructor(private usrs: NetworkService, private us: UserService) {}
 
   ngOnInit(): void {
     this.usrs
@@ -18,5 +20,9 @@ export class ManagMyNetworkCardComponent implements OnInit {
           return e.payload.doc.id;
         });
       });
+
+    this.us.getUserData(localStorage.getItem('uid')).subscribe((res) => {
+      this.groups = res.payload.get('groups');
+    });
   }
 }
