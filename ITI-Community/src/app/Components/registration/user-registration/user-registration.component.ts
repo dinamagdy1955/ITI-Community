@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BranchDatabaseService } from '../../Branches/Services/database.service';
 import { TrackDatabaseService } from '../../Tracks/Services/database.service';
 import { RegistrationService } from '../Service/registration.service';
@@ -11,21 +11,30 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/MainServices/User.service';
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
   styleUrls: ['./user-registration.component.scss'],
 })
 export class UserRegistrationComponent implements OnInit {
+  @ViewChild('err') myModal;
+  regErr: SignInAuthError;
   registerNewUser: FormGroup;
   branches = [];
   tracks = [];
   durations = [];
+  fieldTextType: boolean = false;
   constructor(
     private registerAuth: RegistrationService,
     private branchDB: BranchDatabaseService,
     private trackDB: TrackDatabaseService,
-    private FB: FormBuilder
+    private FB: FormBuilder,
+    private modalService: NgbModal,
+    private router: Router,
+    private us: UserService
   ) {
     this.branches = this.branchDB.getBranches();
     this.tracks = this.trackDB.getTracksData();
@@ -50,7 +59,7 @@ export class UserRegistrationComponent implements OnInit {
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z][a-zA-Z0-9]{7,}$/),
+        Validators.pattern(/^[a-zA-Z0-9]{8,38}$/),
       ]),
       branch: new FormControl(-1, [Validators.required, Validators.min(0)]),
       track: new FormControl(-1, [Validators.required, Validators.min(0)]),
@@ -58,9 +67,14 @@ export class UserRegistrationComponent implements OnInit {
     });
   }
 
+  openModal() {
+    this.modalService.open(this.myModal, { centered: true });
+  }
+
   ngOnInit(): void {}
   register() {
     if (this.registerNewUser.valid) {
+      this.regErr = SignInAuthError.Correct;
       let newUserBasic: IUserBasics = {
         email: this.registerNewUser.value.email,
         password: this.registerNewUser.value.password,
@@ -85,7 +99,33 @@ export class UserRegistrationComponent implements OnInit {
         avatarCover:
           'https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2F1200x400.jpg?alt=media&token=cdc696ed-03b4-4d90-8064-548fe3417a1c',
       };
-      this.registerAuth.registerNewUser(newUserBasic, newUserDetails);
-    }
+      this.registerAuth.checkUserFound(newUserBasic).then((r) => {
+        if (r.length == 0) {
+          this.registerAuth
+            .createUserAccount(newUserBasic)
+            .then((responce) => {
+              this.us.saveInDB(responce.user.uid, newUserBasic, newUserDetails);
+              responce.user.sendEmailVerification().then(() => {
+                this.router.navigate(['/Login']);
+                this.regErr = SignInAuthError.Correct;
+              });
+            })
+            .catch((error) => {
+              switch (error.code) {
+                case 'auth/wrong-password':
+                  this.regErr = SignInAuthError.WrongPassword;
+                case 'auth/user-not-found':
+                  this.regErr = SignInAuthError.UserNotFound;
+                case 'auth/invalid-email':
+                  this.regErr = SignInAuthError.InvalidEmail;
+              }
+              this.openModal();
+            });
+        } else {
+          this.regErr = SignInAuthError.EmailAlreadyInUse;
+          this.openModal();
+        }
+      });
+    } else this.openModal();
   }
 }

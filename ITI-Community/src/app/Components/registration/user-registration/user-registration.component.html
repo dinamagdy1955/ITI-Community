@@ -38,8 +38,14 @@
                     <label class="form-label text-black-50">
                         Password (8 or more characters and numbers) *
                     </label>
-                    <input formControlName="password" type="password" class="form-control" minlength="8" maxlength="8"
-                        ngbTooltip="Password must started with charater and contain characters and numberswith 8 digits length">
+                    <div style="display: flex; flex-direction: row;">
+                        <input formControlName="password" [type]="fieldTextType ? 'text' : 'password'"
+                            class="form-control" minlength="8" maxlength="38"
+                            ngbTooltip="Password must started with charater and contain characters and numberswith 8 digits length">
+                        <span class="icon" (click)="fieldTextType = !fieldTextType">
+                            <i [ngClass]="{'far fa-eye': fieldTextType,'fas fa-eye-slash':!fieldTextType}"></i>
+                        </span>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm mb-2">
@@ -105,3 +111,24 @@
             </div>
         </div>
     </div>
+</div>
+
+<ng-template #err let-modal>
+    <div>
+        <div class="modal-body">
+            <div class="errLogin">
+                <i class="fas fa-times"></i>
+            </div>
+            <p>
+                The error may be :
+            </p>
+            <ul style="margin-left: 2%;">
+                <li>The data you entered not in correct pattern.</li>
+                <li>You are already registered.</li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">OK</button>
+        </div>
+    </div>
+</ng-template>

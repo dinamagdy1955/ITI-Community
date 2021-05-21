@@ -1,40 +1,62 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { IUserBasics } from '../Components/registration/ViewModels/iuser-basics';
+import { IUserDetails } from '../Components/registration/ViewModels/iuser-details';
 import { LocalUserData } from '../ViewModel/local-user-data';
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
-  public localUserData = new Subject<LocalUserData>();
-  data = {
-    id: localStorage.getItem('uid'),
-    firstName: localStorage.getItem('firstName'),
-    lastName: localStorage.getItem('lastName'),
-    jobTitle: localStorage.getItem('jobTitle'),
-    avatar: localStorage.getItem('avatar'),
-  };
-  constructor(private db: AngularFirestore) {}
+export class UserService implements OnInit {
+  public localUserData = new BehaviorSubject<LocalUserData>(undefined);
+
+  constructor(private db: AngularFirestore, private auth: AngularFireAuth) {}
+  ngOnInit(): void {}
+
+  Init() {
+    return new Promise<void>((resolve, reject) => {
+      // localStorage.clear();
+      this.auth.authState.subscribe((res) => {
+        // console.log('state', res);
+        if (res != null || res != undefined) {
+          // console.log('have user token');
+          // localStorage.setItem('userToken', res.refreshToken);
+          this.db
+            .collection('users-details')
+            .doc(res.uid)
+            .snapshotChanges()
+            .subscribe((res) => {
+              // console.log('AppInitService.init() called');
+              this.localUserData = new BehaviorSubject<LocalUserData>({
+                id: res.payload.id,
+                firstName: res.payload.data()['firstName'],
+                lastName: res.payload.data()['lastName'],
+                jobTitle: res.payload.data()['jobTitle'],
+                avatar: res.payload.data()['avatar'],
+                avatarCover: res.payload.data()['avatarCover'],
+              });
+            });
+        } else {
+          // console.log('not have user token');
+          // console.log(this.localUserData.value);
+          // localStorage.clear();
+          this.localUserData.complete();
+          // this.setlocalUserData(undefined);
+        }
+      });
+      setTimeout(() => {
+        resolve();
+      }, 2000);
+    });
+  }
 
   setlocalUserData(value) {
     this.localUserData.next(value);
   }
- getUserData(uid): Observable<any> {
+  getUserData(uid): Observable<any> {
     return this.db.collection('users-details').doc(uid).snapshotChanges();
   }
-
-
-getAllUserData() {
-  return this.db.collection('users-details').snapshotChanges();
-}
-
-
-
-
-getMySentfriendRequests(){
-  let uid=localStorage.getItem("uid");
-return this.db.collection('users-details').doc(uid).collection('MySentfriendRequests').snapshotChanges()
-}
 
   getAllUsersData(): Observable<any> {
     return this.db.collection('users-details').snapshotChanges();
@@ -50,7 +72,10 @@ return this.db.collection('users-details').doc(uid).collection('MySentfriendRequ
       .get();
   }
 
-
+  saveInDB(uid, NewUserBasic: IUserBasics, newUserDetails: IUserDetails) {
+    this.db.collection('users-basics').doc(uid).set(NewUserBasic);
+    this.db.collection('users-details').doc(uid).set(newUserDetails);
+  }
 
   //this code for get users data by giving it array of users ids
 

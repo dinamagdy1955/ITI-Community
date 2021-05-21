@@ -179,6 +179,27 @@ input.ng-touched.ng-pristine.ng-invalid:not(form) {
 .languageDropup > a {
   padding: 0;
 }
+
+.errLogin {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  font-size: 100px;
+  margin: 5% 0%;
+  color: #901b20;
+}
+
+.icon {
+  padding: 1.5%;
+  background: transparent;
+  color: gray;
+  min-width: 50px;
+  text-align: center;
+  border: #ced4da solid 1px;
+  border-left: none;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
 @media all and (max-width: 780px) {
   .footerSignIn {
     display: none;

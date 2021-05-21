@@ -25,9 +25,14 @@
                             <label class="form-label text-black-50">
                                 Password *
                             </label>
-                            <input formControlName="password" type="password" class="form-control" minlength="8"
-                                maxlength="8"
-                                ngbTooltip="Password must started with charater and contain characters and numberswith 8 digits length">
+                            <div style="display: flex; flex-direction: row;">
+                                <input formControlName="password" [type]="fieldTextType ? 'text' : 'password'"
+                                    class="form-control" minlength="8" maxlength="38"
+                                    ngbTooltip="Password must started with charater and contain characters and numberswith 8 digits length">
+                                <span class="icon" (click)="fieldTextType = !fieldTextType">
+                                    <i [ngClass]="{'far fa-eye': fieldTextType,'fas fa-eye-slash':!fieldTextType}"></i>
+                                </span>
+                            </div>
                         </div>
                         <div id="forgetPassword" class="form-group forgetPassword">
                             <a href="">Forget Password ?</a>
@@ -64,3 +69,26 @@
         </span>
     </div>
 </div>
+
+
+<ng-template #err let-modal>
+    <div>
+        <div class="modal-body">
+            <div class="errLogin">
+                <i class="fas fa-times"></i>
+            </div>
+            <p>
+                The error may be :
+            </p>
+            <ul style="margin-left: 2%;">
+                <li>The email or password you entered wrong.</li>
+                <li>The data you entered not in correct pattern.</li>
+                <li>You not verified your email yet.</li>
+                <li>Your account not accepted by admins yet.</li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">OK</button>
+        </div>
+    </div>
+</ng-template>

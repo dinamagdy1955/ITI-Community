@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/MainServices/User.service';
 import { LocalUserData } from 'src/app/ViewModel/local-user-data';
 import { SignInAuthError } from './signInInterface/sign-in-auth-error';
@@ -18,12 +19,15 @@ import { SignInService } from './signInService/sign-in.service';
 })
 export class LoginComponent implements OnInit {
   loginUser: FormGroup;
-
+  loginErr: SignInAuthError;
+  fieldTextType: boolean = false;
+  @ViewChild('err') myModal;
   constructor(
     private signIn: SignInService,
     private FB: FormBuilder,
     private profile: UserService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
     this.loginUser = this.FB.group({
       email: new FormControl('', [
@@ -32,16 +36,20 @@ export class LoginComponent implements OnInit {
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z][a-zA-Z0-9]{7,}$/),
+        Validators.pattern(/^[a-zA-Z0-9]{8,38}$/),
       ]),
     });
   }
 
   ngOnInit(): void {}
 
+  openModal() {
+    this.modalService.open(this.myModal, { centered: true });
+  }
+
   SignIn() {
-    let r;
-    if (this.loginUser.valid)
+    this.loginErr = SignInAuthError.Correct;
+    if (this.loginUser.valid) {
       this.signIn
         .signInAuth(this.loginUser.value.email, this.loginUser.value.password)
         .then(
@@ -94,31 +102,32 @@ export class LoginComponent implements OnInit {
                           avatarCover: res.payload.data().avatarCover,
                         };
                         this.profile.setlocalUserData(localUserData);
-                        /////////////
-                        console.log(this.profile.localUserData);
-                        this.router.navigate(['/HOME']);
+                        this.router.navigate(['/Home']);
                         return SignInAuthError.Correct;
                       });
                   } else {
-                    localStorage.removeItem('uid');
-                    alert('user not accepted yet or have been removed');
+                    this.loginErr = SignInAuthError.UserRemovedOrUnaccepted;
+                    this.openModal();
                   }
                   // sub.unsubscribe();
                 });
             } else {
-              return SignInAuthError.EmailNotVerified;
+              this.loginErr = SignInAuthError.EmailNotVerified;
+              this.openModal();
             }
           },
           (err) => {
             switch (err) {
               case 'auth/wrong-password':
-                return SignInAuthError.WrongPassword;
+                this.loginErr = SignInAuthError.WrongPassword;
               case 'auth/user-not-found':
-                return SignInAuthError.UserNotFound;
+                this.loginErr = SignInAuthError.UserNotFound;
               case 'auth/invalid-email':
-                return SignInAuthError.InvalidEmail;
+                this.loginErr = SignInAuthError.InvalidEmail;
             }
+            this.openModal();
           }
         );
+    } else this.openModal();
   }
 }
