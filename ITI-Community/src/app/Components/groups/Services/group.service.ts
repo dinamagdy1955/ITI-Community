@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { UserService } from 'src/app/MainServices/User.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GroupService {
-  subscribers: string[]
-  members: string[]
-  admins: string[]
+  subscribers: string[];
+  members: string[];
+  admins: string[];
 
-  constructor(private db: AngularFirestore) { }
-
+  constructor(private db: AngularFirestore, private us: UserService) {}
 
   getGroupsUsers(id) {
-    return this.db.collection('Groups2').doc(id).collection('Users').snapshotChanges();
+    return this.db
+      .collection('Groups2')
+      .doc(id)
+      .collection('Users')
+      .snapshotChanges();
   }
-
 
   getGroups() {
     return this.db.collection('Groups2').snapshotChanges();
@@ -34,13 +37,18 @@ export class GroupService {
   // }
 
   sendRequest(user, id) {
-    this.db.collection('Groups2').doc(id).collection('Users', ref => ref.where('__name__', '!=', user)).doc(user).set({
-      firstName: localStorage.getItem('firstName'),
-      lastName: localStorage.getItem('lastName'),
-      avatar: localStorage.getItem('avatar'),
-      jobTitle: localStorage.getItem('jobTitle'),
-      Role: 0
-    })
+    this.db
+      .collection('Groups2')
+      .doc(id)
+      .collection('Users', (ref) => ref.where('__name__', '!=', user))
+      .doc(user)
+      .set({
+        firstName: localStorage.getItem('firstName'),
+        lastName: localStorage.getItem('lastName'),
+        avatar: localStorage.getItem('avatar'),
+        jobTitle: localStorage.getItem('jobTitle'),
+        Role: 0,
+      });
   }
 
   updateMembers(user, id) {
@@ -54,8 +62,9 @@ export class GroupService {
     //   }
     // })
     this.db.collection('Groups2').doc(id).collection('Users').doc(user).update({
-      Role: 1
-    })
+      Role: 1,
+    });
+    this.addGroupToUser(user, id);
   }
 
   ChangeMembers(user, id) {
@@ -69,8 +78,9 @@ export class GroupService {
     //   }
     // })
     this.db.collection('Groups2').doc(id).collection('Users').doc(user).update({
-      Role: 2
-    })
+      Role: 2,
+    });
+    this.addGroupToUser(user, id);
   }
 
   updateRequests(user, id) {
@@ -84,8 +94,9 @@ export class GroupService {
     //   }
     // })
     this.db.collection('Groups2').doc(id).collection('Users').doc(user).update({
-      Role: 2
-    })
+      Role: 2,
+    });
+    this.addGroupToUser(user, id);
   }
 
   changeSub(user, id) {
@@ -99,24 +110,60 @@ export class GroupService {
     //   }
     // })
     this.db.collection('Groups2').doc(id).collection('Users').doc(user).update({
-      Role: 0
-    })
+      Role: 0,
+    });
+    this.deleteGroupFromUser(user, id);
   }
 
   MembersRole(user, id, role) {
-    if (role === 1) // Admins
-      this.updateMembers(user, id)
-    else if (role === 2) // Admin To Member
-      this.ChangeMembers(user, id)
-    else if (role === 2) // Sub To Member
-      this.updateRequests(user, id)
-    else if (role === 0) // Member To Sub
-      this.changeSub(user, id)
-    else
-      return
+    if (role === 1)
+      // Admins
+      this.updateMembers(user, id);
+    else if (role === 2)
+      // Admin To Member
+      this.ChangeMembers(user, id);
+    else if (role === 2)
+      // Sub To Member
+      this.updateRequests(user, id);
+    else if (role === 0)
+      // Member To Sub
+      this.changeSub(user, id);
+    else return;
   }
 
   DeleteMembers(user, id) {
-    this.db.collection('Groups2').doc(id).collection('Users', ref => ref.where('__name__', '==', user)).doc(user).delete()
+    this.db
+      .collection('Groups2')
+      .doc(id)
+      .collection('Users', (ref) => ref.where('__name__', '==', user))
+      .doc(user)
+      .delete();
+    this.deleteGroupFromUser(user, id);
+  }
+
+  addGroupToUser(user, groupId) {
+    let sub = this.us.getUserData(user).subscribe((res) => {
+      let Groups = res.payload.get('groups');
+      if (Groups.indexOf(groupId) == -1) {
+        Groups.push(groupId);
+      }
+      sub.unsubscribe();
+      this.db.collection('users-details').doc(user).update({
+        groups: Groups,
+      });
+    });
+  }
+
+  deleteGroupFromUser(user, groupId) {
+    let sub = this.us.getUserData(user).subscribe((res) => {
+      let Groups = res.payload.get('groups');
+      if (Groups.indexOf(groupId) != -1) {
+        Groups.splice(Groups.indexOf(groupId), 1);
+      }
+      sub.unsubscribe();
+      this.db.collection('users-details').doc(user).update({
+        groups: Groups,
+      });
+    });
   }
 }

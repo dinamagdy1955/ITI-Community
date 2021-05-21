@@ -98,6 +98,7 @@ export class UserRegistrationComponent implements OnInit {
           'https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2Fnav-img_qv.fa2p71r?alt=media&token=131e5508-aa20-4b51-ac1a-a9e212eadc4f',
         avatarCover:
           'https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2F1200x400.jpg?alt=media&token=cdc696ed-03b4-4d90-8064-548fe3417a1c',
+        groups: [],
       };
       this.registerAuth.checkUserFound(newUserBasic).then((r) => {
         if (r.length == 0) {
