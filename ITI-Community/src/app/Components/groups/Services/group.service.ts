@@ -144,15 +144,11 @@ export class GroupService {
   addGroupToUser(user, groupId) {
     let sub = this.us.getUserData(user).subscribe((res) => {
       let Groups = res.payload.get('groups');
-      console.log(Groups);
-      if (Groups.indexOf(groupId) != -1) {
-        Groups.splice(Groups.indexOf(groupId), 1);
-      } else {
+      if (Groups.indexOf(groupId) == -1) {
         Groups.push(groupId);
       }
       sub.unsubscribe();
-      console.log(Groups);
-      this.db.collection('user-details').doc(user).update({
+      this.db.collection('users-details').doc(user).update({
         groups: Groups,
       });
     });
@@ -161,13 +157,11 @@ export class GroupService {
   deleteGroupFromUser(user, groupId) {
     let sub = this.us.getUserData(user).subscribe((res) => {
       let Groups = res.payload.get('groups');
-
       if (Groups.indexOf(groupId) != -1) {
         Groups.splice(Groups.indexOf(groupId), 1);
       }
       sub.unsubscribe();
-      console.log(Groups);
-      this.db.collection('user-details').doc(user).update({
+      this.db.collection('users-details').doc(user).update({
         groups: Groups,
       });
     });
