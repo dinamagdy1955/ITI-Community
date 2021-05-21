@@ -10,7 +10,7 @@
       <img class="card-img-top" src="../../../../assets/2.png" alt="Card image" style="width:50px;border-radius:50%;">
       <div style="display: inline-block;">
         <span><strong>marwa tag</strong>
-          <div ngbDropdown>
+          <!-- <div ngbDropdown>
             <button class="btn btn-outline-primary" id="dropdownConfig" ngbDropdownToggle
               style=" color:black; border-radius: 1.2em;background-color:rgba(255, 255, 255, 0.453); border: 1px solid rgba(148, 140, 140, 0.261);">select
               Privacy</button>
@@ -21,8 +21,9 @@
               <button ngbDropdownItem> <i class="fas fa-users usersIcon  usersIconGroup1"></i> <span
                   class="iconSpan"></span>Group members</button>
             </div>
-          </div>
+          </div> -->
         </span>
+
       </div>
     </div>
     <textarea rows="4" cols="50" placeholder="what do you want to talk about ? "></textarea>
@@ -50,7 +51,7 @@
         post
       </button>
     </p>
-    <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+    <!-- <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
       <div class="card" style="width: 100%; border-radius: .5em;background-color: #e8e8e8;">
         <div class="card-body" style="width: 100%;border: none;">
           <button style="border-radius:2em;" type="button" class="btn btn-outline-dark" (click)="c('Save click')">Create
@@ -64,7 +65,7 @@
 
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </ng-template>
 <button id="HModelBtn" class="btn btn-lg btn-outline-primary" (click)="open(content)">start a post</button>
