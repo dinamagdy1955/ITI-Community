@@ -1,28 +1,30 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { GroupPostsService } from '../Services/group-posts.service';
+import { HomePostsService } from '../HomeServices/home-posts.service';
 
 @Component({
-  selector: 'app-edit-post',
-  templateUrl: './edit-post.component.html',
-  styleUrls: ['./edit-post.component.scss']
+  selector: 'app-edit-home-post',
+  templateUrl: './edit-home-post.component.html',
+  styleUrls: ['./edit-home-post.component.scss']
 })
-export class EditPostComponent implements OnInit {
+export class EditHomePostComponent implements OnInit {
   closeResult = '';
   editPostForm: FormGroup
   @Input() postID
   singlePost
-  constructor(private model: NgbModal,
+  constructor(
+    private model: NgbModal,
      private FB: FormBuilder,
-      private postService: GroupPostsService) {
+     private postService:HomePostsService,
+  ) { 
     this.editPostForm = this.FB.group({
       Body: ''
     })
   }
 
   ngOnInit(): void {
-    this.postService.PostById(this.postID).subscribe(res => {
+    this.postService. MyPostById(this.postID).subscribe(res => {
       this.singlePost = res.payload.data()
       if (this.singlePost != undefined) {
         this.editPostForm = this.FB.group({
@@ -30,6 +32,7 @@ export class EditPostComponent implements OnInit {
         })
       }
     })
+
   }
 
   updatePost() {
@@ -46,7 +49,6 @@ export class EditPostComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -56,4 +58,6 @@ export class EditPostComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+
+
 }

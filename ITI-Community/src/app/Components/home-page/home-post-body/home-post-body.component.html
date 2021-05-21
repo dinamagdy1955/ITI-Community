@@ -1,21 +1,46 @@
-<div class="media border p-3 postcontainer " id="post1" style="background-color: white; border-radius: .5em;">
+<div *ngFor="let post of  AllPosts" class="media border p-3 postcontainer " id="post1" style="background-color: white; border-radius: .5em; margin-bottom: .5em;">
   <div class="media-body " style="  align-items: center ">
-    <span style="font-size: .8em;">
+    <!-- <span style="font-size: .8em;">
       New post in
     </span>
-    <a href="#" style="font-size: .8em;"> UI/UX User Experience / Wireframes </a>
-    <div style="float: right;" class="btn-group" ngbDropdown role="group"
+    <a href="#" style="font-size: .8em;"> UI/UX User Experience / Wireframes </a> -->
+    <div style="float: right;" class="btn-group" ngbDropdown role="group "
       aria-label="Button group with nested dropdown">
       <button class="btn btn-sm " ngbDropdownToggle>
         <i class="fas fa-ellipsis-h dots"></i>
       </button>
       <div class="dropdown-menu" ngbDropdownMenu>
+
+        <div *ngIf="post.data.Auther.id === userID">
+        <button class="DDBtn" ngbDropdownItem   (click)="deletePost(post.id,post)">
+          <div>
+            <i class="fas fa-trash-alt" aria-hidden="true"> Delete </i>
+            <br> <small> Delete this post </small>
+          </div>
+        </button>
+
+            
+        <div>
+          
+          <app-edit-home-post [postID]='post.id'></app-edit-home-post>
+        
+      </div>
+      
+      </div>
+
+
+
+
+
         <button class="DDBtn" ngbDropdownItem>
           <div>
             <i class="fas fa-bookmark" aria-hidden="true"> Save </i>
             <br> <small> save for later </small>
           </div>
         </button>
+
+    
+      
         <button class="DDBtn" ngbDropdownItem>
           <div>
             <i class="far fa-clone" aria-hidden="true"> Copy link to post </i>
@@ -47,31 +72,35 @@
     </div>
 
 
-    <hr>
+    <!-- <hr class="mt-4"> -->
     <div class="row mb-2">
       <div class="col-2 pr-1">
-        <img src="../../../../assets/fiver.jpg" style="width:100%;height: auto;border-radius: 50%;" alt="John Doe"
+        <img [src]="post.data.Auther.avatar" style="width:55px;height:55px;border-radius: 50%;" alt="John Doe"
           class="mr-1   rounded-circle">
 
       </div>
       <div class="col-10 pl-1">
 
-        <strong style="color: #b4272d">John Doe </strong><br>
-        <small>freelancer frontend developer </small>
-        <br><small>1 min</small>
+        <strong style="color: #b4272d">
+           {{post.data.Auther.firstName}} {{post.data.Auther.lastName}} </strong>
+        <small class="text-muted d-block">{{post.data.Auther.jobTitle}}</small>
+        <small class="text-muted d-block">posted in {{post.data.PostedDate.toDate() | date}}</small>
 
       </div>
 
     </div>
 
 
-    <p style="font-size: .8em;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-      incididunt ut labore et
-      dolore magna aliqua.</p>
-    <div style="margin-left: 15px;">
-      <img src="../../../../assets/n2.jpg" style="width:48%;height: auto; " alt="John Doe">
+    <p style="font-size: .8em;">
+      {{post.data.Body}}
+    </p>
+    <!-- *ngFor="let item of post.data.postImg" -->
+    <div *ngFor="let item of post.data.postImg"  style="margin-left: 15px;">
+      <div *ngIf="post.data.postImg" class=" d-inline-block">
+        <img [src]="item" style="width:100%;height: auto; " alt="post image">
+      </div>
+      
 
-      <img src="../../../../assets/n3.jpg" style="width:48%;height: auto;" alt="John Doe">
 
     </div>
 
@@ -84,14 +113,14 @@
 
 
       <a href="#" class="postIconsHover">
-        <div class="diviconsize2" style=" width: 20%;display: inline-block;"> <i class="far fa-thumbs-up"></i><span
+        <div class="diviconsize2" style=" width: 40%;display: inline-block;"> <i class="far fa-thumbs-up"></i><span
             class="posticons"> like</span> </div>
       </a>
       <a href="#" class="postIconsHover">
-        <div class="diviconsize2" style=" width: 20%; display: inline-block;"><i class="far fa-comment"></i><span
+        <div class="diviconsize2" style=" width: 40%; display: inline-block;"><i class="far fa-comment"></i><span
             class="posticons"> comment </span></div>
       </a>
-      <a href="#" class="postIconsHover">
+      <!-- <a href="#" class="postIconsHover">
         <div class="diviconsize2" style=" width: 20%; display: inline-block;"> <i class="fas fa-share"></i><span
             class="posticons"> Share </span></div>
       </a>
@@ -99,8 +128,138 @@
       <a href="#" class="postIconsHover">
         <div class="diviconsize2" style=" width: 20%; display: inline-block;"> <i class="fas fa-paper-plane"></i><span
             class="posticons"> Send </span></div>
-      </a>
+      </a> -->
 
     </div>
+
+  </div>
+  <br>
+</div>
+
+<!-- <div>
+
+  <div *ngFor="let Fpost of MyFriendsPosts" class="media border p-3 postcontainer " 
+  id="post1" style="background-color: white; border-radius: .5em; margin-bottom: .5em;">
+    <div class="media-body " style="  align-items: center ">
+      <span style="font-size: .8em;">
+        New post in
+      </span>
+      <a href="#" style="font-size: .8em;"> UI/UX User Experience / Wireframes </a> 
+
+      <div style="float: right;" class="btn-group" ngbDropdown role="group "
+      aria-label="Button group with nested dropdown">
+      <button class="btn btn-sm " ngbDropdownToggle>
+        <i class="fas fa-ellipsis-h dots"></i>
+      </button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <button class="DDBtn" ngbDropdownItem   (click)="deletePost(post.id,post)">
+            <div>
+              <i class="fas fa-trash-alt" aria-hidden="true"> Delete </i>
+              <br> <small> Delete this post </small>
+            </div>
+          </button>
+          <button class="DDBtn" ngbDropdownItem>
+            <div>
+              <i class="fas fa-bookmark" aria-hidden="true"> Save </i>
+              <br> <small> save for later </small>
+            </div>
+          </button>
+  
+      
+        
+          <button class="DDBtn" ngbDropdownItem>
+            <div>
+              <i class="far fa-clone" aria-hidden="true"> Copy link to post </i>
+            </div>
+          </button>
+  
+          <button class="DDBtn" ngbDropdownItem>
+            <div>
+              <i class="fas fa-flag " aria-hidden="true"> Report this post </i>
+              <br> <small> post is offsensive or the account is hacked </small>
+            </div>
+          </button>
+  
+          <button class="DDBtn" ngbDropdownItem>
+            <div>
+              <i class="fas fa-volume-mute " aria-hidden="true"> mute FriendName </i>
+              <br> <small> stop seeing posts from friendName in feed </small>
+            </div>
+          </button>
+  
+          <button class="DDBtn" ngbDropdownItem>
+            <div>
+              <i class="fas fa-eye-slash " aria-hidden="true"> I don't want to see this</i>
+              <br> <small> let us know why you don't want to see this post </small>
+            </div>
+          </button>
+  
+        </div>
+      </div>
+  
+  
+     <hr> 
+      <div class="row mb-2">
+        <div class="col-2 pr-1">
+          <img [src]="Fpost.data.Auther.avatar" style="width:55px;height:55px;border-radius: 50%;" alt="John Doe"
+            class="mr-1   rounded-circle">
+  
+        </div>
+        <div class="col-10 pl-1">
+  
+          <strong style="color: #b4272d">
+             {{Fpost.data.Auther.firstName}} {{Fpost.data.Auther.lastName}} </strong>
+          <small class="text-muted d-block">{{Fpost.data.Auther.jobTitle}}</small>
+          <small class="text-muted d-block">posted in {{Fpost.data.PostedDate.toDate() | date}}</small>
+  
+        </div>
+  
+      </div>
+  
+  
+      <p style="font-size: .8em;">
+        {{Fpost.data.Body}}
+      </p>
+    
+      <div *ngFor="let item of post.data.postImg"  style="margin-left: 15px;">
+        <div *ngIf="Fpost.data.postImg" class=" d-inline-block">
+          <img [src]="item" style="width:100%;height: auto; " alt="post image">
+        </div>
+        
+  
+  
+      </div>
+  
+      <div class="W-100%"><br></div>
+    
+  
+      <hr>
+      <div class="postIcons">
+  
+  
+  
+        <a href="#" class="postIconsHover">
+          <div class="diviconsize2" style=" width: 20%;display: inline-block;"> <i class="far fa-thumbs-up"></i><span
+              class="posticons"> like</span> </div>
+        </a>
+        <a href="#" class="postIconsHover">
+          <div class="diviconsize2" style=" width: 20%; display: inline-block;"><i class="far fa-comment"></i><span
+              class="posticons"> comment </span></div>
+        </a>
+        <a href="#" class="postIconsHover">
+          <div class="diviconsize2" style=" width: 20%; display: inline-block;"> <i class="fas fa-share"></i><span
+              class="posticons"> Share </span></div>
+        </a>
+  
+        <a href="#" class="postIconsHover">
+          <div class="diviconsize2" style=" width: 20%; display: inline-block;"> <i class="fas fa-paper-plane"></i><span
+              class="posticons"> Send </span></div>
+        </a>
+  
+      </div>
+  
+    </div>
+    <br>
   </div>
 </div>
+ -->

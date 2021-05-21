@@ -23,6 +23,7 @@ import { MainfooterModule } from './Components/main-footer/mainfooter.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { EditHomePostComponent } from './Components/home-page/edit-home-post/edit-home-post.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     LoginComponent,
     ErrorComponent,
     NotificationComponent,
+    EditHomePostComponent,
   ],
   imports: [
     BrowserModule,

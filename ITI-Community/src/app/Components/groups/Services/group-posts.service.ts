@@ -26,6 +26,10 @@ export class GroupPostsService {
     })
   }
 
+
+
+  
+
   writePost(post: IPost2) {
     return new Promise<any>((res, rej) => {
       this.db
@@ -58,6 +62,10 @@ export class GroupPostsService {
     }
   }
 
+
+
+
+  
   giveLike(like, id) {
     let sub = this.PostById(id).subscribe(res => {
       this.likes = res.payload.get('Likes')
