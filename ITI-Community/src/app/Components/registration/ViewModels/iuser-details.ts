@@ -14,4 +14,5 @@ export interface IUserDetails {
   friendRequests?: [];
   avatar: string;
   avatarCover: string;
+  groups: [];
 }
