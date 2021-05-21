@@ -114,7 +114,7 @@
               <div class="d-flex ">
                 <a type="button" class="profile-Card-Edit pt-2" [routerLink]="['/Messages']"><i
                     class="fas fa-comment"></i></a>
-                <a type="button" class="profile-Card-Edit p-2" (click)="addRequset()"
+                <a type="button" class="profile-Card-Edit p-2" (click)="addRequset(userDetails)"
                   *ngIf="!userDetails.request.includes(uidLocal);"><i class="fas fa-user-plus"></i></a>
               </div>
             </ng-template>

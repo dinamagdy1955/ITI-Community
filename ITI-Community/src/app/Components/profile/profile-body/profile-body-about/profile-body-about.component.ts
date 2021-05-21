@@ -24,10 +24,7 @@ export class ProfileBodyAboutComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.editAbout = this.FB.group({
-      about: new FormControl(this.userAbout.about, [
-        Validators.required,
-        Validators.minLength(10),
-      ]),
+      about: new FormControl(this.userAbout.about),
     });
   }
   openAbout(content) {

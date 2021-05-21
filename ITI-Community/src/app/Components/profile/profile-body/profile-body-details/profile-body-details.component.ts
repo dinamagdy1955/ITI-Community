@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileService } from '../../Service/user-profile.service';
-import { NetworkService } from '../../../network/Services/user.service';
+import { NetworkService } from '../../../network/Services/network.service';
 import {
   FormBuilder,
   FormControl,
@@ -105,7 +105,7 @@ export class ProfileBodyDetailsComponent implements OnInit {
       }
     });
   }
-  addRequset() {
-    this.NUS.create_NewRequest(this.userDetails.id);
+  addRequset(item) {
+    this.NUS.create_NewRequest(item, this.userDetails.id);
   }
 }

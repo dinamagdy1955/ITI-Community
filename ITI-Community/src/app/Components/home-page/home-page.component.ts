@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,13 +6,8 @@ import { Router } from '@angular/router';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })
-export class HomePageComponent implements OnInit, OnChanges {
-  constructor(private router: Router) {
-    if (localStorage.getItem('userToken') == undefined) {
-      this.router.navigate(['/Login']);
-    }
-  }
-  ngOnChanges(changes: SimpleChanges): void {}
+export class HomePageComponent implements OnInit {
+  constructor() {}
 
   ngOnInit(): void {}
 }

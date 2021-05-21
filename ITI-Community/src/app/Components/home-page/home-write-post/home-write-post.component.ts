@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NetworkService } from '../../network/Services/user.service';
+import { NetworkService } from '../../network/Services/network.service';
 @Component({
   selector: 'app-home-write-post',
   templateUrl: './home-write-post.component.html',
@@ -10,6 +10,13 @@ export class HomeWritePostComponent implements OnInit {
   constructor(private usrs: NetworkService) {}
 
   ngOnInit(): void {
-    this.myData = this.usrs.data;
+    this.myData = {
+      id: localStorage.getItem('uid'),
+      firstName: localStorage.getItem('firstName'),
+      lastName: localStorage.getItem('lastName'),
+      jobTitle: localStorage.getItem('jobTitle'),
+      avatar: localStorage.getItem('avatar'),
+      avatarCover: localStorage.getItem('avatarCover'),
+    };
   }
 }
