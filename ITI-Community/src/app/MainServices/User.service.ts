@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IUserBasics } from '../Components/registration/ViewModels/iuser-basics';
 import { IUserDetails } from '../Components/registration/ViewModels/iuser-details';
@@ -11,44 +12,48 @@ import { LocalUserData } from '../ViewModel/local-user-data';
 export class UserService implements OnInit {
   public localUserData = new BehaviorSubject<LocalUserData>(undefined);
 
-  constructor(private db: AngularFirestore, private auth: AngularFireAuth) {}
+  constructor(
+    private db: AngularFirestore,
+    private auth: AngularFireAuth,
+    private router: Router
+  ) {
+    this.stateObs();
+  }
   ngOnInit(): void {}
 
   Init() {
     return new Promise<void>((resolve, reject) => {
-      // localStorage.clear();
-      this.auth.authState.subscribe((res) => {
-        // console.log('state', res);
-        if (res != null || res != undefined) {
-          // console.log('have user token');
-          // localStorage.setItem('userToken', res.refreshToken);
-          this.db
-            .collection('users-details')
-            .doc(res.uid)
-            .snapshotChanges()
-            .subscribe((res) => {
-              // console.log('AppInitService.init() called');
-              this.localUserData = new BehaviorSubject<LocalUserData>({
-                id: res.payload.id,
-                firstName: res.payload.data()['firstName'],
-                lastName: res.payload.data()['lastName'],
-                jobTitle: res.payload.data()['jobTitle'],
-                avatar: res.payload.data()['avatar'],
-                avatarCover: res.payload.data()['avatarCover'],
-              });
-            });
-        } else {
-          // console.log('not have user token');
-          // console.log(this.localUserData.value);
-          // localStorage.clear();
-          this.localUserData.complete();
-          // this.setlocalUserData(undefined);
-        }
-      });
+      this.stateObs();
       setTimeout(() => {
         resolve();
-      }, 2000);
+      }, 100);
     });
+  }
+
+  stateObs() {
+    this.auth.onAuthStateChanged((res) => {
+      if (res != null || res != undefined) {
+        this.db
+          .collection('users-details')
+          .doc(res.uid)
+          .snapshotChanges()
+          .subscribe((res) => {
+            console.log('AppInitService.init() called');
+            this.setlocalUserData({
+              id: res.payload.id,
+              firstName: res.payload.data()['firstName'],
+              lastName: res.payload.data()['lastName'],
+              jobTitle: res.payload.data()['jobTitle'],
+              avatar: res.payload.data()['avatar'],
+              avatarCover: res.payload.data()['avatarCover'],
+            });
+          });
+      } else {
+        this.localUserData.next(undefined);
+        this.router.navigate(['/Login']);
+      }
+    });
+    console.log(this.localUserData.value);
   }
 
   setlocalUserData(value) {

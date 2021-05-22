@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable, Subscription } from 'rxjs';
+import { UserService } from 'src/app/MainServices/User.service';
+import { SignInService } from '../../login/signInService/sign-in.service';
 import { UserProfileService } from '../../profile/Service/user-profile.service';
 
 @Component({
@@ -8,49 +11,75 @@ import { UserProfileService } from '../../profile/Service/user-profile.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-
-
-
-export class HeaderComponent implements OnInit {
-  selectedLang: string
+export class HeaderComponent implements OnInit, OnDestroy {
+  selectedLang: string;
   toggleStatus: boolean = false;
   public isMenuCollapsed = true;
-  uid = localStorage.getItem('uid');
-  firstName: string = localStorage.getItem('firstName');
-  lastName: string = localStorage.getItem('lastName');
-  jobTitle: string = localStorage.getItem('jobTitle');
-  avatar: string = localStorage.getItem('avatar');
-
+  data: Observable<any>;
+  uid: string;
+  firstName: string;
+  lastName: string;
+  jobTitle: string;
+  avatar: string;
+  subscription: Subscription[] = [];
   constructor(
-    private router: Router,
-    private userProfile: UserProfileService,
-    public translateService: TranslateService
+    public translateService: TranslateService,
+    private auth: SignInService,
+    private us: UserService
   ) {
     translateService.addLangs(['en', 'ar']);
-    if (localStorage.getItem('lang') == undefined || localStorage.getItem('lang') == 'en') {
-      translateService.use('en')
-      localStorage.setItem('lang', 'en')
+    if (
+      localStorage.getItem('lang') == undefined ||
+      localStorage.getItem('lang') == 'en'
+    ) {
+      translateService.use('en');
+      localStorage.setItem('lang', 'en');
       // document.dir = 'ltr';
     } else if (localStorage.getItem('lang') == 'ar') {
-      translateService.use('ar')
-      localStorage.setItem('lang', 'ar')
+      translateService.use('ar');
+      localStorage.setItem('lang', 'ar');
       // document.dir = 'rtl';
     }
+    // this.auth.currentUser().then((res) => {
+    //   console.log('current', res);
+    // });
+    // this.sub = this.auth.user().subscribe((res) => {
+    //   localStorage.removeItem('userToken');
+    //   console.log('not current', res);
+    // });
+
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      console.log(res);
+      if (res != undefined) {
+        this.uid = res.id;
+        this.firstName = res.firstName;
+        this.lastName = res.lastName;
+        this.jobTitle = res.jobTitle;
+        this.avatar = res.avatar;
+      }
+    });
+    // this.subscription.push(sub);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   toggleSideBar() {
     this.toggleStatus = !this.toggleStatus;
   }
-  signOut() {
-    localStorage.clear();
-    this.router.navigate(['/Login']);
+  async signOut() {
+    await this.auth.logout();
   }
 
   translateSite(language: string) {
-    localStorage.setItem('lang', language)
+    localStorage.setItem('lang', language);
     this.translateService.use(language);
     window.location.reload();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }

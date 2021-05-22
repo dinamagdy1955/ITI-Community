@@ -20,7 +20,6 @@ export class HomeAddToYourFeedComponent implements OnInit {
         let id = e.payload.doc.id;
         return id;
       });
-      console.log(Requests);
 
       this.usrs.getMySentfriendRequests(uid).subscribe((data) => {
         SentfriendRequest = data.map((e) => {
@@ -29,12 +28,9 @@ export class HomeAddToYourFeedComponent implements OnInit {
 
         this.usrs.getAllFriendsList(uid).subscribe((data) => {
           friendData = data.map((e) => {
-            // if(e.payload.doc.id)
             let id = e.payload.doc.id;
             return id;
           });
-          console.log(friendData);
-
           this.usrs
             .notINCard(Requests.concat(friendData, SentfriendRequest), uid)
             .subscribe((data) => {
@@ -50,7 +46,6 @@ export class HomeAddToYourFeedComponent implements OnInit {
                   avatarCover: e.payload.doc.data()['avatarCover'],
                 };
               });
-              console.log(friendData);
             });
         });
       });

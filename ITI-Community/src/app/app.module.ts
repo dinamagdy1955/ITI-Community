@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +24,14 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { EditHomePostComponent } from './Components/home-page/edit-home-post/edit-home-post.component';
+import { UserService } from './MainServices/User.service';
+
+export function initializeApp1(userService: UserService) {
+  return (): Promise<any> => {
+    return userService.Init();
+  };
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,14 +63,22 @@ import { EditHomePostComponent } from './Components/home-page/edit-home-post/edi
       loader: {
         provide: TranslateLoader,
         useFactory: translateFactory,
-        deps: [HttpClient]
-      }
-    })
+        deps: [HttpClient],
+      },
+    }),
   ],
-  providers: [],
+  providers: [
+    UserService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp1,
+      deps: [UserService],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 export function translateFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient)
+  return new TranslateHttpLoader(httpClient);
 }

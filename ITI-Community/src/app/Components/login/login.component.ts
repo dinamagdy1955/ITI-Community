@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit {
                     this.loginErr = SignInAuthError.UserRemovedOrUnaccepted;
                     this.openModal();
                   }
-                  // sub.unsubscribe();
+                  sub.unsubscribe();
                 });
             } else {
               this.loginErr = SignInAuthError.EmailNotVerified;

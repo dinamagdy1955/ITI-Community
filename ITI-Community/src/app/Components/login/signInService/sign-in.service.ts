@@ -15,12 +15,7 @@ export class SignInService {
     private auth: AngularFireAuth,
     private router: Router,
     private profile: UserService
-  ) {
-    this.isloggedIn = this.isLoggedIn();
-    if (this.isloggedIn == true) {
-      this.router.navigate(['/HOME']);
-    }
-  }
+  ) {}
 
   signInAuth(email: string, password: string) {
     return this.auth.signInWithEmailAndPassword(email, password);
@@ -29,5 +24,20 @@ export class SignInService {
   isLoggedIn(): boolean {
     if (localStorage.getItem('userToken') == undefined) return false;
     else return true;
+  }
+
+  async logout() {
+    await this.auth.signOut().then(() => {
+      localStorage.removeItem('userToken');
+      this.router.navigate(['/Login']);
+    });
+  }
+
+  currentUser() {
+    return this.auth.currentUser;
+  }
+
+  user() {
+    return this.auth.user;
   }
 }

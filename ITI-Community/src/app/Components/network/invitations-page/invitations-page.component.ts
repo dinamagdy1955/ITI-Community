@@ -26,7 +26,6 @@ export class InvitationsPageComponent implements OnInit {
             addedDate: e.payload.doc.data()['addedDate'],
           };
         });
-        console.log(this.invitaions )
       });
   }
 
@@ -85,6 +84,4 @@ export class InvitationsPageComponent implements OnInit {
       jobTitle: localStorage.getItem('jobTitle'),
     });
   }
-
-
 }

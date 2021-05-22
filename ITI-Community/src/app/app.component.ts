@@ -7,6 +7,7 @@ import {
   NavigationCancel,
   NavigationError,
 } from '@angular/router';
+import { UserService } from './MainServices/User.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent {
   title = 'ITI-Community';
   showHead: boolean = false;
   loader: boolean = true;
-  constructor(private router: Router) {
+  constructor(private router: Router, private us: UserService) {
+    this.us.Init();
     if (localStorage.getItem('lang') == 'en') {
       document.dir = 'ltr';
     } else if (localStorage.getItem('lang') == 'ar') {

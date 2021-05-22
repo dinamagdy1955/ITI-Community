@@ -25,7 +25,6 @@ export class SentRequestesCardComponent implements OnInit {
             avatarCover: e.payload.doc.data()['avatarCover'],
           };
         });
-        console.log(this.sentRequests);
       });
   }
 
