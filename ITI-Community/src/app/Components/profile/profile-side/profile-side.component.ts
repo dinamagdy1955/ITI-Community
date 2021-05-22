@@ -14,7 +14,7 @@ export class ProfileSideComponent implements OnInit {
     let sub = this.network.getAllFriendsList(this.uidLocal).subscribe((res) => {
       this.friendList = res.map((e) => {
         return {
-          id: e.payload.doc.data()['id'],
+          id: e.payload.doc.id,
           firstName: e.payload.doc.data()['firstName'],
           lastName: e.payload.doc.data()['lastName'],
           jobTitle: e.payload.doc.data()['jobTitle'],

@@ -6,57 +6,36 @@ import { GroupService } from '../Services/group.service';
 @Component({
   selector: 'app-group-profile-page',
   templateUrl: './group-profile-page.component.html',
-  styleUrls: ['./group-profile-page.component.scss']
+  styleUrls: ['./group-profile-page.component.scss'],
 })
-
 export class GroupProfilePageComponent implements OnInit, OnDestroy {
-  GroupId: string
-  admins = []
-  members = []
-  subscribers = []
-  userID
-  adminRole = []
+  GroupId: string;
+  admins = [];
+  members = [];
+  subscribers = [];
+  userID;
+  adminRole = [];
 
-
-  users = []
+  users = [];
   private subscription: Subscription[] = [];
 
-  constructor(private activeRoute: ActivatedRoute, private GrpServ: GroupService) { }
+  constructor(
+    private activeRoute: ActivatedRoute,
+    private GrpServ: GroupService
+  ) {}
 
   ngOnInit(): void {
     this.activeRoute.paramMap.subscribe((params) => {
-      this.GroupId = params.get('id')
-    })
-
-
-    this.GrpServ.getGroupsUsers(this.GroupId).subscribe(res => {
-      this.users = res.map(e => {
-        return {
-          id: e.payload.doc.id,
-          ...(e.payload.doc.data())
-        }
-      })
-    })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      this.GroupId = params.get('id');
+      this.GrpServ.getGroupsUsers(this.GroupId).subscribe((res) => {
+        this.users = res.map((e) => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data(),
+          };
+        });
+      });
+    });
 
     // this.admins = [];
     // this.members = [];
@@ -99,5 +78,4 @@ export class GroupProfilePageComponent implements OnInit, OnDestroy {
       i.unsubscribe();
     }
   }
-
 }
