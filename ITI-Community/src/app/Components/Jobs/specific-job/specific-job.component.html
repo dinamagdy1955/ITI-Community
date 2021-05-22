@@ -1,5 +1,5 @@
-<div class="container">
-    <nav>
+<div style=" background-color: rgba(199, 178, 155, 0.4);" >
+    <!-- <nav>
         <div id="logo" class="col-2">
             <div class="text-primary fw-bold">
                 Linked
@@ -36,7 +36,7 @@
             <button type="button" class="btn btn-outline-primary rounded-pill">Sign in</button>
 
         </div>
-    </nav>
+    </nav> -->
 
     <header>
 
@@ -146,133 +146,43 @@
             </ul>
         </div>
     </header>
-    <div class="content position-relative mt-5">
+
+<div class="container">
+
+    <!-- ///////////////////header//////////////////////////// -->
+    <!--  [routerLink]="'jobs/specificjob/'+ item.id" routerLinkActive="router-link-active" -->
+    <div class="content row  ">
         <div class="news col-6">
-            <div class="element mb-2">
+            <div *ngFor="let item of list" [ngClass]="{selected: item.id===jobId}" (click)="showMore(item.id)"  class="element mb-2 btn" >
                 <div class="img col-2 rounded-circle mr-2">
-                    <img src="img5.jpg" class="rounded-circle" alt="">
+                    <img class="card-img-top" [src]="item.data.companyLogoAvatar"> 
                 </div>
-                <div class="ml-2 info">
-                   <a href="#" class="text-decoration-none text-dark" ><h4>Office Administrative Assistant</h4></a>
-                   <a href="#" class="text-decoration-none text-dark" ><p>Target Recruitment & HR Solutions</p></a>
-                   <a href="#" class="text-decoration-none" > <div class="text-secondary" ><span>cairo,egypt</span></div> </a>
-                    <a href="#" class="text-decoration-none"> <div> <span class="text-success" > 7 Hours ago </span> <span class="text-primary" > Apply Now </span> </div></a>
+                <div class="ml-2 info col-10">
+                   <div class="text-decoration-none text-dark" ><h4>{{item.data.position.en}}</h4></div>
+                   <div class="text-decoration-none text-dark" ><p>{{item.data.company.en}}</p></div>
+                   <div class="text-decoration-none" > <div class="text-secondary" ><span>{{item.data.location.en}}</span></div> </div>
+                    <div class="text-decoration-none"> <div> <span class="text-success" > 7 Hours ago </span> <span class="text-primary" > Apply Now </span> </div></div>
                 </div>
             </div>
-            <div class="element mb-2">
-                <div class="img col-2 rounded-circle mr-2">
-                    <img src="img4.jpg" class="rounded-circle" alt="">
-                </div>
-                <div class="ml-2 info">
-                   <a href="#" class="text-decoration-none text-dark" ><h4>Office Administrative Assistant</h4></a>
-                   <a href="#" class="text-decoration-none text-dark" ><p>Target Recruitment & HR Solutions</p></a>
-                   <a href="#" class="text-decoration-none" > <div class="text-secondary" ><span>cairo,egypt</span></div> </a>
-                    <a href="#" class="text-decoration-none"> <div> <span class="text-success" > 7 Hours ago </span> <span class="text-primary" > Apply Now </span> </div></a>
-                </div>
-            </div>
-            <div class="element mb-2">
-                <div class="img col-2 rounded-circle mr-2">
-                    <img src="img3.jpg" class="rounded-circle" alt="">
-                </div>
-                <div class="ml-2 info">
-                   <a href="#" class="text-decoration-none text-dark" ><h4>Office Administrative Assistant</h4></a>
-                   <a href="#" class="text-decoration-none text-dark" ><p>Target Recruitment & HR Solutions</p></a>
-                   <a href="#" class="text-decoration-none" > <div class="text-secondary" ><span>cairo,egypt</span></div> </a>
-                    <a href="#" class="text-decoration-none"> <div> <span class="text-success" > 7 Hours ago </span> <span class="text-primary" > Apply Now </span> </div></a>
-                </div>
-            </div>
-            <div class="element mb-2">
-                <div class="img col-2 rounded-circle mr-2">
-                    <img src="img5.jpg" class="rounded-circle" alt="">
-                </div>
-                <div class="ml-2 info">
-                   <a href="#" class="text-decoration-none text-dark" ><h4>Office Administrative Assistant</h4></a>
-                   <a href="#" class="text-decoration-none text-dark" ><p>Target Recruitment & HR Solutions</p></a>
-                   <a href="#" class="text-decoration-none" > <div class="text-secondary" ><span>cairo,egypt</span></div> </a>
-                    <a href="#" class="text-decoration-none"> <div> <span class="text-success" > 7 Hours ago </span> <span class="text-primary" > Apply Now </span> </div></a>
-                </div>
-            </div>
-            <div class="element mb-2">
-                <div class="img col-2 rounded-circle mr-2">
-                    <img src="img5.jpg" class="rounded-circle" alt="">
-                </div>
-                <div class="ml-2 info">
-                   <a href="#" class="text-decoration-none text-dark" ><h4>Office Administrative Assistant</h4></a>
-                   <a href="#" class="text-decoration-none text-dark" ><p>Target Recruitment & HR Solutions</p></a>
-                   <a href="#" class="text-decoration-none" > <div class="text-secondary" ><span>cairo,egypt</span></div> </a>
-                    <a href="#" class="text-decoration-none"> <div> <span class="text-success" > 7 Hours ago </span> <span class="text-primary" > Apply Now </span> </div></a>
-                </div>
-            </div>
-            <div class="element mb-2">
-                <div class="img col-2 rounded-circle mr-2">
-                    <img src="img5.jpg" class="rounded-circle" alt="">
-                </div>
-                <div class="ml-2 info">
-                   <a href="#" class="text-decoration-none text-dark" ><h4>Office Administrative Assistant</h4></a>
-                   <a href="#" class="text-decoration-none text-dark" ><p>Target Recruitment & HR Solutions</p></a>
-                   <a href="#" class="text-decoration-none" > <div class="text-secondary" ><span>cairo,egypt</span></div> </a>
-                    <a href="#" class="text-decoration-none"> <div> <span class="text-success" > 7 Hours ago </span> <span class="text-primary" > Apply Now </span> </div></a>
-                </div>
-            </div>
-            <div class="element mb-2">
-                <div class="img col-2 rounded-circle mr-2">
-                    <img src="img5.jpg" class="rounded-circle" alt="">
-                </div>
-                <div class="ml-2 info">
-                   <a href="#" class="text-decoration-none text-dark" ><h4>Office Administrative Assistant</h4></a>
-                   <a href="#" class="text-decoration-none text-dark" ><p>Target Recruitment & HR Solutions</p></a>
-                   <a href="#" class="text-decoration-none" > <div class="text-secondary" ><span>cairo,egypt</span></div> </a>
-                    <a href="#" class="text-decoration-none"> <div> <span class="text-success" > 7 Hours ago </span> <span class="text-primary" > Apply Now </span> </div></a>
-                </div>
-            </div>
-            <div class="element mb-2">
-                <div class="img col-2 rounded-circle mr-2">
-                    <img src="img5.jpg" class="rounded-circle" alt="">
-                </div>
-                <div class="ml-2 info">
-                   <a href="#" class="text-decoration-none text-dark" ><h4>Office Administrative Assistant</h4></a>
-                   <a href="#" class="text-decoration-none text-dark" ><p>Target Recruitment & HR Solutions</p></a>
-                   <a href="#" class="text-decoration-none" > <div class="text-secondary" ><span>cairo,egypt</span></div> </a>
-                    <a href="#" class="text-decoration-none"> <div> <span class="text-success" > 7 Hours ago </span> <span class="text-primary" > Apply Now </span> </div></a>
-                </div>
-            </div>
-            <div class="element mb-2">
-                <div class="img col-2 rounded-circle mr-2">
-                    <img src="img5.jpg" class="rounded-circle" alt="">
-                </div>
-                <div class="ml-2 info">
-                   <a href="#" class="text-decoration-none text-dark" ><h4>Office Administrative Assistant</h4></a>
-                   <a href="#" class="text-decoration-none text-dark" ><p>Target Recruitment & HR Solutions</p></a>
-                   <a href="#" class="text-decoration-none" > <div class="text-secondary" ><span>cairo,egypt</span></div> </a>
-                    <a href="#" class="text-decoration-none"> <div> <span class="text-success" > 7 Hours ago </span> <span class="text-primary" > Apply Now </span> </div></a>
-                </div>
-            </div>
+
 
         </div>
         <div class="details position-sticky top-0 end-0 col-6 " >
-            <div class="element mb-2">
+            <div  class="elementCard mb-2">
                 <div class="img col-2 rounded-circle mr-2">
-                    <img src="img5.jpg" class="rounded-circle" alt="">
+                    <img [src]="selectedJob.data.companyLogoAvatar" class="rounded-circle" alt="">
                 </div>
                 <div class="ml-2 info">
-                   <a href="#" class="text-decoration-none text-dark" ><h4>Office Administrative Assistant</h4></a>
-                   <a href="#" class="text-decoration-none text-dark" ><p>Target Recruitment & HR Solutions</p></a>
-                   <a href="#" class="text-decoration-none" > <div class="text-secondary" ><span>cairo,egypt</span></div> </a>
-                    <a href="#" class="text-decoration-none"> <div> <span class="text-success" > 7 Hours ago </span> <span class="text-primary" > Apply Now </span> </div></a>
+                   <div class="text-decoration-none text-dark" ><h4>{{selectedJob.data.position.en}}</h4></div>
+                   <div class="text-decoration-none text-dark" ><p>{{selectedJob.data.company.en}}</p></div>
+                    <div class="text-decoration-none" > <div class="text-secondary" ><span>{{selectedJob.data.location.en}}</span></div> </div>
+                    <div  class="text-decoration-none"> <div> <span class="text-success" > 7 Hours ago </span> <span class="text-primary" > Apply Now </span> </div> </div>
                 </div>
             </div>
-            <p>
-                We explore whether HR is an Art or a Science.
-
-Whether you have a large or small business, HR is a component which everyone needs to consider.
-
-A core part of building success, HR policies need to be flexible, and to evolve and grow to take into account the needs of the company and relevant legislation.
-
-However, HR is a grey area; one which combines many different approaches so it’s hardly surprising there’s much ambiguity over how it is perceived. We ask whether HR is an art or a science?
-
-
+            <p style="overflow: scroll;"   > {{selectedJob.data.description.en.slice(0,x)}}... <button (click)= "clicked(jobId)"  *ngIf="selectedJob.data.description.en.length>800" class="btn  btn-link btn-sm p-0 "  >{{showing}}</button>
             </p>
         </div>
     </div>
 
+</div>
 </div>
