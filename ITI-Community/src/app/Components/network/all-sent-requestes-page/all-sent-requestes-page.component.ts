@@ -24,7 +24,6 @@ export class AllSentRequestesPageComponent implements OnInit {
             avatar: e.payload.doc.data()['avatar'],
           };
         });
-        console.log(this.sentRequests);
       });
   }
   DeleteFriendRequest(req) {

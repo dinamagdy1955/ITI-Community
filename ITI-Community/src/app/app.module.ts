@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +27,14 @@ import { EditHomePostComponent } from './Components/home-page/edit-home-post/edi
 import { HomePostCommentComponent } from './Components/home-page/home-post-comment/home-post-comment.component';
 import { HomeEditCommentComponent } from './Components/home-page/home-edit-comment/home-edit-comment.component';
 import { HCommentFormComponent } from './Components/home-page/hcomment-form/hcomment-form.component';
+import { UserService } from './MainServices/User.service';
+
+export function initializeApp1(userService: UserService) {
+  return (): Promise<any> => {
+    return userService.Init();
+  };
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,14 +69,22 @@ import { HCommentFormComponent } from './Components/home-page/hcomment-form/hcom
       loader: {
         provide: TranslateLoader,
         useFactory: translateFactory,
-        deps: [HttpClient]
-      }
-    })
+        deps: [HttpClient],
+      },
+    }),
   ],
-  providers: [],
+  providers: [
+    UserService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp1,
+      deps: [UserService],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 export function translateFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient)
+  return new TranslateHttpLoader(httpClient);
 }

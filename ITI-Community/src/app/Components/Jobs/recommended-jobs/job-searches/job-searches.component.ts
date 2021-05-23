@@ -11,5 +11,12 @@ export class JobSearchesComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+/*   let sub4 = this.getall.GroupPosts(this.GroupId).subscribe(res => {
+    this.postGroupList = res.map(e => {
+      return {
+        id: e.payload.doc.id,
+        data: e.payload.doc.data()
+      }
+    })
+  })  */
 }

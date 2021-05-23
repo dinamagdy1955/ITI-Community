@@ -12,9 +12,9 @@ import { RecomendedForYouComponent } from './recommended-jobs/recomended-for-you
 import { JobSearchesComponent } from './recommended-jobs/job-searches/job-searches.component';
 const routes: Routes = [
   /* {path:"",redirectTo: '/savedjobs' , pathMatch:"full" }, */
-  { path: 'recomendedJobs', component: RecommendedJobsComponent },
+  { path: '', component: RecommendedJobsComponent },
   { path: 'savedjobs', component: SavedJobsComponent },
-  { path: 'specificjob', component: SpecificJobComponent },
+  { path: 'specificjob/:id', component: SpecificJobComponent },
 ];
 @NgModule({
   declarations: [

@@ -96,11 +96,11 @@ export class ProfileBodyDetailsComponent implements OnInit {
     await img.ref.getDownloadURL().subscribe(async (url) => {
       if (type == 'avatar') {
         this.us.editUserAvatar(this.uidLocal, url);
-        localStorage.setItem('avatar', url);
+        // localStorage.setItem('avatar', url);
         this.userDetails.avatar = url;
       } else if (type == 'avatarCover') {
         this.us.editUserCoverAvatar(this.uidLocal, url);
-        localStorage.setItem('avatarCover', url);
+        // localStorage.setItem('avatarCover', url);
         this.userDetails.avatarCover = url;
       }
     });

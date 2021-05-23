@@ -26,7 +26,6 @@ export class NetworkFriendRequestComponent implements OnInit {
             addedDate: e.payload.doc.data()['addedDate'],
           };
         });
-        console.log(this.Requests);
       });
   }
 

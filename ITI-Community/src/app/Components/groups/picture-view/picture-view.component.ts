@@ -4,22 +4,25 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-picture-view',
   templateUrl: './picture-view.component.html',
-  styleUrls: ['./picture-view.component.scss']
+  styleUrls: ['./picture-view.component.scss'],
 })
 export class PictureViewComponent implements OnInit {
-  @Input() img
-  closeResult = ''
-  constructor(private model: NgbModal) { }
+  @Input() img;
+  closeResult = '';
+  constructor(private model: NgbModal) {}
 
-  ngOnInit(): void {
-    console.log(this.img)
-  }
+  ngOnInit(): void {}
   open(content) {
-    this.model.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.model
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
   }
 
   private getDismissReason(reason: any): string {
@@ -31,5 +34,4 @@ export class PictureViewComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
 }

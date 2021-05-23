@@ -21,39 +21,25 @@ export class HomePostBodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.homePostServ.getAllMyPosts().subscribe((data) => {
-      data.map((e) => {
-        this.flag = false;
-        this.AllPosts.find((pos) => {
-          if (pos.id == e.payload.doc.id) {
-            this.flag = true;
-            pos.data = e.payload.doc.data();
-          }
-        });
-        if (!this.flag)
-          this.AllPosts.push({
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-          });
-        this.sort();
+      this.MyPosts = data.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          data: e.payload.doc.data(),
+        };
       });
+      this.AllPosts = this.MyPosts.concat(this.MyFriendsPosts);
+      this.sort();
     });
 
     this.homePostServ.getAllMyFriendsPosts().subscribe((data) => {
-      data.map((e) => {
-        this.flag = false;
-        this.AllPosts.find((pos) => {
-          if (pos.id == e.payload.doc.id) {
-            this.flag = true;
-            pos.data = e.payload.doc.data();
-          }
-        });
-        if (!this.flag)
-          this.AllPosts.push({
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-          });
-        this.sort();
+      this.MyFriendsPosts = data.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          data: e.payload.doc.data(),
+        };
       });
+      this.AllPosts = this.MyPosts.concat(this.MyFriendsPosts);
+      this.sort();
     });
   }
   
