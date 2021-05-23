@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { NetworkService } from '../../Services/network.service';
 
@@ -7,22 +8,36 @@ import { NetworkService } from '../../Services/network.service';
   templateUrl: './manag-my-network-card.component.html',
   styleUrls: ['./manag-my-network-card.component.scss'],
 })
-export class ManagMyNetworkCardComponent implements OnInit {
+export class ManagMyNetworkCardComponent implements OnInit, OnDestroy {
   frindsList: any[] = [];
   groups: any[] = [];
-  constructor(private usrs: NetworkService, private us: UserService) {}
-
+  data: Observable<any>;
+  subscription: Subscription[] = [];
+  uid;
+  constructor(private usrs: NetworkService, private us: UserService) {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.uid = res.id;
+      }
+    });
+    this.subscription.push(sub);
+  }
   ngOnInit(): void {
-    this.usrs
-      .getAllFriendsList(localStorage.getItem('uid'))
-      .subscribe((data) => {
-        this.frindsList = data.map((e) => {
-          return e.payload.doc.id;
-        });
+    let sub1 = this.usrs.getAllFriendsList(this.uid).subscribe((data) => {
+      this.frindsList = data.map((e) => {
+        return e.payload.doc.id;
       });
-
-    this.us.getUserData(localStorage.getItem('uid')).subscribe((res) => {
+    });
+    this.subscription.push(sub1);
+    let sub2 = this.us.getUserData(this.uid).subscribe((res) => {
       this.groups = res.payload.get('groups');
+    });
+    this.subscription.push(sub2);
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
     });
   }
 }

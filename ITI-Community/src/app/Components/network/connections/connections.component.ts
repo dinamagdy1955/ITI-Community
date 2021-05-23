@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { UserService } from 'src/app/MainServices/User.service';
 import { NetworkService } from '../Services/network.service';
 
 @Component({
@@ -6,28 +8,36 @@ import { NetworkService } from '../Services/network.service';
   templateUrl: './connections.component.html',
   styleUrls: ['./connections.component.scss'],
 })
-export class ConnectionsComponent implements OnInit {
+export class ConnectionsComponent implements OnInit, OnDestroy {
   frindsList: any[] = [];
   keyWordsSearch;
-  constructor(private usrs: NetworkService) {}
+  uid;
+  data: Observable<any>;
+  subscription: Subscription[] = [];
+  constructor(private usrs: NetworkService, private us: UserService) {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.uid = res.id;
+      }
+    });
+    this.subscription.push(sub);
+  }
 
   ngOnInit(): void {
-    this.usrs
-      .getAllFriendsList(localStorage.getItem('uid'))
-      .subscribe((data) => {
-        this.frindsList = data.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            firstName: e.payload.doc.data()['firstName'],
-            lastName: e.payload.doc.data()['lastName'],
-            jobTitle: e.payload.doc.data()['jobTitle'],
-            avatar: e.payload.doc.data()['avatar'],
-            addedDate: e.payload.doc.data()['addedDate'],
-          };
-        });
-
-        console.log(this.frindsList);
+    let sub = this.usrs.getAllFriendsList(this.uid).subscribe((data) => {
+      this.frindsList = data.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          firstName: e.payload.doc.data()['firstName'],
+          lastName: e.payload.doc.data()['lastName'],
+          jobTitle: e.payload.doc.data()['jobTitle'],
+          avatar: e.payload.doc.data()['avatar'],
+          addedDate: e.payload.doc.data()['addedDate'],
+        };
       });
+    });
+    this.subscription.push(sub);
   }
 
   sortRecently() {
@@ -73,6 +83,12 @@ export class ConnectionsComponent implements OnInit {
   }
 
   DeleteFriend(id) {
-    this.usrs.deleteFriend(id, localStorage.getItem('uid'));
+    this.usrs.deleteFriend(id, this.uid);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }
