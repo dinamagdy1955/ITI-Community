@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/MainServices/User.service';
+import { GroupService } from '../Services/group.service';
 
 @Component({
   selector: 'app-left-side-group',
@@ -15,7 +15,9 @@ export class LeftSideGroupComponent implements OnInit {
   avatar: string;
   jobTitle: string;
   avatarCover: string;
-  constructor() {}
+  counter = 0;
+  groups: any[] = [];
+  constructor(private us: UserService, private gp: GroupService) {}
 
   ngOnInit(): void {
     this.userID = localStorage.getItem('uid');
@@ -24,5 +26,17 @@ export class LeftSideGroupComponent implements OnInit {
     this.avatar = localStorage.getItem('avatar');
     this.avatarCover = localStorage.getItem('avatarCover');
     this.jobTitle = localStorage.getItem('jobTitle');
+    this.us.getUserData(localStorage.getItem('uid')).subscribe((res) => {
+      this.counter = 0;
+      res.payload.get('groups').map((grp) => {
+        if (this.counter < 5)
+          this.gp.getGrpById(grp).subscribe((e) => {
+            this.groups.push({
+              id: grp,
+              data: e,
+            });
+          });
+      });
+    });
   }
 }

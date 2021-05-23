@@ -12,9 +12,11 @@ export class HomePostBodyComponent implements OnInit {
   MyFriendsPosts: any[] = [];
   AllPosts: any[] = [];
   userID: string;
+  avatar:string;
   flag = false;
   constructor(private homePostServ: HomePostsService) {
     this.userID = localStorage.getItem('uid');
+    this.avatar = localStorage.getItem('avatar');
   }
 
   ngOnInit(): void {
@@ -54,6 +56,8 @@ export class HomePostBodyComponent implements OnInit {
       });
     });
   }
+  
+
 
   sort() {
     this.AllPosts = this.AllPosts.sort((a, b) => {
@@ -71,5 +75,9 @@ export class HomePostBodyComponent implements OnInit {
 
   deletePost(pid, post) {
     this.homePostServ.deletePost(pid, post);
+  }
+
+  Like(uid, pid,autID) {
+    this.homePostServ.giveLike(uid, pid,autID);
   }
 }

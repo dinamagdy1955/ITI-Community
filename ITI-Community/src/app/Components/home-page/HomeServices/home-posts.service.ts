@@ -7,9 +7,24 @@ import { IHomePost } from '../ViewModel/ihome-post'
   providedIn: 'root'
 })
 export class HomePostsService {
+  likes: string[]=[];
 
   constructor(private db: AngularFirestore, private afStorage: AngularFireStorage) { }
- 
+
+  //friendList
+  getAllFriendsList() {
+    let uid = localStorage.getItem('uid');
+
+    return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('friendList')
+      .snapshotChanges();
+  }
+
+
+
+
   getAllMyPosts() {
     let uid = localStorage.getItem('uid');
     return this.db
@@ -34,7 +49,6 @@ export class HomePostsService {
       .snapshotChanges();
   }
 
-
   writePost(post: IHomePost,) {
     let   frindsList: any[] = [];
     this.getAllFriendsList()
@@ -54,7 +68,8 @@ export class HomePostsService {
             console.log(res)
             frindsList.map((e) => {
               console.log(e)
-             this.db.collection('users-details').doc(e).collection('MyFriendsPosts').doc(res.id).set(post)
+             this.db.collection('users-details').doc(e).collection('MyFriendsPosts')
+             .doc(res.id).set(post)
             })
           },
           (error) => rej(error)
@@ -116,22 +131,6 @@ export class HomePostsService {
      return
   }
 
-  
-  //friendList
-  getAllFriendsList() {
-    let uid = localStorage.getItem('uid');
-
-    return this.db
-      .collection('users-details')
-      .doc(uid)
-      .collection('friendList')
-      .snapshotChanges();
-
-
-  }
-
-
-
 
   editPost(id, data) {
   let uid = localStorage.getItem('uid');
@@ -168,5 +167,100 @@ export class HomePostsService {
 
     return 
   }
+
+
+  getAllFriendsPostsByID(postid) {
+    let uid = localStorage.getItem('uid');
+    return this.db.collection('users-details').doc(uid).collection('MyFriendsPosts').doc(postid).snapshotChanges()
+     
+  }
+
+  getAllautIDList(id) {
+    
+
+    return this.db
+      .collection('users-details')
+      .doc(id)
+      .collection('friendList')
+      .snapshotChanges();
+  }
+
+
+
+ giveLike(like, pid,autID) {
+  let   frindsList: any[] = [];
+  let   mfrindsList: any[] = [];
+
+
+    let uid = localStorage.getItem('uid');
+
+    if(autID!==uid){
+      let sub = this.getAllFriendsPostsByID(pid).subscribe(res => {
+        this.likes = res.payload.get('Likes')
+        if (this.likes.indexOf(like) != -1) {
+          this.likes.splice(this.likes.indexOf(like), 1)
+        } else {
+          this.likes.push(like) 
+        }
+ this.getAllautIDList(autID).subscribe((data)=>{
+mfrindsList=data.map((e)=>{
+  return e.payload.doc.id
+})
+ })
+ sub.unsubscribe()
+mfrindsList.map((e) => {
+  this.db.collection('users-details').doc(e).collection('MyFriendsPosts').doc(pid).update({
+    Likes: this.likes })
+})
+       
+ this.db.collection('users-details').doc(autID).collection('MyPosts').doc(pid).update({
+          Likes: this.likes
+         
+        })
+       // console.log(this.likes)
+  
+       
+      })
+    }
+    else {
+  let sub2 = this.MyPostById(pid).subscribe(res => {
+    this.likes = res.payload.get('Likes')
+    if (this.likes.indexOf(like) != -1) {
+      this.likes.splice(this.likes.indexOf(like), 1)
+    } else {
+      this.likes.push(like)
+      console.log(this.likes)
+    }
+    this.getAllFriendsList()
+    .subscribe((data) => {
+     frindsList = data.map((e) => {
+        return e.payload.doc.id
+      });
+  
+    });
+    sub2.unsubscribe()
+    this.db.collection('users-details').doc(uid).collection('MyPosts').doc(pid).update({
+      Likes: this.likes
+    })
+
+
+frindsList.map((e) => {
+  this.db.collection('users-details').doc(e).collection('MyFriendsPosts').doc(pid).update({
+    Likes: this.likes
+   
+  })
+})
+
+    
+  })
 }
+
+
+    
+    return
+  }
+
+
+}
+
 

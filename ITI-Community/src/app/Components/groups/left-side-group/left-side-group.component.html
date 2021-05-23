@@ -18,9 +18,11 @@
         </ul>
         <span class="card-title font-weight-bold">Groups</span>
         <ul class="list-unstyled mt-2">
-            <li><i class="fas fa-users mx-2"></i>Job 4 All</li>
-            <li><i class="fas fa-users mx-2"></i>Careers</li>
-            <li><i class="fas fa-users mx-2"></i>Human Resource</li>
+            <li *ngFor="let grp of groups">
+                <a href="#" routerLink="/Group/group-profile/{{grp.id}}" routerLinkActive="router-link-active">
+                    <i class="fas fa-users mx-2"></i>{{grp.data.Name}}
+                </a>
+            </li>
         </ul>
     </div>
 </div>

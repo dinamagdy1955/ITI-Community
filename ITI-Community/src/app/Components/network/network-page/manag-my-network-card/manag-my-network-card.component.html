@@ -4,36 +4,27 @@
     <br />
     <div class="item">
       <a [routerLink]="['/FullNetwork/connections']">
-        <i class="fas fa-users usersIcon usersIconGroup1"></i
-        ><span class="iconSpan card_item"> connections </span>
+        <i class="fas fa-users usersIcon usersIconGroup1"></i><span class="iconSpan card_item"> connections </span>
         <span class="Span" style="float: right"> {{ frindsList.length }}</span>
       </a>
     </div>
-
     <div class="W-100%"><br /></div>
-
     <div class="item">
       <a [routerLink]="['/Group/all-groups']">
         <i class="fas fa-users usersIcon usersIconGroup1"></i>
         <span class="iconSpan card_item"> Groups </span>
-        <span class="Span" style="float: right">2</span></a
-      >
+        <span class="Span" style="float: right">{{groups.length}}</span></a>
     </div>
-
     <div class="W-100%"><br /></div>
   </div>
   <br />
-
   <div class="card" style="width: 100%; height: auto; align-items: center">
-    <img
-      class="card-img-top"
+    <img class="card-img-top"
       src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2F42015658.jpg?alt=media&token=e57cd5cd-b16b-4776-a5c1-960ab5d79525"
-      alt="Advertise on LinkedIn"
-      style="width: 100%; height: auto"
-    />
+      alt="Advertise on LinkedIn" style="width: 100%; height: auto" />
   </div>
   <div class="W-100%"><br /></div>
   <div class="card-header">
-    <a class="cardfooter" href="#"> Grow your Network</a>
+    <div class="cardfooter"> Grow your Network</div>
   </div>
 </div>

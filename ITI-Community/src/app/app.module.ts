@@ -24,6 +24,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { EditHomePostComponent } from './Components/home-page/edit-home-post/edit-home-post.component';
+import { HomePostCommentComponent } from './Components/home-page/home-post-comment/home-post-comment.component';
+import { HomeEditCommentComponent } from './Components/home-page/home-edit-comment/home-edit-comment.component';
+import { HCommentFormComponent } from './Components/home-page/hcomment-form/hcomment-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +42,9 @@ import { EditHomePostComponent } from './Components/home-page/edit-home-post/edi
     ErrorComponent,
     NotificationComponent,
     EditHomePostComponent,
+    HomePostCommentComponent,
+    HomeEditCommentComponent,
+    HCommentFormComponent,
   ],
   imports: [
     BrowserModule,

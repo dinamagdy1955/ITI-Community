@@ -24,7 +24,8 @@ export class PostCommentService {
   }
 
   deleteComment(id, post) {
-    return this.db.collection('PostGroup').doc(post).collection('Comments').doc(id).delete()
+    return this.db.collection('PostGroup')
+    .doc(post).collection('Comments').doc(id).delete()
   }
 
   getCommentById(pid, cid) {
@@ -38,7 +39,8 @@ export class PostCommentService {
   }
 
   editComment(pid, cid, data) {
-    return this.db.collection('PostGroup').doc(pid).collection('Comments').doc(cid).update({
+    return this.db.collection('PostGroup')
+    .doc(pid).collection('Comments').doc(cid).update({
       Body: data
     })
   }

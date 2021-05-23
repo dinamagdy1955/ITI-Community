@@ -33,7 +33,7 @@ export class HomeAddToYourFeedComponent implements OnInit {
             let id = e.payload.doc.id;
             return id;
           });
-          console.log(friendData);
+         // console.log(friendData);
 
           this.usrs
             .notINCard(Requests.concat(friendData, SentfriendRequest), uid)
@@ -50,7 +50,7 @@ export class HomeAddToYourFeedComponent implements OnInit {
                   avatarCover: e.payload.doc.data()['avatarCover'],
                 };
               });
-              console.log(friendData);
+            //  console.log(friendData);
             });
         });
       });
