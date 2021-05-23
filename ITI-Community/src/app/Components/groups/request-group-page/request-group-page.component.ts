@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { UserService } from 'src/app/MainServices/User.service';
 import { GroupService } from '../Services/group.service';
 
 @Component({
@@ -13,11 +14,18 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
   userID: string;
   subscribers;
   users = [];
+  data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor(private GrpServ: GroupService) { }
+  constructor(private GrpServ: GroupService, private us: UserService) {}
 
   ngOnInit(): void {
-    this.userID = localStorage.getItem('uid');
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.userID = res.id;
+      }
+    });
+    this.subscription.push(sub);
     this.GroupList = [];
 
     let sub1 = this.GrpServ.getGroups().subscribe((res) => {

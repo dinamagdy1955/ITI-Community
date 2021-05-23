@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   FormBuilder,
@@ -8,14 +8,18 @@ import {
 } from '@angular/forms';
 import { UserProfileService } from '../../Service/user-profile.service';
 import { IExperience } from '../ViewModels/iexperience';
+import { UserService } from 'src/app/MainServices/User.service';
+import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-profile-body-exp',
   templateUrl: './profile-body-exp.component.html',
   styleUrls: ['./profile-body-exp.component.scss'],
 })
-export class ProfileBodyExpComponent implements OnInit {
+export class ProfileBodyExpComponent implements OnInit, OnDestroy {
   @Input() userExperiences;
-  uidLocal = localStorage.getItem('uid');
+  uidLocal;
+  data: Observable<any>;
+  subscription: Subscription[] = [];
   today: string = new Date().toISOString().substring(0, 10);
   checked: boolean = false;
   addExperience: FormGroup;
@@ -31,8 +35,17 @@ export class ProfileBodyExpComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private FB: FormBuilder,
-    private us: UserProfileService
-  ) {}
+    private usr: UserProfileService,
+    private us: UserService
+  ) {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.uidLocal = res.id;
+      }
+    });
+    this.subscription.push(sub);
+  }
 
   ngOnInit() {
     this.addExperience = this.FB.group({
@@ -81,10 +94,7 @@ export class ProfileBodyExpComponent implements OnInit {
       }
       this.modalService.dismissAll();
       this.userExperiences.experiences.push(this.addExperience.value);
-      this.us.addUserExp(
-        localStorage.getItem('uid'),
-        this.userExperiences.experiences
-      );
+      this.usr.addUserExp(this.uidLocal, this.userExperiences.experiences);
     }
   }
 
@@ -93,5 +103,11 @@ export class ProfileBodyExpComponent implements OnInit {
     this.checked
       ? this.addExperience.controls['to'].disable()
       : this.addExperience.controls['to'].enable();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }

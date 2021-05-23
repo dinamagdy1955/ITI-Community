@@ -1,64 +1,85 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+import { UserService } from 'src/app/MainServices/User.service';
 import { PostCommentService } from '../Services/post-comment.service';
 
 @Component({
   selector: 'app-comment-form',
   templateUrl: './comment-form.component.html',
-  styleUrls: ['./comment-form.component.scss']
+  styleUrls: ['./comment-form.component.scss'],
 })
-export class CommentFormComponent implements OnInit {
-  userID: string
-  firstName: string
-  lastName: string
-  avatar: string
-  @Input() defPostId: string
-  commentForm: FormGroup
+export class CommentFormComponent implements OnInit, OnDestroy {
+  userID: string;
+  firstName: string;
+  lastName: string;
+  jobTitle: string;
+  avatar: string;
+  @Input() defPostId: string;
+  commentForm: FormGroup;
+  data: Observable<any>;
+  subscription: Subscription[] = [];
   constructor(
     private commentService: PostCommentService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private us: UserService
   ) {
-    this.userID = localStorage.getItem('uid');
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.userID = res.id;
+        this.firstName = res.firstName;
+        this.lastName = res.lastName;
+        this.jobTitle = res.jobTitle;
+        this.avatar = res.avatar;
+      }
+    });
+    this.subscription.push(sub);
     this.commentForm = this.fb.group({
       Body: '',
-      CommentDate: new Date,
+      CommentDate: new Date(),
       User: {
         firstName: '',
         lastName: '',
         jobTitle: '',
         avatar: '',
-        id: ''
-      }
-    })
+        id: '',
+      },
+    });
   }
 
   ngOnInit(): void {
     this.commentForm = this.fb.group({
       Body: '',
-      CommentDate: new Date,
+      CommentDate: new Date(),
       User: {
-        firstName: localStorage.getItem('firstName'),
-        lastName: localStorage.getItem('lastName'),
-        jobTitle: localStorage.getItem('jobTitle'),
-        avatar: localStorage.getItem('avatar'),
-        id: localStorage.getItem('uid')
-      }
-    })
+        firstName: this.firstName,
+        lastName: this.lastName,
+        jobTitle: this.jobTitle,
+        avatar: this.avatar,
+        id: this.userID,
+      },
+    });
   }
 
   onSubmit() {
     this.commentService.writeComment(this.commentForm.value, this.defPostId);
     this.commentForm = this.fb.group({
       Body: '',
-      CommentDate: new Date,
+      CommentDate: new Date(),
       User: {
-        firstName: localStorage.getItem('firstName'),
-        lastName: localStorage.getItem('lastName'),
-        jobTitle: localStorage.getItem('jobTitle'),
-        avatar: localStorage.getItem('avatar'),
-        id: localStorage.getItem('uid')
-      }
-    })
+        firstName: this.firstName,
+        lastName: this.lastName,
+        jobTitle: this.jobTitle,
+        avatar: this.avatar,
+        id: this.userID,
+      },
+    });
   }
 
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
+  }
 }

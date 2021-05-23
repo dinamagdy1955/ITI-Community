@@ -13,9 +13,7 @@ export class GroupProfilePageComponent implements OnInit, OnDestroy {
   admins = [];
   members = [];
   subscribers = [];
-  userID;
   adminRole = [];
-
   users = [];
   private subscription: Subscription[] = [];
 

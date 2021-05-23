@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 
 @Injectable({
@@ -9,8 +10,24 @@ export class GroupService {
   subscribers: string[];
   members: string[];
   admins: string[];
-
-  constructor(private db: AngularFirestore, private us: UserService) {}
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  jobTitle: string;
+  data: Observable<any>;
+  subscriptions: Subscription[] = [];
+  constructor(private db: AngularFirestore, private us: UserService) {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.firstName = res.firstName;
+        this.lastName = res.lastName;
+        this.avatar = res.avatar;
+        this.jobTitle = res.jobTitle;
+      }
+    });
+    this.subscriptions.push(sub);
+  }
 
   getGroupsUsers(id) {
     return this.db
@@ -43,10 +60,10 @@ export class GroupService {
       .collection('Users', (ref) => ref.where('__name__', '!=', user))
       .doc(user)
       .set({
-        firstName: localStorage.getItem('firstName'),
-        lastName: localStorage.getItem('lastName'),
-        avatar: localStorage.getItem('avatar'),
-        jobTitle: localStorage.getItem('jobTitle'),
+        firstName: this.firstName,
+        lastName: this.lastName,
+        avatar: this.avatar,
+        jobTitle: this.jobTitle,
         Role: 0,
       });
   }

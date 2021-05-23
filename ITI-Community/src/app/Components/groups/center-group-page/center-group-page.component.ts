@@ -1,49 +1,59 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { UserService } from 'src/app/MainServices/User.service';
 import { GroupService } from '../Services/group.service';
 import { IGroup2 } from '../ViewModel/igroup';
 
 @Component({
   selector: 'app-center-group-page',
   templateUrl: './center-group-page.component.html',
-  styleUrls: ['./center-group-page.component.scss']
+  styleUrls: ['./center-group-page.component.scss'],
 })
 export class CenterGroupPageComponent implements OnInit, OnDestroy, OnChanges {
-  userID: string
-  avatar: string
+  userID: string;
+  avatar: string;
   Group: IGroup2;
   @Input() GroupId: string;
-  @Input() users = []
-  admin = []
-  member = []
-  subscribe = []
-
+  @Input() users = [];
+  admin = [];
+  member = [];
+  subscribe = [];
+  data: Observable<any>;
   private subscription: Subscription[] = [];
-  constructor(
-    private GrpServ: GroupService,
-  ) {
-  }
-
+  constructor(private GrpServ: GroupService, private us: UserService) {}
 
   ngOnInit(): void {
-    this.userID = localStorage.getItem('uid')
-    this.avatar = localStorage.getItem('avatar')
-    let sub = this.GrpServ.getGrpById(this.GroupId).subscribe(res => {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.userID = res.id;
+        this.avatar = res.avatar;
+      }
+    });
+    this.subscription.push(sub);
+    let sub1 = this.GrpServ.getGrpById(this.GroupId).subscribe((res) => {
       this.Group = res;
-    })
-    this.subscription.push(sub)
+    });
+    this.subscription.push(sub1);
   }
 
   ngOnChanges(): void {
     for (let u of this.users) {
       if (u.id == this.userID && u.Role == 1) {
-        this.admin.push(u.id)
+        this.admin.push(u.id);
       }
       if (u.id == this.userID && u.Role == 2) {
-        this.member.push(u.id)
+        this.member.push(u.id);
       }
       if (u.id == this.userID && u.Role == 0) {
-        this.subscribe.push(u.id)
+        this.subscribe.push(u.id);
       }
     }
   }
@@ -53,7 +63,7 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   cancelRequest(uid, id) {
-    this.GrpServ.DeleteMembers(uid, id)
+    this.GrpServ.DeleteMembers(uid, id);
   }
 
   ngOnDestroy(): void {

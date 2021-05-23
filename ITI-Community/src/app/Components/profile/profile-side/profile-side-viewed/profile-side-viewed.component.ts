@@ -10,10 +10,10 @@ import { UserService } from 'src/app/MainServices/User.service';
 })
 export class ProfileSideViewedComponent implements OnInit, OnDestroy {
   data: Observable<any>;
-  uid;
   subscription: Subscription[] = [];
+  uid;
   @Input() friendList;
-  constructor(private network: NetworkService, private us: UserService) {
+  constructor(private us: UserService) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != undefined) {

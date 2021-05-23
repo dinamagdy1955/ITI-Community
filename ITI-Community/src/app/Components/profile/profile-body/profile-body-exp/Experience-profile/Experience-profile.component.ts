@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { validateEventsArray } from '@angular/fire/firestore';
 import {
   FormBuilder,
@@ -7,6 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, Subscription } from 'rxjs';
+import { UserService } from 'src/app/MainServices/User.service';
 import { UserProfileService } from '../../../Service/user-profile.service';
 import { IExperience } from '../../ViewModels/iexperience';
 
@@ -15,17 +17,28 @@ import { IExperience } from '../../ViewModels/iexperience';
   templateUrl: './Experience-profile.component.html',
   styleUrls: ['./Experience-profile.component.scss'],
 })
-export class ExperienceProfileComponent implements OnInit {
+export class ExperienceProfileComponent implements OnInit, OnDestroy {
   @Input() userExperience;
-  uidLocal = localStorage.getItem('uid');
+  uidLocal;
+  data: Observable<any>;
+  subscription: Subscription[] = [];
   editExp: FormGroup;
   today: string = new Date().toISOString().substring(0, 10);
   checked: boolean = false;
   constructor(
     private modalService: NgbModal,
-    private us: UserProfileService,
-    private FB: FormBuilder
-  ) {}
+    private usr: UserProfileService,
+    private FB: FormBuilder,
+    private us: UserService
+  ) {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.uidLocal = res.id;
+      }
+    });
+    this.subscription.push(sub);
+  }
 
   ngOnInit() {
     this.editExp = this.FB.group({
@@ -91,7 +104,7 @@ export class ExperienceProfileComponent implements OnInit {
         degree: this.editExp.value.degree,
       };
       this.modalService.dismissAll();
-      this.us.updateUserExp(localStorage.getItem('uid'), exp);
+      this.usr.updateUserExp(this.uidLocal, exp);
     }
   }
 
@@ -103,9 +116,12 @@ export class ExperienceProfileComponent implements OnInit {
   }
 
   deleteExp() {
-    this.us.deleteUserExp(
-      localStorage.getItem('uid'),
-      this.userExperience.experience.id
-    );
+    this.usr.deleteUserExp(this.uidLocal, this.userExperience.experience.id);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }

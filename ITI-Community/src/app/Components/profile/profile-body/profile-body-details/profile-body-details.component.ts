@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileService } from '../../Service/user-profile.service';
 import { NetworkService } from '../../../network/Services/network.service';
@@ -9,15 +9,18 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserService } from 'src/app/MainServices/User.service';
+import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-profile-body-details',
   templateUrl: './profile-body-details.component.html',
   styleUrls: ['./profile-body-details.component.scss'],
 })
-export class ProfileBodyDetailsComponent implements OnInit {
+export class ProfileBodyDetailsComponent implements OnInit, OnDestroy {
   @Input() userDetails;
   editPersonalData: FormGroup;
-  uidLocal = localStorage.getItem('uid');
+  uidLocal;
+  data: Observable<any>;
+  subscription: Subscription[] = [];
   previewedImg = undefined;
   previewedCoverImg = undefined;
   branch;
@@ -25,11 +28,20 @@ export class ProfileBodyDetailsComponent implements OnInit {
   friendsRequest = [];
   constructor(
     private modalService: NgbModal,
-    private us: UserProfileService,
+    private usr: UserProfileService,
     private FB: FormBuilder,
-    private ur: UserService,
+    private us: UserService,
     private NUS: NetworkService
-  ) {}
+  ) {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.uidLocal = res.id;
+      }
+    });
+    this.subscription.push(sub);
+  }
+
   ngOnInit() {
     this.editPersonalData = this.FB.group({
       firstName: new FormControl(this.userDetails.firstName, [
@@ -66,19 +78,12 @@ export class ProfileBodyDetailsComponent implements OnInit {
   saveChanges() {
     if (this.editPersonalData.valid) {
       this.modalService.dismissAll();
-      this.us.updatePersonalData(
-        localStorage.getItem('uid'),
+      this.usr.updatePersonalData(
+        this.uidLocal,
         this.editPersonalData.value.firstName,
         this.editPersonalData.value.lastName,
         this.editPersonalData.value.jobTitle
       );
-      this.ur.setlocalUserData({
-        ...this.ur.localUserData,
-        firstName: this.editPersonalData.value.firstName,
-        lastName: this.editPersonalData.value.lastName,
-        jobTitle: this.editPersonalData.value.jobTitle,
-      });
-      console.log(this.ur.localUserData);
     }
   }
   preview(files, type) {
@@ -92,20 +97,24 @@ export class ProfileBodyDetailsComponent implements OnInit {
   async upload(type) {
     const selectedImg = (<HTMLInputElement>document.getElementById('img'))
       .files;
-    const img = await this.us.uploadImg(selectedImg[0]);
+    const img = await this.usr.uploadImg(selectedImg[0]);
     await img.ref.getDownloadURL().subscribe(async (url) => {
       if (type == 'avatar') {
-        this.us.editUserAvatar(this.uidLocal, url);
-        // localStorage.setItem('avatar', url);
+        this.usr.editUserAvatar(this.uidLocal, url);
         this.userDetails.avatar = url;
       } else if (type == 'avatarCover') {
-        this.us.editUserCoverAvatar(this.uidLocal, url);
-        // localStorage.setItem('avatarCover', url);
+        this.usr.editUserCoverAvatar(this.uidLocal, url);
         this.userDetails.avatarCover = url;
       }
     });
   }
   addRequset(item) {
     this.NUS.create_NewRequest(item, this.userDetails.id);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }

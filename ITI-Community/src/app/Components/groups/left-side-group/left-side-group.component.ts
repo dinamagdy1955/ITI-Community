@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { GroupService } from '../Services/group.service';
 
@@ -17,16 +18,25 @@ export class LeftSideGroupComponent implements OnInit {
   avatarCover: string;
   counter = 0;
   groups: any[] = [];
+  data: Observable<any>;
+  subscription: Subscription[] = [];
   constructor(private us: UserService, private gp: GroupService) {}
 
   ngOnInit(): void {
-    this.userID = localStorage.getItem('uid');
-    this.firstName = localStorage.getItem('firstName');
-    this.lastName = localStorage.getItem('lastName');
-    this.avatar = localStorage.getItem('avatar');
-    this.avatarCover = localStorage.getItem('avatarCover');
-    this.jobTitle = localStorage.getItem('jobTitle');
-    this.us.getUserData(localStorage.getItem('uid')).subscribe((res) => {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.userID = res.id;
+        this.firstName = res.firstName;
+        this.lastName = res.lastName;
+        this.avatar = res.avatar;
+        this.jobTitle = res.jobTitle;
+        this.avatarCover = res.avatarCover;
+      }
+    });
+    this.subscription.push(sub);
+
+    this.us.getUserData(this.userID).subscribe((res) => {
       this.counter = 0;
       res.payload.get('groups').map((grp) => {
         if (this.counter < 5)

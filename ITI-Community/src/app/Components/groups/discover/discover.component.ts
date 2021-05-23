@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { UserService } from 'src/app/MainServices/User.service';
 import { GroupService } from '../Services/group.service';
 
 @Component({
@@ -12,10 +13,17 @@ export class DiscoverComponent implements OnInit, OnDestroy {
   GroupList2;
   userID: string;
   allUsers = [];
+  data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor(private groupService: GroupService) { }
+  constructor(private groupService: GroupService, private us: UserService) {}
   ngOnInit(): void {
-    this.userID = localStorage.getItem('uid');
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.userID = res.id;
+      }
+    });
+    this.subscription.push(sub);
     this.GroupList = [];
     let sub1 = this.groupService.getGroups().subscribe((res) => {
       this.GroupList2 = res.map((e) => {
@@ -39,7 +47,7 @@ export class DiscoverComponent implements OnInit, OnDestroy {
         this.subscription.push(sub);
       }
     });
-    this.subscription.push(sub1)
+    this.subscription.push(sub1);
   }
 
   sendRequest(user, id) {

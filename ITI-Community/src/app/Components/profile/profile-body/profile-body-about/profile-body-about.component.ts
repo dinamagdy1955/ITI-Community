@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileService } from '../../Service/user-profile.service';
 import {
@@ -7,21 +7,34 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+import { UserService } from 'src/app/MainServices/User.service';
 
 @Component({
   selector: 'app-profile-body-about',
   templateUrl: './profile-body-about.component.html',
   styleUrls: ['./profile-body-about.component.scss'],
 })
-export class ProfileBodyAboutComponent implements OnInit {
+export class ProfileBodyAboutComponent implements OnInit, OnDestroy {
   @Input() userAbout;
   editAbout: FormGroup;
-  userLocal = localStorage.getItem('uid');
+  data: Observable<any>;
+  subscription: Subscription[] = [];
+  userLocal;
   constructor(
     private modalService: NgbModal,
-    private us: UserProfileService,
-    private FB: FormBuilder
-  ) {}
+    private usr: UserProfileService,
+    private FB: FormBuilder,
+    private us: UserService
+  ) {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.userLocal = res.id;
+      }
+    });
+    this.subscription.push(sub);
+  }
   ngOnInit() {
     this.editAbout = this.FB.group({
       about: new FormControl(this.userAbout.about),
@@ -36,10 +49,12 @@ export class ProfileBodyAboutComponent implements OnInit {
   saveChanges() {
     if (this.editAbout.valid) {
       this.modalService.dismissAll('Save click');
-      this.us.updateUserAbout(
-        localStorage.getItem('uid'),
-        this.editAbout.value.about
-      );
+      this.usr.updateUserAbout(this.userLocal, this.editAbout.value.about);
     }
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }
