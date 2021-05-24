@@ -32,7 +32,9 @@ export class AppComponent {
         if (
           event['url'] == '/Login' ||
           event['url'] == '/Register/User' ||
-          event['url'] == '/jobs/specificjob'
+          event['url'] == '/jobs/specificjob' ||
+          event['url'] == '/ForgetPassword' ||
+          event['url'].startsWith('/ResetPassword')
         ) {
           this.showHead = false;
         } else {

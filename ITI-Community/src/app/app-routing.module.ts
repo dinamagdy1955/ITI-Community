@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './Components/error/error.component';
 import { HomePageComponent } from './Components/home-page/home-page.component';
+import { ForgetPasswordComponent } from './Components/login/forget-password/forget-password.component';
 import { LoginComponent } from './Components/login/login.component';
+import { ResetPasswordComponent } from './Components/login/reset-password/reset-password.component';
 import { NotificationComponent } from './Components/notification/notification.component';
 
 const routes: Routes = [
@@ -13,6 +15,14 @@ const routes: Routes = [
   {
     path: 'Login',
     component: LoginComponent,
+  },
+  {
+    path: 'ForgetPassword',
+    component: ForgetPasswordComponent,
+  },
+  {
+    path: 'ResetPassword',
+    component: ResetPasswordComponent,
   },
   {
     path: 'Notification',
@@ -56,9 +66,7 @@ const routes: Routes = [
   {
     path: 'jobs',
     loadChildren: () =>
-      import('./Components/Jobs/jobsModule').then(
-        (m) => m.jobsModule
-      ),
+      import('./Components/Jobs/jobsModule').then((m) => m.jobsModule),
   },
   {
     path: '',
@@ -79,4 +87,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

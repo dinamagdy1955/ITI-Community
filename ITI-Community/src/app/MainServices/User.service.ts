@@ -50,7 +50,7 @@ export class UserService implements OnInit {
           });
       } else {
         this.localUserData.next(undefined);
-        this.router.navigate(['/Login']);
+        // this.router.navigate(['/Login']);
       }
     });
     console.log(this.localUserData.value);
@@ -80,6 +80,13 @@ export class UserService implements OnInit {
   saveInDB(uid, NewUserBasic: IUserBasics, newUserDetails: IUserDetails) {
     this.db.collection('users-basics').doc(uid).set(NewUserBasic);
     this.db.collection('users-details').doc(uid).set(newUserDetails);
+  }
+
+  editPassword(email, password) {
+    this.db
+      .collection('users-basics', (ref) => ref.where('email', '==', email))
+      .doc()
+      .update({ password: password });
   }
 
   //this code for get users data by giving it array of users ids

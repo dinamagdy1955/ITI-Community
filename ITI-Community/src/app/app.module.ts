@@ -28,6 +28,8 @@ import { HomePostCommentComponent } from './Components/home-page/home-post-comme
 import { HomeEditCommentComponent } from './Components/home-page/home-edit-comment/home-edit-comment.component';
 import { HCommentFormComponent } from './Components/home-page/hcomment-form/hcomment-form.component';
 import { UserService } from './MainServices/User.service';
+import { ForgetPasswordComponent } from './Components/login/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './Components/login/reset-password/reset-password.component';
 
 export function initializeApp1(userService: UserService) {
   return (): Promise<any> => {
@@ -53,6 +55,8 @@ export function initializeApp1(userService: UserService) {
     HomePostCommentComponent,
     HomeEditCommentComponent,
     HCommentFormComponent,
+    ForgetPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,12 +10,7 @@ import { SignInAuthError } from '../signInInterface/sign-in-auth-error';
   providedIn: 'root',
 })
 export class SignInService {
-  isloggedIn: boolean;
-  constructor(
-    private auth: AngularFireAuth,
-    private router: Router,
-    private profile: UserService
-  ) {}
+  constructor(private auth: AngularFireAuth, private router: Router) {}
 
   signInAuth(email: string, password: string) {
     return this.auth.signInWithEmailAndPassword(email, password);
@@ -33,11 +28,11 @@ export class SignInService {
     });
   }
 
-  currentUser() {
-    return this.auth.currentUser;
+  forgetPassword(email) {
+    return this.auth.sendPasswordResetEmail(email);
   }
 
-  user() {
-    return this.auth.user;
+  resetPassword(code, password) {
+    return this.auth.confirmPasswordReset(code, password);
   }
 }
