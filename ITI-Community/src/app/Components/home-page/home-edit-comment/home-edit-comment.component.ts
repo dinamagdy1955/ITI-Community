@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HPostCommentService } from '../HomeServices/hpost-comment.service';
+import { UserService } from 'src/app/MainServices/User.service';
+import { Observable, Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-home-edit-comment',
   templateUrl: './home-edit-comment.component.html',
@@ -14,11 +17,23 @@ export class HomeEditCommentComponent implements OnInit {
   @Input() postID
   @Input() AUTHId
   singleComment
+  uid
+  data: Observable<any>;
+  subscription: Subscription[] = [];
   constructor(
     private model: NgbModal,
     private FB: FormBuilder, 
-    private commentService: HPostCommentService
+    private commentService: HPostCommentService,
+    private us: UserService
   ) {
+
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.uid = res.id;
+      }
+    });
+    this.subscription.push(sub);
     this.editCommentForm = this.FB.group({
       Body: ''
     })
@@ -26,7 +41,7 @@ export class HomeEditCommentComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.commentService.getMyCommentsById(this.postID, this.commentID).subscribe(res => {
+    this.commentService.getMyCommentsById(this.postID, this.commentID,this.uid).subscribe(res => {
       this.singleComment = res
       if (this.singleComment != undefined) {
         this.editCommentForm = this.FB.group({

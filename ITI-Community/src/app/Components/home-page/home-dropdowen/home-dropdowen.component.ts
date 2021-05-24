@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { GroupService } from '../../groups/Services/group.service';
 
@@ -10,10 +11,21 @@ import { GroupService } from '../../groups/Services/group.service';
 export class HomeDropdowenComponent implements OnInit {
   groups: any[] = [];
   counter = 0;
-  constructor(private us: UserService, private gp: GroupService) {}
+  uid;
+  data: Observable<any>;
+  subscription: Subscription[] = [];
+  constructor(private us: UserService, private gp: GroupService) {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.uid = res.id;
+      }
+    });
+    this.subscription.push(sub);
+  }
 
   ngOnInit(): void {
-    this.us.getUserData(localStorage.getItem('uid')).subscribe((res) => {
+    this.us.getUserData(this.uid).subscribe((res) => {
       this.counter = 0;
       res.payload.get('groups').map((grp) => {
         if (this.counter < 5)

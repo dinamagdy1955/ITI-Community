@@ -8,23 +8,8 @@ import { IHomeComment } from '../ViewModel/ihome-comment';
 })
 export class HPostCommentService {
   postCounts: BehaviorSubject<number>;
-  uid = localStorage.getItem('uid');
   constructor(private db: AngularFirestore) {
     this.postCounts = new BehaviorSubject<number>(4);
-  }
-
-  //friendList
-
-  getAllFriendsList() {
- 
-
-    return this.db
-      .collection('users-details')
-      .doc(this.uid)
-      .collection('friendList')
-      .snapshotChanges();
-
-
   }
 
 
@@ -39,7 +24,7 @@ export class HPostCommentService {
 
 
 
-  writeComment(comment: IHomeComment, postId, AUTHId) {
+  writeComment(comment: IHomeComment, postId, AUTHId,uid) {
     let   frindsList: any[] = [];
     //let  authFrindsList: any[] = [];
      this.getAllautIDList(AUTHId)
@@ -49,16 +34,10 @@ export class HPostCommentService {
                 });
                 //console.log(frindsList);
               });
-    // this.getAllFriendsList()
-    // .subscribe((data) => {
-    //  frindsList = data.map((e) => {
-    //     return e.payload.doc.id
-    //   });
-    //   //console.log(frindsList);
-    // });
+
     return new Promise<any>((res, rej) => {
-      if (this.uid== AUTHId) {
-        this.db.collection('users-details').doc(this.uid).collection('MyHomePosts')
+      if (uid== AUTHId) {
+        this.db.collection('users-details').doc(uid).collection('MyHomePosts')
         .doc(postId).collection('postsComments').add(comment)
           .then(
             (res) => { 
@@ -77,7 +56,7 @@ export class HPostCommentService {
        else {
         this.db
           .collection('users-details')
-          .doc(this.uid)
+          .doc(uid)
           .collection('MyHomePosts')
           .doc(postId)
           .collection('postsComments')
@@ -100,19 +79,19 @@ export class HPostCommentService {
     });
   }
  
-  getPostComments2(postId, param?) {
+  getPostComments2(postId,uid, param?) {
  
   
     if (param != undefined) {
       return this.db
-        .collection('users-details').doc(this.uid) .collection('MyHomePosts').doc(postId)
+        .collection('users-details').doc(uid) .collection('MyHomePosts').doc(postId)
         .collection('postsComments', (ref) => ref.orderBy('CommentDate', 'desc')
         .limit(5).startAfter(param) ).snapshotChanges();
     }
      else {
       
         return this.db
-        .collection('users-details').doc(this.uid)
+        .collection('users-details').doc(uid)
         .collection('MyHomePosts').doc(postId).collection('postsComments', (ref) =>
           ref.orderBy('CommentDate', 'desc').limit(5)).snapshotChanges();
       
@@ -160,8 +139,8 @@ export class HPostCommentService {
 
 
 
-  getMyCommentsById(pid, cid) {
-    return this.db.collection('users-details').doc(this.uid) .collection('MyHomePosts')
+  getMyCommentsById(pid, cid,uid) {
+    return this.db.collection('users-details').doc(uid) .collection('MyHomePosts')
     .doc(pid).collection('Comments').doc(cid).valueChanges()
   }
 

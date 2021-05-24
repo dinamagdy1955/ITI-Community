@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { HPostCommentService } from '../HomeServices/hpost-comment.service';
+import { UserService } from 'src/app/MainServices/User.service';
 
 @Component({
   selector: 'app-home-post-comment',
@@ -11,23 +12,28 @@ export class HomePostCommentComponent implements OnInit {
   @Input() PostID: string;
   @Input() admins;
   @Input() AUTHId: string;
-  subscriptions: Subscription[] = [];
+  subscription: Subscription[] = [];
   getComments = [];
-
-  userID;
-
+  uid;
   turnOff: boolean = false;
   counter: number = 0;
-  constructor(public commentService: HPostCommentService) {}
+  data: Observable<any>;
+  constructor(public commentService: HPostCommentService,private us: UserService) {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this. uid= res.id;
+      }
+    });
+    this.subscription.push(sub);
+  }
   identify(index, c) {
     return c.id;
   }
   ngOnInit(): void {
-    this.userID = localStorage.getItem('uid');
- 
-   
+
       let sub = this.commentService
-        .getPostComments2(this.PostID)
+        .getPostComments2(this.PostID,this.uid)
         .subscribe((res) => {
           this.getComments = res.map((e) => {
             return {
@@ -36,10 +42,10 @@ export class HomePostCommentComponent implements OnInit {
               doc: e.payload.doc,
             };
           });
-          console.log('mu posts', this.getComments);
+         console.log('mu posts', this.getComments);
           this.hideBtn(res);
         });
-      this.subscriptions.push(sub);
+      this.subscription.push(sub);
 
   }
 
@@ -60,7 +66,7 @@ export class HomePostCommentComponent implements OnInit {
      
       this.counter += 5
       let param = this.getComments[this.getComments.length - 1].doc
-      this.commentService.getPostComments2(this.PostID, param).subscribe(res => {
+      this.commentService.getPostComments2(this.PostID,this.uid, param).subscribe(res => {
         res.map(e => {
           this.getComments.push({
             id: e.payload.doc.id,

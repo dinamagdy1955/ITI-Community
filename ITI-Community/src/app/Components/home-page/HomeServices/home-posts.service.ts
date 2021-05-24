@@ -8,23 +8,21 @@ import { IHomePost } from '../ViewModel/ihome-post';
 })
 export class HomePostsService {
   likes: string[]=[];
-   uid = localStorage.getItem('uid');
+ 
   constructor(private db: AngularFirestore, private afStorage: AngularFireStorage) { }
 
-  //friendList
-  getAllFriendsList() {
+  getAllFriends(id) {
     return this.db
       .collection('users-details')
-      .doc(this.uid)
+      .doc(id)
       .collection('friendList')
       .snapshotChanges();
   }
 
-
-  getAllMyPosts() {
+  getAllMyPosts(uid) {
     return this.db
       .collection('users-details')
-      .doc(this.uid)
+      .doc(uid)
       .collection('MyHomePosts', (ref) =>
         ref.where('PostedDate', '!=', null).orderBy('PostedDate', 'desc')
       )
@@ -41,9 +39,9 @@ export class HomePostsService {
   }
 
 
-  writePost(post: IHomePost,) {
+  writePost(post: IHomePost,uid) {
     let   frindsList: any[] = [];
-    this.getAllFriendsList()
+    this.getAllFriends(uid)
     .subscribe((data) => {
      frindsList = data.map((e) => {
         return e.payload.doc.id
@@ -53,7 +51,7 @@ export class HomePostsService {
     new Promise<any>((res, rej) => {
       this.db
         .collection('users-details')
-        .doc(this.uid)
+        .doc(uid)
         .collection('MyHomePosts')
         .add(post)
         .then(
@@ -94,9 +92,9 @@ export class HomePostsService {
     };
   }
 
- deletePost(pid, post) {
+ deletePost(pid, post,uid) {
     let myfrindsList: any[] = [];
-    this.getAllFriendsList().subscribe((data) => {
+    this.getAllFriends(uid).subscribe((data) => {
       myfrindsList = data.map((e) => {
         return e.payload.doc.id;
       });
@@ -105,7 +103,7 @@ export class HomePostsService {
       this.db
       this.db
       .collection('users-details')
-      .doc(this.uid)
+      .doc(uid)
       .collection('MyHomePosts')
       .doc(pid)
       .delete()
@@ -127,26 +125,26 @@ export class HomePostsService {
     return;
   }
 
-  SpamPost(pid, post){
+  SpamPost(pid, post,uid){
     return this.db
     .collection('users-details')
-    .doc(this.uid)
+    .doc(uid)
     .collection('MyHomePosts')
     .doc(pid)
     .delete()
   }
 
-  SavePosts(pid, post){
+  SavePosts(pid, post,uid){
    return this.db
     .collection('users-details')
-    .doc(this.uid)
+    .doc(uid)
     .collection('MySavedPosts').doc(pid).set(post)
   
   }
 
   editPost(id, data,uid) {
     let myfrindsList: any[] = [];
-    this.getAllFriendsList().subscribe((data) => {
+    this.getAllFriends(uid).subscribe((data) => {
       myfrindsList = data.map((e) => {
         return e.payload.doc.id;
       });

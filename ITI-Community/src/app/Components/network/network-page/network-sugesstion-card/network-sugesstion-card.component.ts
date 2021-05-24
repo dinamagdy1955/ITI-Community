@@ -19,7 +19,8 @@ export class NetworkSugesstionCardComponent implements OnInit {
   avatarCover;
   data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor(private usrs: NetworkService, private us: UserService) {
+  constructor(private usrs: NetworkService,
+     private us: UserService) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != undefined) {
@@ -90,8 +91,8 @@ export class NetworkSugesstionCardComponent implements OnInit {
       firstName: this.firstName,
       lastName: this.lastName,
       avatar: this.avatar,
-      avatarCover: this.avatarCover,
       jobTitle: this.jobTitle,
+      avatarCover: this.avatarCover,
     });
   }
 
