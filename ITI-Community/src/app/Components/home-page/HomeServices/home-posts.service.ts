@@ -8,55 +8,38 @@ import { IHomePost } from '../ViewModel/ihome-post';
 })
 export class HomePostsService {
   likes: string[]=[];
-
+   uid = localStorage.getItem('uid');
   constructor(private db: AngularFirestore, private afStorage: AngularFireStorage) { }
 
   //friendList
   getAllFriendsList() {
-    let uid = localStorage.getItem('uid');
-
     return this.db
       .collection('users-details')
-      .doc(uid)
+      .doc(this.uid)
       .collection('friendList')
       .snapshotChanges();
   }
 
 
-
-
   getAllMyPosts() {
-    let uid = localStorage.getItem('uid');
     return this.db
       .collection('users-details')
-      .doc(uid)
-      .collection('MyPosts', (ref) =>
+      .doc(this.uid)
+      .collection('MyHomePosts', (ref) =>
         ref.where('PostedDate', '!=', null).orderBy('PostedDate', 'desc')
       )
       .snapshotChanges();
   }
 
-  MyPostById(postid) {
-    let uid = localStorage.getItem('uid');
+  MyPostById(postid,uid) {
     return this.db
       .collection('users-details')
       .doc(uid)
-      .collection('MyPosts')
+      .collection('MyHomePosts')
       .doc(postid)
       .snapshotChanges();
   }
 
-  getAllMyFriendsPosts() {
-    let uid = localStorage.getItem('uid');
-
-    return this.db
-      .collection('users-details')
-      .doc(uid)
-      .collection('MyFriendsPosts', (ref) =>
-        ref.where('PostedDate', '!=', null).orderBy('PostedDate', 'desc')
-      )
-      .snapshotChanges();
-  }
 
   writePost(post: IHomePost,) {
     let   frindsList: any[] = [];
@@ -67,26 +50,24 @@ export class HomePostsService {
       
       });
     });
-    let uid = localStorage.getItem('uid');
     new Promise<any>((res, rej) => {
       this.db
         .collection('users-details')
-        .doc(uid)
-        .collection('MyPosts')
+        .doc(this.uid)
+        .collection('MyHomePosts')
         .add(post)
         .then(
           (res) => {
             frindsList.map((e) => {
               console.log(e)
-             this.db.collection('users-details').doc(e).collection('MyFriendsPosts')
+             this.db.collection('users-details').doc(e).collection('MyHomePosts')
              .doc(res.id).set(post)
             })
           },
           (error) => rej(error)
         );
     });
-
-    return;
+    return
   }
 
   async uploadImg(imgs) {
@@ -113,28 +94,28 @@ export class HomePostsService {
     };
   }
 
-  deletePost(pid, post) {
+ deletePost(pid, post) {
     let myfrindsList: any[] = [];
     this.getAllFriendsList().subscribe((data) => {
       myfrindsList = data.map((e) => {
         return e.payload.doc.id;
       });
     });
-    let uid = localStorage.getItem('uid');
     new Promise<any>((res, rej) => {
       this.db
-        .collection('users-details')
-        .doc(uid)
-        .collection('MyPosts')
-        .doc(pid)
-        .delete()
+      this.db
+      .collection('users-details')
+      .doc(this.uid)
+      .collection('MyHomePosts')
+      .doc(pid)
+      .delete()
         .then(
           (res) => {
             myfrindsList.map((e) => {
               this.db
                 .collection('users-details')
                 .doc(e)
-                .collection('MyFriendsPosts')
+                .collection('MyHomePosts')
                 .doc(pid)
                 .delete();
             });
@@ -146,10 +127,24 @@ export class HomePostsService {
     return;
   }
 
+  SpamPost(pid, post){
+    return this.db
+    .collection('users-details')
+    .doc(this.uid)
+    .collection('MyHomePosts')
+    .doc(pid)
+    .delete()
+  }
 
+  SavePosts(pid, post){
+   return this.db
+    .collection('users-details')
+    .doc(this.uid)
+    .collection('MySavedPosts').doc(pid).set(post)
+  
+  }
 
-  editPost(id, data) {
-    let uid = localStorage.getItem('uid');
+  editPost(id, data,uid) {
     let myfrindsList: any[] = [];
     this.getAllFriendsList().subscribe((data) => {
       myfrindsList = data.map((e) => {
@@ -160,7 +155,7 @@ export class HomePostsService {
       this.db
         .collection('users-details')
         .doc(uid)
-        .collection('MyPosts')
+        .collection('MyHomePosts')
         .doc(id)
         .update({
           Body: data,
@@ -171,7 +166,7 @@ export class HomePostsService {
               this.db
                 .collection('users-details')
                 .doc(e)
-                .collection('MyFriendsPosts')
+                .collection('MyHomePosts')
                 .doc(id)
                 .update({
                   Body: data,
@@ -186,12 +181,6 @@ export class HomePostsService {
   }
 
 
-  getAllFriendsPostsByID(postid) {
-    let uid = localStorage.getItem('uid');
-    return this.db.collection('users-details').doc(uid).collection('MyFriendsPosts').doc(postid).snapshotChanges()
-     
-  }
-
   getAllautIDList(id) {
     
 
@@ -203,79 +192,37 @@ export class HomePostsService {
   }
 
 
+    
+  giveLike(like, pid,autID) {
 
- giveLike(like, pid,autID) {
-  let   frindsList: any[] = [];
-  let   mfrindsList: any[] = [];
+    let frindsList: any[] = [];
+    this.getAllautIDList(autID)
+             .subscribe((data) => {
+              frindsList = data.map((e) => {
+                 return e.payload.doc.id
+               });
+               //console.log(frindsList);
+             });
 
+    let sub2 = this.MyPostById(pid,like).subscribe((res) => {
+      this.likes = res.payload.get('Likes');
+      if (this.likes.indexOf(like) != -1) {
+        this.likes.splice(this.likes.indexOf(like), 1);
+      } else {
+        this.likes.push(like);
+      }
 
-    let uid = localStorage.getItem('uid');
-
-    if(autID!==uid){
-      let sub = this.getAllFriendsPostsByID(pid).subscribe(res => {
-        this.likes = res.payload.get('Likes')
-        if (this.likes.indexOf(like) != -1) {
-          this.likes.splice(this.likes.indexOf(like), 1)
-        } else {
-          this.likes.push(like) 
-        }
- this.getAllautIDList(autID).subscribe((data)=>{
-mfrindsList=data.map((e)=>{
-  return e.payload.doc.id
-})
- })
- sub.unsubscribe()
-mfrindsList.map((e) => {
-  this.db.collection('users-details').doc(e).collection('MyFriendsPosts').doc(pid).update({
+  this.db.collection('users-details').doc(autID).collection('MyHomePosts').doc(pid).update({
+    Likes: this.likes});
+ 
+  frindsList.map((e) => {
+  this.db.collection('users-details').doc(e).collection('MyHomePosts').doc(pid).update({
     Likes: this.likes })
-})
-       
- this.db.collection('users-details').doc(autID).collection('MyPosts').doc(pid).update({
-          Likes: this.likes
-         
         })
-       // console.log(this.likes)
-  
-       
-      })
-    }
-    else {
-  let sub2 = this.MyPostById(pid).subscribe(res => {
-    this.likes = res.payload.get('Likes')
-    if (this.likes.indexOf(like) != -1) {
-      this.likes.splice(this.likes.indexOf(like), 1)
-    } else {
-      this.likes.push(like)
-      console.log(this.likes)
-    }
-    this.getAllFriendsList()
-    .subscribe((data) => {
-     frindsList = data.map((e) => {
-        return e.payload.doc.id
-      });
-  
+      sub2.unsubscribe();
     });
-    sub2.unsubscribe()
-    this.db.collection('users-details').doc(uid).collection('MyPosts').doc(pid).update({
-      Likes: this.likes
-    })
-
-
-frindsList.map((e) => {
-  this.db.collection('users-details').doc(e).collection('MyFriendsPosts').doc(pid).update({
-    Likes: this.likes
-   
-  })
-})
-
-    
-  })
-}
-
-
-    
-    return
   }
+
 
 
 }

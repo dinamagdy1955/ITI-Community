@@ -19,7 +19,7 @@
                                             <i class="fas fa-ellipsis-h"></i>
                                         </a>
                                         <div ngbDropdownMenu>
-                                            <app-edit-comment [commentID]="c.id" [postID]='PostID'></app-edit-comment>
+                                            <app-home-edit-comment [AUTHId]="AUTHId" [commentID]="c.id" [postID]='PostID'></app-home-edit-comment>
                                             <div class="dropdown-divider"></div>
                                             <button ngbDropdownItem
                                                 (click)="deleteComment(c.id, PostID)">Delete</button>
