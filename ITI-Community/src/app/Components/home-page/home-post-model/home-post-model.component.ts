@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalConfig, NgbModal ,ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HomePostsService } from '../HomeServices/home-posts.service';
-
+import { Observable, Subscription } from 'rxjs';
+import { UserService } from 'src/app/MainServices/User.service';
 @Component({
   selector: 'app-home-post-model',
   templateUrl: './home-post-model.component.html',
@@ -16,16 +17,33 @@ export class HomePostModelComponent implements OnInit  {
   postForm: FormGroup
   userID: string;
   //GroupId
-  firstName
-  lastName
-  avatar
+  uid;
+  firstName;
+  lastName;
+  jobTitle;
+  avatar;
+  avatarCover;
+  data: Observable<any>;
+  subscription: Subscription[] = [];
 
   constructor(private model: NgbModal, 
-    private modalService: NgbModal,private homePostServ:HomePostsService,private fb: FormBuilder) {
-    // config.backdrop = 'static';
-    // config.keyboard = false;
-
-    this.userID = localStorage.getItem("uid");
+    private homePostServ:HomePostsService,
+    private fb: FormBuilder,
+    private us: UserService
+    ) {
+      this.data = this.us.localUserData.asObservable();
+      let sub = this.data.subscribe((res) => {
+        if (res != undefined) {
+          this.uid = res.id;
+          this.firstName = res.firstName;
+          this.lastName = res.lastName;
+          this.jobTitle = res.jobTitle;
+          this.avatar = res.avatar;
+          this.avatarCover = res.avatarCover;
+        }
+      });
+      this.subscription.push(sub);
+ 
     this.postForm = this.fb.group({
       //GroupId: '',
       postID:'',
@@ -33,11 +51,12 @@ export class HomePostModelComponent implements OnInit  {
       Body: '',
       PostedDate: new Date,
       Auther: {
-        avatar: localStorage.getItem('avatar'),
-        firstName: localStorage.getItem('firstName'),
-        lastName: localStorage.getItem('lastName'),
-        id: localStorage.getItem('uid'),
-        jobTitle: localStorage.getItem('jobTitle'),
+        id: this.uid,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        avatar: this.avatar,
+        jobTitle: this.jobTitle,
+        
       },
       postImg: [[]]
     })
@@ -60,9 +79,6 @@ export class HomePostModelComponent implements OnInit  {
     }
   }
   ngOnInit(): void {
-    this.firstName = localStorage.getItem('firstName')
-    this.lastName = localStorage.getItem('lastName')
-    this.avatar = localStorage.getItem('avatar')
 
     this.postForm = this.fb.group({
      // GroupId: this.SelectedGroupId,
@@ -71,11 +87,12 @@ export class HomePostModelComponent implements OnInit  {
       Body: '',
       PostedDate: new Date,
       Auther: {
-        avatar: localStorage.getItem('avatar'),
-        firstName: localStorage.getItem('firstName'),
-        lastName: localStorage.getItem('lastName'),
-        id: localStorage.getItem('uid'),
-        jobTitle: localStorage.getItem('jobTitle'),
+        id: this.uid,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        avatar: this.avatar,
+        jobTitle: this.jobTitle,
+        
       },
       postImg: [[]]
     })
@@ -95,14 +112,14 @@ export class HomePostModelComponent implements OnInit  {
           if (i == img.ref.length - 1) {
             this.postForm.value.postImg = Allimgs
             this.postForm.value.Body = body
-            this.homePostServ.writePost(this.postForm.value);
+            this.homePostServ.writePost(this.postForm.value,this.uid);
           }
         });
       }
     } else {
       let body = this.postForm.value.Body
       this.postForm.value.Body = body
-      this.homePostServ.writePost(this.postForm.value);
+      this.homePostServ.writePost(this.postForm.value,this.uid);
     }
     this.postForm = this.fb.group({
      // GroupId: this.SelectedGroupId,
@@ -111,11 +128,12 @@ export class HomePostModelComponent implements OnInit  {
       Body: '',
       PostedDate: new Date,
       Auther: {
-        avatar: localStorage.getItem('avatar'),
-        firstName: localStorage.getItem('firstName'),
-        lastName: localStorage.getItem('lastName'),
-        id: localStorage.getItem('uid'),
-        jobTitle: localStorage.getItem('jobTitle'),
+        id: this.uid,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        avatar: this.avatar,
+        jobTitle: this.jobTitle,
+        
 
       },
       postImg: [[]]

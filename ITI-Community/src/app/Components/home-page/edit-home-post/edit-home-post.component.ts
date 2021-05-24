@@ -14,7 +14,6 @@ export class EditHomePostComponent implements OnInit {
   editPostForm: FormGroup
   @Input() postID
   singlePost
-
   uid;
  
   data: Observable<any>;

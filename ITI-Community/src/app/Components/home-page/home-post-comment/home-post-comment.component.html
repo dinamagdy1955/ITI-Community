@@ -13,7 +13,7 @@
                                 <small class="day text-muted">{{c.CommentDate.toDate() | date}}</small>
                             </div>
                             <div  class="d-flex flex-column ml-auto">
-                                <div *ngIf="c.User.id === userID">
+                                <div *ngIf="c.User.id === uid">
                                     <div ngbDropdown container="body">
                                         <a type="button" class="btn btn-default" ngbDropdownToggle>
                                             <i class="fas fa-ellipsis-h"></i>

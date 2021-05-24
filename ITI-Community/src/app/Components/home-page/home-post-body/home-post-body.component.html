@@ -12,7 +12,7 @@
       </button>
       <div class="dropdown-menu" ngbDropdownMenu>
 
-        <div *ngIf="post.data.Auther.id === userID">
+        <div *ngIf="post.data.Auther.id ===uid">
           <button class="DDBtn" ngbDropdownItem (click)="deletePost(post.id,post)">
             <div>
               <i class="fas fa-trash-alt" aria-hidden="true"> Delete </i>
@@ -67,7 +67,8 @@
     <!-- <hr class="mt-4"> -->
     <div class="row mb-2">
       <div class="col-2 pr-1">
-        <img [src]="post.data.Auther.avatar" style="width:100%;height:auto;border-radius: 50%;" alt="John Doe"
+        <img [src]="post.data.Auther.avatar"
+         style="width:100%;height:auto;border-radius: 50%;" alt="John Doe"
           class=" mr-2  rounded-circle">
 
       </div>
@@ -108,10 +109,10 @@
 
 
       <div class="post-actions-groups" style="float: left;">
-        <button class="btn btn-default" (click)="Like(userID, post.id,post.data.Auther.id)">
-          <span *ngIf="!post.data.Likes.includes(userID)"><i class="far fa-thumbs-up diviconsize2"></i>
+        <button class="btn btn-default" (click)="Like(uid, post.id,post.data.Auther.id)">
+          <span *ngIf="!post.data.Likes.includes(uid)"><i class="far fa-thumbs-up diviconsize2"></i>
              Like</span>
-          <span *ngIf="post.data.Likes.includes(userID)" class="font-weight-bold">
+          <span *ngIf="post.data.Likes.includes(uid)" class="font-weight-bold">
             <i class="fas fa-thumbs-up  diviconsize2"></i> Like</span>
         </button>
 
