@@ -8,36 +8,57 @@ import { IHomeComment } from '../ViewModel/ihome-comment';
 })
 export class HPostCommentService {
   postCounts: BehaviorSubject<number>;
+  uid = localStorage.getItem('uid');
   constructor(private db: AngularFirestore) {
     this.postCounts = new BehaviorSubject<number>(4);
   }
 
   //friendList
+
   getAllFriendsList() {
-    let uid = localStorage.getItem('uid');
+ 
 
     return this.db
       .collection('users-details')
-      .doc(uid)
+      .doc(this.uid)
       .collection('friendList')
       .snapshotChanges();
 
 
   }
 
+
+  getAllautIDList(id) {
+    return this.db
+      .collection('users-details')
+      .doc(id)
+      .collection('friendList')
+      .snapshotChanges();
+  }
+
+
+
+
   writeComment(comment: IHomeComment, postId, AUTHId) {
-    let uid = localStorage.getItem('uid');
     let   frindsList: any[] = [];
-    this.getAllFriendsList()
-    .subscribe((data) => {
-     frindsList = data.map((e) => {
-        return e.payload.doc.id
-      });
-      //console.log(frindsList);
-    });
+    //let  authFrindsList: any[] = [];
+     this.getAllautIDList(AUTHId)
+              .subscribe((data) => {
+               frindsList = data.map((e) => {
+                  return e.payload.doc.id
+                });
+                //console.log(frindsList);
+              });
+    // this.getAllFriendsList()
+    // .subscribe((data) => {
+    //  frindsList = data.map((e) => {
+    //     return e.payload.doc.id
+    //   });
+    //   //console.log(frindsList);
+    // });
     return new Promise<any>((res, rej) => {
-      if (uid == AUTHId) {
-        this.db.collection('users-details').doc(uid) .collection('MyPosts')
+      if (this.uid== AUTHId) {
+        this.db.collection('users-details').doc(this.uid).collection('MyHomePosts')
         .doc(postId).collection('postsComments').add(comment)
           .then(
             (res) => { 
@@ -45,7 +66,7 @@ export class HPostCommentService {
               frindsList.map((e) => {
                 console.log(res.id);
                 this.db.collection('users-details').doc(e)
-                  .collection('MyFriendsPosts').doc(postId)
+                  .collection('MyHomePosts').doc(postId)
                   .collection('postsComments').doc(res.id)
                   .set(comment);
                   })
@@ -56,8 +77,8 @@ export class HPostCommentService {
        else {
         this.db
           .collection('users-details')
-          .doc(uid)
-          .collection('MyFriendsPosts')
+          .doc(this.uid)
+          .collection('MyHomePosts')
           .doc(postId)
           .collection('postsComments')
           .add(comment)
@@ -66,61 +87,36 @@ export class HPostCommentService {
               console.log(res.id);
               this.db
               .collection('users-details').doc(AUTHId)
-              .collection('MyPosts').doc(postId).collection('postsComments').doc(res.id).set(comment);
-
+              .collection('MyHomePosts').doc(postId).collection('postsComments').doc(res.id).set(comment);
+      
               frindsList.map((e) => {
              
              this.db.collection('users-details').doc(e)
-                .collection('MyFriendsPosts').doc(postId).collection('postsComments').doc(res.id).set(comment)
+                .collection('MyHomePosts').doc(postId).collection('postsComments').doc(res.id).set(comment)
               }) },
             (err) => rej(err)
           );
       }
     });
   }
-
+ 
   getPostComments2(postId, param?) {
-    let uid = localStorage.getItem('uid');
+ 
   
     if (param != undefined) {
       return this.db
-        .collection('users-details').doc(uid) .collection('MyPosts').doc(postId)
+        .collection('users-details').doc(this.uid) .collection('MyHomePosts').doc(postId)
         .collection('postsComments', (ref) => ref.orderBy('CommentDate', 'desc')
         .limit(5).startAfter(param) ).snapshotChanges();
     }
      else {
       
         return this.db
-        .collection('users-details').doc(uid)
-        .collection('MyPosts').doc(postId).collection('postsComments', (ref) =>
+        .collection('users-details').doc(this.uid)
+        .collection('MyHomePosts').doc(postId).collection('postsComments', (ref) =>
           ref.orderBy('CommentDate', 'desc').limit(5)).snapshotChanges();
       
      
-    }
-  }
-
-  getFriendPostComments(postId, param?) {
-    let uid = localStorage.getItem('uid');
-    if (param != undefined) {
-      return this.db
-        .collection('users-details')
-        .doc(uid)
-        .collection('MyFriendsPosts')
-        .doc(postId)
-        .collection('postsComments', (ref) =>
-          ref.orderBy('CommentDate', 'desc').limit(5).startAfter(param)
-        )
-        .snapshotChanges();
-    } else {
-      return this.db
-        .collection('users-details')
-        .doc(uid)
-        .collection('MyFriendsPosts')
-        .doc(postId)
-        .collection('postsComments', (ref) =>
-          ref.orderBy('CommentDate', 'desc').limit(5)
-        )
-        .snapshotChanges();
     }
   }
 
@@ -128,30 +124,22 @@ export class HPostCommentService {
     this.postCounts.next(this.postCounts.value + 4);
   }
 
-  // deleteComment(Cid, postID) {
-  //   let uid = localStorage.getItem('uid');
-  //   return this.db
-  //   .collection('users-details')
-  //   .doc(uid).collection('MyPosts').doc(postID).collection('postsComments').doc(Cid)
-  //   .delete();
- 
-  // }
-
 
 //COMMENT WRITERAUTHId
   deleteComment(Cid, postId,AUTHId) {
-    let uid = localStorage.getItem('uid');
+   
     let   frindsList: any[] = [];
-    this.getAllFriendsList()
-    .subscribe((data) => {
-     frindsList = data.map((e) => {
-        return e.payload.doc.id
-      });
-      //console.log(frindsList);
-    });
+    //let  authFrindsList: any[] = [];
+     this.getAllautIDList(AUTHId)
+              .subscribe((data) => {
+               frindsList = data.map((e) => {
+                  return e.payload.doc.id
+                });
+                //console.log(frindsList);
+              });
     return new Promise<any>((res, rej) => {
-      if (uid == AUTHId) {
-        this.db.collection('users-details').doc(uid) .collection('MyPosts')
+     
+        this.db.collection('users-details').doc(AUTHId) .collection('MyHomePosts')
         .doc(postId).collection('postsComments').doc(Cid)
          .delete()
           .then(
@@ -159,52 +147,57 @@ export class HPostCommentService {
               console.log(res)
               frindsList.map((e) => {
                 this.db.collection('users-details').doc(e)
-                  .collection('MyFriendsPosts').doc(postId)
+                  .collection('MyHomePosts').doc(postId)
                   .collection('postsComments').doc(Cid)
                   .delete()
                   })
             },
             (err) => rej(err)
           );
-      }
-       else {
-        this.db
-          .collection('users-details')
-          .doc(uid)
-          .collection('MyFriendsPosts')
-          .doc(postId)
-          .collection('postsComments').doc(Cid)
-          .delete()
-          .then(
-            (res) => {
-             
-              this.db
-                .collection('users-details')
-                .doc(AUTHId)
-                .collection('MyPosts')
-                .doc(postId)
-                .collection('postsComments')
-                .doc(Cid)
-         .delete()
-            },
-
-            
-            (err) => rej(err)
-          );
-      }
+    
     });
   }
 
 
 
+  getMyCommentsById(pid, cid) {
+    return this.db.collection('users-details').doc(this.uid) .collection('MyHomePosts')
+    .doc(pid).collection('Comments').doc(cid).valueChanges()
+  }
 
 
+editComment(pid, cid, data,AUTHId) {
+  let   frindsList: any[] = [];
+   this.getAllautIDList(AUTHId)
+            .subscribe((data) => {
+             frindsList = data.map((e) => {
+                return e.payload.doc.id
+              });
+              //console.log(frindsList);
+            });
+  new Promise<any>((res, rej) => {
+    this.db.collection('users-details').doc(AUTHId).collection('MyHomePosts')
+    .doc(pid).collection('postsComments').doc(cid)
+      .update({
+        Body: data,
+      })
+      .then(
+        (res) => {
+          frindsList.map((e) => {
+            console.log(e)
+            console.log(res)
+            this.db.collection('users-details').doc(e).collection('MyHomePosts')
+            .doc(pid).collection('postsComments').doc(cid)
+              .update({
+                Body: data,
+              })
+          });
+        },
+        (error) => rej(error)
+      );
+  });
 
-
-
-
-
-
-
+  return;
+}
 
 }

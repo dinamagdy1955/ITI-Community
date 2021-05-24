@@ -1,1 +1,23 @@
-<p>home-edit-comment works!</p>
+<ng-template #editComment let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title">Edit your Comment</h6>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form [formGroup]='editCommentForm' (ngSubmit)='updateComment()'>
+        <div class="modal-body">
+            <div class="form-group">
+                <textarea class="form-control" name="Body" formControlName="Body" rows="5"
+                    placeholder="Type Your Edit Comment..." required></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-danger btn-sm" (click)="c('Save click')">Cancel</button>
+            <button type="submit" class="btn btn-outline-primary btn-sm" [disabled]="!editCommentForm.valid"
+                (click)="c('Save click');">Edit</button>
+        </div>
+    </form>
+</ng-template>
+
+<button ngbDropdownItem (click)="open(editComment)">Edit</button>
