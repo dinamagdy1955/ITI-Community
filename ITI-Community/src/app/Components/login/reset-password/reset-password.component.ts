@@ -56,12 +56,16 @@ export class ResetPasswordComponent implements OnInit {
         this.resetPasswordForm.value.confirmPassword
       ) {
         this.signIn
-          .resetPassword(this.code, this.resetPasswordForm.value.password)
-          .then((res) => {
-            console.log(res);
-
-            // this.us.editPassword(r,this.resetPasswordForm.value.password);
-            // this.router.navigate(['/Login']);
+          .applyActionCode(this.code)
+          .then(() => {
+            this.signIn
+              .resetPassword(this.code, this.resetPasswordForm.value.password)
+              .then((res) => {
+                this.router.navigate(['/Login']);
+              })
+              .catch((err) => {
+                this.openModal();
+              });
           })
           .catch((err) => {
             this.openModal();

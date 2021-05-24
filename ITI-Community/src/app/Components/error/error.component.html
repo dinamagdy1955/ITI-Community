@@ -1,9 +1,9 @@
 <div class="container-fluid">
-    <a href="" id="loginLogo">
+    <div id="loginLogo">
         <img class="header__logo" src="../../../../assets/iti-logo.png">
         <div class="header__separator"></div>
         <span class="header__title">Information Technology Institute</span>
-    </a>
+    </div>
     <div class="col-lg-4 mainContainerError">
         <div class="separator"></div>
 
@@ -13,6 +13,6 @@
         <h6 class="headerErr">
             Refresh the page
         </h6>
-        <button class="tryAgain">Try Again</button>
+        <button class="tryAgain" (click)="navigate()">{{text}}</button>
     </div>
 </div>

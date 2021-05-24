@@ -7,6 +7,7 @@ import {
   NavigationCancel,
   NavigationError,
 } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from './MainServices/User.service';
 
 @Component({
@@ -18,8 +19,17 @@ export class AppComponent {
   title = 'ITI-Community';
   showHead: boolean = false;
   loader: boolean = true;
+  data: Observable<any>;
+  subscription: Subscription[] = [];
+  uid;
   constructor(private router: Router, private us: UserService) {
-    this.us.Init();
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != undefined) {
+        this.uid = res.id;
+      }
+    });
+    this.subscription.push(sub);
     if (localStorage.getItem('lang') == 'en') {
       document.dir = 'ltr';
     } else if (localStorage.getItem('lang') == 'ar') {
@@ -32,13 +42,33 @@ export class AppComponent {
         if (
           event['url'] == '/Login' ||
           event['url'] == '/Register/User' ||
-          event['url'] == '/jobs/specificjob' ||
           event['url'] == '/ForgetPassword' ||
-          event['url'].startsWith('/ResetPassword')
+          event['url'].startsWith('/ResetPassword') ||
+          event['url'] == '/notFound'
         ) {
           this.showHead = false;
         } else {
           this.showHead = true;
+        }
+        if (
+          localStorage.getItem('userToken') == undefined &&
+          !(
+            event['url'] == '/Login' ||
+            event['url'] == '/Register/User' ||
+            event['url'] == '/ForgetPassword' ||
+            event['url'].startsWith('/ResetPassword')
+          )
+        ) {
+          this.router.navigate(['/Login']);
+        }
+        if (
+          localStorage.getItem('userToken') != undefined &&
+          (event['url'] == '/Login' ||
+            event['url'] == '/Register/User' ||
+            event['url'] == '/ForgetPassword' ||
+            event['url'].startsWith('/ResetPassword'))
+        ) {
+          this.router.navigate(['/Home']);
         }
       }
     });

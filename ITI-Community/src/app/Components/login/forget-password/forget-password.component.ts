@@ -44,8 +44,6 @@ export class ForgetPasswordComponent implements OnInit {
       this.signIn
         .forgetPassword(this.forgetPassword.value.email)
         .then((res) => {
-          // localStorage.setItem('email',);
-
           this.router.navigate(['/Login']);
         })
         .catch((err) => {

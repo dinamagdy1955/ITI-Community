@@ -35,4 +35,8 @@ export class SignInService {
   resetPassword(code, password) {
     return this.auth.confirmPasswordReset(code, password);
   }
+
+  applyActionCode(code) {
+    return this.auth.verifyPasswordResetCode(code);
+  }
 }
