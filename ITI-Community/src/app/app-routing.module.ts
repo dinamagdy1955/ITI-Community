@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './Components/error/error.component';
 import { HomePageComponent } from './Components/home-page/home-page.component';
+import { SavedPostsComponent } from './Components/home-page/saved-posts/saved-posts.component';
 import { ForgetPasswordComponent } from './Components/login/forget-password/forget-password.component';
 import { LoginComponent } from './Components/login/login.component';
 import { ResetPasswordComponent } from './Components/login/reset-password/reset-password.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
     path: 'Home',
     component: HomePageComponent,
   },
+  { path: 'savedPosts', component:SavedPostsComponent },
   {
     path: 'Login',
     component: LoginComponent,

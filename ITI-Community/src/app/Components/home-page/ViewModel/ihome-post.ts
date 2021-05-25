@@ -10,6 +10,7 @@ export interface IHomePost {
     //GroupId: string,
     postID:string,
     Body: string,
+    savedState:boolean,
     PostedDate: Date,
     postImgs?: string[],
     Auther?: IUser,

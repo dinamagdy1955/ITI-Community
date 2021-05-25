@@ -1,0 +1,97 @@
+<div class="container-fluid savedJobMain">
+    <div class="container-xl">
+        <div class="row savedJobContainer">
+            <div class="col-md-3 mainContainer">
+                <div class="list-group mySavedItems">
+                    <a  class="list-group-item disabled mySavedItemsHeader">
+                        <i class="fas fa-bookmark"></i> My Items
+                    </a>
+                    <a  class="list-group-item list-group-item-action">
+                        Saved Jobs
+                        <span class="noOfItems">5</span>
+                    </a>
+                 
+                    <a  class="list-group-item list-group-item-action">
+                        Saved Posts
+                        <span class="noOfItems">{{savedPosts.length}}</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-9  mainContainer" >
+             <div *ngIf="savedPosts.length === 0"  style="align-content: center;width: 100%;
+             height:auto;border: 10px;background-color: white;padding: 20px;border-radius: .5em; box-shadow: 2px 2px 5px gray; ">
+             
+                <div >
+                    <div class="noAboutImg">
+                      <p>OOPS...! you Dont have any Saved posts till Now 
+                        go to home and Explore more  ...</p>
+                      <img
+                        src="https://img.freepik.com/free-photo/3d-word-oops_58466-263.jpg?size=626&ext=jpg">
+                    </div>
+                    <a name="" id="" class="btn " [routerLink]="['/Home']" role="button" 
+                    style="border-radius: 5px;color: white;background-color: brown; margin-left: 45%; margin-top: 5px;">Go Home</a>
+                </div>
+             
+                <!-- <div style=" align-items: center ;width: 100%;height:350px;
+                background-image: url(https://img.freepik.com/free-photo/3d-word-oops_58466-263.jpg?size=626&ext=jpg);
+               background-repeat: no-repeat;background-size:contain; ">
+         <h4 style="color: brown;">
+            you Dont have any Saved posts till Now 
+            go to home and Explore more 
+            </h4>
+                </div>
+       <a name="" id="" class="btn " [routerLink]="['/Home']" role="button" 
+       style="border-radius: 5px;color: white;background-color: brown; margin-left: 45%;">Go Home</a> -->
+                </div>
+                <div *ngIf="savedPosts.length > 0" class="list-group mySavedListItems">
+                    <div href="#" class="list-group-item disabled mySavedItemsHeader">
+                        <h3>My Saved Posts</h3>
+                    </div>
+
+
+
+
+                    <div  *ngFor="let item of savedPosts" href="#" class="list-group-item mySavedItem">
+                        <div class="mySavedItemContent">
+                            <img [src]="item.data.Auther.avatar" class="logoImg">
+                        </div>
+                        <div class="mySavedItemContent" [routerLink]="['/Home']"  >
+                            <a href="" class="list-group-item-heading jobTitleLink">{{item.data.Auther.firstName}} {{item.data.Auther.lastName}}</a>
+                            <div class="list-group-item-text companyName">posted in {{item.data.PostedDate.toDate() | date}} </div>
+                            <div class="list-group-item-text jobLocation"> {{item.data.Body | slice : 0 : 100 }}.....</div>
+                           
+                        </div>
+                        <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
+                            <a ngbDropdownToggle type="text" class="btnMoreDetailsDots" id="dropdownMenuButton"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </a>
+                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                               
+                          <button type="button" 
+                           ngbDropdownItem (click)="unsave(item)">
+                               <i class="fas fa-bookmark"></i> Unsave</button>
+                                
+                               
+                                   
+                               
+                                <button ngbDropdownItem 
+                                 
+                                 >
+                                    <i class="fas fa-link"></i> CopyLink
+                                </button>
+                                <!--
+                                    ngxClipboard [cbContent]="hh"
+                                     <a ngbDropdownItem href="#">
+                                    <i class="fas fa-envelope"></i> Send a message
+                                </a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<app-main-footer></app-main-footer>

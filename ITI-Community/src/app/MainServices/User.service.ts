@@ -26,7 +26,7 @@ export class UserService implements OnInit {
       this.stateObs();
       setTimeout(() => {
         resolve();
-      }, 100);
+      }, 200);
     });
   }
 

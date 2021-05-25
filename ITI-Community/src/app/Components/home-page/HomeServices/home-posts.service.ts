@@ -138,9 +138,29 @@ export class HomePostsService {
    return this.db
     .collection('users-details')
     .doc(uid)
-    .collection('MySavedPosts').doc(pid).set(post)
+    .collection('MyHomePosts').doc(pid).update({
+      savedState:true
+    })
   
   }
+  getSavedPosts(uid) {
+    return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('MyHomePosts' , (ref) => ref.where('savedState', '==',true))
+      .snapshotChanges();
+  }
+
+  unSavePost(item,uid){
+    console.log(item.id)
+    return this.db
+    .collection('users-details')
+    .doc(uid)
+    .collection('MyHomePosts').doc(item.id).update({
+      savedState:false
+    })
+  }
+
 
   editPost(id, data,uid) {
     let myfrindsList: any[] = [];

@@ -21,15 +21,15 @@
       <span style="font-weight: bold;color: #b4272d">Grow your network</span> <br>
     </div>
     <div class="profilecardsection">
-      <a href="#" [routerLink]="['/FullNetwork/RequestsInvitation']">
+      <a  [routerLink]="['/FullNetwork/RequestsInvitation']">
         <span style="color:#68161ad5">invitation </span>
         <span style=" color: #b4272d">{{Requests.length}}</span>
       </a>
     </div>
     <hr>
     <div class="profilecardsection">
-      <a href="#"><i class="fas fa-bookmark " style="font-size: 1em; color: #b4272d;"></i>
-        <span style="margin:.5em; color: black;"> my items </span>
+      <a [routerLink]="['/savedPosts']"   ><i class="fas fa-bookmark " style="font-size: 1em; color: #b4272d;"></i>
+        <span style="margin:.5em; color: black;"> Saved Posts </span>
       </a>
     </div>
     <br>

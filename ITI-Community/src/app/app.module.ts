@@ -30,6 +30,9 @@ import { HCommentFormComponent } from './Components/home-page/hcomment-form/hcom
 import { UserService } from './MainServices/User.service';
 import { ForgetPasswordComponent } from './Components/login/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './Components/login/reset-password/reset-password.component';
+import { SavedPostsComponent } from './Components/home-page/saved-posts/saved-posts.component';
+import { ClipboardModule } from 'ngx-clipboard';
+
 
 export function initializeApp1(userService: UserService) {
   return (): Promise<any> => {
@@ -57,6 +60,8 @@ export function initializeApp1(userService: UserService) {
     HCommentFormComponent,
     ForgetPasswordComponent,
     ResetPasswordComponent,
+    SavedPostsComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -69,6 +74,7 @@ export function initializeApp1(userService: UserService) {
     NgxTwitterTimelineModule,
     MainfooterModule,
     HttpClientModule,
+    ClipboardModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

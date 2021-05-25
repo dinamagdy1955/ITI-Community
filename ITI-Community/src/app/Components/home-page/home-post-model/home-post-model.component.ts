@@ -49,6 +49,7 @@ export class HomePostModelComponent implements OnInit  {
       postID:'',
       Likes: [[]],
       Body: '',
+      savedState:false,
       PostedDate: new Date,
       Auther: {
         id: this.uid,
@@ -85,6 +86,7 @@ export class HomePostModelComponent implements OnInit  {
       postID:'',
       Likes: [[]],
       Body: '',
+      savedState:false,
       PostedDate: new Date,
       Auther: {
         id: this.uid,
@@ -126,6 +128,7 @@ export class HomePostModelComponent implements OnInit  {
      postID:'',
       Likes: [[]],
       Body: '',
+      savedState:false,
       PostedDate: new Date,
       Auther: {
         id: this.uid,
