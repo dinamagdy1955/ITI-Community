@@ -58,8 +58,10 @@ export class HomePostsService {
           (res) => {
             frindsList.map((e) => {
               console.log(e)
-             this.db.collection('users-details').doc(e).collection('MyHomePosts')
-             .doc(res.id).set(post)
+              this.db.collection('users-details').doc(e).collection('MyHomePosts')
+              .doc(res.id).set(post)
+              this.db.collection('users-details').doc(e).collection('Notifications')
+              .doc(res.id).set(post)
             })
           },
           (error) => rej(error)
@@ -67,6 +69,26 @@ export class HomePostsService {
     });
     return
   }
+
+  getAllNotifications(uid) {
+    return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('Notifications', (ref) =>
+        ref.where('PostedDate', '!=', null).orderBy('PostedDate', 'desc')
+      )
+      .snapshotChanges();
+  }
+
+  DeleteNotification(pid,uid){
+    return this.db
+    .collection('users-details')
+    .doc(uid)
+    .collection('Notifications')
+    .doc(pid)
+    .delete()
+  }
+
 
   async uploadImg(imgs) {
     const fileRef = [];
@@ -134,13 +156,25 @@ export class HomePostsService {
     .delete()
   }
 
+
   SavePosts(pid, post,uid){
-   return this.db
-    .collection('users-details')
-    .doc(uid)
-    .collection('MyHomePosts').doc(pid).update({
-      savedState:true
-    })
+    if(post.data.savedState===false){
+      return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('MyHomePosts').doc(pid).update({
+        savedState:true
+      })
+    }
+    else{
+      return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('MyHomePosts').doc(pid).update({
+        savedState:false
+      })
+    }
+ 
   
   }
   getSavedPosts(uid) {

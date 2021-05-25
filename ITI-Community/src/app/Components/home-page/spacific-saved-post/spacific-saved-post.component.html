@@ -1,0 +1,100 @@
+
+<div *ngIf="post !==undefined" style="align-items: center;align-content: center;margin-left: 20%;" class="mt-4">
+<div class=" col-md-9 media border p-3 postcontainer " id="post1"
+  style="background-color: white; border-radius: .5em; margin-bottom: .5em;">
+  <div class="media-body  " style="  align-items: center ">
+    <!-- <span style="font-size: .8em;">
+      New post in
+    </span>
+    <a href="#" style="font-size: .8em;"> UI/UX User Experience / Wireframes </a> -->
+    <div style="float: right;" class="btn-group" ngbDropdown role="group "
+      aria-label="Button group with nested dropdown">
+      <button class="btn btn-sm " ngbDropdownToggle>
+        <i class="fas fa-ellipsis-h dots"></i>
+      </button>
+      <div class="dropdown-menu" ngbDropdownMenu>
+
+    
+        <button class="DDBtn" ngbDropdownItem>
+          <div>
+            <i class="fas fa-flag " aria-hidden="true"> Report this post </i>
+            <br> <small> post is offsensive or the account is hacked </small>
+          </div>
+        </button>
+
+    
+
+      </div>
+    </div>
+
+    <!-- <hr class="mt-4"> -->
+    <div class="row mb-2">
+      <div class="col-2 pr-1">
+        <img [src]="post.Auther.avatar"
+         style="width:80px;height: 80px;border-radius: 50%;" alt="John Doe"
+          class=" mr-2  rounded-circle">
+
+      </div>
+      <div class="col-10 pl-1">
+
+        <strong style="color: #b4272d">
+          {{post.Auther.firstName}} {{post.Auther.lastName}} </strong>
+        <small class="text-muted d-block">{{post.Auther.jobTitle}}</small>
+        <small class="text-muted d-block">posted in {{post.PostedDate.toDate() | date}}</small>
+
+      </div>
+
+    </div>
+
+    <div style="width:250px;height: auto;overflow: hidden;">
+
+      {{post.Body}}
+
+    </div>
+
+    <!-- *ngFor="let item of post.data.postImg" -->
+    <div *ngFor="let item of post.postImg" style="margin-left: 15px;">
+      <div *ngIf="post.postImg" class=" d-inline-block">
+        <img [src]="item" style="width:100%;height:auto; " alt="post image">
+      </div>
+
+
+
+    </div>
+
+    <div class="W-100%"><br></div>
+    <!--  posts two buttons-->
+    <div class="text-secondary mb-2" style="float: left;">
+      <small>{{post.Likes.length}} Likes</small>
+    </div>
+    <hr style="color: rgba(255, 255, 255, 0);">
+    <div class="postIcons mt-3" style="border-top: 1px solid lightgray;">
+
+
+      <div class="post-actions-groups" style="float: left;">
+       
+
+
+        <label for="comment" class="btn mb-0"><i class="far fa-comment mr-1"></i>Comment</label>
+      </div>
+      <br>
+      <!-- <div class="user-right-comments row mt-3">
+        <img [src]="avatar" class="col-2" style="width:50px;height:40px;padding: 0px;">
+       
+      </div> -->
+      <div class=" col-10 ">
+        <!-- <img [src]="avatar"  style="width:50px;height:40px;padding: 0px;"> -->
+        <app-hcomment-form [defPostId]="post.id" [AUTHId]="post.Auther.id"></app-hcomment-form>
+      </div>
+      <app-home-post-comment [PostID]="post.id"
+       [AUTHId]="post.Auther.id">
+      </app-home-post-comment>
+ 
+
+    </div>
+
+  </div>
+  <br>
+</div>
+
+</div>

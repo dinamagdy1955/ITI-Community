@@ -55,7 +55,8 @@
                         <div class="mySavedItemContent">
                             <img [src]="item.data.Auther.avatar" class="logoImg">
                         </div>
-                        <div class="mySavedItemContent" [routerLink]="['/Home']"  >
+                        <div class="mySavedItemContent" [routerLink]="['/savedPosts',item.id]"  >
+                            
                             <a href="" class="list-group-item-heading jobTitleLink">{{item.data.Auther.firstName}} {{item.data.Auther.lastName}}</a>
                             <div class="list-group-item-text companyName">posted in {{item.data.PostedDate.toDate() | date}} </div>
                             <div class="list-group-item-text jobLocation"> {{item.data.Body | slice : 0 : 100 }}.....</div>

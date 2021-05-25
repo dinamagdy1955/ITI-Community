@@ -26,9 +26,13 @@
 
 
         <button class="DDBtn" ngbDropdownItem (click)="SavePost(post.id,post)">
-          <div>
+          <div *ngIf="post.data.savedState==false">
             <i class="fas fa-bookmark" aria-hidden="true"> Save </i>
             <br> <small> save for later </small>
+          </div>
+          <div *ngIf="post.data.savedState==true">
+            <i class="fas fa-bookmark" aria-hidden="true"> UnSave </i>
+            <br> <small> Remove from your saved posts </small>
           </div>
         </button>
 
@@ -92,7 +96,7 @@
     <!-- *ngFor="let item of post.data.postImg" -->
     <div *ngFor="let item of post.data.postImg" style="margin-left: 15px;">
       <div *ngIf="post.data.postImg" class=" d-inline-block">
-        <img [src]="item" style="width:100%;height: 50px; " alt="post image">
+        <img [src]="item" style="width:100%;height:auto; " alt="post image">
       </div>
 
 

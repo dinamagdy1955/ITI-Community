@@ -32,6 +32,7 @@ import { ForgetPasswordComponent } from './Components/login/forget-password/forg
 import { ResetPasswordComponent } from './Components/login/reset-password/reset-password.component';
 import { SavedPostsComponent } from './Components/home-page/saved-posts/saved-posts.component';
 import { ClipboardModule } from 'ngx-clipboard';
+import { SpacificSavedPostComponent } from './Components/home-page/spacific-saved-post/spacific-saved-post.component';
 
 
 export function initializeApp1(userService: UserService) {
@@ -61,6 +62,7 @@ export function initializeApp1(userService: UserService) {
     ForgetPasswordComponent,
     ResetPasswordComponent,
     SavedPostsComponent,
+    SpacificSavedPostComponent,
     
   ],
   imports: [

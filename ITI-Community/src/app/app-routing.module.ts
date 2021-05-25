@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './Components/error/error.component';
 import { HomePageComponent } from './Components/home-page/home-page.component';
 import { SavedPostsComponent } from './Components/home-page/saved-posts/saved-posts.component';
+import { SpacificSavedPostComponent } from './Components/home-page/spacific-saved-post/spacific-saved-post.component';
 import { ForgetPasswordComponent } from './Components/login/forget-password/forget-password.component';
 import { LoginComponent } from './Components/login/login.component';
 import { ResetPasswordComponent } from './Components/login/reset-password/reset-password.component';
@@ -14,6 +15,8 @@ const routes: Routes = [
     component: HomePageComponent,
   },
   { path: 'savedPosts', component:SavedPostsComponent },
+  { path: 'savedPosts/:id', component:SpacificSavedPostComponent },
+ 
   {
     path: 'Login',
     component: LoginComponent,
