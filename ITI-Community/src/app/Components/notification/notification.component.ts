@@ -15,10 +15,10 @@ export class NotificationComponent implements OnInit {
   avatar;
   data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor(private homePostServ: HomePostsService,private us: UserService) {
+  constructor(private homePostServ: HomePostsService, private us: UserService) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
-      if (res != undefined) {
+      if (res != null) {
         this.uid = res.id;
         this.avatar = res.avatar;
       }
@@ -28,20 +28,18 @@ export class NotificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.homePostServ.getAllNotifications(this.uid).subscribe((data) => {
-      console.log(data)
-      this. Notifications = data.map((e) => {
-        console.log(e.payload.doc.data())
+      console.log(data);
+      this.Notifications = data.map((e) => {
+        console.log(e.payload.doc.data());
         return {
-          id:e.payload.doc.id,
-          data:e.payload.doc.data()
-        }
-        
-        
+          id: e.payload.doc.id,
+          data: e.payload.doc.data(),
+        };
       });
-console.log(this.Notifications)
+      console.log(this.Notifications);
     });
   }
-  DeleteNotification(postid){
-this.homePostServ.DeleteNotification(postid,this.uid)
+  DeleteNotification(postid) {
+    this.homePostServ.DeleteNotification(postid, this.uid);
   }
 }

@@ -18,29 +18,26 @@ export class HomeAddToYourFeedComponent implements OnInit {
   avatarCover;
   data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor(
-    private usrs: NetworkService,
-    private us: UserService) {
-
-      this.data = this.us.localUserData.asObservable();
-      let sub = this.data.subscribe((res) => {
-        if (res != undefined) {
-          this.uid = res.id;
-          this.firstName = res.firstName;
-          this.lastName = res.lastName;
-          this.jobTitle = res.jobTitle;
-          this.avatar = res.avatar;
-          this.avatarCover = res.avatarCover;
-        }
-      });
-      this.subscription.push(sub);
-    }
+  constructor(private usrs: NetworkService, private us: UserService) {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != null) {
+        this.uid = res.id;
+        this.firstName = res.firstName;
+        this.lastName = res.lastName;
+        this.jobTitle = res.jobTitle;
+        this.avatar = res.avatar;
+        this.avatarCover = res.avatarCover;
+      }
+    });
+    this.subscription.push(sub);
+  }
 
   ngOnInit(): void {
     let friendData: any[];
     let Requests: any[];
     let SentfriendRequest: any[];
-   // let uid = localStorage.getItem('uid');
+    // let uid = localStorage.getItem('uid');
     this.usrs.getAllFriendRequests(this.uid).subscribe((data) => {
       Requests = data.map((e) => {
         let id = e.payload.doc.id;

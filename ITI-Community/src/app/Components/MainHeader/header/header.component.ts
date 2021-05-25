@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       console.log(res);
-      if (res != undefined) {
+      if (res != null) {
         this.uid = res.id;
         this.firstName = res.firstName;
         this.lastName = res.lastName;

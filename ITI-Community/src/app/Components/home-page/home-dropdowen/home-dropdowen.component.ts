@@ -17,7 +17,7 @@ export class HomeDropdowenComponent implements OnInit {
   constructor(private us: UserService, private gp: GroupService) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
-      if (res != undefined) {
+      if (res != null) {
         this.uid = res.id;
       }
     });

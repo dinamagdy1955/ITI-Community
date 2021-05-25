@@ -29,7 +29,7 @@ export class RightSideGroupComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
-      if (res != undefined) {
+      if (res != null) {
         this.userID = res.id;
       }
     });

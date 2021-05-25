@@ -9,8 +9,8 @@ import { LocalUserData } from '../ViewModel/local-user-data';
 @Injectable({
   providedIn: 'root',
 })
-export class UserService implements OnInit {
-  public localUserData = new BehaviorSubject<LocalUserData>(undefined);
+export class UserService {
+  public localUserData = new BehaviorSubject<LocalUserData>(null);
 
   constructor(
     private db: AngularFirestore,
@@ -19,20 +19,22 @@ export class UserService implements OnInit {
   ) {
     this.stateObs();
   }
-  ngOnInit(): void {}
+  // ngOnInit(): void {}
 
   Init() {
     return new Promise<void>((resolve, reject) => {
       this.stateObs();
       setTimeout(() => {
         resolve();
-      }, 200);
+      }, 1500);
     });
   }
 
   stateObs() {
     this.auth.onAuthStateChanged((res) => {
       if (res != null || res != undefined) {
+        // console.log(this.localUserData.value);
+
         this.db
           .collection('users-details')
           .doc(res.uid)
@@ -49,7 +51,7 @@ export class UserService implements OnInit {
             });
           });
       } else {
-        this.localUserData.next(undefined);
+        this.localUserData.next(null);
         // this.router.navigate(['/Login']);
       }
     });

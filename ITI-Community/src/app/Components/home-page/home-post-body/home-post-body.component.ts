@@ -17,10 +17,10 @@ export class HomePostBodyComponent implements OnInit {
   avatar;
   data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor(private homePostServ: HomePostsService,private us: UserService) {
+  constructor(private homePostServ: HomePostsService, private us: UserService) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
-      if (res != undefined) {
+      if (res != null) {
         this.uid = res.id;
         this.avatar = res.avatar;
       }
@@ -28,7 +28,6 @@ export class HomePostBodyComponent implements OnInit {
     this.subscription.push(sub);
   }
 
-  
   identify(index, post) {
     return post.id;
   }
@@ -40,21 +39,20 @@ export class HomePostBodyComponent implements OnInit {
           data: e.payload.doc.data(),
         };
       });
-
     });
-   }
-  
-  deletePost(pid, post) {
-    this.homePostServ.deletePost(pid, post,this.uid)
-  }
-  spamPost(pid,post){
-    this.homePostServ.SpamPost(pid, post,this.uid)
-  }
-  SavePost(pid,post){
-    this.homePostServ.SavePosts(pid, post,this.uid)
   }
 
-  Like(uid, pid,autID) {
-    this.homePostServ.giveLike(uid, pid,autID);
+  deletePost(pid, post) {
+    this.homePostServ.deletePost(pid, post, this.uid);
+  }
+  spamPost(pid, post) {
+    this.homePostServ.SpamPost(pid, post, this.uid);
+  }
+  SavePost(pid, post) {
+    this.homePostServ.SavePosts(pid, post, this.uid);
+  }
+
+  Like(uid, pid, autID) {
+    this.homePostServ.giveLike(uid, pid, autID);
   }
 }

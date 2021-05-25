@@ -26,7 +26,7 @@ export class CommentFormComponent implements OnInit, OnDestroy {
   ) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
-      if (res != undefined) {
+      if (res != null) {
         this.userID = res.id;
         this.firstName = res.firstName;
         this.lastName = res.lastName;

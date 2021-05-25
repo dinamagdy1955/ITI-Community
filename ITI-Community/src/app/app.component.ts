@@ -25,7 +25,7 @@ export class AppComponent {
   constructor(private router: Router, private us: UserService) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
-      if (res != undefined) {
+      if (res != null) {
         this.uid = res.id;
       }
     });

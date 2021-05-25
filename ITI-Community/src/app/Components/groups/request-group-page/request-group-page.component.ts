@@ -21,7 +21,7 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
-      if (res != undefined) {
+      if (res != null) {
         this.userID = res.id;
       }
     });

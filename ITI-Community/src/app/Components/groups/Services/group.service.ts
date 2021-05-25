@@ -19,7 +19,7 @@ export class GroupService {
   constructor(private db: AngularFirestore, private us: UserService) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
-      if (res != undefined) {
+      if (res != null) {
         this.firstName = res.firstName;
         this.lastName = res.lastName;
         this.avatar = res.avatar;
