@@ -147,6 +147,13 @@ export class HomePostsService {
     return;
   }
 
+  ReportPost(pid,post,uid){
+    this.db.collection('users-details').doc(uid).collection('ReportedPosts')
+    .doc(pid).set(post)
+    alert('you are Reported this post')
+
+  }
+
   SpamPost(pid, post,uid){
     return this.db
     .collection('users-details')

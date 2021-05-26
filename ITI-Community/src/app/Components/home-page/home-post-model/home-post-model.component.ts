@@ -29,6 +29,7 @@ export class HomePostModelComponent implements OnInit {
   avatarCover;
   data: Observable<any>;
   subscription: Subscription[] = [];
+  fileToUpload: File = null;
 
   constructor(
     private model: NgbModal,
@@ -107,6 +108,7 @@ export class HomePostModelComponent implements OnInit {
   }
 
   async onSubmit() {
+    
     const selectedImg = (<HTMLInputElement>document.getElementById('Img'))
       .files;
     if (selectedImg.length > 0) {
@@ -128,6 +130,7 @@ export class HomePostModelComponent implements OnInit {
       this.postForm.value.Body = body;
       this.homePostServ.writePost(this.postForm.value, this.uid);
     }
+    
     this.postForm = this.fb.group({
       // GroupId: this.SelectedGroupId,
       postID: '',
@@ -145,4 +148,5 @@ export class HomePostModelComponent implements OnInit {
       postImg: [[]],
     });
   }
+  
 }

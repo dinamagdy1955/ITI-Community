@@ -18,14 +18,19 @@
                 </h6>
                 <small class="text-muted">
                   <span>{{item.jobTitle}}</span>
-                  <br />Connected 4 days ago</small>
+                 </small>
               </div>
               <!--
  <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4" > 
                   Message 
                 </button>
                 -->
-              <div class="btn-group mr-3">
+
+                <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4"
+                (click)="DeleteFriendRequest(item)">
+                 <i class="fas fa-trash-alt"> Delete </i>
+               </button>
+              <!-- <div class="btn-group mr-3">
                 <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
                   <button class="btn btn-sm mt-4 " ngbDropdownToggle>
                     <i class="fas fa-ellipsis-h dots"></i>
@@ -36,7 +41,7 @@
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </li>
         </ul>

@@ -44,11 +44,15 @@
                   <br />Connected at {{item.addedDate.toDate() | date}}</small>
               </div>
 
-              <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4">
-                Message
+              <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4"
+               (click)="DeleteFriend(item.id)">
+                <i class="fas fa-trash-alt"> Delete </i>
               </button>
-              <div class="btn-group mr-3">
-                <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+              <!-- <div class="btn-group mr-3">
+                <button ngbDropdownItem (click)="DeleteFriend(item.id)">
+                  <i class="fas fa-trash-alt"> Delete </i>
+                </button> -->
+                <!-- <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
                   <button class="btn btn-sm mt-4" ngbDropdownToggle>
                     <i class="fas fa-ellipsis-h dots"></i>
                   </button>
@@ -57,8 +61,8 @@
                       <i class="fas fa-trash-alt"> Delete </i>
                     </button>
                   </div>
-                </div>
-              </div>
+                </div> -->
+              <!-- </div> -->
 
               
             </div>

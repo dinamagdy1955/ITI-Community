@@ -191,3 +191,39 @@
     margin: auto;
     border-radius: 50%;
   }
+  .messageBtn:hover{
+ 
+    border-radius: 2em;
+    font-weight: bold;
+
+     padding-left: .9em; 
+     padding-right:.9em; 
+     color:white;
+     border: 2px solid #b4272d;
+     font-size: small;
+     background-color: #b4272d !important;
+ 
+     span{
+         color: white;
+         font-weight: bold;
+     } 
+     i{
+         color: white;
+     }
+}
+.messageBtn{
+    border-radius: 2em;
+
+     padding-left: 1em; 
+     padding-right: 1em; 
+     border: 1px solid #b4272d;
+     color:#b4272d;
+     font-size: small;
+     background-color: white !important;
+ 
+     span{
+         color:#b4272d;
+         font-weight: bold;
+     }
+   
+ }

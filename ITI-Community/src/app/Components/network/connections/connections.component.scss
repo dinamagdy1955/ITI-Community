@@ -18,6 +18,8 @@
      border: 1px solid #b4272d;
      background-color: white !important;
      color: #68161ad5;
+     padding-left: 1em; 
+     padding-right: 1em;
      border-radius: 2em;
      font-size: small;
  margin-right: 5px;
@@ -31,7 +33,12 @@
      background-color: #b4272d !important;
          color: white;
          font-weight: bold;
-     
+         padding: 0.3em;
+      padding-left: 1em; 
+      padding-right: 1em; 
+     i{
+         color: white;
+     }
 }
 *{
  color: #68161ad5;;

@@ -13,6 +13,7 @@ export class HomePostBodyComponent implements OnInit {
   MyFriendsPosts: any[] = [];
   AllPosts: any[] = [];
   flag = false;
+  x = 200;
   uid;
   avatar;
   data: Observable<any>;
@@ -55,4 +56,12 @@ export class HomePostBodyComponent implements OnInit {
   Like(uid, pid, autID) {
     this.homePostServ.giveLike(uid, pid, autID);
   }
+  ReportPost(pid,post){
+    this.homePostServ.ReportPost(pid, post, this.uid)
+  }
+  seeAllContent(){
+    this.x=1000;
+
+  }
+
 }
