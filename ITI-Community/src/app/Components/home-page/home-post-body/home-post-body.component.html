@@ -151,3 +151,18 @@
   <br>
 </div>
 
+<div *ngIf="AllPosts.length==0">
+  <div class="noAboutImg" style="background-color: white; border-radius: .5em;">
+    <br>
+    <p style="margin: 20px;">OOPS...! you Dont have any  posts till Now 
+      go to Network and Explore more Friends ...</p>
+    <img
+      src="https://www.qualiart.com.au/wp-content/uploads/2020/04/sm.png" 
+      style="width:75%;height: auto; border-radius: 50%;display: block;margin: auto;">
+      <a name="" id="" class="btn mb-3" [routerLink]="['/FullNetwork']" role="button" 
+      style="border-radius: 5px;color: white;background-color: brown; margin-left: 40%; margin-top: 5px;">
+      Go To Network</a>
+  </div>
+ 
+</div>
+

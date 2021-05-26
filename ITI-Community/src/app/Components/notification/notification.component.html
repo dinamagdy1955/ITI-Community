@@ -1,12 +1,11 @@
 <div class="container-fluid savedJobMain" >
-    <div class="container-xl">
+    <div >
         <div class="row savedJobContainer">
-          
 
-
-            <div  class="col-md-9 mainContainer  mt-3" style="margin-left: 15%;">
+            <div  class="col-md-9 mainContainer  mt-3" style="display: block; margin:auto">
                 <div  class="list-group mySavedListItems" style="border-radius: .5em;">
-                    <div *ngFor="let notify of Notifications" style="margin: 1px;padding: 0px;border-radius: .5em;">
+                    <div *ngFor="let notify of Notifications"
+                     style="margin: 1px;padding: 0px;border-radius: .5em;">
                     <div  class="list-group-item list-group-item-action mySavedItem newNotification" >
                         <div  class="mySavedItemContent">
                            
@@ -27,8 +26,8 @@
                        <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
                            
                             
-                            <button name="" id="" class="btn mt-1"  role="button"  (click)="DeleteNotification(notify.id)"
-                            style="background-color: brown; color: white; border-radius: 5px; ">
+       <button name="" id="" class="btn mt-1"  role="button"  (click)="DeleteNotification(notify.id)"
+                            style="background-color: brown; color: white; border-radius: 5px;float:right ">
                                 <i class="far fa-trash-alt"></i>
                        </button>
                          
@@ -72,3 +71,19 @@
             </div>
         </div>
     </div>
+
+    <div *ngIf="Notifications.length==0">
+        <div class="noAboutImg" style="background-color: rgb(255, 255, 255); border-radius: .5em;
+        box-shadow: 2px 2px 5px gray  ;">
+          <br>
+          <p style="margin: 20px;">OOPS...! you Dont have any Notifications 
+            go and grow Up your Network Now </p>
+          <img
+            src="https://economictimes.indiatimes.com/thumb/msid-69417800,width-1200,height-900,resizemode-4,imgsize-205855/ai-in-social-media.jpg?from=mdr" 
+            style="width:50%;height: auto; border-radius: 50%;display: block;margin: auto;">
+            <a name="" id="" class="btn mb-3" [routerLink]="['/FullNetwork']" role="button" 
+            style="border-radius: 5px;color: white;background-color: brown; margin-left: 40%; margin-top: 5px;">
+            Go To Network</a>
+        </div>
+       
+      </div>
