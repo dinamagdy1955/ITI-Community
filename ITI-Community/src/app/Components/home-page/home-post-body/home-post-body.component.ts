@@ -61,6 +61,7 @@ export class HomePostBodyComponent implements OnInit {
   }
   seeAllContent(){
     this.x=1000;
+    document.getElementById('btn').style.display='none';
 
   }
 
