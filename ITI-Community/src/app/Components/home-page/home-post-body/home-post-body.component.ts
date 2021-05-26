@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HomePostsService } from '../HomeServices/home-posts.service';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -8,12 +8,13 @@ import { UserService } from 'src/app/MainServices/User.service';
   styleUrls: ['./home-post-body.component.scss'],
 })
 export class HomePostBodyComponent implements OnInit {
+  @ViewChild('pRef') pRef: ElementRef;
   MyPosts: any[] = [];
   frindsList: any[] = [];
   MyFriendsPosts: any[] = [];
   AllPosts: any[] = [];
   flag = false;
-  x = 200;
+  x = 400;
   uid;
   avatar;
   data: Observable<any>;
@@ -61,7 +62,6 @@ export class HomePostBodyComponent implements OnInit {
   }
   seeAllContent(){
     this.x=1000;
-    document.getElementById('btn').style.display='none';
 
   }
 

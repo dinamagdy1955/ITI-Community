@@ -93,7 +93,7 @@
     <div style="width:300px;height: auto;overflow: hidden;">
 
       {{post.data.Body | slice : 0 : x }}
-       <button id="btn" *ngIf="post.data.Body.length > 200" style="border: none;background-color:white;color: #b4272d;" 
+       <button id="btn" #pRef *ngIf="post.data.Body.length > 400" style="border: none;background-color:white;color: #b4272d;" 
        (click)= "seeAllContent()"> 
          Read More...</button>
   
