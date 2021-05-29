@@ -1,4 +1,4 @@
-<div class="W-100%"><br></div>
+<!-- <div class="W-100%"><br></div>
 <div class="media border p-3 postcontainer">
 
     <div class="media-body" style="  align-items: center;">
@@ -37,4 +37,17 @@
 
 
     </div>
+</div> -->
+<div class="W-100% "><br></div> <div class="W-100% "><br></div>
+<div class="searchedjobs " >
+    <h5>Your Applied Jobs</h5>
+<div *ngFor="let item of appliedJobs" class="appliedJobCard btn">
+
+    <h4 class="font-weight-normal">position : {{ item.data.position.en }}</h4>
+    <h5 class="font-weight-light">For :{{  item.data.company.en }}</h5>
+    <h5 class="font-weight-light"> in :{{item.data.location.en }}</h5>
+
+    <div><span class="text-success"> 7 Hours ago </span></div>
 </div>
+</div>
+<div class="W-100% "><br></div> <div class="W-100% "><br></div>
