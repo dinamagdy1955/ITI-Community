@@ -10,14 +10,20 @@
             </div> -->
             <ul ngbNav #nav="ngbNav" class="nav-tabs">
                 <li ngbNavItem>
-                    <a ngbNavLink>Groups</a>
+                    <a ngbNavLink>{{'Groups' | translate}}</a>
                     <ng-template ngbNavContent>
                         <div id="GroupsDiscover" class="Groups-content-display1">
-                            <h1 class="px-2 text-muted">Your Groups</h1>
-                            <ul class="list-group list-group-flush" *ngFor="let g of GroupList">
-                                <li class="list-group-item">
+                            <h1 class="px-2 text-muted" [ngClass]="{'text-right': Lang == 'ar'}">{{'Your Groups' |
+                                translate}}</h1>
+                            <div class="form-group has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" name="search" class="form-control" [(ngModel)]="keyWordsSearch"
+                                    placeholder="{{'What Do You Have Searching For ?...' | translate}}">
+                            </div>
+                            <ul class="list-group list-group-flush" *ngFor="let g of GroupList | filter:keyWordsSearch">
+                                <li class="list-group-item" [ngClass]="{'text-right': Lang == 'ar'}">
                                     <div class="media">
-                                        <img class="mr-3" [src]="g.ImgURL" alt="" width="64px">
+                                        <img class="mx-3" [src]="g.Img" alt="" width="64px">
                                         <div class="media-body">
                                             <h6 class="mt-2 mb-1">
                                                 <a routerLink="/Group/group-profile/{{g.id}}">{{g.Name}}</a>
@@ -27,7 +33,7 @@
                                         <div>
                                             <button class="btn btn-outline-danger btn-sm rounded-pill mt-3 px-3"
                                                 (click)='leaveGroup(userID, g.id)'><i class="fas fa-sign-out-alt"></i>
-                                                Leave
+                                                {{'Leave' | translate}}
                                             </button>
                                         </div>
                                     </div>
@@ -37,33 +43,40 @@
                     </ng-template>
                 </li>
                 <li ngbNavItem>
-                    <a ngbNavLink>Requests</a>
+                    <a ngbNavLink>{{'Requests' | translate}}</a>
                     <ng-template ngbNavContent>
                         <div id="GroupsDRequest" class="Groups-content-display2">
-                            <h1 class="px-2 text-muted">Your Requests</h1>
-                            <ul class="list-group list-group-flush" *ngFor="let g of subscribers">
-                                <li class="list-group-item">
+                            <h1 class="px-2 text-muted" [ngClass]="{'text-right': Lang == 'ar'}">{{'Your Requests' |
+                                translate}}</h1>
+                            <div class="form-group has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" name="search" class="form-control" [(ngModel)]="keyWordsSearch"
+                                    placeholder="{{'What Do You Have Searching For ?...' | translate}}">
+                            </div>
+                            <ul class="list-group list-group-flush"
+                                *ngFor="let g of subscribers | filter:keyWordsSearch">
+                                <li class="list-group-item" [ngClass]="{'text-right': Lang == 'ar'}">
                                     <div class="media">
-                                        <img class="mr-3" src="../../../../assets/400x400.png" alt="" width="64px">
+                                        <img class="mx-3" [src]="g.Img" alt="" width="64px">
                                         <div class="media-body">
                                             <h6 class="mt-2 mb-1"><a
                                                     routerLink="/Group/group-profile/{{g.id}}">{{g.Name}}
                                                 </a>
                                             </h6>
-                                            <small class="text-muted"><span>{{g.Specialty}}</span> members</small>
+                                            <small class="text-muted">{{g.Specialty}}</small>
                                         </div>
                                         <button type="button" class="btn btn-outline-dark btn-sm rounded-pill px-3 mt-3"
                                             (click)='leaveGroup(userID, g.id);'><i class="fas fa-undo"></i>
-                                            Withdraw</button>
+                                            {{'Withdraw' | translate}}</button>
                                     </div>
                                 </li>
                             </ul>
                         </div>
                     </ng-template>
                 </li>
-                <div class="ml-auto bd-highlight">
+                <div class="" [ngClass]="{'mr-auto': Lang == 'ar', 'ml-auto': Lang=='en'}">
                     <a [routerLink]="['/Group/discover-groups']"
-                        class="btn btn-sm btn-outline-primary rounded-pill px-3">Discover Groups</a>
+                        class="btn btn-sm btn-outline-primary rounded-pill px-3">{{'Discover Groups'| translate}}</a>
                 </div>
             </ul>
             <div [ngbNavOutlet]="nav" class="mt-2"></div>

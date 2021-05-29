@@ -16,9 +16,13 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
   users = [];
   data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor(private GrpServ: GroupService, private us: UserService) {}
+  Lang: string
+  keyWordsSearch;
+
+  constructor(private GrpServ: GroupService, private us: UserService) { }
 
   ngOnInit(): void {
+    this.Lang = localStorage.getItem('lang')
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -47,9 +51,6 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
               ...e.payload.doc.data(),
             };
           });
-          console.log('ul', this.users);
-          console.log('beforegl', this.GroupList);
-          console.log('beforesl', this.subscribers);
           if (this.users.length == 0) {
             this.GroupList = this.GroupList.filter((ele) => ele.id != i.id);
             this.subscribers = this.subscribers.filter((ele) => ele.id != i.id);
@@ -60,7 +61,6 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
               } else if (u.id == this.userID && u.Role == 0) {
                 this.subscribers.push(i);
               } else if (u.id == this.userID && u.Role == undefined) {
-                console.log('rmv');
                 this.GroupList = this.GroupList.filter((ele) => ele.id != i.id);
                 this.subscribers = this.subscribers.filter(
                   (ele) => ele.id != i.id
@@ -76,6 +76,10 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
 
   leaveGroup(user, id) {
     this.GrpServ.DeleteMembers(user, id);
+    let inds = this.subscribers.indexOf(id);
+    let indm = this.GroupList.indexOf(id)
+    this.subscribers.splice(inds, 1);
+    this.GroupList.splice(indm, 1);
   }
 
   ngOnDestroy(): void {

@@ -22,7 +22,7 @@ export class WriteBoxModelComponent implements OnInit {
   jobTitle;
   data: Observable<any>;
   subscriptions: Subscription[] = [];
-
+  Lang: string;
   constructor(
     private model: NgbModal,
     private grpService: GroupPostsService,
@@ -80,6 +80,8 @@ export class WriteBoxModelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.Lang = localStorage.getItem('lang');
+
     this.postForm = this.fb.group({
       GroupId: this.SelectedGroupId,
       Likes: [[]],

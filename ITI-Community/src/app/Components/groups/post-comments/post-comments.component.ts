@@ -17,16 +17,18 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
   data: Observable<any>;
   turnOff: boolean = false;
   counter: number = 0;
+  Lang: string
   constructor(
     public commentService: PostCommentService,
     private us: UserService
-  ) {}
+  ) { }
 
   identify(index, c) {
     return c.id;
   }
 
   ngOnInit(): void {
+    this.Lang = localStorage.getItem('lang')
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {

@@ -161,9 +161,9 @@ export class GroupService {
   addGroupToUser(user, groupId) {
     let sub = this.us.getUserData(user).subscribe((res) => {
       let Groups = res.payload.get('groups');
-      if (Groups.indexOf(groupId) == -1) {
-        Groups.push(groupId);
-      }
+      // if (Groups.indexOf(groupId) == -1) {
+      //   Groups.push(groupId);
+      // }
       sub.unsubscribe();
       this.db.collection('users-details').doc(user).update({
         groups: Groups,

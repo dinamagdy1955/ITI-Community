@@ -1,7 +1,12 @@
-<div class="card mt-3" *ngFor="let post of postGroupList; trackBy: identify">
-    <div class="card-body">
+<div class="form-group has-search pt-3">
+    <span class="fa fa-search form-control-feedback"></span>
+    <input type="text" name="search" class="form-control" [(ngModel)]="keyWordsSearch"
+        placeholder="{{'Searching For ?...' | translate}}">
+</div>
+<div class="card mt-3" *ngFor="let post of postGroupList | filter:keyWordsSearch; trackBy: identify">
+    <div class="card-body" [ngClass]="{'text-right': Lang == 'ar'}">
         <div class="media">
-            <img class="mr-4 rounded-circle" [src]="post.data.Auther.avatar" alt="" width="64px">
+            <img class="mx-4 rounded-circle" [src]="post.data.Auther.avatar" alt="" width="64px">
             <div class="media-body">
                 <h6 class="mt-1 mb-1">
                     <a class="text-dark text-decoration-none" href="">
@@ -21,7 +26,8 @@
                             <app-edit-post [postID]='post.id'></app-edit-post>
                         </div>
                         <div class="dropdown-divider"></div>
-                        <button ngbDropdownItem (click)="deletePost(post.id)">Delete</button>
+                        <button ngbDropdownItem (click)="deletePost(post.id)"
+                            [ngClass]="{'text-right': Lang == 'ar'}">{{'Delete' | translate}}</button>
                     </div>
                 </div>
             </div>
@@ -31,27 +37,41 @@
         </div>
         <div class="row">
             <div class="users-post-groups col-md-6" *ngFor="let img of post.data.postImg">
-                <button class="btn" (click)='onPress()'><img class="img-fluid" src="{{img}}" alt="" /></button>
-            </div>
-            <div *ngIf="viewImg">
-                <app-picture-view [img]='img'></app-picture-view>
+                <img class="img-fluid" src="{{img}}" alt="" (click)="openLg(content)" />
+                <ng-template #content let-modal>
+                    <div class="modal-header">
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')"
+                            [ngClass]="{'m-0 p-0': Lang == 'ar'}">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img class="img-fluid" src="{{img}}" alt="" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+                            translate}}</button>
+                    </div>
+                </ng-template>
             </div>
         </div>
         <div class="text-secondary pt-2">
-            <small>{{post.data.Likes.length}} Likes</small>
+            <small>{{post.data.Likes.length}} {{'Likes' | translate}}</small>
         </div>
         <div class="post-actions-groups mt-2">
             <button class="btn btn-default" (click)="Like(userID , post.id)">
-                <span *ngIf="!post.data.Likes.includes(userID)"><i class="far fa-thumbs-up mr-2"></i> Like</span>
+                <span *ngIf="!post.data.Likes.includes(userID)"><i class="far fa-thumbs-up mr-2"></i> {{'Like' |
+                    translate}}</span>
                 <span *ngIf="post.data.Likes.includes(userID)" class="font-weight-bold"><i
-                        class="fas fa-thumbs-up mr-2"></i>
-                    Like</span>
+                        class="fas fa-thumbs-up mx-2"></i>
+                    {{'Unlike' | translate}}</span>
             </button>
-            <label for="comment" class="btn mb-0"><i class="far fa-comment mr-2"></i>Comment</label>
+            <label class="btn mb-0"><i class="far fa-comment mx-2"></i>{{'Comment' |
+                translate}}</label>
         </div>
         <div class="user-right-comments row mt-3">
             <img [src]="avatar" class="rounded-circle col-2">
-            <div class=" col-9 mt-md-4 mt-lg-2 mr-2">
+            <div class=" col-9 mt-md-4 mt-lg-2 mr-2 p-0">
                 <app-comment-form [defPostId]="post.id"></app-comment-form>
             </div>
         </div>

@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { GroupPostsService } from '../Services/group-posts.service';
@@ -18,11 +19,13 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
   avatar;
   data: Observable<any>;
   viewImg: boolean = false;
-
+  Lang: string;
+  keyWordsSearch
   constructor(
     private getall: GroupPostsService,
     private groupService: GroupService,
-    private us: UserService
+    private us: UserService,
+    private modalService: NgbModal
   ) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
@@ -39,6 +42,7 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.Lang = localStorage.getItem('lang');
     let sub3 = this.groupService
       .getGroupsUsers(this.GroupId)
       .subscribe((res) => {
@@ -60,10 +64,9 @@ export class GroupPostsComponent implements OnInit, OnDestroy {
     this.subsriptions.push(sub4);
   }
 
-  onPress() {
-    this.viewImg = !this.viewImg;
+  openLg(content) {
+    this.modalService.open(content, { size: 'lg' });
   }
-
   Like(like, usrid) {
     this.getall.giveLike(like, usrid);
   }

@@ -33,6 +33,7 @@ import { ResetPasswordComponent } from './Components/login/reset-password/reset-
 import { SavedPostsComponent } from './Components/home-page/saved-posts/saved-posts.component';
 import { ClipboardModule } from 'ngx-clipboard';
 import { SpacificSavedPostComponent } from './Components/home-page/spacific-saved-post/spacific-saved-post.component';
+import { GroupsModule } from './Components/groups/groups.module';
 
 
 export function initializeApp1(userService: UserService) {
@@ -63,7 +64,7 @@ export function initializeApp1(userService: UserService) {
     ResetPasswordComponent,
     SavedPostsComponent,
     SpacificSavedPostComponent,
-    
+
   ],
   imports: [
     BrowserModule,
@@ -96,7 +97,7 @@ export function initializeApp1(userService: UserService) {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
 export function translateFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }

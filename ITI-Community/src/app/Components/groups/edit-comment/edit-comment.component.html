@@ -1,7 +1,8 @@
 <ng-template #editComment let-c="close" let-d="dismiss">
     <div class="modal-header">
-        <h6 class="modal-title" id="modal-basic-title">Edit Comment</h6>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <h6 class="modal-title" id="modal-basic-title">{{'Edit Comment' | translate}}</h6>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')"
+            [ngClass]="{'m-0 p-0': Lang == 'ar'}">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -9,15 +10,17 @@
         <div class="modal-body">
             <div class="form-group">
                 <textarea class="form-control" name="Body" formControlName="Body" rows="5"
-                    placeholder="Type Your Edit Comment..." required></textarea>
+                    placeholder="{{'Type Your Edit Comment...' | translate}}" required></textarea>
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-outline-danger btn-sm" (click)="c('Save click')">Cancel</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" (click)="c('Save click')">{{'Cancel' |
+                translate}}</button>
             <button type="submit" class="btn btn-outline-primary btn-sm" [disabled]="!editCommentForm.valid"
-                (click)="c('Save click');">Edit</button>
+                (click)="c('Save click');">{{'Edit' | translate}}</button>
         </div>
     </form>
 </ng-template>
 
-<button ngbDropdownItem (click)="open(editComment)">Edit</button>
+<button ngbDropdownItem (click)="open(editComment)" [ngClass]="{'text-right': Lang == 'ar'}">{{'Edit' |
+    translate}}</button>
