@@ -1,22 +1,24 @@
 <div *ngFor="let post of  AllPosts ; trackBy: identify" class="media border p-3 postcontainer " id="post1"
   style="background-color: white; border-radius: .5em; margin-bottom: .5em;">
-  <div class="media-body " style="  align-items: center ">
+  <div class="media-body " >
     <!-- <span style="font-size: .8em;">
       New post in
     </span>
     <a href="#" style="font-size: .8em;"> UI/UX User Experience / Wireframes </a> -->
     <div style="float: right;" class="btn-group" ngbDropdown role="group "
+    
+    [ngClass]="{'en': selectedLang==='en', 'arabic': selectedLang=== 'ar'}"
       aria-label="Button group with nested dropdown">
       <button class="btn btn-sm " ngbDropdownToggle>
         <i class="fas fa-ellipsis-h dots"></i>
       </button>
-      <div class="dropdown-menu" ngbDropdownMenu>
-
+      <div class="dropdown-menu" ngbDropdownMenu >
+<div [ngClass]="{'en': selectedLang==='en', 'ar': selectedLang=== 'ar'}">
         <div *ngIf="post.data.Auther.id ===uid">
           <button class="DDBtn" ngbDropdownItem (click)="deletePost(post.id,post)">
             <div>
-              <i class="fas fa-trash-alt" aria-hidden="true"> Delete </i>
-              <br> <small> Delete this post </small>
+              <i class="fas fa-trash-alt" aria-hidden="true"> {{'Delete' | translate }} </i>
+              <br> <small>  {{'Delete this post' | translate }} </small>
             </div>
           </button>
           <div>
@@ -27,12 +29,12 @@
 
         <button class="DDBtn" ngbDropdownItem (click)="SavePost(post.id,post)">
           <div *ngIf="post.data.savedState==false">
-            <i class="fas fa-bookmark" aria-hidden="true"> Save </i>
-            <br> <small> save for later </small>
+            <i class="fas fa-bookmark" aria-hidden="true"> {{'Save' | translate }} </i>
+            <br> <small> {{'save for later' | translate }} </small>
           </div>
           <div *ngIf="post.data.savedState==true">
-            <i class="fas fa-bookmark" aria-hidden="true"> UnSave </i>
-            <br> <small> Remove from your saved posts </small>
+            <i class="fas fa-bookmark" aria-hidden="true"> {{'UnSave' | translate }} </i>
+            <br> <small >  {{'Remove from your saved posts' | translate }}</small>
           </div>
         </button>
 
@@ -41,8 +43,8 @@
         <button class="DDBtn" ngbDropdownItem 
         (click)="ReportPost(post.id,post)">
           <div>
-            <i class="fas fa-flag " aria-hidden="true"> Report this post </i>
-            <br> <small> post is offsensive or the account is hacked </small>
+            <i class="fas fa-flag " aria-hidden="true"> {{'Report this post' | translate }} </i>
+            <br> <small>  {{'post is offsensive or the account is hacked' | translate }}</small>
           </div>
         </button>
       </div>
@@ -50,8 +52,8 @@
       <button class="DDBtn" ngbDropdownItem ngxClipboard 
       cbContent="http://localhost:4200/savedPosts/{{post.id}}"  >
         <div>
-          <i class="far fa-clone" aria-hidden="true" > Copy link to post </i>
-          <br> <small> Copy post link so you can share or post it  </small>
+          <i class="far fa-clone" aria-hidden="true" >  {{'Copy link to post' | translate }} </i>
+          <br> <small>  {{'Copy post link so you can share or post it' | translate }} </small>
         </div>
       </button>
         <!-- <button class="DDBtn" ngbDropdownItem>
@@ -63,39 +65,41 @@
 
         <button class="DDBtn" ngbDropdownItem (click)="spamPost(post.id,post)">
           <div>
-            <i class="fas fa-eye-slash " aria-hidden="true"> I don't want to see this</i>
-            <br> <small> let us know why you don't want to see this post </small>
+            <i class="fas fa-eye-slash " aria-hidden="true"> {{'I dont want to see this' | translate }} </i>
+            <br> <small>{{'let us know why you dont want to see this post' | translate }} </small>
           </div>
         </button>
 
       </div>
     </div>
-
+  </div>
     <!-- <hr class="mt-4"> -->
-    <div class="row mb-2">
+    <div class="row mb-2" [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
       <div class="col-2 pr-1">
         <img [src]="post.data.Auther.avatar"
          style="width:100%;height:auto;border-radius: 50%;" alt="John Doe"
           class=" mr-2  rounded-circle">
 
       </div>
-      <div class="col-10 pl-1">
+      <div class="col-10 pl-1"  >
         <a routerLink="/profile/{{post.data.Auther.id}}">
         <strong style="color: #b4272d">
           {{post.data.Auther.firstName}} {{post.data.Auther.lastName}} </strong></a>
         <small class="text-muted d-block">{{post.data.Auther.jobTitle}}</small>
-        <small class="text-muted d-block">posted in {{post.data.PostedDate.toDate() | date}}</small>
+        <small class="text-muted d-block">{{'posted in' | translate }} {{post.data.PostedDate.toDate() | date}}</small>
 
       </div>
 
     </div>
 
-    <div style="width:300px;height: auto;overflow: hidden;">
+
+    <div style="width:300px;height: auto;overflow: hidden;" [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
 
       {{post.data.Body | slice : 0 : x }}
-       <button id="btn" #pRef *ngIf="post.data.Body.length > 400" style="border: none;background-color:white;color: #b4272d;" 
+       <button id="btn" #pRef *ngIf="post.data.Body.length > 400"
+          style="border: none;background-color:white;color: #b4272d;" 
        (click)= "seeAllContent()"> 
-         Read More...</button>
+           {{'Read More' | translate }}</button>
   
     </div>
 
@@ -104,30 +108,33 @@
       <div *ngIf="post.data.postImg" class=" d-inline-block">
         <img [src]="item" style="width:100%;height:auto; " alt="post image">
       </div>
-
-
-
     </div>
 
     <div class="W-100%"><br></div>
     <!--  posts two buttons-->
-    <div class="text-secondary mb-2" style="float: left;">
-      <small>{{post.data.Likes.length}} Likes</small>
+    
+    <div class="text-secondary mb-2 mt-2" style="float: left;" 
+   
+    >
+      <small sty >{{post.data.Likes.length}} {{'Likes' | translate }}</small>
     </div>
     <hr style="color: rgba(255, 255, 255, 0);">
-    <div class="postIcons mt-3" style="border-top: 1px solid lightgray;">
+    <div class="postIcons mt-3" style="border-top: 1px solid lightgray;"[ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
 
 
-      <div class="post-actions-groups" style="float: left;">
+      <div class="post-actions-groups" style="float: left;" 
+      [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
         <button class="btn btn-default" (click)="Like(uid, post.id,post.data.Auther.id)">
-          <span *ngIf="!post.data.Likes.includes(uid)"><i class="far fa-thumbs-up diviconsize2"></i>
-             Like</span>
+          <span *ngIf="!post.data.Likes.includes(uid)">
+            <i class="far fa-thumbs-up diviconsize2"></i>
+              {{'Like' | translate }}</span>
           <span *ngIf="post.data.Likes.includes(uid)" class="font-weight-bold">
-            <i class="fas fa-thumbs-up  diviconsize2"></i> Like</span>
+            <i class="fas fa-thumbs-up  diviconsize2"></i>  {{'Like' | translate }}</span>
         </button>
 
 
-        <label for="comment" class="btn mb-0"><i class="far fa-comment mr-1"></i>Comment</label>
+        <label for="comment" class="btn mb-0" [ngClass]="{'en': selectedLang==='en', 'ar': selectedLang=== 'ar'}">
+          <i class="far fa-comment mr-1"></i>  {{'Comment' | translate }}</label>
       </div>
       <br>
       <!-- <div class="user-right-comments row mt-3">
@@ -139,6 +146,7 @@
         <app-hcomment-form [defPostId]="post.id" [AUTHId]="post.data.Auther.id"></app-hcomment-form>
       </div>
       <app-home-post-comment [PostID]="post.id"
+      
        [admins]="adminGroup" [AUTHId]="post.data.Auther.id">
       </app-home-post-comment>
       <!-- <a href="#" class="postIconsHover">
@@ -160,8 +168,8 @@
 <div *ngIf="AllPosts.length==0">
   <div class="noAboutImg" style="background-color: white; border-radius: .5em;">
     <br>
-    <p style="margin: 20px;">OOPS...! you Dont have any  posts till Now 
-      go to Network and Explore more Friends ...</p>
+    <p style="margin: 20px;" [ngClass]="{'en': selectedLang==='en', 'ar': selectedLang=== 'ar'}"> 
+       {{'you Dont have any posts till Now go to Network and Explore more Friends' | translate }}</p>
     <img
       src="https://www.qualiart.com.au/wp-content/uploads/2020/04/sm.png" 
       style="width:75%;height: auto; border-radius: 50%;display: block;margin: auto;">

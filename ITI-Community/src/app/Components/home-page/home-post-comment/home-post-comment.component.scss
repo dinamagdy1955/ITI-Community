@@ -6,3 +6,28 @@
 .dropdown-toggle::after {
     display: none;
 }
+.ar{
+    text-align: right;
+}
+
+.en{
+    text-align: left;
+}
+.arr{
+    text-align: right;
+    align-content:right;
+    align-items: right;
+    float: right !important;
+}
+.arrr{
+  
+    float: left !important;
+}
+.arabic{
+    text-align: right;
+    align-content:right;
+    align-items: right;
+    float: left !important;
+}
+
+// [ngClass]="{'en': selectedLang==='en', 'arrr': selectedLang=== 'ar'}"

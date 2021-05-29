@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { HPostCommentService } from '../HomeServices/hpost-comment.service';
 import { UserService } from 'src/app/MainServices/User.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home-post-comment',
@@ -13,15 +14,32 @@ export class HomePostCommentComponent implements OnInit {
   @Input() admins;
   @Input() AUTHId: string;
   subscription: Subscription[] = [];
+  selectedLang: string;
   getComments = [];
   uid;
   turnOff: boolean = false;
   counter: number = 0;
   data: Observable<any>;
   constructor(
+    public translateService: TranslateService,
     public commentService: HPostCommentService,
     private us: UserService
   ) {
+    translateService.addLangs(['en', 'ar']);
+      if (
+        localStorage.getItem('lang') == undefined ||
+        localStorage.getItem('lang') == 'en'
+      ) {
+        translateService.use('en');
+        localStorage.setItem('lang', 'en');
+        this.selectedLang='en'
+        // document.dir = 'ltr';
+      } else if (localStorage.getItem('lang') == 'ar') {
+        translateService.use('ar');
+        localStorage.setItem('lang', 'ar');
+        this.selectedLang='ar'
+        // document.dir = 'rtl';
+      }
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {

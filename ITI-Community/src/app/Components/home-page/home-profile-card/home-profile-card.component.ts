@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { NetworkService } from '../../network/Services/network.service';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-home-profile-card',
   templateUrl: './home-profile-card.component.html',
   styleUrls: ['./home-profile-card.component.scss'],
 })
 export class HomeProfileCardComponent implements OnInit {
+  selectedLang: string;
   myData: any;
   frindsList: any[] = [];
   Requests: any[] = [];
@@ -19,7 +21,21 @@ export class HomeProfileCardComponent implements OnInit {
   avatarCover;
   data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor(private usrs: NetworkService, private us: UserService) {
+  constructor( public translateService: TranslateService,private usrs: NetworkService, private us: UserService) 
+  {
+    translateService.addLangs(['en', 'ar']);
+    if (
+      localStorage.getItem('lang') == undefined ||
+      localStorage.getItem('lang') == 'en'
+    ) {
+      translateService.use('en');
+      localStorage.setItem('lang', 'en');
+      // document.dir = 'ltr';
+    } else if (localStorage.getItem('lang') == 'ar') {
+      translateService.use('ar');
+      localStorage.setItem('lang', 'ar');
+      // document.dir = 'rtl';
+    }
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -60,4 +76,6 @@ export class HomeProfileCardComponent implements OnInit {
       });
     });
   }
+
+
 }

@@ -1,7 +1,8 @@
 <div class="ATYFContain">
-  <div class="card" style="width: 100%; height: auto; border:none ">
-    <h4 class="cardH4">
-      Add your feed
+  <div class="card" style="width: 100%; height: auto; border:none"
+   [ngClass]="{'en': selectedLang==='en', 'ar': selectedLang=== 'ar'}">
+    <h4 class="cardH4" >
+     {{'Add to your feed' | translate }}
     </h4>
   </div>
   <div class="card " *ngFor="let item of (usersData| slice: -3) "
@@ -22,15 +23,15 @@
             id="ember135"
             class="follow ember-view feed-follows-module-recommendation__follow-btn artdeco-button artdeco-button--secondary artdeco-button--2 artdeco-button--muted"
             (click)="sendRequest(item)">
-            <span aria-hidden="true"><i class="fas fa-plus"></i> Connect</span>
+            <span aria-hidden="true"><i class="fas fa-plus"></i> {{'Connect' | translate }}</span>
           </button>
         </div>
       </div>
     </div>
   </div>
-  <div style="margin-top: 7px; align-content: center;">
+  <div style="margin-top: 7px; align-content: center;" [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
     <a [routerLink]="['/FullNetwork/Network']" style="color: brown; margin-left: 20px;">
-      See More...
+      {{'See More' | translate }}
     </a>
   </div>
 </div>

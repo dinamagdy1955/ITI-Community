@@ -2,9 +2,9 @@
   <div class="media-body">
     <div>
       <div>
-        <span class="invit">invitation</span>
+        <span class="invit">{{'invitation' | translate }}</span>
         <a [routerLink]="['/FullNetwork/RequestsInvitation']" style="float: right">
-          <span class="mang">see all {{Requests.length}}</span>
+          <span class="mang"> {{'see all' | translate }} {{Requests.length}}</span>
         </a>
       </div>
 
@@ -14,7 +14,7 @@
         <div class="col-md-2" style="padding-right: 0px; align-items: center">
           <img src={{item.avatar}} style="width: 70%; height: auto" alt="John Doe" class="mr-3 mt-3 rounded-circle">
         </div>
-        <div class="col-md-6" style="padding-left: 0px">
+        <div class="col-md-6" style="padding-left: 0px" [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
           <br>
           <a href="#">
             <span><strong class="name">{{item.firstName}} {{item.lastName}} </strong></span> </a><br>
@@ -24,10 +24,10 @@
           <div class="W-100%"><br></div>
 
           <button type="button" class="btn  btn-sm mr-2 ignoreBtn" (click)="IgnoreRequest(item.id)">
-            ignore
+           {{'ignore' | translate }}
           </button>
           <button type="button" class="btn btn-outline-primary btn-sm AcceptBtn" (click)="AcceptRequest(item)">
-            Accept
+            {{'Accept' | translate }}
           </button>
         </div>
       </div>

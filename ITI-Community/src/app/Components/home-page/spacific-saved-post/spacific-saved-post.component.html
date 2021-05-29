@@ -1,24 +1,27 @@
 
-<div *ngIf="post !==undefined" style="align-items: center;align-content: center;margin-left: 20%;" class="mt-4">
-<div class=" col-md-9 media border p-3 postcontainer " id="post1"
-  style="background-color: white; border-radius: .5em; margin-bottom: .5em;">
-  <div class="media-body  " style="  align-items: center ">
+<div *ngIf="post !==undefined" style="align-items: center;align-content: center" class="mt-4">
+<div class=" col-md-7 media border p-3 postcontainer " id="post1"
+[ngClass]="{'en': selectedLang==='en', 'ar': selectedLang=== 'ar'}"
+  style="background-color: white; border-radius: .5em; margin-bottom: .5em;display: block;margin: auto;">
+  <div class="media-body  " style="  align-items: center " >
     <!-- <span style="font-size: .8em;">
       New post in
     </span>
     <a href="#" style="font-size: .8em;"> UI/UX User Experience / Wireframes </a> -->
     <div style="float: right;" class="btn-group" ngbDropdown role="group "
+    [ngClass]="{'en': selectedLang==='en', 'arrr': selectedLang=== 'ar'}"
     aria-label="Button group with nested dropdown">
-    <button class="btn btn-sm " ngbDropdownToggle>
+    <button class="btn btn-sm " ngbDropdownToggle
+    >
       <i class="fas fa-ellipsis-h dots"></i>
     </button>
-    <div class="dropdown-menu" ngbDropdownMenu>
+    <div class="dropdown-menu" ngbDropdownMenu  [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
 
       <div *ngIf="post.Auther.id ===uid">
         <button class="DDBtn" ngbDropdownItem (click)="deletePost(id,post)">
           <div>
-            <i class="fas fa-trash-alt" aria-hidden="true"> Delete </i>
-            <br> <small> Delete this post </small>
+            <i class="fas fa-trash-alt" aria-hidden="true"> {{'Delete' | translate }} </i>
+            <br> <small> {{'Delete this post' | translate }} </small>
           </div>
         </button>
         <div>
@@ -30,8 +33,8 @@
 <div  *ngIf="post.Auther.id !==uid">
       <button class="DDBtn" ngbDropdownItem   (click)="ReportPost(id,post)" >
         <div>
-          <i class="fas fa-flag " aria-hidden="true"> Report this post </i>
-          <br> <small> post is offsensive or the account is hacked </small>
+          <i class="fas fa-flag " aria-hidden="true"> {{'Report this post' | translate }} </i>
+          <br> <small>  {{'post is offsensive or the account is hacked' | translate }} </small>
         </div>
       </button>
     </div>
@@ -39,8 +42,8 @@
     <button class="DDBtn" ngbDropdownItem ngxClipboard
     cbContent="http://localhost:4200/savedPosts/{{id}}" >
      <div>
-       <i class="far fa-clone" aria-hidden="true" > Copy link to post </i>
-        <br> <small> Copy post link so you can share or post it  </small>
+       <i class="far fa-clone" aria-hidden="true" > {{'Copy link to post' | translate }}</i>
+        <br> <small>  {{'Copy post link so you can share or post it' | translate }} </small>
      </div>
    </button>
       <!-- <button class="DDBtn" ngbDropdownItem>
@@ -52,8 +55,8 @@
 
       <button class="DDBtn" ngbDropdownItem (click)="spamPost(id,post)">
         <div>
-          <i class="fas fa-eye-slash " aria-hidden="true"> I don't want to see this</i>
-          <br> <small> let us know why you don't want to see this post </small>
+          <i class="fas fa-eye-slash " aria-hidden="true"> {{'I dont want to see this' | translate }}</i>
+          <br> <small> {{'let us know why you dont want to see this post' | translate }}  </small>
         </div>
       </button>
 
@@ -61,7 +64,7 @@
   </div>
 
     <!-- <hr class="mt-4"> -->
-    <div class="row mb-2">
+    <div class="row mb-2" >
       <div class="col-2 pr-1">
         <img [src]="post.Auther.avatar"
          style="width:80px;height: 80px;border-radius: 50%;" alt="John Doe"
@@ -73,7 +76,7 @@
         <strong style="color: #b4272d">
           {{post.Auther.firstName}} {{post.Auther.lastName}} </strong></a>
         <small class="text-muted d-block">{{post.Auther.jobTitle}}</small>
-        <small class="text-muted d-block">posted in {{post.PostedDate.toDate() | date}}</small>
+        <small class="text-muted d-block">{{'posted in' | translate }} {{post.PostedDate.toDate() | date}}</small>
 
       </div>
 
@@ -98,23 +101,25 @@
     <div class="W-100%"><br></div>
     <!--  posts two buttons-->
     <div class="text-secondary mb-2" style="float: left;">
-      <small>{{post.Likes.length}} Likes</small>
+      <small>{{post.Likes.length}} {{'Likes' | translate }}</small>
     </div>
     <hr style="color: rgba(255, 255, 255, 0);">
     <div class="postIcons mt-3" style="border-top: 1px solid lightgray;">
 
 
-      <div class="post-actions-groups" style="float: left;">
+      <div class="post-actions-groups" style="float: left;"
+      [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}"
+      >
         <button class="btn btn-default" (click)="Like(uid,id,post.Auther.id)">
           <span *ngIf="!post.Likes.includes(uid)"><i class="far fa-thumbs-up diviconsize2"></i>
-             Like</span>
+            {{'Like' | translate }}</span>
           <span *ngIf="post.Likes.includes(uid)" class="font-weight-bold">
-            <i class="fas fa-thumbs-up  diviconsize2"></i> Like</span>
+            <i class="fas fa-thumbs-up  diviconsize2"></i>  {{'Like' | translate }}</span>
         </button>
 
 
 
-        <label for="comment" class="btn mb-0"><i class="far fa-comment mr-1"></i>Comment</label>
+        <label for="comment" class="btn mb-0"><i class="far fa-comment mr-1"></i>{{'Comment' | translate }}</label>
       </div>
       <br>
       <!-- <div class="user-right-comments row mt-3">

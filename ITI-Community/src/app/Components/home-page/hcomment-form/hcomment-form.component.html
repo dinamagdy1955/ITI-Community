@@ -1,4 +1,4 @@
 <form [formGroup]=commentForm (ngSubmit)='onSubmit();' >
     <input id="comment" class="form-control" type="text" formControlName="Body"
-        placeholder="Start a Conversation in this Post" style="width: 100%;" autocomplete="off">
+        placeholder="{{'Start a Conversation in this Post' | translate }}" style="width: 100%;" autocomplete="off">
 </form>
