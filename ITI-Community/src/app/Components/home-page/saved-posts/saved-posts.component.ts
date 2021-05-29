@@ -17,22 +17,23 @@ export class SavedPostsComponent implements OnInit {
   constructor(
     public translateService: TranslateService,
     private postsServ: HomePostsService,
-     private us: UserService) {
-      translateService.addLangs(['en', 'ar']);
-      if (
-        localStorage.getItem('lang') == undefined ||
-        localStorage.getItem('lang') == 'en'
-      ) {
-        translateService.use('en');
-        localStorage.setItem('lang', 'en');
-        this.selectedLang='en'
-        // document.dir = 'ltr';
-      } else if (localStorage.getItem('lang') == 'ar') {
-        translateService.use('ar');
-        localStorage.setItem('lang', 'ar');
-        this.selectedLang='ar'
-        // document.dir = 'rtl';
-      }
+    private us: UserService
+  ) {
+    translateService.addLangs(['en', 'ar']);
+    if (
+      localStorage.getItem('lang') == undefined ||
+      localStorage.getItem('lang') == 'en'
+    ) {
+      translateService.use('en');
+      localStorage.setItem('lang', 'en');
+      this.selectedLang = 'en';
+      // document.dir = 'ltr';
+    } else if (localStorage.getItem('lang') == 'ar') {
+      translateService.use('ar');
+      localStorage.setItem('lang', 'ar');
+      this.selectedLang = 'ar';
+      // document.dir = 'rtl';
+    }
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -44,14 +45,12 @@ export class SavedPostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.postsServ.getSavedPosts(this.uid).subscribe((data) => {
-      console.log(data);
       this.savedPosts = data.map((e) => {
         return {
           id: e.payload.doc.id,
           data: e.payload.doc.data(),
         };
       });
-      console.log(this.savedPosts);
     });
   }
   unsave(item) {

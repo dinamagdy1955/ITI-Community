@@ -33,7 +33,6 @@ export class JobSearchesComponent implements OnInit {
           data: e.payload.doc.data(),
         };
       });
-      console.log(this.appliedJobs);
     });
   }
 }

@@ -7,9 +7,12 @@ import { IHomePost } from '../ViewModel/ihome-post';
   providedIn: 'root',
 })
 export class HomePostsService {
-  likes: string[]=[];
- 
-  constructor(private db: AngularFirestore, private afStorage: AngularFireStorage) { }
+  likes: string[] = [];
+
+  constructor(
+    private db: AngularFirestore,
+    private afStorage: AngularFireStorage
+  ) {}
 
   getAllFriends(id) {
     return this.db
@@ -29,7 +32,7 @@ export class HomePostsService {
       .snapshotChanges();
   }
 
-  MyPostById(postid,uid) {
+  MyPostById(postid, uid) {
     return this.db
       .collection('users-details')
       .doc(uid)
@@ -38,14 +41,11 @@ export class HomePostsService {
       .snapshotChanges();
   }
 
-
-  writePost(post: IHomePost,uid) {
-    let   frindsList: any[] = [];
-    this.getAllFriends(uid)
-    .subscribe((data) => {
-     frindsList = data.map((e) => {
-        return e.payload.doc.id
-      
+  writePost(post: IHomePost, uid) {
+    let frindsList: any[] = [];
+    this.getAllFriends(uid).subscribe((data) => {
+      frindsList = data.map((e) => {
+        return e.payload.doc.id;
       });
     });
     new Promise<any>((res, rej) => {
@@ -57,17 +57,24 @@ export class HomePostsService {
         .then(
           (res) => {
             frindsList.map((e) => {
-              console.log(e)
-              this.db.collection('users-details').doc(e).collection('MyHomePosts')
-              .doc(res.id).set(post)
-              this.db.collection('users-details').doc(e).collection('Notifications')
-              .doc(res.id).set(post)
-            })
+              this.db
+                .collection('users-details')
+                .doc(e)
+                .collection('MyHomePosts')
+                .doc(res.id)
+                .set(post);
+              this.db
+                .collection('users-details')
+                .doc(e)
+                .collection('Notifications')
+                .doc(res.id)
+                .set(post);
+            });
           },
           (error) => rej(error)
         );
     });
-    return
+    return;
   }
 
   getAllNotifications(uid) {
@@ -80,18 +87,14 @@ export class HomePostsService {
       .snapshotChanges();
   }
 
-
-
-
-  DeleteNotification(pid,uid){
+  DeleteNotification(pid, uid) {
     return this.db
-    .collection('users-details')
-    .doc(uid)
-    .collection('Notifications')
-    .doc(pid)
-    .delete()
+      .collection('users-details')
+      .doc(uid)
+      .collection('Notifications')
+      .doc(pid)
+      .delete();
   }
-
 
   async uploadImg(imgs) {
     const fileRef = [];
@@ -117,7 +120,7 @@ export class HomePostsService {
     };
   }
 
- deletePost(pid, post,uid) {
+  deletePost(pid, post, uid) {
     let myfrindsList: any[] = [];
     this.getAllFriends(uid).subscribe((data) => {
       myfrindsList = data.map((e) => {
@@ -125,13 +128,13 @@ export class HomePostsService {
       });
     });
     new Promise<any>((res, rej) => {
+      this.db;
       this.db
-      this.db
-      .collection('users-details')
-      .doc(uid)
-      .collection('MyHomePosts')
-      .doc(pid)
-      .delete()
+        .collection('users-details')
+        .doc(uid)
+        .collection('MyHomePosts')
+        .doc(pid)
+        .delete()
         .then(
           (res) => {
             myfrindsList.map((e) => {
@@ -150,63 +153,66 @@ export class HomePostsService {
     return;
   }
 
-  ReportPost(pid,post,uid){
-    this.db.collection('users-details').doc(uid).collection('ReportedPosts')
-    .doc(pid).set(post)
-    alert('you are Reported this post')
-
+  ReportPost(pid, post, uid) {
+    this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('ReportedPosts')
+      .doc(pid)
+      .set(post);
+    alert('you are Reported this post');
   }
 
-  SpamPost(pid, post,uid){
+  SpamPost(pid, post, uid) {
     return this.db
-    .collection('users-details')
-    .doc(uid)
-    .collection('MyHomePosts')
-    .doc(pid)
-    .delete()
+      .collection('users-details')
+      .doc(uid)
+      .collection('MyHomePosts')
+      .doc(pid)
+      .delete();
   }
 
-
-  SavePosts(pid, post,uid){
-    if(post.data.savedState===false){
+  SavePosts(pid, post, uid) {
+    if (post.data.savedState === false) {
       return this.db
-      .collection('users-details')
-      .doc(uid)
-      .collection('MyHomePosts').doc(pid).update({
-        savedState:true
-      })
-    }
-    else{
+        .collection('users-details')
+        .doc(uid)
+        .collection('MyHomePosts')
+        .doc(pid)
+        .update({
+          savedState: true,
+        });
+    } else {
       return this.db
-      .collection('users-details')
-      .doc(uid)
-      .collection('MyHomePosts').doc(pid).update({
-        savedState:false
-      })
+        .collection('users-details')
+        .doc(uid)
+        .collection('MyHomePosts')
+        .doc(pid)
+        .update({
+          savedState: false,
+        });
     }
- 
-  
   }
   getSavedPosts(uid) {
     return this.db
       .collection('users-details')
       .doc(uid)
-      .collection('MyHomePosts' , (ref) => ref.where('savedState', '==',true))
+      .collection('MyHomePosts', (ref) => ref.where('savedState', '==', true))
       .snapshotChanges();
   }
 
-  unSavePost(item,uid){
-    console.log(item.id)
+  unSavePost(item, uid) {
     return this.db
-    .collection('users-details')
-    .doc(uid)
-    .collection('MyHomePosts').doc(item.id).update({
-      savedState:false
-    })
+      .collection('users-details')
+      .doc(uid)
+      .collection('MyHomePosts')
+      .doc(item.id)
+      .update({
+        savedState: false,
+      });
   }
 
-
-  editPost(id, data,uid) {
+  editPost(id, data, uid) {
     let myfrindsList: any[] = [];
     this.getAllFriends(uid).subscribe((data) => {
       myfrindsList = data.map((e) => {
@@ -242,10 +248,7 @@ export class HomePostsService {
     return;
   }
 
-
   getAllautIDList(id) {
-    
-
     return this.db
       .collection('users-details')
       .doc(id)
@@ -253,20 +256,15 @@ export class HomePostsService {
       .snapshotChanges();
   }
 
-
-    
-  giveLike(like, pid,autID) {
-
+  giveLike(like, pid, autID) {
     let frindsList: any[] = [];
-    this.getAllautIDList(autID)
-             .subscribe((data) => {
-              frindsList = data.map((e) => {
-                 return e.payload.doc.id
-               });
-               //console.log(frindsList);
-             });
+    this.getAllautIDList(autID).subscribe((data) => {
+      frindsList = data.map((e) => {
+        return e.payload.doc.id;
+      });
+    });
 
-    let sub2 = this.MyPostById(pid,like).subscribe((res) => {
+    let sub2 = this.MyPostById(pid, like).subscribe((res) => {
       this.likes = res.payload.get('Likes');
       if (this.likes.indexOf(like) != -1) {
         this.likes.splice(this.likes.indexOf(like), 1);
@@ -274,19 +272,26 @@ export class HomePostsService {
         this.likes.push(like);
       }
 
-  this.db.collection('users-details').doc(autID).collection('MyHomePosts').doc(pid).update({
-    Likes: this.likes});
- 
-  frindsList.map((e) => {
-  this.db.collection('users-details').doc(e).collection('MyHomePosts').doc(pid).update({
-    Likes: this.likes })
-        })
+      this.db
+        .collection('users-details')
+        .doc(autID)
+        .collection('MyHomePosts')
+        .doc(pid)
+        .update({
+          Likes: this.likes,
+        });
+
+      frindsList.map((e) => {
+        this.db
+          .collection('users-details')
+          .doc(e)
+          .collection('MyHomePosts')
+          .doc(pid)
+          .update({
+            Likes: this.likes,
+          });
+      });
       sub2.unsubscribe();
     });
   }
-
-
-
 }
-
-

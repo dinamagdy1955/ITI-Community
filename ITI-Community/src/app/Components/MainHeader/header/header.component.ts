@@ -39,6 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       translateService.use('ar');
       localStorage.setItem('lang', 'ar');
     }
+
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {

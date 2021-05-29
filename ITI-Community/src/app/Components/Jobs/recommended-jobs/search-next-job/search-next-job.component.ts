@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Job } from '../../viewModels/job';
 import { JobDatabaseService } from '../../service/JobDatabase.service';
-import { NgModule } from '@angular/core';
-import { AppModule } from 'src/app/app.module';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,9 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./search-next-job.component.scss'],
 })
 export class SearchNextJobComponent implements OnInit {
-  /*   companyName: String;
-  jobName: string;
-  city: string; */
   searchItem: string;
   foundJobs: Job[] | any;
   x;

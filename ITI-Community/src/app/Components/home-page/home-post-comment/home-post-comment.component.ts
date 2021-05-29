@@ -26,20 +26,20 @@ export class HomePostCommentComponent implements OnInit {
     private us: UserService
   ) {
     translateService.addLangs(['en', 'ar']);
-      if (
-        localStorage.getItem('lang') == undefined ||
-        localStorage.getItem('lang') == 'en'
-      ) {
-        translateService.use('en');
-        localStorage.setItem('lang', 'en');
-        this.selectedLang='en'
-        // document.dir = 'ltr';
-      } else if (localStorage.getItem('lang') == 'ar') {
-        translateService.use('ar');
-        localStorage.setItem('lang', 'ar');
-        this.selectedLang='ar'
-        // document.dir = 'rtl';
-      }
+    if (
+      localStorage.getItem('lang') == undefined ||
+      localStorage.getItem('lang') == 'en'
+    ) {
+      translateService.use('en');
+      localStorage.setItem('lang', 'en');
+      this.selectedLang = 'en';
+      // document.dir = 'ltr';
+    } else if (localStorage.getItem('lang') == 'ar') {
+      translateService.use('ar');
+      localStorage.setItem('lang', 'ar');
+      this.selectedLang = 'ar';
+      // document.dir = 'rtl';
+    }
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -62,7 +62,6 @@ export class HomePostCommentComponent implements OnInit {
             doc: e.payload.doc,
           };
         });
-        console.log('mu posts', this.getComments);
         this.hideBtn(res);
       });
     this.subscription.push(sub);

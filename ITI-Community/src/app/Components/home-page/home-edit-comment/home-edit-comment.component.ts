@@ -29,7 +29,6 @@ export class HomeEditCommentComponent implements OnInit {
     private commentService: HPostCommentService,
     private us: UserService
   ) {
-
     translateService.addLangs(['en', 'ar']);
     if (
       localStorage.getItem('lang') == undefined ||
@@ -37,12 +36,12 @@ export class HomeEditCommentComponent implements OnInit {
     ) {
       translateService.use('en');
       localStorage.setItem('lang', 'en');
-      this.selectedLang='en'
+      this.selectedLang = 'en';
       // document.dir = 'ltr';
     } else if (localStorage.getItem('lang') == 'ar') {
       translateService.use('ar');
       localStorage.setItem('lang', 'ar');
-      this.selectedLang='ar'
+      this.selectedLang = 'ar';
       // document.dir = 'rtl';
     }
     this.data = this.us.localUserData.asObservable();
@@ -84,8 +83,6 @@ export class HomeEditCommentComponent implements OnInit {
   }
 
   open(content) {
-    console.log(this.editCommentForm.value.Body);
-
     this.model
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
