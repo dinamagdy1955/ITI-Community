@@ -39,14 +39,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       translateService.use('ar');
       localStorage.setItem('lang', 'ar');
     }
-    // this.auth.currentUser().then((res) => {
-    //   console.log('current', res);
-    // });
-    // this.sub = this.auth.user().subscribe((res) => {
-    //   localStorage.removeItem('userToken');
-    //   console.log('not current', res);
-    // });
-
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -57,11 +49,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.avatar = res.avatar;
       }
     });
-    // this.subscription.push(sub);
+    this.subscription.push(sub);
   }
 
   ngOnInit(): void {
-    this.Lang = localStorage.getItem('lang')
+    this.Lang = localStorage.getItem('lang');
   }
 
   toggleSideBar() {

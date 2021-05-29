@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit {
         .then(
           (responce) => {
             if (responce.user.emailVerified) {
-              localStorage.setItem('uid', responce.user.uid);
               let sub = this.profile
                 .getUserBasic(responce.user.uid)
                 .subscribe((res) => {
@@ -71,26 +70,6 @@ export class LoginComponent implements OnInit {
                         localStorage.setItem(
                           'userToken',
                           responce.user.refreshToken
-                        );
-                        localStorage.setItem(
-                          'firstName',
-                          res.payload.data().firstName
-                        );
-                        localStorage.setItem(
-                          'lastName',
-                          res.payload.data().lastName
-                        );
-                        localStorage.setItem(
-                          'jobTitle',
-                          res.payload.data().jobTitle
-                        );
-                        localStorage.setItem(
-                          'avatar',
-                          res.payload.data().avatar
-                        );
-                        localStorage.setItem(
-                          'avatarCover',
-                          res.payload.data().avatarCover
                         );
                         //for behavioral subject
                         let localUserData: LocalUserData = {

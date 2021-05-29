@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -10,7 +10,7 @@ import { JobDatabaseService } from '../service/JobDatabase.service';
   templateUrl: './saved-jobs.component.html',
   styleUrls: ['./saved-jobs.component.scss'],
 })
-export class SavedJobsComponent implements OnInit {
+export class SavedJobsComponent implements OnInit, OnDestroy {
   favoriteArray;
   data: Observable<any>;
   subscription: Subscription[] = [];
@@ -57,5 +57,10 @@ export class SavedJobsComponent implements OnInit {
   }
   toSavedPosts() {
     this.router.navigate(['/savedPosts']);
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }
