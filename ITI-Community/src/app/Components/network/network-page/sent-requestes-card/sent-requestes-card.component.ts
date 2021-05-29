@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { NetworkService } from '../../Services/network.service';
@@ -11,10 +12,29 @@ import { NetworkService } from '../../Services/network.service';
 export class SentRequestesCardComponent implements OnInit, OnDestroy {
   sentRequests: any[] = [];
   RequestsinCardData: any[];
+  selectedLang: string;
   data: Observable<any>;
   subscription: Subscription[] = [];
   uid;
-  constructor(private usrs: NetworkService, private us: UserService) {
+  constructor(
+    public translateService: TranslateService,
+    private usrs: NetworkService,
+     private us: UserService) {
+      translateService.addLangs(['en', 'ar']);
+      if (
+        localStorage.getItem('lang') == undefined ||
+        localStorage.getItem('lang') == 'en'
+      ) {
+        translateService.use('en');
+        localStorage.setItem('lang', 'en');
+        this.selectedLang='en'
+        // document.dir = 'ltr';
+      } else if (localStorage.getItem('lang') == 'ar') {
+        translateService.use('ar');
+        localStorage.setItem('lang', 'ar');
+        this.selectedLang='ar'
+        // document.dir = 'rtl';
+      }
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {

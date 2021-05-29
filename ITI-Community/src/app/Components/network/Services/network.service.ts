@@ -123,6 +123,11 @@ export class NetworkService {
       .collection('friendList')
       .doc(uid)
       .set({ ...user });
+      // this.db.collection('users-details').doc(user).collection('Notifications')
+      // .doc(id).set(post)
+
+
+      
   }
 
   //friendList

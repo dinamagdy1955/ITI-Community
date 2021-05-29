@@ -1,10 +1,10 @@
 <section class="container sec_container mt-3" style="background-color: white">
-  <div class="container" style="background-color: white">
+  <div class="container" style="background-color: white" [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
     <div class="row rowBB">
       <h5 class="pt-3" style="color: #b4272d">
-        {{ invitaions.length }} Invitaion
+        {{ invitaions.length }} {{'Invitations' | translate }}
       </h5>
-      <ul _ngcontent-exd-c114="" class="list-group list-group-flush">
+      <ul _ngcontent-exd-c114="" class="list-group list-group-flush" >
         <li _ngcontent-exd-c114="" class="list-group-item">
           <div _ngcontent-exd-c114="" class="media">
             <div class="btn-group mr-3">
@@ -12,24 +12,22 @@
                 class="btn-group"
                 ngbDropdown
                 role="group"
-                aria-label="Button group with nested dropdown"
-              >
+                aria-label="Button group with nested dropdown">
                 <button
                   class="btn btn-sm mt-4"
                   style="margin-left: 3em"
-                  ngbDropdownToggle
-                >
-                  Sort By : <i class="fas fa-ellipsis-h"></i>
+                  ngbDropdownToggle>
+                  {{'Sort By' | translate }} : <i class="fas fa-ellipsis-h"></i>
                 </button>
-                <div class="dropdown-menu" ngbDropdownMenu>
+                <div class="dropdown-menu" ngbDropdownMenu  [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
                   <button ngbDropdownItem (click)="sortRecently()">
-                    Recently
+                    {{'Recently' | translate }}
                   </button>
                   <button ngbDropdownItem (click)="sortFirstName()">
-                    First Name
+                    {{'First Name' | translate }}
                   </button>
                   <button ngbDropdownItem (click)="sortLastName()">
-                    Last Name
+                    {{'Last Name' | translate }}
                   </button>
                 </div>
               </div>
@@ -73,7 +71,7 @@
                 </h6>
                 <small class="text-muted">
                   <span>{{ item.jobTitle }}</span>
-                  <br />Request in {{ item.addedDate.toDate() | date }}</small
+                  <br />{{'Request in' | translate }} {{ item.addedDate.toDate() | date }}</small
                 >
               </div>
 
@@ -83,14 +81,14 @@
                   class="btn btn-sm mr-2 ignoreBtn"
                   (click)="IgnoreRequest(item.id)"
                 >
-                  ignore
+                  {{'ignore' | translate }}
                 </button>
                 <button
                   type="button"
                   class="btn btn-outline-primary btn-sm AcceptBtn"
                   (click)="AcceptRequest(item)"
                 >
-                  Accept
+                  {{'Accept' | translate }}
                 </button>
               </div>
             </div>

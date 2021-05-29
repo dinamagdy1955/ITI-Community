@@ -1,7 +1,7 @@
-<div class="card parentCard" *ngIf="sentRequests.length >0">
+<div class="card parentCard" *ngIf="sentRequests.length >0" [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
   <div class="card" style="width: 100%; height: auto; border:none ">
     <h4 class="cardH4">
-      Friend Requests I sent
+      {{'Friend Requests I sent' | translate }}
     </h4>
   </div>
   <div class="card mb-2" *ngFor="let item of (sentRequests| slice: -2) "
@@ -11,7 +11,8 @@
         <img class="card-img-top" src={{item.avatar}} alt="Card image" />
       </div>
       <div class="col-md-7" style="margin: 0px;padding: 0px;">
-        <div class="card-body pb-0 LineHeight" style="padding-left: 0px;padding-right:2px; text-align: center;">
+        <div class="card-body pb-0 LineHeight" style="padding-left: 0px;padding-right:2px; text-align: center;"
+        [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
           <div>
             <a href="#" routerLink="/profile/{{item.id}}">
               <h6 class="card-title m-0 nameH6">{{item.firstName}}</h6>
@@ -24,7 +25,7 @@
             id="ember135"
             class="follow ember-view feed-follows-module-recommendation__follow-btn artdeco-button artdeco-button--secondary artdeco-button--2 artdeco-button--muted"
             (click)="cancelRequest(item)">
-            <span aria-hidden="true">cancel Request</span>
+            <span aria-hidden="true"> {{'cancel Request' | translate }}</span>
           </button>
         </div>
       </div>
@@ -32,7 +33,7 @@
   </div>
   <div style="margin-top: 7px; align-content: center;">
     <a [routerLink]="['/FullNetwork/sentRequests']" style="color: brown; margin-left: 20px;">
-      See All Requests You Sent
+      {{'See All Requests You Sent' | translate }}
     </a>
   </div>
 

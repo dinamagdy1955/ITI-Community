@@ -67,3 +67,20 @@ button{
     padding: 1.5em;
     box-shadow: 1px 1px 10px 1px rgb(211, 203, 203);
  } 
+ .ar{
+    text-align: right;
+}
+
+.en{
+    text-align: left;
+}
+.arr{
+    text-align: right;
+    align-content:right;
+    align-items: right;
+    float: right !important;
+}
+.arrr{
+  
+    float: left !important;
+}

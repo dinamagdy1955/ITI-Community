@@ -12,6 +12,10 @@ import { AllSentRequestesPageComponent } from './all-sent-requestes-page/all-sen
 import { InvitationsPageComponent } from './invitations-page/invitations-page.component';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { AppComponent } from 'src/app/app.component';
 
 const networkRoutes: Routes = [
   { path: 'Network', component: NetworkPageComponent },
@@ -39,6 +43,18 @@ const networkRoutes: Routes = [
     NgbModule,
     FormsModule,
     Ng2SearchPipeModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: translateFactory,
+        deps: [HttpClient],
+      },
+    }),
   ],
+  bootstrap: [AppComponent], 
 })
+
 export class NetworkModule {}
+export function translateFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}

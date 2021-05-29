@@ -1,19 +1,19 @@
 <div class="container-fluid savedJobMain">
     <div class="container-xl">
-        <div class="row savedJobContainer">
+        <div class="row savedJobContainer" >
             <div class="col-md-3 mainContainer">
-                <div class="list-group mySavedItems">
+                <div class="list-group mySavedItems"[ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
                     <a  class="list-group-item disabled mySavedItemsHeader">
-                        <i class="fas fa-bookmark"></i> My Items
+                        <i class="fas fa-bookmark"></i> {{'My Items' | translate }}
                     </a>
                     <a  class="list-group-item list-group-item-action">
-                        Saved Jobs
-                        <span class="noOfItems">5</span>
+                        {{'Saved Jobs' | translate }}
+                        <span [ngClass]="{'en': selectedLang==='en', 'arrr': selectedLang=== 'ar'}" class="noOfItems">5</span>
                     </a>
                  
                     <a  class="list-group-item list-group-item-action">
-                        Saved Posts
-                        <span class="noOfItems">{{savedPosts.length}}</span>
+                        {{'Saved Posts' | translate }}
+                        <span class="noOfItems" [ngClass]="{'en': selectedLang==='en', 'arrr': selectedLang=== 'ar'}"> {{savedPosts.length}}</span>
                     </a>
                 </div>
             </div>
@@ -23,8 +23,7 @@
              
                 <div >
                     <div class="noAboutImg">
-                      <p>OOPS...! you Dont have any Saved posts till Now 
-                        go to home and Explore more  ...</p>
+                      <p> {{'you Dont have any Saved posts till Now go to home and Explore more ' | translate }}</p>
                       <img
                         src="https://img.freepik.com/free-photo/3d-word-oops_58466-263.jpg?size=626&ext=jpg">
                     </div>
@@ -44,9 +43,10 @@
        style="border-radius: 5px;color: white;background-color: brown; margin-left: 45%;">Go Home</a> -->
                 </div>
                 <div *ngIf="savedPosts.length > 0" 
+                    [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}"
                     class="list-group mySavedListItems">
                     <div href="#" class="list-group-item disabled mySavedItemsHeader">
-                        <h3>My Saved Posts</h3>
+                        <h3> {{'My Saved Posts' | translate }}</h3>
                     </div>
 
 
@@ -59,8 +59,8 @@
                         <div class="mySavedItemContent" [routerLink]="['/savedPosts',item.id]"  >
                             
                             <a  class="list-group-item-heading jobTitleLink">{{item.data.Auther.firstName}} {{item.data.Auther.lastName}}</a>
-                            <div class="list-group-item-text companyName">posted in {{item.data.PostedDate.toDate() | date}} </div>
-                            <div class="list-group-item-text jobLocation"> {{item.data.Body | slice : 0 : 90 }}.....</div>
+                            <div class="list-group-item-text companyName">{{'posted in' | translate }} {{item.data.PostedDate.toDate() | date}} </div>
+                            <div class="list-group-item-text jobLocation"> {{item.data.Body | slice : 0 : 85 }}.....</div>
                     
                         </div>
 
@@ -68,7 +68,7 @@
 <div style="float: right;">
     <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4"
     (click)="unsave(item)">
-    <i class="fas fa-bookmark"></i> Unsave
+    <i class="fas fa-bookmark"></i> {{'UnSave' | translate }}
    </button>
 </div>
 

@@ -1,14 +1,16 @@
 <section class="container sec_container mt-3" style="background-color: white">
-  <div class="container" style="background-color: white">
+  <div class="container" style="background-color: white" [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
     <div class="row rowBB">
-      <h5 class="pt-3" style="color: #b4272d">{{sentRequests.length}} Sent Requests </h5>
+      <h5 class="pt-3" style="color: #b4272d">
+        {{sentRequests.length}} {{'Sent Requests' | translate }} </h5>
     </div>
     <div>
       <div *ngFor="let item of sentRequests" class="row rowBB">
         <ul _ngcontent-exd-c114="" class="list-group list-group-flush">
           <li _ngcontent-exd-c114="" class="list-group-item">
             <div _ngcontent-exd-c114="" class="media">
-              <img _ngcontent-exd-c114="" src={{item.avatar}} alt="" width="70px" class="mr-3"
+              <img _ngcontent-exd-c114="" src={{item.avatar}} alt="" width="70px" 
+              class="mr-3"
                 style="border-radius: 50% ; width:70px;height: 70px;" />
               <div class="media-body">
                 <h6 class="mt-2 mb-1 UserName">
@@ -28,7 +30,7 @@
 
                 <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4"
                 (click)="DeleteFriendRequest(item)">
-                 <i class="fas fa-trash-alt"> Delete </i>
+                 <i class="fas fa-trash-alt">  {{'Delete' | translate }}</i>
                </button>
               <!-- <div class="btn-group mr-3">
                 <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">

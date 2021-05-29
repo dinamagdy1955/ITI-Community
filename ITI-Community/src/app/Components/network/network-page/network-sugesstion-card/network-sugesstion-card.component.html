@@ -1,6 +1,6 @@
 <div class="media border p-3 mt-4">
-  <div class="media-body" style="align-items: center;color: #68161ad5; ">
-    ITI Community Members
+  <div class="media-body" style="align-items: center;color: #68161ad5; " [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
+    {{'ITI Community Members' | translate }}
     
     <div class="W-100%"><br></div>
     <div *ngIf="usersinCardData !=undefined" class="row">
@@ -20,7 +20,7 @@
             <br>
             <div class="W-100%"><br></div>
             <button style="width: 90px;" type="button" class="btn btn-outline-primary" (click)="sendRequest(item)">
-              Connect
+              {{'connect' | translate }}
             </button>
             <br>
             <div class="W-100%"><br></div>
