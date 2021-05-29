@@ -1,19 +1,19 @@
-<section class="container sec_container mt-3" style="background-color: white">
-  <div class="container" style="background-color: white">
+<section class="container sec_container mt-3" style="background-color: white" >
+  <div class="container" style="background-color: white"[ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
     <div class="row rowBB">
-      <h5 class="pt-3" style="color: #b4272d">{{frindsList.length}} connects</h5>
+      <h5 class="pt-3" style="color: #b4272d">{{frindsList.length}} {{'connects' | translate }}</h5>
       <ul _ngcontent-exd-c114="" class="list-group list-group-flush">
         <li _ngcontent-exd-c114="" class="list-group-item">
-          <div _ngcontent-exd-c114="" class="media">
+          <div _ngcontent-exd-c114="" class="media" >
             <div class="btn-group mr-3">
               <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
                 <button class="btn btn-sm mt-4" style="margin-left: 3em" ngbDropdownToggle>
-                  Sort By : <i class="fas fa-ellipsis-h"></i>
+                  {{'Sort By' | translate }} : <i class="fas fa-ellipsis-h"></i>
                 </button>
-                <div class="dropdown-menu" ngbDropdownMenu>
-                  <button ngbDropdownItem (click)="sortRecently()">Recently</button>
-                  <button ngbDropdownItem (click)="sortFirstName()">First Name</button>
-                  <button ngbDropdownItem (click)="sortLastName()">Last Name</button>
+                <div class="dropdown-menu" ngbDropdownMenu [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
+                  <button ngbDropdownItem (click)="sortRecently()">{{'Recently' | translate }} </button>
+                  <button ngbDropdownItem (click)="sortFirstName()"> {{'First Name' | translate }}</button>
+                  <button ngbDropdownItem (click)="sortLastName()"> {{'Last Name' | translate }}</button>
                 </div>
               </div>
             </div>
@@ -46,7 +46,7 @@
 
               <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4"
                (click)="DeleteFriend(item.id)">
-                <i class="fas fa-trash-alt"> Delete </i>
+                <i class="fas fa-trash-alt"> {{'Delete' | translate }} </i>
               </button>
               <!-- <div class="btn-group mr-3">
                 <button ngbDropdownItem (click)="DeleteFriend(item.id)">

@@ -14,22 +14,22 @@
     <hr>
     <div class="profilecardsection">
       <a [routerLink]="['/FullNetwork/connections']">
-        <span style="color:#68161ad5 "> connections <span style="color: #b4272d"> {{frindsList.length}}</span>
+        <span style="color:#68161ad5 ">{{'Connections'| translate}}  <span style="color: #b4272d"> {{frindsList.length}}</span>
         </span>
       </a>
       <br>
-      <span style="font-weight: bold;color: #b4272d">Grow your network</span> <br>
+      <span style="font-weight: bold;color: #b4272d"> {{'Grow Your Network'| translate}} </span> <br>
     </div>
     <div class="profilecardsection">
       <a  [routerLink]="['/FullNetwork/RequestsInvitation']">
-        <span style="color:#68161ad5">invitation </span>
+        <span style="color:#68161ad5">{{'invitation'| translate}}  </span>
         <span style=" color: #b4272d">{{Requests.length}}</span>
       </a>
     </div>
     <hr>
     <div class="profilecardsection">
       <a [routerLink]="['/savedPosts']"   ><i class="fas fa-bookmark " style="font-size: 1em; color: #b4272d;"></i>
-        <span style="margin:.5em; color: black;"> Saved Posts </span>
+        <span style="margin:.5em; color: black;"> {{'Saved Posts'| translate}} </span>
       </a>
     </div>
     <br>

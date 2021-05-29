@@ -41,7 +41,9 @@ export class GroupPostsService {
         .collection('PostGroup')
         .add(post)
         .then(
-          (res) => {},
+          (res) => {
+            
+          },
           (error) => rej(error)
         );
     });
