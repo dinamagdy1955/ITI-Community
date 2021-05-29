@@ -12,7 +12,7 @@ import { UserProfileService } from '../../profile/Service/user-profile.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  selectedLang: string;
+  Lang: string;
   toggleStatus: boolean = false;
   public isMenuCollapsed = true;
   data: Observable<any>;
@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   jobTitle: string;
   avatar: string;
   subscription: Subscription[] = [];
+
   constructor(
     public translateService: TranslateService,
     private auth: SignInService,
@@ -34,11 +35,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ) {
       translateService.use('en');
       localStorage.setItem('lang', 'en');
-      // document.dir = 'ltr';
     } else if (localStorage.getItem('lang') == 'ar') {
       translateService.use('ar');
       localStorage.setItem('lang', 'ar');
-      // document.dir = 'rtl';
     }
     // this.auth.currentUser().then((res) => {
     //   console.log('current', res);
@@ -50,7 +49,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
-      console.log(res);
       if (res != null) {
         this.uid = res.id;
         this.firstName = res.firstName;
@@ -62,7 +60,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // this.subscription.push(sub);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.Lang = localStorage.getItem('lang')
+  }
 
   toggleSideBar() {
     this.toggleStatus = !this.toggleStatus;

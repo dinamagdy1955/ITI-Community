@@ -20,9 +20,11 @@ export class LeftSideGroupComponent implements OnInit {
   groups: any[] = [];
   data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor(private us: UserService, private gp: GroupService) {}
+  Lang: string
+  constructor(private us: UserService, private gp: GroupService) { }
 
   ngOnInit(): void {
+    this.Lang = localStorage.getItem('lang')
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {

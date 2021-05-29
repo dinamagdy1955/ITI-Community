@@ -1,21 +1,28 @@
 <section class="groups-page">
     <div class="container">
         <div class="content-groups">
-            <h1 class="text-muted py-2">Discover Groups</h1>
+            <h1 class="text-muted py-2" [ngClass]="{'text-right': Lang == 'ar'}">{{'Discover Groups' | translate}}</h1>
+            <div class="form-group has-search">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input type="text" name="search" class="form-control" [(ngModel)]="keyWordsSearch"
+                    placeholder="{{'What Do You Have Searching For ?...' | translate}}">
+            </div>
             <div id="GroupsDiscover" class="Groups-content-display1">
-                <ul class="list-group list-group-flush" *ngFor="let g of GroupList">
-                    <li class="list-group-item">
+                <ul class="list-group list-group-flush"
+                    *ngFor="let g of GroupList | filter:keyWordsSearch; trackBy:identify">
+                    <li class="list-group-item" [ngClass]="{'text-right': Lang == 'ar'}">
                         <div class="media">
-                            <img class="mr-3" [src]="g.Img" alt="" width="64px">
+                            <img class="mx-3" [src]="g.Img" alt="" width="64px">
                             <div class="media-body">
-                                <h6 class="mt-0 mb-1"><a class="text-decoration-none"
+                                <h6 class="mt-0 mb-1">
+                                    <a class="text-decoration-none"
                                         routerLink="/Group/group-profile/{{g.id}}">{{g.Name}}</a>
                                 </h6>
                                 <small class="text-muted">{{g.Specialty}}</small><br>
                                 <!-- <small class="text-muted"><span>{{g.users.length}}</span> members</small> -->
                             </div>
                             <button class="btn btn-outline-success btn-sm rounded-pill px-3 mt-3"
-                                (click)="sendRequest(userID, g.id)">Request To Join</button>
+                                (click)="sendRequest(userID, g.id)">{{'Request To Join' | translate}}</button>
                         </div>
                     </li>
                 </ul>

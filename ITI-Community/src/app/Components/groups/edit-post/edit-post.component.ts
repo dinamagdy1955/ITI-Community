@@ -13,15 +13,17 @@ export class EditPostComponent implements OnInit {
   editPostForm: FormGroup
   @Input() postID
   singlePost
+  Lang: string
   constructor(private model: NgbModal,
-     private FB: FormBuilder,
-      private postService: GroupPostsService) {
+    private FB: FormBuilder,
+    private postService: GroupPostsService) {
     this.editPostForm = this.FB.group({
       Body: ''
     })
   }
 
   ngOnInit(): void {
+    this.Lang = localStorage.getItem('lang');
     this.postService.PostById(this.postID).subscribe(res => {
       this.singlePost = res.payload.data()
       if (this.singlePost != undefined) {

@@ -6,40 +6,46 @@
                     <a href="#" class="list-group-item disabled mySavedItemsHeader">
                         <i class="fas fa-bookmark"></i> My Items
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action">
-                        My Jobs
-                        <span class="noOfItems">5</span>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action">
-                        My Learning
-                        <span class="noOfItems">12</span>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action">
+                    <div class="list-group-item list-group-item-action">
+                        Saved Jobs
+                        <span class="noOfItems">{{favoriteArray.length}}</span>
+                    </div>
+                    <a class="list-group-item list-group-item-action" (click)="toSavedPosts()">
                         Saved Posts
-                        <span class="noOfItems">20</span>
+                        <span class="noOfItems">{{noSavedPosts}}</span>
                     </a>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-12 col-lg-6 mainContainer">
-                <div class="list-group mySavedListItems">
+            <div class="col-sm-12 col-md-12 col-lg-9 mainContainer">
+                <div *ngIf="favoriteArray.length==0" class="p-4"
+                    style="background-color: white; border-radius: 15px; display: block; margin: auto;">
+                    <img class="mt-4 mb-4"
+                        src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/189-1896954_jobs-clipart-primary-data-clip-art-sources-of-data.png?alt=media&token=0de400d9-aa32-4f28-8763-caf8aa20178c"
+                        alt="" style="width:50%; display: block; margin: auto;">
+                    <div style="display: block; margin: auto; width: fit-content; font-size: 1.5rem; color: gray;">
+                        <div>Sorry you have no saved jobs ...</div>
+                        <div class="btn btn-sm p-2 btn-primary "
+                            style="background-color: #b4272d; color: white; font-size: 1rem;" (click)="toRecommended()">
+                            explore new Jobs</div>
+                    </div>
+                </div>
+                <div class="list-group mySavedListItems" *ngIf="favoriteArray.length!==0">
                     <div href="#" class="list-group-item disabled mySavedItemsHeader">
                         <h3>My Jobs</h3>
                     </div>
-                    <div class="list-group-item mySavedItem">
+                    <div class="list-group-item mySavedItem btn" *ngFor="let item of favoriteArray">
                         <div class="mySavedItemContent">
-                            <!--   <img src="{{./Saved Jobs Page/lg.png}}" class="logoImg"> -->
-                            <img src="../../../../assets/1.jpg" class="logoImg">
+                            <img [src]="item.data.companyLogoAvatar" class="logoImg">
                         </div>
-                        <div class="mySavedItemContent">
-                            <a href="" class="list-group-item-heading jobTitleLink">Frontend Web Developer</a>
-                            <div class="list-group-item-text companyName">LG</div>
-                            <div class="list-group-item-text jobLocation">Egypt</div>
-                            <div class="list-group-item-text activelyRecruiting">
+                        <div class="mySavedItemContent " (click)="details(item.id)">
+                            <div class="list-group-item-heading jobTitleLink">{{item.data.position.en}}</div>
+                            <div class="list-group-item-text companyName">{{item.data.company.en}}</div>
+                            <div class="list-group-item-text jobLocation">{{item.data.location.en}}</div>
+                            <div class="list-group-item-text activelyRecruiting" *ngIf="item.data.closingDate!=''">
                                 <i class="fas fa-briefcase"></i> Actively recruiting
                             </div>
                             <div class="list-group-item-text">
-                                <span class="jobPostTime">Posted 1w ago •</span>
-                                <span class="applyNow"><i class="fab fa-linkedin"></i> Apply now</span>
+                                <span class="jobPostTime">Posted In {{item.data.postedDate.toDate()|date}} </span>
                             </div>
                         </div>
                         <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
@@ -48,9 +54,9 @@
                                 <i class="fas fa-ellipsis-h"></i>
                             </a>
                             <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                                <a ngbDropdownItem href="#">
+                                <div ngbDropdownItem (click)="unsave(item.id)">
                                     <i class="fas fa-bookmark"></i> Unsave
-                                </a>
+                                </div>
                                 <a ngbDropdownItem href="#">
                                     <i class="fas fa-link"></i> CopyLink
                                 </a>
@@ -58,270 +64,9 @@
                                     <i class="fas fa-envelope"></i> Send a message
                                 </a>
                             </div>
-                        </div>
-                    </div>
-                    <div href="#" class="list-group-item mySavedItem">
-                        <div class="mySavedItemContent">
-                            <img src="../../../../assets/1.jpg" class="logoImg">
-                        </div>
-                        <div class="mySavedItemContent">
-                            <a href="" class="list-group-item-heading jobTitleLink">Backend Web Developer</a>
-                            <div class="list-group-item-text companyName">Samsung</div>
-                            <div class="list-group-item-text jobLocation">Egypt</div>
-                        </div>
-                        <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
-                            <a ngbDropdownToggle type="text" class="btnMoreDetailsDots" id="dropdownMenuButton"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </a>
-                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-bookmark"></i> Unsave
-                                </a>
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-link"></i> CopyLink
-                                </a>
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-envelope"></i> Send a message
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div href="#" class="list-group-item mySavedItem">
-                        <div class="mySavedItemContent">
-                            <img src="../../../../assets/1.jpg" class="logoImg">
-                        </div>
-                        <div class="mySavedItemContent">
-                            <a href="" class="list-group-item-heading jobTitleLink">Full Stack Web Developer</a>
-                            <div class="list-group-item-text companyName">IBM</div>
-                            <div class="list-group-item-text jobLocation">Egypt</div>
-                            <div class="list-group-item-text activelyRecruiting">
-                                <i class="fas fa-briefcase"></i> Actively recruiting
-                            </div>
-                            <div class="list-group-item-text">
-                                <span class="jobPostTime">Posted 3mon ago •</span>
-                                <span class="applyNow"><i class="fab fa-linkedin"></i> Apply now</span>
-                            </div>
-                        </div>
-                        <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
-                            <a ngbDropdownToggle type="text" class="btnMoreDetailsDots" id="dropdownMenuButton"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </a>
-                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-bookmark"></i> Unsave
-                                </a>
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-link"></i> CopyLink
-                                </a>
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-envelope"></i> Send a message
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div href="#" class="list-group-item mySavedItem">
-                        <div class="mySavedItemContent">
-                            <img src="../../../../assets/1.jpg" class="logoImg">
-                        </div>
-                        <div class="mySavedItemContent">
-                            <a href="" class="list-group-item-heading jobTitleLink">Full Stack Web Developer</a>
-                            <div class="list-group-item-text companyName">Vodafone</div>
-                            <div class="list-group-item-text jobLocation">Egypt</div>
-                            <div class="list-group-item-text activelyRecruiting">
-                                <i class="fas fa-briefcase"></i> Actively recruiting
-                            </div>
-                            <div class="list-group-item-text">
-                                <span class="jobPostTime">Posted 3mon ago •</span>
-                                <span class="applyNow"><i class="fab fa-linkedin"></i> Apply now</span>
-                            </div>
-                        </div>
-                        <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
-                            <a ngbDropdownToggle type="text" class="btnMoreDetailsDots" id="dropdownMenuButton"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </a>
-                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-bookmark"></i> Unsave
-                                </a>
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-link"></i> CopyLink
-                                </a>
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-envelope"></i> Send a message
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div href="#" class="list-group-item mySavedItem">
-                        <div class="mySavedItemContent">
-                            <img src="../../../../assets/1.jpg" class="logoImg">
-                        </div>
-                        <div class="mySavedItemContent">
-                            <a href="" class="list-group-item-heading jobTitleLink">Full Stack Web Developer</a>
-                            <div class="list-group-item-text companyName">Orange</div>
-                            <div class="list-group-item-text jobLocation">Egypt</div>
-                            <div class="list-group-item-text activelyRecruiting">
-                                <i class="fas fa-briefcase"></i> Actively recruiting
-                            </div>
-                            <div class="list-group-item-text">
-                                <span class="jobPostTime">Posted 3mon ago •</span>
-                                <span class="applyNow"><i class="fab fa-linkedin"></i> Apply now</span>
-                            </div>
-                        </div>
-                        <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
-                            <a ngbDropdownToggle type="text" class="btnMoreDetailsDots" id="dropdownMenuButton"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </a>
-                            <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-bookmark"></i> Unsave
-                                </a>
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-link"></i> CopyLink
-                                </a>
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-envelope"></i> Send a message
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 mainContainer">
-                <div class="panel-group">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <a class="list-group-item itiBranchesHeader" data-toggle="collapse" href="#collapse1">
-                                    <i class="fas fa-university"></i> ITI Branches
-                                </a>
-                            </div>
-                        </div>
-                        <div id="collapse1" class="panel-collapse collapse">
-                            <ul class="list-group itiBranchesCollapse">
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Smart Villege
-                                    <span class="branchLocation">
-                                        <i class="fas fa-location-arrow"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Assuit
-                                    <span class="branchLocation">
-                                        <i class="fas fa-location-arrow"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Aswan
-                                    <span class="branchLocation">
-                                        <i class="fas fa-location-arrow"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Sohag
-                                    <span class="branchLocation">
-                                        <i class="fas fa-location-arrow"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Qena
-                                    <span class="branchLocation">
-                                        <i class="fas fa-location-arrow"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Menofia
-                                    <span class="branchLocation">
-                                        <i class="fas fa-location-arrow"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Mansoura
-                                    <span class="branchLocation">
-                                        <i class="fas fa-location-arrow"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Alexendria
-                                    <span class="branchLocation">
-                                        <i class="fas fa-location-arrow"></i>
-                                    </span>
-                                </a>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-group">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <a class="list-group-item itiBranchesHeader" data-toggle="collapse" href="#collapse2">
-                                    <i class="fas fa-user-graduate"></i> ITI Tracks
-                                </a>
-                            </div>
-                        </div>
-                        <div id="collapse2" class="panel-collapse collapse">
-                            <ul class="list-group itiBranchesCollapse">
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Software Development Fundamentals
-                                    <span class="branchLocation">
-                                        <i class="fas fa-laptop-code"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Full Stack Web Development Using .Net
-                                    <span class="branchLocation">
-                                        <i class="fas fa-laptop-code"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Frontend & Cross-Platform Mob Developer
-                                    <span class="branchLocation">
-                                        <i class="fas fa-laptop-code"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Embedded Systems
-                                    <span class="branchLocation">
-                                        <i class="fas fa-laptop-code"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Big Data Specialist
-                                    <span class="branchLocation">
-                                        <i class="fas fa-laptop-code"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Business Data Intelligence
-                                    <span class="branchLocation">
-                                        <i class="fas fa-laptop-code"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Fullstack Web Development Using Python
-                                    <span class="branchLocation">
-                                        <i class="fas fa-laptop-code"></i>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Social Media Marketing
-                                    <span class="branchLocation">
-                                        <i class="fas fa-laptop-code"></i>
-                                    </span>
-                                </a>
-                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
