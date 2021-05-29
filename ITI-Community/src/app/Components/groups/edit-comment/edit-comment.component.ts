@@ -14,6 +14,7 @@ export class EditCommentComponent implements OnInit {
   @Input() commentID
   @Input() postID
   singleComment
+  Lang: string
   constructor(private model: NgbModal, private FB: FormBuilder, private commentService: PostCommentService) {
     this.editCommentForm = this.FB.group({
       Body: ''
@@ -21,7 +22,7 @@ export class EditCommentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.Lang = localStorage.getItem('lang')
     this.commentService.getCommentById(this.postID, this.commentID).subscribe(res => {
       this.singleComment = res
       if (this.singleComment != undefined) {

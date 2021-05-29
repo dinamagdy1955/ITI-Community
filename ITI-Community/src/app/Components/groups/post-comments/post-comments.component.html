@@ -6,7 +6,7 @@
                     <div class="">
                         <div class="d-flex flex-row user">
                             <img class="rounded-circle img-fluid img-responsive" [src]="c.User.avatar" width="40">
-                            <div class="d-flex flex-column ml-2">
+                            <div class="d-flex flex-column mx-2 w-100">
                                 <span class="font-weight-bold">
                                     {{c.User.firstName}} {{c.User.lastName}}
                                 </span>
@@ -21,8 +21,9 @@
                                         <div ngbDropdownMenu>
                                             <app-edit-comment [commentID]="c.id" [postID]='PostID'></app-edit-comment>
                                             <div class="dropdown-divider"></div>
-                                            <button ngbDropdownItem
-                                                (click)="deleteComment(c.id, PostID)">Delete</button>
+                                            <button ngbDropdownItem (click)="deleteComment(c.id, PostID)"
+                                                [ngClass]="{'text-right': Lang == 'ar'}">{{'Delete' |
+                                                translate}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -38,6 +39,7 @@
     </div>
 </div>
 <div class="">
-    <button class="btn btn-link" (click)="loadMore()" [ngClass]="{'d-none': turnOff == true}">Load
-        More Comments</button>
+    <button class="btn btn-link text-decoration-none" (click)="loadMore()"
+        [ngClass]="{'d-none': turnOff == true}">{{'Load
+        More Comments' | translate}}</button>
 </div>

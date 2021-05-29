@@ -6,6 +6,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { GroupService } from '../Services/group.service';
@@ -26,11 +27,14 @@ export class CenterGroupPageComponent implements OnInit, OnDestroy, OnChanges {
   member = [];
   subscribe = [];
   data: Observable<any>;
+  Lang: string;
   private subscription: Subscription[] = [];
-  constructor(private GrpServ: GroupService, private us: UserService) {}
+  constructor(private GrpServ: GroupService, private us: UserService, private tranSev: TranslateService) { }
 
   ngOnInit(): void {
     this.data = this.us.localUserData.asObservable();
+    this.Lang = localStorage.getItem('lang');
+
     let sub = this.data.subscribe((res) => {
       if (res != null) {
         this.userID = res.id;

@@ -5,7 +5,7 @@ section.groups-page .content-groups{
     border-radius: 10px;
     padding: 20px;
     margin-top: 50px;
-    margin-bottom: 50px;
+    height: 82vh;
 }
 
 
@@ -70,10 +70,23 @@ section.groups-page .content-groups .Groups-content-display2 {
     color: #aaa;
 }
 
-
-.active{
-    background-color: #7ec5ff;
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: #aed3f8;
+    padding: 4px;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: #aed3f8;
+
+}
+
+.list-group-item {
+    background-color: #aed3f800;
+    border: none;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 
 .sender, .reciever {
     margin-top: 5px !important;
@@ -90,14 +103,14 @@ section.groups-page .content-groups .Groups-content-display2 {
     text-decoration: none;
 }
 
-.sender:before {
+.sender>small {
     content: attr(data-is);
     position: absolute;
-    right: 15px;
-    bottom: -0.8em;
+    right: 8px;
+    bottom: -3.4em;
     display: block;
-    font-size: .750rem;
-    color: rgba(84, 110, 122,1.0);
+    font-size: .700rem;
+    color: #a4bac4;
 }
 
 .reciever a {
@@ -110,14 +123,14 @@ section.groups-page .content-groups .Groups-content-display2 {
     text-decoration: none;
 }
 
-.reciever:before {
+.reciever>small {
     content: attr(data-is);
     position: absolute;
-    left: 13px;
-    bottom: -0.8em;
+    left: 16px;
+    bottom: -3.4em;
     display: block;
-    font-size: .750rem;
-    color: rgba(84, 110, 122,1.0);
+    font-size: .700rem;
+    color: #a4bac4;
 }
 
 
@@ -133,3 +146,18 @@ section.groups-page .content-groups .Groups-content-display2 {
 
 .left-side-messages {
 }
+
+
+  .users-list {
+      max-width: 30%;
+      min-width: 30%;
+  }
+
+  .chatting-room {
+      min-width: 100%;
+      max-width: 100%;
+  }
+
+  .tab-content{
+      width: 100% !important;
+  }

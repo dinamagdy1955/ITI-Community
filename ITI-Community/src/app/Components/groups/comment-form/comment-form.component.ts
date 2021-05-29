@@ -19,6 +19,7 @@ export class CommentFormComponent implements OnInit, OnDestroy {
   commentForm: FormGroup;
   data: Observable<any>;
   subscription: Subscription[] = [];
+  Lang: string
   constructor(
     private commentService: PostCommentService,
     private fb: FormBuilder,
@@ -49,6 +50,7 @@ export class CommentFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.Lang = localStorage.getItem('lang')
     this.commentForm = this.fb.group({
       Body: '',
       CommentDate: new Date(),

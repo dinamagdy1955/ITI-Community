@@ -1,16 +1,18 @@
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Create a post</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <h4 class="modal-title" id="modal-basic-title">{{'Create a post' | translate}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')"
+            [ngClass]="{'m-0 p-0': Lang == 'ar'}">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
 
     <form [formGroup]='postForm' (ngSubmit)='onSubmit()'>
 
-        <div class="modal-body">
-            <div style="padding-left: .8em;">
-                <img class="card-img-top" [src]="avatar" alt="Card image" style="width:10%;border-radius:50%;">
+        <div class="modal-body" [ngClass]="{'text-right': Lang == 'ar'}">
+            <div class="px-2">
+                <img class="card-img-top" [src]="avatar" alt="Card image" class="mx-2"
+                    style="width:10%;border-radius:50%;">
                 <div style="display: inline-block;" class="ml-2">
                     <span>
                         <strong>{{firstName}} {{lastName}}</strong>
@@ -20,7 +22,7 @@
             <hr>
             <div class="form-group">
                 <textarea class="form-control" formControlName="Body" name="Body" rows="5"
-                    placeholder="What Do You Think About?!..." required>
+                    placeholder="{{'What Do You Think About?!...' | translate}}" required>
                 </textarea>
             </div>
             <div class="form-group">
@@ -36,9 +38,10 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-outline-primary" [disabled]='!postForm.valid'
-                (click)="c('Save click')">Post</button>
+                (click)="c('Save click')">{{'Post' | translate}}</button>
         </div>
     </form>
 </ng-template>
 
-<button id="writePost" class="btn btn-lg btn-outline-primary" (click)="open(content)">Write a post</button>
+<button id="writePost" class="btn btn-lg btn-outline-primary" (click)="open(content)">{{'Write a post' |
+    translate}}</button>

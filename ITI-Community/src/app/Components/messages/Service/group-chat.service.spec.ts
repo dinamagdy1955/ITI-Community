@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GroupChatService } from './group-chat.service';
+import { GroupChatService } from './chats.service';
 
 describe('GroupChatService', () => {
   let service: GroupChatService;
