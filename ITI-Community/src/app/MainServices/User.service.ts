@@ -26,7 +26,7 @@ export class UserService {
       this.stateObs();
       setTimeout(() => {
         resolve();
-      }, 1500);
+      }, 2000);
     });
   }
 

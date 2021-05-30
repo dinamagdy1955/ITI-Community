@@ -22,14 +22,28 @@ export class HomePostsService {
       .snapshotChanges();
   }
 
-  getAllMyPosts(uid) {
-    return this.db
+  getAllMyPosts(uid,param?) {
+
+    if (param != undefined) {
+      return this.db
       .collection('users-details')
       .doc(uid)
       .collection('MyHomePosts', (ref) =>
-        ref.where('PostedDate', '!=', null).orderBy('PostedDate', 'desc')
+        ref.where('PostedDate', '!=', null).orderBy('PostedDate', 'desc').limit(5).startAfter(param)
       )
       .snapshotChanges();
+         
+       
+    } else {
+        return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('MyHomePosts', (ref) =>
+        ref.where('PostedDate', '!=', null).orderBy('PostedDate', 'desc').limit(5)
+      )
+      .snapshotChanges();
+    }
+
   }
 
   MyPostById(postid, uid) {
