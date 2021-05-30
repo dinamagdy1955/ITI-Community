@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { NetworkService } from '../Services/network.service';
 
+
 @Component({
   selector: 'app-all-sent-requestes-page',
   templateUrl: './all-sent-requestes-page.component.html',
@@ -15,6 +16,9 @@ export class AllSentRequestesPageComponent implements OnInit, OnDestroy {
   RequestsinCardData: any[];
   data: Observable<any>;
   subscription: Subscription[] = [];
+  page: number = 1;
+  total: number=5;
+  collection: any[] = []; 
   uid;
   constructor(
     public translateService: TranslateService,

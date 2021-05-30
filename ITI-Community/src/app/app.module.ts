@@ -33,7 +33,8 @@ import { ResetPasswordComponent } from './Components/login/reset-password/reset-
 import { SavedPostsComponent } from './Components/home-page/saved-posts/saved-posts.component';
 import { ClipboardModule } from 'ngx-clipboard';
 import { SpacificSavedPostComponent } from './Components/home-page/spacific-saved-post/spacific-saved-post.component';
-
+import { GroupsModule } from './Components/groups/groups.module';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 export function initializeApp1(userService: UserService) {
   return (): Promise<any> => {
     return userService.Init();
@@ -65,6 +66,7 @@ export function initializeApp1(userService: UserService) {
   ],
   imports: [
     BrowserModule,
+     InfiniteScrollModule,
     AppRoutingModule,
     NgbModule,
     AngularFireModule.initializeApp(environment.firebase),
