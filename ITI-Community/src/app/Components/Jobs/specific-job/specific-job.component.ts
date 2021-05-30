@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -13,7 +13,7 @@ ActivatedRoute;
   templateUrl: './specific-job.component.html',
   styleUrls: ['./specific-job.component.scss'],
 })
-export class SpecificJobComponent implements OnInit {
+export class SpecificJobComponent implements OnInit, OnDestroy {
   x: number;
   showing: string;
   list: Job[];
@@ -122,19 +122,22 @@ export class SpecificJobComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe((params) => {
+    let sub = this.activatedRoute.paramMap.subscribe((params) => {
       this.jobId = params.get('id');
       this.company = this.activatedRoute.snapshot.queryParams['company'];
       this.job = this.activatedRoute.snapshot.queryParams['job'];
       if (this.jobId != null) {
-        this.service.getJobById(this.jobId).subscribe((res) => {
+        sub = this.service.getJobById(this.jobId).subscribe((res) => {
           this.selectedJob.data = res.data();
         });
-        this.us.getUserBasic(this.uid).subscribe((res) => {
+        this.subscription.push(sub);
+        sub = this.us.getUserBasic(this.uid).subscribe((res) => {
           this.user = res.payload.data();
         });
+        this.subscription.push(sub);
       }
     });
+    this.subscription.push(sub);
   }
 
   favorite() {
@@ -164,5 +167,10 @@ export class SpecificJobComponent implements OnInit {
       this.x = 1500;
       this.showing = 'show less';
     }
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }

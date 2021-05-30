@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Job } from '../../viewModels/job';
 import { JobDatabaseService } from '../../service/JobDatabase.service';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -9,7 +9,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './job-searches.component.html',
   styleUrls: ['./job-searches.component.scss'],
 })
-export class JobSearchesComponent implements OnInit {
+export class JobSearchesComponent implements OnInit, OnDestroy {
   appliedJobs;
   data: Observable<any>;
   subscription: Subscription[] = [];
@@ -26,13 +26,20 @@ export class JobSearchesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.getAppliedJobs(this.uid).subscribe((res) => {
+    let sub = this.service.getAppliedJobs(this.uid).subscribe((res) => {
       this.appliedJobs = res.map((e) => {
         return {
           id: e.payload.doc.id,
           data: e.payload.doc.data(),
         };
       });
+    });
+    this.subscription.push(sub);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
     });
   }
 }
