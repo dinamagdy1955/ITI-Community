@@ -29,7 +29,7 @@
                             <div class="list-group-item-heading jobTitleLink">{{item.position.en}}</div>
                             <div class="list-group-item-text companyName">{{item.company.en}}</div>
                             <div class="list-group-item-text jobLocation">{{item.location.en}}</div>
-                            <div class="list-group-item-text activelyRecruiting" *ngIf="item.closingDate == undefined">
+                            <div class="list-group-item-text activelyRecruiting" *ngIf="item.closingDate == null">
                                 <i class="fas fa-briefcase"></i> Actively recruiting
                             </div>
                             <div class="list-group-item-text">

@@ -17,7 +17,7 @@ export class JobDatabaseService {
       .snapshotChanges();
   }
   getJobById(id): any {
-    return this.db.collection('jobs').doc(id).get();
+    return this.db.collection('jobs').doc(id).snapshotChanges();
   }
   Company(name) {
     return this.db

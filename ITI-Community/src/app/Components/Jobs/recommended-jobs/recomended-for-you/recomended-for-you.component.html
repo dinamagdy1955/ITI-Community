@@ -22,7 +22,7 @@
                         <img class="card-img-top" [src]="item.data.companyLogoAvatar" alt="Card image"
                             style="width:80px;height: 80px; float: left; margin-left: 2px;">
                     </div>
-                    <div [routerLink]="'specificjob/'+ item.id" routerLinkActive="router-link-active">
+                    <div [routerLink]="['/jobs/specificjob']" [queryParams]="{id: item.id}">
                         <div class="btn " style="color: black;"><strong> {{item.data.position.en}}</strong> </div>
                         <br />
                         <span class="txtt btn"> {{item.data.company.en}}</span> <br />

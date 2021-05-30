@@ -132,13 +132,12 @@
     </header>
 
     <div class="container">
-        <!-- ///////////////////header//////////////////////////// -->
-        <!--  [routerLink]="'jobs/specificjob/'+ item.id" routerLinkActive="router-link-active" -->
         <div class="content row">
             <div class="news col-6 pt-4" style="overflow-y: scroll; height: 600px">
                 <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="company">
                 <div *ngFor="let item of list | filter:company " [ngClass]="{ selected: item.id === jobId }"
-                    (click)="showMore(item.id)" class="element mb-2 btn">
+                    (click)="showMore(item.id)" [routerLink]="['/jobs/specificjob']" [queryParams]="{id: item.id}"
+                    class="element mb-2 btn">
                     <div class="img col-3 rounded-circle mr-2">
                         <img class="card-img-top" [src]="item.data.companyLogoAvatar" />
                     </div>
@@ -146,12 +145,13 @@
                         <h4 class="font-weight-normal">{{ item.data.position.en }}</h4>
                         <h5 class="font-weight-light">{{ item.data.company.en }}</h5>
                         <h5 class="font-weight-light">{{ item.data.location.en }}</h5>
-                        <div><span class="text-success" *ngIf="selectedJob.data.postedDate != null">Posted In : {{
+                        <div><span class="text-success" *ngIf="item.data.postedDate != null">Posted In : {{
                                 item.data.postedDate.toDate() | date }} </span></div>
                     </div>
                 </div>
             </div>
-            <div class="details position-sticky top-0 end-0 col-6 pt-4" style="overflow-y: scroll; height: 600px">
+            <div class="details position-sticky top-0 end-0 col-6 pt-4" style="overflow-y: scroll; height: 600px"
+                *ngIf="selectedJob != undefined">
                 <div class="elementCard mb-2">
                     <div class="img " style="width:150px;">
                         <img [src]="selectedJob.data.companyLogoAvatar" alt="" />
@@ -173,7 +173,10 @@
                             selectedJob.data.postedDate.toDate() | date }} </span>
                     </div>
                     <div class="save btn">
-                        <i class="fas fa-bookmark b1 savehover " style="font-size: 20px;" (click)="favorite()"> </i>
+                        <i class="fas fa-bookmark b1 savehover " style="font-size: 20px;"
+                            [ngStyle]="{'color':savedJobs.includes(selectedJob.id) ?'goldenrod':'black'}"
+                            (click)="saveUnsave(selectedJob.id)">
+                        </i>
                     </div>
                 </div>
                 <div style="border-bottom:1px solid rgb(192, 191, 191); text-align: center;" class="pb-2">
@@ -195,8 +198,6 @@
             </div>
         </div>
     </div>
-
-
 
     <ng-template #err let-modal>
         <div>

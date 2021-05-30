@@ -16,20 +16,23 @@ ActivatedRoute;
 export class SpecificJobComponent implements OnInit, OnDestroy {
   x: number;
   showing: string;
-  list: Job[];
+  list;
+  savedJobs = [];
+  appliedJobs = [];
   jobId: string;
-  selectedJob: Job;
+  selectedJob;
   clickedID: string;
-  user: IUserBasics;
   company: string;
-  job: string;
+  position: string;
+  location: string;
   appliedJob: Job;
   @ViewChild('err') myModal;
   data: Observable<any>;
   subscription: Subscription[] = [];
   uid: string;
+  userData;
   constructor(
-    private service: JobDatabaseService,
+    private jobService: JobDatabaseService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
@@ -39,121 +42,103 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
     let sub = this.data.subscribe((res) => {
       if (res != null) {
         this.uid = res.id;
+        this.userData = res;
       }
     });
     this.subscription.push(sub);
     this.x = 800;
     this.showing = 'see More';
-    // this.list = this.service.getJobs();
-    this.selectedJob = {
-      id: '',
-      data: {
-        closingDate: new Date(),
-        companyLogoAvatar: '',
-        company: {
-          ar: '',
-          en: '',
-        },
-        description: {
-          ar: '',
-          en: '',
-        },
-        employmentType: {
-          ar: '',
-          en: '',
-        },
-        location: {
-          ar: '',
-          en: '',
-        },
-        position: {
-          ar: '',
-          en: '',
-        },
-        postedDate: new Date(),
-        seniorityLevel: {
-          ar: '',
-          en: '',
-        },
-        worksFrom: {
-          ar: '',
-          en: '',
-        },
-      },
-    };
-    this.appliedJob = {
-      id: '',
-      data: {
-        closingDate: new Date(),
-        companyLogoAvatar: '',
-        company: {
-          ar: '',
-          en: '',
-        },
-        description: {
-          ar: '',
-          en: '',
-        },
-        employmentType: {
-          ar: '',
-          en: '',
-        },
-        location: {
-          ar: '',
-          en: '',
-        },
-        position: {
-          ar: '',
-          en: '',
-        },
-        postedDate: new Date(),
-        seniorityLevel: {
-          ar: '',
-          en: '',
-        },
-        worksFrom: {
-          ar: '',
-          en: '',
-        },
-      },
-    };
-    this.clickedID = '';
-    this.company = '';
   }
 
   ngOnInit(): void {
-    let sub = this.activatedRoute.paramMap.subscribe((params) => {
-      this.jobId = params.get('id');
+    let sub = this.activatedRoute.queryParams.subscribe((params) => {
+      this.jobId = this.activatedRoute.snapshot.queryParams['id'];
       this.company = this.activatedRoute.snapshot.queryParams['company'];
-      this.job = this.activatedRoute.snapshot.queryParams['job'];
-      if (this.jobId != null) {
-        sub = this.service.getJobById(this.jobId).subscribe((res) => {
-          this.selectedJob.data = res.data();
+      this.position = this.activatedRoute.snapshot.queryParams['position'];
+      this.location = this.activatedRoute.snapshot.queryParams['location'];
+      if (this.jobId != undefined) {
+        this.jobService.getJobById(this.jobId).subscribe((res) => {
+          this.selectedJob = {
+            id: res.payload.id,
+            data: res.payload.data(),
+          };
         });
-        this.subscription.push(sub);
-        sub = this.us.getUserBasic(this.uid).subscribe((res) => {
-          this.user = res.payload.data();
+        this.jobService.getJobs().subscribe((res) => {
+          this.list = res.map((e) => {
+            return {
+              id: e.payload.doc.id,
+              data: e.payload.doc.data(),
+            };
+          });
         });
-        this.subscription.push(sub);
+      } else if (
+        this.company != undefined ||
+        this.position != undefined ||
+        this.location != undefined
+      ) {
+      } else {
+        this.selectedJob = undefined;
+        this.jobService.getJobs().subscribe((res) => {
+          this.list = res.map((e) => {
+            return {
+              id: e.payload.doc.id,
+              data: e.payload.doc.data(),
+            };
+          });
+        });
       }
+      this.jobService.getFavorite(this.uid).subscribe((res) => {
+        this.savedJobs = res.map((e) => {
+          return e.payload.doc.id;
+        });
+      });
+      this.jobService.getAppliedJobs(this.uid).subscribe((res) => {
+        this.appliedJobs = res.map((e) => {
+          return e.payload.doc.id;
+        });
+      });
+
+      // console.log(this.jobId);
+      // console.log(this.company);
+      // console.log(this.location);
+      // console.log(this.position);
+
+      // if (this.jobId != null) {
+      //   sub = this.service.getJobById(this.jobId).subscribe((res) => {
+      //     this.selectedJob.data = res.data();
+      //   });
+      //   this.subscription.push(sub);
+      //   sub = this.us.getUserBasic(this.uid).subscribe((res) => {
+      //     this.user = res.payload.data();
+      //   });
+      //   this.subscription.push(sub);
+      // }
     });
+
     this.subscription.push(sub);
   }
 
-  favorite() {
-    let favoriteJob = this.list.find((e) => e.id == this.jobId);
-    this.service.favourite(this.uid, favoriteJob.id, favoriteJob.data);
+  saveUnsave(jobId) {
+    if (this.savedJobs.includes(jobId)) {
+      this.jobService.deleteFavorite(jobId, this.uid);
+    } else {
+      let favoriteJob = this.list.find((e) => e.id == jobId);
+      this.jobService.favourite(this.uid, favoriteJob.id, favoriteJob.data);
+    }
   }
-
-  showMore(id) {
-    this.router.navigate(['jobs/specificjob/' + id]);
-    this.jobId = id;
+  showMore(jid) {
+    this.jobId = jid;
     this.showing = 'See More';
     this.x = 800;
   }
   Apply() {
     this.appliedJob = this.list.find((e) => e.id == this.jobId);
-    this.service.Apply(this.uid, this.jobId, this.appliedJob.data, this.user);
+    this.jobService.Apply(
+      this.uid,
+      this.jobId,
+      this.appliedJob.data,
+      this.userData
+    );
     this.openModal();
   }
   openModal() {
