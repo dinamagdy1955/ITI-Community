@@ -30,12 +30,12 @@ export class SpacificSavedPostComponent implements OnInit {
     ) {
       translateService.use('en');
       localStorage.setItem('lang', 'en');
-      this.selectedLang='en'
+      this.selectedLang = 'en';
       // document.dir = 'ltr';
     } else if (localStorage.getItem('lang') == 'ar') {
       translateService.use('ar');
       localStorage.setItem('lang', 'ar');
-      this.selectedLang='ar'
+      this.selectedLang = 'ar';
       // document.dir = 'rtl';
     }
     this.data = this.us.localUserData.asObservable();
@@ -48,14 +48,9 @@ export class SpacificSavedPostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log(this.post);
     this.id = this._Activatedroute.snapshot.paramMap.get('id');
-    console.log(this.id);
     this.postsServ.MyPostById(this.id, this.uid).subscribe((data) => {
-      // console.log(data.payload.data())
       this.post = data.payload.data();
-
-      console.log(this.post.Auther);
     });
   }
 
@@ -71,7 +66,7 @@ export class SpacificSavedPostComponent implements OnInit {
   SavePost(pid, post) {
     this.postsServ.SavePosts(pid, post, this.uid);
   }
-  ReportPost(pid,post){
-    this.postsServ.ReportPost(pid, post, this.uid)
+  ReportPost(pid, post) {
+    this.postsServ.ReportPost(pid, post, this.uid);
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
+import { ChatsService } from '../../messages/Service/chats.service';
 import { NetworkService } from '../Services/network.service';
 
 @Component({
@@ -14,12 +15,15 @@ export class ConnectionsComponent implements OnInit, OnDestroy {
   keyWordsSearch;
   selectedLang: string;
   uid;
+  loggedUser;
   data: Observable<any>;
   subscription: Subscription[] = [];
   constructor(
     public translateService: TranslateService,
     private usrs: NetworkService,
-     private us: UserService) {
+     private us: UserService,
+     private chat: ChatsService
+     ) {
       translateService.addLangs(['en', 'ar']);
       if (
         localStorage.getItem('lang') == undefined ||
@@ -39,6 +43,7 @@ export class ConnectionsComponent implements OnInit, OnDestroy {
     let sub = this.data.subscribe((res) => {
       if (res != null) {
         this.uid = res.id;
+        this.loggedUser = res;
       }
     });
     this.subscription.push(sub);
@@ -106,9 +111,14 @@ export class ConnectionsComponent implements OnInit, OnDestroy {
     this.usrs.deleteFriend(id, this.uid);
   }
 
+  openChat(logged, reci) {
+    this.chat.newChat(logged, reci);
+  }
+
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => {
       sub.unsubscribe();
     });
   }
+
 }

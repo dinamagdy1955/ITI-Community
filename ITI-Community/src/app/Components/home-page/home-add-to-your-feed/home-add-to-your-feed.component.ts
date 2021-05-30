@@ -59,7 +59,6 @@ export class HomeAddToYourFeedComponent implements OnInit {
     let friendData: any[];
     let Requests: any[];
     let SentfriendRequest: any[];
-    // let uid = localStorage.getItem('uid');
     this.usrs.getAllFriendRequests(this.uid).subscribe((data) => {
       Requests = data.map((e) => {
         let id = e.payload.doc.id;

@@ -28,15 +28,12 @@ export class NotificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.homePostServ.getAllNotifications(this.uid).subscribe((data) => {
-      console.log(data);
       this.Notifications = data.map((e) => {
-        console.log(e.payload.doc.data());
         return {
           id: e.payload.doc.id,
           data: e.payload.doc.data(),
         };
       });
-      console.log(this.Notifications);
     });
   }
   DeleteNotification(postid) {

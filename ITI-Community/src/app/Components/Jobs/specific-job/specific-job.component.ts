@@ -122,18 +122,13 @@ export class SpecificJobComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /* this.selectedJob.id = this.jobId;  */
     this.activatedRoute.paramMap.subscribe((params) => {
       this.jobId = params.get('id');
       this.company = this.activatedRoute.snapshot.queryParams['company'];
       this.job = this.activatedRoute.snapshot.queryParams['job'];
-      console.log(params.get('company'));
-
       if (this.jobId != null) {
-        console.log(this.jobId);
         this.service.getJobById(this.jobId).subscribe((res) => {
           this.selectedJob.data = res.data();
-          console.log(res.data());
         });
         this.us.getUserBasic(this.uid).subscribe((res) => {
           this.user = res.payload.data();
