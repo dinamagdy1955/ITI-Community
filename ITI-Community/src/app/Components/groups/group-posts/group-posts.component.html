@@ -3,6 +3,11 @@
     <input type="text" name="search" class="form-control" [(ngModel)]="keyWordsSearch"
         placeholder="{{'Searching For ?...' | translate}}">
 </div>
+<div *ngIf="postGroupList.length == 0">
+    <div>
+        <h1>مفيش بوستات هنا يابني</h1>
+    </div>
+</div>
 <div class="card mt-3" *ngFor="let post of postGroupList | filter:keyWordsSearch; trackBy: identify">
     <div class="card-body" [ngClass]="{'text-right': Lang == 'ar'}">
         <div class="media">
