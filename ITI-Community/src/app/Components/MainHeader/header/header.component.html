@@ -12,7 +12,7 @@
 
         <div class="collapse navbar-collapse justify-content-end" [ngbCollapse]="isMenuCollapsed"
             id="navbarSupportedContent">
-            <ul class="navbar-nav text-lg-center custom-nav">
+            <ul class="navbar-nav text-lg-center custom-nav" [ngClass]="{'text-right': Lang == 'ar'}">
                 <li class="nav-item">
 
                     <a class="nav-link visible-dot" [routerLink]="['Home']" routerLinkActive="active"
@@ -118,46 +118,39 @@
             <div class="card-header">
                 <h4>Visit Our Sites</h4>
             </div>
-            <div class="card-body text-center">
-                <a href="#" class="btn">
-                    <i class="fab fa-leanpub"></i>
-                    <div>Learn</div>
+            <div class="card-body text-center d-flex flex-column">
+                <a href="https://www.facebook.com/ITI.eg" class="btn" target="_blank">
+                    <img src="../../../../assets/iti-logo-right.png" width="80" class="rounded-circle" />
+                    <div class="pt-1">ITI</div>
                 </a>
-                <a href="#" class="btn">
-                    <i class="fas fa-briefcase"></i>
-                    <div>Jobs</div>
+                <a href="https://www.facebook.com/ITP.ITI" class="btn" target="_blank">
+                    <img src="../../../../assets/itp-logo.jpg" width="80" class="rounded-circle" />
+                    <div class="pt-1">ITP</div>
                 </a>
-                <a href="#" class="btn">
-                    <i class="fab fa-leanpub"></i>
-                    <div>Learn</div>
+                <a href="https://www.facebook.com/ITIFreelancingZones" class="btn" target="_blank">
+                    <img src="../../../../assets/itp-logo.jpg" width="80" class="rounded-circle" />
+                    <div class="pt-1">Freelancer Zones</div>
                 </a>
-                <a href="#" class="btn">
-                    <i class="fas fa-briefcase"></i>
-                    <div>Jobs</div>
+                <a href="https://www.facebook.com/maharatech.Eg" class="btn" target="_blank">
+                    <img src="../../../../assets/mahara.png" width="80" class="rounded-circle" />
+                    <div class="pt-1">Mahara-Tech</div>
                 </a>
-                <a href="#" class="btn">
-                    <i class="fab fa-leanpub"></i>
-                    <div>Learn</div>
+                <a href="https://www.linkedin.com/school/information-technology-institute-iti-/" class="btn"
+                    target="_blank">
+                    <img src="../../../../assets/linked.png" width="80" class="rounded-circle" />
+                    <div class="pt-1">ITI-Page</div>
                 </a>
-                <a href="#" class="btn">
-                    <i class="fas fa-briefcase"></i>
-                    <div>Jobs</div>
+                <a href="https://maharatech.gov.eg/" class="btn" target="_blank">
+                    <img src="../../../../assets/iti-logo.png" width="80" class="rounded-circle" />
+                    <div class="pt-1">MaharaSite</div>
                 </a>
-                <a href="#" class="btn">
-                    <i class="fab fa-leanpub"></i>
-                    <div>Learn</div>
+                <a href="http://iti.gov.eg/iti/home" class="btn" target="_blank">
+                    <img src="../../../../assets/iti-logo.png" width="80" class="rounded-circle" />
+                    <div class="pt-1">ITI-Site</div>
                 </a>
-                <a href="#" class="btn">
-                    <i class="fas fa-briefcase"></i>
-                    <div>Jobs</div>
-                </a>
-                <a href="#" class="btn">
-                    <i class="fab fa-leanpub"></i>
-                    <div>Learn</div>
-                </a>
-                <a href="#" class="btn">
-                    <i class="fas fa-briefcase"></i>
-                    <div>Jobs</div>
+                <a href="https://freelancingzones.com/" class="btn" target="_blank">
+                    <img src="../../../../assets/zones.jpg" width="80" class="rounded-circle" />
+                    <div class="pt-1">freelancerZones-Site</div>
                 </a>
             </div>
         </div>

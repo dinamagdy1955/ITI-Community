@@ -39,6 +39,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       translateService.use('ar');
       localStorage.setItem('lang', 'ar');
     }
+
+
     // this.auth.currentUser().then((res) => {
     //   console.log('current', res);
     // });
