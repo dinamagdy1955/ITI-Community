@@ -10,18 +10,16 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./recomended-for-you.component.scss'],
 })
 export class RecomendedForYouComponent implements OnInit {
-  list: Job[];
-  searchItem: string;
+  savedJobs: any[] = [];
   data: Observable<any>;
   subscription: Subscription[] = [];
   uid;
+  list = [];
   constructor(
     private jobService: JobDatabaseService,
     private router: Router,
     private us: UserService
   ) {
-    this.list = this.jobService.getJobs();
-    this.searchItem = '';
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -30,11 +28,28 @@ export class RecomendedForYouComponent implements OnInit {
     });
     this.subscription.push(sub);
   }
-
-  ngOnInit(): void {}
-  favorite(id) {
-    let favoriteJob = this.list.find((e) => e.id == id);
-    this.jobService.favourite(this.uid, favoriteJob.id, favoriteJob.data);
+  ngOnInit(): void {
+    this.jobService.getJobs().subscribe((res) => {
+      this.list = res.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          data: e.payload.doc.data(),
+        };
+      });
+    });
+    this.jobService.getFavorite(this.uid).subscribe((res) => {
+      this.savedJobs = res.map((e) => {
+        return e.payload.doc.id;
+      });
+    });
+  }
+  saveUnsave(jobId) {
+    if (this.savedJobs.includes(jobId)) {
+      this.jobService.deleteFavorite(jobId, this.uid);
+    } else {
+      let favoriteJob = this.list.find((e) => e.id == jobId);
+      this.jobService.favourite(this.uid, favoriteJob.id, favoriteJob.data);
+    }
   }
   toSavedJobs() {
     this.router.navigate(['jobs/savedjobs']);

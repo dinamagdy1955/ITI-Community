@@ -7,19 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class JobDatabaseService {
   constructor(private db: AngularFirestore) {}
   getJobs() {
-    let jobs = [];
-    this.db
-      .collection('jobs')
-      .get()
-      .subscribe((res) => {
-        res.docs.forEach((doc) => {
-          jobs.push({
-            id: doc.id,
-            data: doc.data(),
-          });
-        });
-      });
-    return jobs;
+    return this.db.collection('jobs').snapshotChanges();
   }
   getAppliedJobs(userId) {
     return this.db
@@ -104,11 +92,6 @@ export class JobDatabaseService {
       .doc(userId)
       .set(user);
   }
-  /* getUser(userId)
-{
-  return this.db.collection('users-details').doc(userId).snapshotChanges();
-
-} */
   getFavorite(userId) {
     return this.db
       .collection('users-details')

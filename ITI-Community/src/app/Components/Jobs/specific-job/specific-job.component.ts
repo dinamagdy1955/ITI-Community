@@ -44,7 +44,7 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
     this.subscription.push(sub);
     this.x = 800;
     this.showing = 'see More';
-    this.list = this.service.getJobs();
+    // this.list = this.service.getJobs();
     this.selectedJob = {
       id: '',
       data: {
