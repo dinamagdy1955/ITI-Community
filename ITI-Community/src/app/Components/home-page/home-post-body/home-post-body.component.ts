@@ -1,14 +1,21 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HomePostsService } from '../HomeServices/home-posts.service';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { TranslateService } from '@ngx-translate/core';
+import { HPostCommentService } from '../HomeServices/hpost-comment.service';
 @Component({
   selector: 'app-home-post-body',
   templateUrl: './home-post-body.component.html',
   styleUrls: ['./home-post-body.component.scss'],
 })
 export class HomePostBodyComponent implements OnInit {
+  throttle = 300;
+  scrollDistance = 1;
+  scrollUpDistance = 2;
+  direction = "";
+  counter: number = 0;
+  postsCount: BehaviorSubject<number>;
   @ViewChild('pRef') pRef: ElementRef;
   selectedLang: string;
   MyPosts: any[] = [];
@@ -24,7 +31,10 @@ export class HomePostBodyComponent implements OnInit {
   constructor( 
     public translateService: TranslateService,
     private homePostServ: HomePostsService, 
-    private us: UserService) {
+    private us: UserService,
+    public commentService: HPostCommentService) 
+    {
+      this.postsCount = new BehaviorSubject<number>(5);
       translateService.addLangs(['en', 'ar']);
       if (
         localStorage.getItem('lang') == undefined ||
@@ -59,9 +69,29 @@ export class HomePostBodyComponent implements OnInit {
         return {
           id: e.payload.doc.id,
           data: e.payload.doc.data(),
+          doc:e.payload.doc
         };
       });
     });
+  }
+
+  onScrollDown () { 
+      this.counter += 5;
+      let param = this.AllPosts[this.AllPosts.length - 1].doc;
+      this.homePostServ.getAllMyPosts(this.uid,param )
+        .subscribe((res) => {
+          res.map((e) => {
+            this.AllPosts.push({
+              id: e.payload.doc.id,
+              data: e.payload.doc.data(),
+              doc:e.payload.doc
+            });
+          });
+         
+        });
+
+      this.postsCount.next(this.postsCount.value + 5);
+   
   }
 
   deletePost(pid, post) {
