@@ -9,7 +9,7 @@ import { GroupService } from '../Services/group.service';
   styleUrls: ['./discover.component.scss'],
 })
 export class DiscoverComponent implements OnInit, OnDestroy {
-  GroupList;
+  GroupList = [];
   GroupList2;
   userID: string;
   allUsers = [];
@@ -44,7 +44,8 @@ export class DiscoverComponent implements OnInit, OnDestroy {
           // this.GroupList = [];
           this.allUsers = res.map((e) => e.payload.doc.id);
           if (!this.allUsers.includes(this.userID)) {
-            this.GroupList.push(i);
+            if (!this.GroupList.includes(i))
+              this.GroupList.push(i);
           } else {
             this.GroupList = this.GroupList.filter((ele) => ele.id != i.id);
           }

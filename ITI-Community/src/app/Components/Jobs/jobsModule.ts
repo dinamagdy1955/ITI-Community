@@ -13,13 +13,13 @@ import { JobSearchesComponent } from './recommended-jobs/job-searches/job-search
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { MainfooterModule } from '../main-footer/mainfooter.module';
+import { AppliedJobsComponent } from './applied-jobs/applied-jobs.component';
+import { ClipboardModule } from 'ngx-clipboard';
 const routes: Routes = [
-  /* {path:"",redirectTo: '/savedjobs' , pathMatch:"full" }, */
   { path: '', component: RecommendedJobsComponent },
   { path: 'savedjobs', component: SavedJobsComponent },
-  { path: 'specificjob/:id', component: SpecificJobComponent },
   { path: 'specificjob', component: SpecificJobComponent },
-  { path: '/search', component: SpecificJobComponent },
+  { path: 'appliedJobs', component: AppliedJobsComponent },
 ];
 @NgModule({
   declarations: [
@@ -29,6 +29,7 @@ const routes: Routes = [
     RecommendedJobsComponent,
     RecomendedForYouComponent,
     JobSearchesComponent,
+    AppliedJobsComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +39,7 @@ const routes: Routes = [
     NgxTwitterTimelineModule,
     Ng2SearchPipeModule,
     MainfooterModule,
+    ClipboardModule,
   ],
 })
 export class jobsModule {}

@@ -12,6 +12,9 @@ export class SearchNextJobComponent implements OnInit {
   searchItem: string;
   foundJobs: Job[] | any;
   x;
+  city;
+  jobName;
+  companyName;
 
   constructor(private service: JobDatabaseService, private router: Router) {
     this.searchItem = '';

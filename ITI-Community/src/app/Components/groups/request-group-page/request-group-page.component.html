@@ -23,7 +23,9 @@
                             <ul class="list-group list-group-flush" *ngFor="let g of GroupList | filter:keyWordsSearch">
                                 <li class="list-group-item" [ngClass]="{'text-right': Lang == 'ar'}">
                                     <div class="media">
-                                        <img class="mx-3" [src]="g.Img" alt="" width="64px">
+                                        <img class="mx-3" src="../../../../assets/400x400.png" alt="" width="64px"
+                                            *ngIf="g.Img == ''">
+                                        <img class="mx-3" [src]="g.Img" alt="" width="64px" *ngIf="g.Img != ''">
                                         <div class="media-body">
                                             <h6 class="mt-2 mb-1">
                                                 <a routerLink="/Group/group-profile/{{g.id}}">{{g.Name}}</a>
@@ -57,7 +59,9 @@
                                 *ngFor="let g of subscribers | filter:keyWordsSearch">
                                 <li class="list-group-item" [ngClass]="{'text-right': Lang == 'ar'}">
                                     <div class="media">
-                                        <img class="mx-3" [src]="g.Img" alt="" width="64px">
+                                        <img class="mx-3" src="../../../../assets/400x400.png" alt="" width="64px"
+                                            *ngIf="g.Img == ''">
+                                        <img class="mx-3" [src]="g.Img" alt="" width="64px" *ngIf="g.Img != ''">
                                         <div class="media-body">
                                             <h6 class="mt-2 mb-1"><a
                                                     routerLink="/Group/group-profile/{{g.id}}">{{g.Name}}

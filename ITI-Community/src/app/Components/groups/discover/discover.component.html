@@ -12,7 +12,9 @@
                     *ngFor="let g of GroupList | filter:keyWordsSearch; trackBy:identify">
                     <li class="list-group-item" [ngClass]="{'text-right': Lang == 'ar'}">
                         <div class="media">
-                            <img class="mx-3" [src]="g.Img" alt="" width="64px">
+                            <img class="mx-3" src="../../../../assets/400x400.png" alt="" width="64px"
+                                *ngIf="g.Img == ''">
+                            <img class="mx-3" [src]="g.Img" alt="" width="64px" *ngIf="g.Img != ''">
                             <div class="media-body">
                                 <h6 class="mt-0 mb-1">
                                     <a class="text-decoration-none"

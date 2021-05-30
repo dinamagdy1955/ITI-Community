@@ -19,10 +19,18 @@
 }
 
 .b1:hover {
-  color: #b4272d;
+  color: goldenrod;
 }
 
 .txtt {
   color: rgb(169, 159, 159);
   font-size: medium;
+}
+
+.navBtns {
+  font-size: 1.5rem;
+}
+
+.navBtns i:hover {
+  color: #b4272d;
 }

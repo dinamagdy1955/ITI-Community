@@ -9,10 +9,10 @@ import { GroupService } from '../Services/group.service';
   styleUrls: ['./request-group-page.component.scss'],
 })
 export class RequestGroupPageComponent implements OnInit, OnDestroy {
-  GroupList;
-  GroupList2;
+  GroupList = [];
+  GroupList2 = [];
   userID: string;
-  subscribers;
+  subscribers = [];
   users = [];
   data: Observable<any>;
   subscription: Subscription[] = [];
@@ -39,7 +39,6 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
           ...(e.payload.doc.data() as object),
         };
       });
-      sub1.unsubscribe();
       this.subscribers = [];
       this.GroupList = [];
       this.users = [];
@@ -51,22 +50,19 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
               ...e.payload.doc.data(),
             };
           });
-          if (this.users.length == 0) {
-            this.GroupList = this.GroupList.filter((ele) => ele.id != i.id);
-            this.subscribers = this.subscribers.filter((ele) => ele.id != i.id);
-          } else
-            for (let u of this.users) {
-              if (u.id == this.userID && u.Role > 0) {
+          for (let u of this.users) {
+            if (u.id == this.userID && u.Role > 0) {
+              if (!this.GroupList.includes(i))
                 this.GroupList.push(i);
-              } else if (u.id == this.userID && u.Role == 0) {
+            } else if (u.id == this.userID && u.Role == 0) {
+              if (!this.subscribers.includes(i))
                 this.subscribers.push(i);
-              } else if (u.id == this.userID && u.Role == undefined) {
-                this.GroupList = this.GroupList.filter((ele) => ele.id != i.id);
-                this.subscribers = this.subscribers.filter(
-                  (ele) => ele.id != i.id
-                );
-              }
+            } else {
+              this.GroupList = this.GroupList.filter((ele) => ele.id != i.id);
+              this.subscribers = this.subscribers.filter((ele) => ele.id != i.id);
             }
+
+          }
         });
         this.subscription.push(sub);
       }
@@ -76,10 +72,6 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
 
   leaveGroup(user, id) {
     this.GrpServ.DeleteMembers(user, id);
-    let inds = this.subscribers.indexOf(id);
-    let indm = this.GroupList.indexOf(id)
-    this.subscribers.splice(inds, 1);
-    this.GroupList.splice(indm, 1);
   }
 
   ngOnDestroy(): void {
