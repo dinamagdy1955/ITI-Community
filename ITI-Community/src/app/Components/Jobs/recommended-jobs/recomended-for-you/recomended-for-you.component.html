@@ -6,14 +6,10 @@
                 <h4> Recommended for you </h4>
                 <span class="txtt"> Based on your profile and search history </span>
             </div>
-            <div class="btn text-secondary col-2 navBtns" (click)="toSavedJobs()">
-                <i class="fas fa-bookmark p-2"></i>
-                <i class="far fa-address-book p-2"></i>
+            <div class="btn text-secondary col-2 navBtns">
+                <i class="fas fa-bookmark p-2" routerLink="/jobs/savedjobs"></i>
+                <i class="far fa-address-book p-2" routerLink="/jobs/appliedJobs"></i>
             </div>
-            <!-- <div class="col-md-3">
-                <input class="form-control mr-sm-2" type="text" [(ngModel)]="searchItem" placeholder=" Search "
-                    aria-label="Search" style="width: 99%;">
-            </div> -->
         </div>
         <div class="W-100%"><br></div>
         <div class="row mb-3 " style="border-bottom: 1px solid lightgray;">
