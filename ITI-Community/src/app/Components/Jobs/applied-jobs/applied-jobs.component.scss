@@ -1,0 +1,180 @@
+.mainContainer {
+  margin-bottom: 5%;
+}
+
+.savedJobMain,
+.footerSavedJobs {
+  width: 100%;
+}
+
+.savedJobContainer {
+  margin: auto;
+  padding-top: 4%;
+}
+
+.mySavedItems,
+.mySavedItemsMain {
+  border-radius: 15px;
+}
+
+.mySavedListItems {
+  text-align: left;
+  border-radius: 15px 15px 0px 0px;
+}
+
+.mySavedItemsHeader h3 {
+  font-weight: 350;
+  color: black;
+  font-size: 1.5rem;
+}
+
+.noOfItems,
+.branchLocation {
+  float: right;
+}
+
+.mySavedItem {
+  display: flex;
+  flex-direction: row;
+}
+
+.mySavedItemContent {
+  margin: 0px 8px;
+  text-align: left;
+}
+
+.logoImg {
+  width: 50px;
+}
+
+.jobTitleLink {
+  color: black;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.jobTitleLink:hover {
+  color: #b4272d;
+}
+
+.companyName,
+.jobLocation {
+  font-size: 1rem;
+  font-weight: 300;
+  color: black;
+}
+
+.jobLocation {
+  font-size: 0.9rem;
+  font-weight: 250;
+}
+
+.activelyRecruiting,
+.jobPostTime,
+.applyNow {
+  font-size: 0.85rem;
+  font-weight: 200;
+  color: rgba(37, 37, 37, 0.89);
+}
+
+.activelyRecruiting .fas {
+  font-size: 1.1rem;
+  color: rgb(0, 94, 0);
+}
+
+.applyNow .fab {
+  font-size: 1.1rem;
+  color: #0a66c2;
+}
+
+.btnMoreDetails {
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-left: auto;
+}
+
+.btnMoreDetailsDots {
+  font-size: 1.5rem;
+  color: gray;
+  border-radius: 50%;
+}
+
+.btnMoreDetailsDots:hover {
+  background-color: #e4e3e0;
+  color: white;
+}
+
+.itiBranchesHeader {
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: gray;
+  margin-bottom: 5px;
+}
+.itiBranchesHeader i {
+  color: #b4272d;
+}
+
+.itiBranchesHeader:hover {
+  color: #94151b;
+  text-decoration: none;
+}
+
+.itiBranchesHeader,
+.itiBranchesCollapse {
+  border-radius: 15px !important;
+}
+
+.footerSavedJobs {
+  background-color: #212529;
+}
+
+.footerSavedJobsContainer {
+  padding-bottom: 5%;
+}
+
+.footerSeparatorSavedJobs {
+  margin: 0;
+  margin-bottom: 3%;
+}
+
+.contactusSavedJobs * {
+  margin-bottom: 10px;
+  color: white;
+}
+
+.contactusSavedJobs div span {
+  font-size: 1.05rem;
+  margin-left: 3px;
+  color: rgb(207, 204, 204);
+}
+
+.contactusSavedJobs div i {
+  font-size: 1.5rem;
+  color: #c22028;
+}
+
+.followusSavedJobs * {
+  color: white;
+}
+
+.socialmediaLinks {
+  display: flex;
+  flex-direction: row;
+}
+
+.socialmediaLink {
+  padding: 12px 20px 12px 20px;
+  font-size: 1.5rem;
+  background-color: white;
+  border-radius: 52%;
+  margin-left: 10px;
+}
+
+.socialmediaLink i {
+  color: #b4272d !important;
+}
+
+.socialmediaLink:hover i {
+  color: #94151b !important;
+}

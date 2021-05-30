@@ -10,12 +10,10 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./job-searches.component.scss'],
 })
 export class JobSearchesComponent implements OnInit, OnDestroy {
-  appliedJobs;
   data: Observable<any>;
   subscription: Subscription[] = [];
   uid: string;
-  constructor(private service: JobDatabaseService, private us: UserService) {
-    this.appliedJobs = [];
+  constructor(private jobService: JobDatabaseService, private us: UserService) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -25,17 +23,7 @@ export class JobSearchesComponent implements OnInit, OnDestroy {
     this.subscription.push(sub);
   }
 
-  ngOnInit(): void {
-    let sub = this.service.getAppliedJobs(this.uid).subscribe((res) => {
-      this.appliedJobs = res.map((e) => {
-        return {
-          id: e.payload.doc.id,
-          data: e.payload.doc.data(),
-        };
-      });
-    });
-    this.subscription.push(sub);
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => {

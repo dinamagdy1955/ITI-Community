@@ -41,7 +41,8 @@
                             <div class="list-group-item-heading jobTitleLink">{{item.data.position.en}}</div>
                             <div class="list-group-item-text companyName">{{item.data.company.en}}</div>
                             <div class="list-group-item-text jobLocation">{{item.data.location.en}}</div>
-                            <div class="list-group-item-text activelyRecruiting" *ngIf="item.data.closingDate!=''">
+                            <div class="list-group-item-text activelyRecruiting"
+                                *ngIf="item.data.closingDate== undefined">
                                 <i class="fas fa-briefcase"></i> Actively recruiting
                             </div>
                             <div class="list-group-item-text">
@@ -57,7 +58,8 @@
                                 <div ngbDropdownItem (click)="unsave(item.id)">
                                     <i class="fas fa-bookmark"></i> Unsave
                                 </div>
-                                <a ngbDropdownItem href="#">
+                                <a ngbDropdownItem ngxClipboard
+                                    cbContent="http://localhost:4200/jobs/specificjob?id={{item.id}}">
                                     <i class="fas fa-link"></i> CopyLink
                                 </a>
                                 <a ngbDropdownItem href="#">

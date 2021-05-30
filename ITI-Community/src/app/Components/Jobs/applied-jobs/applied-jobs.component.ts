@@ -1,6 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
+import { ChatsService } from '../../messages/Service/chats.service';
 import { JobDatabaseService } from '../service/JobDatabase.service';
 
 @Component({
@@ -9,11 +11,18 @@ import { JobDatabaseService } from '../service/JobDatabase.service';
   styleUrls: ['./applied-jobs.component.scss'],
 })
 export class AppliedJobsComponent implements OnInit, OnDestroy {
-  appliedJobs;
+  @ViewChild('friends') myFriendsModel;
+  appliedJobs: any[] = [];
   data: Observable<any>;
   subscription: Subscription[] = [];
   uid: string;
-  constructor(private jobService: JobDatabaseService, private us: UserService) {
+  jobMsgId: string;
+  constructor(
+    private jobService: JobDatabaseService,
+    private us: UserService,
+    private msgService: ChatsService,
+    private modalService: NgbModal
+  ) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -28,13 +37,19 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
       this.appliedJobs = res.map((e) => {
         return {
           id: e.payload.doc.id,
-          data: e.payload.doc.data(),
+          ...(e.payload.doc.data() as object),
         };
       });
     });
     this.subscription.push(sub);
   }
-
+  openModal(jobId) {
+    this.modalService.open(this.myFriendsModel, { centered: true });
+    this.jobMsgId = jobId;
+  }
+  // sendJobinMsg(recId) {
+  //   this.msgService.newChat()
+  // }
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => {
       sub.unsubscribe();

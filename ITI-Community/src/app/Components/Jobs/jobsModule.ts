@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { MainfooterModule } from '../main-footer/mainfooter.module';
 import { AppliedJobsComponent } from './applied-jobs/applied-jobs.component';
+import { ClipboardModule } from 'ngx-clipboard';
 const routes: Routes = [
   { path: '', component: RecommendedJobsComponent },
   { path: 'savedjobs', component: SavedJobsComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
     RecommendedJobsComponent,
     RecomendedForYouComponent,
     JobSearchesComponent,
+    AppliedJobsComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,7 @@ const routes: Routes = [
     NgxTwitterTimelineModule,
     Ng2SearchPipeModule,
     MainfooterModule,
+    ClipboardModule,
   ],
 })
 export class jobsModule {}
