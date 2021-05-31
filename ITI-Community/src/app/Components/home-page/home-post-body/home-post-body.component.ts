@@ -13,7 +13,7 @@ export class HomePostBodyComponent implements OnInit {
   throttle = 300;
   scrollDistance = 1;
   scrollUpDistance = 2;
-  direction = "";
+  direction = '';
   counter: number = 0;
   postsCount: BehaviorSubject<number>;
   @ViewChild('pRef') pRef: ElementRef;
@@ -28,28 +28,28 @@ export class HomePostBodyComponent implements OnInit {
   avatar;
   data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor( 
+  constructor(
     public translateService: TranslateService,
-    private homePostServ: HomePostsService, 
+    private homePostServ: HomePostsService,
     private us: UserService,
-    public commentService: HPostCommentService) 
-    {
-      this.postsCount = new BehaviorSubject<number>(5);
-      translateService.addLangs(['en', 'ar']);
-      if (
-        localStorage.getItem('lang') == undefined ||
-        localStorage.getItem('lang') == 'en'
-      ) {
-        translateService.use('en');
-        localStorage.setItem('lang', 'en');
-        this.selectedLang='en'
-        // document.dir = 'ltr';
-      } else if (localStorage.getItem('lang') == 'ar') {
-        translateService.use('ar');
-        localStorage.setItem('lang', 'ar');
-        this.selectedLang='ar'
-        // document.dir = 'rtl';
-      }
+    public commentService: HPostCommentService
+  ) {
+    this.postsCount = new BehaviorSubject<number>(5);
+    translateService.addLangs(['en', 'ar']);
+    if (
+      localStorage.getItem('lang') == undefined ||
+      localStorage.getItem('lang') == 'en'
+    ) {
+      translateService.use('en');
+      localStorage.setItem('lang', 'en');
+      this.selectedLang = 'en';
+      // document.dir = 'ltr';
+    } else if (localStorage.getItem('lang') == 'ar') {
+      translateService.use('ar');
+      localStorage.setItem('lang', 'ar');
+      this.selectedLang = 'ar';
+      // document.dir = 'rtl';
+    }
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -64,34 +64,50 @@ export class HomePostBodyComponent implements OnInit {
     return post.id;
   }
   ngOnInit(): void {
-    this.homePostServ.getAllMyPosts(this.uid).subscribe((data) => {
-      this.AllPosts = data.map((e) => {
-        return {
-          id: e.payload.doc.id,
-          data: e.payload.doc.data(),
-          doc:e.payload.doc
-        };
+    if (this.AllPosts.length == 0) {
+      let sub = this.homePostServ.getAllMyPosts(this.uid).subscribe((data) => {
+        // sub.unsubscribe();
+        console.log('hello');
+
+        this.AllPosts = data.map((e) => {
+          return {
+            id: e.payload.doc.id,
+            data: e.payload.doc.data(),
+            doc: e.payload.doc,
+          };
+        });
       });
-    });
+    } else {
+      this.homePostServ.getAllMyPosts(this.uid).subscribe((data) => {
+        console.log('in else', data);
+        data.map((e) => {
+          this.AllPosts.push({
+            id: e.payload.doc.id,
+            data: e.payload.doc.data(),
+            doc: e.payload.doc,
+          });
+        });
+      });
+    }
   }
 
-  onScrollDown () { 
-      this.counter += 5;
-      let param = this.AllPosts[this.AllPosts.length - 1].doc;
-      this.homePostServ.getAllMyPosts(this.uid,param )
-        .subscribe((res) => {
-          res.map((e) => {
-            this.AllPosts.push({
-              id: e.payload.doc.id,
-              data: e.payload.doc.data(),
-              doc:e.payload.doc
-            });
+  onScrollDown() {
+    this.counter += 5;
+    let param = this.AllPosts[this.AllPosts.length - 1].doc;
+    let sub = this.homePostServ
+      .getAllMyPosts(this.uid, param)
+      .subscribe((res) => {
+        sub.unsubscribe();
+        res.map((e) => {
+          this.AllPosts.push({
+            id: e.payload.doc.id,
+            data: e.payload.doc.data(),
+            doc: e.payload.doc,
           });
-         
         });
+      });
 
-      this.postsCount.next(this.postsCount.value + 5);
-   
+    this.postsCount.next(this.postsCount.value + 5);
   }
 
   deletePost(pid, post) {
@@ -107,12 +123,10 @@ export class HomePostBodyComponent implements OnInit {
   Like(uid, pid, autID) {
     this.homePostServ.giveLike(uid, pid, autID);
   }
-  ReportPost(pid,post){
-    this.homePostServ.ReportPost(pid, post, this.uid)
+  ReportPost(pid, post) {
+    this.homePostServ.ReportPost(pid, post, this.uid);
   }
-  seeAllContent(){
-    this.x=1000;
-
+  seeAllContent() {
+    this.x = 1000;
   }
-
 }

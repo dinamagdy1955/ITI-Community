@@ -34,7 +34,9 @@ export class ProfileBodyComponent implements OnInit, OnChanges, OnDestroy {
     branch: '',
     track: '',
     avatarCover: '',
-    request: [],
+    friends: [],
+    mySentReq: [],
+    requests: [],
   };
   UserExperiences = {
     id: '',
@@ -96,14 +98,22 @@ export class ProfileBodyComponent implements OnInit, OnChanges, OnDestroy {
             this.br.getBrancheById(this.userData.branch).subscribe((res) => {
               this.UserDetails.branch = res.data()['name'];
             });
-
             this.tr.getTrackById(this.userData.track).subscribe((res) => {
               this.UserDetails.track = res.data()['name'];
             });
             this.network.getAllFriendsList(this.uid).subscribe((data) => {
-              this.UserDetails.request = data.map((e) => {
-                let id = e.payload.doc.id;
-                return id;
+              this.UserDetails.friends = data.map((e) => {
+                return e.payload.doc.id;
+              });
+            });
+            this.network.getMySentfriendRequests(this.uid).subscribe((data) => {
+              this.UserDetails.mySentReq = data.map((e) => {
+                return e.payload.doc.id;
+              });
+            });
+            this.network.getAllFriendRequests(this.uid).subscribe((data) => {
+              this.UserDetails.requests = data.map((e) => {
+                return e.payload.doc.id;
               });
             });
             this.UserExperiences.id = this.uid;

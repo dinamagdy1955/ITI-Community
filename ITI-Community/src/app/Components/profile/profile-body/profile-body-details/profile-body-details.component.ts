@@ -19,13 +19,13 @@ export class ProfileBodyDetailsComponent implements OnInit, OnDestroy {
   @Input() userDetails;
   editPersonalData: FormGroup;
   uidLocal;
+  userDataLocal;
   data: Observable<any>;
   subscription: Subscription[] = [];
   previewedImg = undefined;
   previewedCoverImg = undefined;
   branch;
   track = '';
-  friendsRequest = [];
   constructor(
     private modalService: NgbModal,
     private usr: UserProfileService,
@@ -37,6 +37,7 @@ export class ProfileBodyDetailsComponent implements OnInit, OnDestroy {
     let sub = this.data.subscribe((res) => {
       if (res != null) {
         this.uidLocal = res.id;
+        this.userDataLocal = res;
       }
     });
     this.subscription.push(sub);
@@ -109,7 +110,26 @@ export class ProfileBodyDetailsComponent implements OnInit, OnDestroy {
     });
   }
   addRequset(item) {
-    this.NUS.create_NewRequest(item, this.userDetails.id);
+    this.NUS.create_NewRequest(
+      {
+        firstName: item.firstName,
+        lastName: item.lastName,
+        avatar: item.avatar,
+        avatarCover: item.avatarCover,
+        jobTitle: item.jobTitle,
+        id: item.id,
+        reqState: false,
+      },
+      this.userDataLocal
+    );
+  }
+
+  DeleteFriend(id) {
+    this.NUS.deleteFriend(id, this.uidLocal);
+  }
+
+  cancelRequest(req) {
+    this.NUS.deleteSentFriendReq(req, this.uidLocal);
   }
 
   ngOnDestroy(): void {

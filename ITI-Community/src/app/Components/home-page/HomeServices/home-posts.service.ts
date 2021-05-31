@@ -22,29 +22,41 @@ export class HomePostsService {
       .snapshotChanges();
   }
 
-  getAllMyPosts(uid,param?) {
-
+  getAllMyPosts(uid, param?) {
     if (param != undefined) {
       return this.db
-      .collection('users-details')
-      .doc(uid)
-      .collection('MyHomePosts', (ref) =>
-        ref.where('PostedDate', '!=', null).orderBy('PostedDate', 'desc').limit(5).startAfter(param)
-      )
-      .snapshotChanges();
-         
-       
+        .collection('users-details')
+        .doc(uid)
+        .collection('MyHomePosts', (ref) =>
+          ref
+            .where('PostedDate', '!=', null)
+            .orderBy('PostedDate', 'desc')
+            .limit(5)
+            .startAfter(param)
+        )
+        .snapshotChanges();
     } else {
-        return this.db
-      .collection('users-details')
-      .doc(uid)
-      .collection('MyHomePosts', (ref) =>
-        ref.where('PostedDate', '!=', null).orderBy('PostedDate', 'desc').limit(5)
-      )
-      .snapshotChanges();
+      return this.db
+        .collection('users-details')
+        .doc(uid)
+        .collection('MyHomePosts', (ref) =>
+          ref
+            .where('PostedDate', '!=', null)
+            .orderBy('PostedDate', 'desc')
+            .limit(5)
+        )
+        .snapshotChanges();
     }
-
   }
+  // getLatestPost(uid) {
+  //   return this.db
+  //     .collection('users-details')
+  //     .doc(uid)
+  //     .collection('MyHomePosts', (ref) =>
+  //       ref.orderBy('PostedDate', 'desc').limit(2)
+  //     )
+  //     .snapshotChanges();
+  // }
 
   MyPostById(postid, uid) {
     return this.db
