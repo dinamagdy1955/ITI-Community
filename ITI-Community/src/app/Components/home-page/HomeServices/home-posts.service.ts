@@ -22,7 +22,7 @@ export class HomePostsService {
       .snapshotChanges();
   }
 
-  getAllMyPosts(uid, param?) {
+  getAllMyPosts(uid, limit, param?) {
     if (param != undefined) {
       return this.db
         .collection('users-details')
@@ -31,7 +31,7 @@ export class HomePostsService {
           ref
             .where('PostedDate', '!=', null)
             .orderBy('PostedDate', 'desc')
-            .limit(5)
+            .limit(limit)
             .startAfter(param)
         )
         .snapshotChanges();
@@ -43,7 +43,7 @@ export class HomePostsService {
           ref
             .where('PostedDate', '!=', null)
             .orderBy('PostedDate', 'desc')
-            .limit(5)
+            .limit(limit)
         )
         .snapshotChanges();
     }

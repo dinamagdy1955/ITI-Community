@@ -15,6 +15,7 @@ export class HomePostBodyComponent implements OnInit {
   scrollUpDistance = 2;
   direction = '';
   counter: number = 0;
+  noPosts;
   postsCount: BehaviorSubject<number>;
   @ViewChild('pRef') pRef: ElementRef;
   selectedLang: string;
@@ -65,29 +66,58 @@ export class HomePostBodyComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.AllPosts.length == 0) {
-      let sub = this.homePostServ.getAllMyPosts(this.uid).subscribe((data) => {
-        // sub.unsubscribe();
-        console.log('hello');
-
-        this.AllPosts = data.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-            doc: e.payload.doc,
-          };
-        });
-      });
-    } else {
-      this.homePostServ.getAllMyPosts(this.uid).subscribe((data) => {
-        console.log('in else', data);
-        data.map((e) => {
-          this.AllPosts.push({
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-            doc: e.payload.doc,
+      let sub = this.homePostServ
+        .getAllMyPosts(this.uid, 5)
+        .subscribe((data) => {
+          sub.unsubscribe();
+          this.counter += 5;
+          this.AllPosts = data.map((e) => {
+            return {
+              id: e.payload.doc.id,
+              data: e.payload.doc.data(),
+              doc: e.payload.doc,
+            };
           });
+          this.noPosts = this.AllPosts.length;
         });
-      });
+    } else {
+      this.homePostServ
+        .getAllMyPosts(this.uid, this.AllPosts.length)
+        .subscribe((data) => {
+          console.log('hello');
+
+          data.map((e) => {
+            let flag = false;
+            this.AllPosts.find((post) => {
+              if (post.id == e.payload.doc.id) {
+                console.log('hello1');
+                flag = true;
+                post.id = e.payload.doc.id;
+                post.data = e.payload.doc.data();
+                post.doc = e.payload.doc;
+              }
+            });
+            if (!flag)
+              this.AllPosts.push({
+                id: e.payload.doc.id,
+                data: e.payload.doc.data(),
+                doc: e.payload.doc,
+              });
+            this.AllPosts = this.AllPosts.sort((a, b) => {
+              const date1 = a.data.PostedDate;
+              const date2 = b.data.PostedDate;
+              if (date1 > date2) {
+                return -1;
+              }
+              if (date1 < date2) {
+                return 1;
+              }
+              return 0;
+            });
+          });
+          this.noPosts = this.AllPosts.length;
+          console.log(this.AllPosts.length);
+        });
     }
   }
 
@@ -95,7 +125,7 @@ export class HomePostBodyComponent implements OnInit {
     this.counter += 5;
     let param = this.AllPosts[this.AllPosts.length - 1].doc;
     let sub = this.homePostServ
-      .getAllMyPosts(this.uid, param)
+      .getAllMyPosts(this.uid, 5, param)
       .subscribe((res) => {
         sub.unsubscribe();
         res.map((e) => {
@@ -105,6 +135,7 @@ export class HomePostBodyComponent implements OnInit {
             doc: e.payload.doc,
           });
         });
+        this.noPosts = this.AllPosts.length;
       });
 
     this.postsCount.next(this.postsCount.value + 5);
