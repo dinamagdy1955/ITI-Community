@@ -14,6 +14,7 @@ export class SavedPostsComponent implements OnInit,OnDestroy {
   scrollUpDistance = 2;
   direction = "";
   counter: number = 0;
+  limits:number=8;
   notificationsCount: BehaviorSubject<number>;
   savedPosts: any[] = [];
   selectedLang: string;
@@ -51,37 +52,34 @@ export class SavedPostsComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
-   let sub2= this.postsServ.getSavedPosts(this.uid).subscribe((data) => {
+   let sub2= this.postsServ.getSavedPosts(this.uid, this.limits)
+   .subscribe((data) => {
       this.savedPosts = data.map((e) => {
         return {
           id: e.payload.doc.id,
           data: e.payload.doc.data(),
         };
       });
-    }); this.subscription.push(sub2);
+    });
+     this.subscription.push(sub2);
   }
 
 
   onScrollDown () { 
-    this.counter += 5;
-    let param = this.savedPosts[this.savedPosts.length - 1].doc;
-    let sub3= this.postsServ.getSavedPosts(this.uid,param )
-        .subscribe((res) => {
-        res.map((e) => {
-          this.savedPosts.push({
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-            doc:e.payload.doc
-          });
-        });
+    this.limits+=5;
+    let sub3= this.postsServ.getSavedPosts(this.uid, this.limits )
+    .subscribe((data) => {
+      this.savedPosts = data.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          data: e.payload.doc.data(),
+        };
+      });
        
       }); this.subscription.push(sub3);
 
-    this.notificationsCount.next(this.notificationsCount.value + 5);
  
 }
-
-
 
   unsave(item) {
     this.postsServ.unSavePost(item, this.uid);
@@ -93,4 +91,4 @@ export class SavedPostsComponent implements OnInit,OnDestroy {
     });
   }
 }
-//getSavedPosts
+

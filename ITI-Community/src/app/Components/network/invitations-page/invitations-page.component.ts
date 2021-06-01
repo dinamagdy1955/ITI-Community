@@ -10,6 +10,12 @@ import { NetworkService } from '../Services/network.service';
   styleUrls: ['./invitations-page.component.scss'],
 })
 export class InvitationsPageComponent implements OnInit, OnDestroy {
+  throttle = 300;
+  scrollDistance = 1;
+  scrollUpDistance = 2;
+  direction = "";
+  counter: number = 0;
+  limits:number=10;
   invitaions: any[] = [];
   selectedLang: string;
   keyWordsSearch;
@@ -56,7 +62,8 @@ export class InvitationsPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    let sub2 = this.usrs.getAllFriendRequests(this.uid).subscribe((data) => {
+    let sub2 = this.usrs.getAllFriendRequests(this.uid,this.limits)
+    .subscribe((data) => {
       this.invitaions = data.map((e) => {
         return {
           id: e.payload.doc.id,
@@ -71,6 +78,26 @@ export class InvitationsPageComponent implements OnInit, OnDestroy {
     });
     this.subscription.push(sub2);
   }
+
+  onScrollDown () { 
+    this.limits+=5;
+    let sub3= this.usrs.getAllFriendRequests(this.uid,this.limits)
+    .subscribe((data) => {
+      this.invitaions = data.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          firstName: e.payload.doc.data()['firstName'],
+          lastName: e.payload.doc.data()['lastName'],
+          jobTitle: e.payload.doc.data()['jobTitle'],
+          avatar: e.payload.doc.data()['avatar'],
+          avatarCover: e.payload.doc.data()['avatarCover'],
+          addedDate: e.payload.doc.data()['addedDate'],
+        };
+      });
+    }); this.subscription.push(sub3);
+
+ 
+}
 
   sortRecently() {
     this.invitaions = this.invitaions.sort((a, b) => {

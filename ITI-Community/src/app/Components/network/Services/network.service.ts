@@ -26,11 +26,13 @@ export class NetworkService {
       .snapshotChanges();
   }
 
-  getAllFriendRequests(uid) {
+  getAllFriendRequests(uid,limits?) {
     return this.db
       .collection('users-details')
       .doc(uid)
-      .collection('friendRequest')
+      .collection('friendRequest', (ref) =>
+      ref.limit(limits)
+    )
       .snapshotChanges();
   }
 
@@ -165,11 +167,13 @@ export class NetworkService {
   }
 
   //friendList
-  getAllFriendsList(uid) {
+  getAllFriendsList(uid,limits?) {
     return this.db
       .collection('users-details')
       .doc(uid)
-      .collection('friendList')
+      .collection('friendList', (ref) =>
+      ref.limit(limits)
+    )
       .snapshotChanges();
   }
 
