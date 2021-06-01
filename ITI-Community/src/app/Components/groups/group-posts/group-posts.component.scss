@@ -1,36 +1,48 @@
 .dropdown-toggle::after {
-    display: none;
+  display: none;
 }
 
 .btn {
-    outline: none;
-    box-shadow: none;
+  outline: none;
+  box-shadow: none;
 }
 
 .users-post-groups {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.users-post-groups img{
-    max-height: 30vh;
+.users-post-groups img {
+  max-height: 30vh;
 }
 
- 
 .has-search .form-control {
-    padding-left: 2.375rem;
-    padding-right: 2.375rem;
-  }
-  
-  .has-search .form-control-feedback {
-    position: absolute;
-    z-index: 2;
-    display: block;
-    width: 2.375rem;
-    height: 2.375rem;
-    line-height: 2.375rem;
-    text-align: center;
-    pointer-events: none;
-    color: #aaa;
-  }
+  padding-left: 2.375rem;
+  padding-right: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+.notFound {
+  background-color: white;
+  border-radius: 10px;
+  padding: 3% 0%;
+}
+.notFound * {
+  display: block;
+  margin: auto;
+}
+.notFound div {
+  color: grey;
+  text-align: center;
+}

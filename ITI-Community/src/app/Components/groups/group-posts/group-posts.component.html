@@ -4,8 +4,13 @@
         placeholder="{{'Searching For ?...' | translate}}">
 </div>
 <div *ngIf="postGroupList.length == 0">
-    <div>
-        <h1>مفيش بوستات هنا يابني</h1>
+    <div class="notFound">
+        <img src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/10_best_social_media_designers_jpg_XkLCgMOX.jpg?alt=media&token=394ca10d-4440-45a7-84d4-091444c54bba"
+            width="50%" class="rounded-circle">
+        <div>
+            There are no posts in the group yet ...<br />
+            Be the first to post here ...
+        </div>
     </div>
 </div>
 <div class="card mt-3" *ngFor="let post of postGroupList | filter:keyWordsSearch; trackBy: identify">
