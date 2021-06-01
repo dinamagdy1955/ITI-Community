@@ -34,3 +34,24 @@
     pointer-events: none;
     color: #aaa;
   }
+
+
+  @media screen and (max-width: 450px){ 
+    .custom-titles {
+        font-size: 11px;
+    }
+    .post-body{
+        font-size: 14px;
+    }
+
+    .custom-btns{
+        font-size: 14px;
+    }
+    .comment-avatar{
+        display: none;
+    }
+    .user-right-comments {
+        justify-content: center;
+    }
+
+  }

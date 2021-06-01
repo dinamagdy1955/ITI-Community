@@ -25,8 +25,16 @@
 
 @media screen and (max-width: 450px){
     .profile-group-content .profile-group-header .profile-group-img {
-        top: 10%;
+        top: 25%;
         right: 42%;
         width: 33%;
+    }
+
+    .logged-img {
+        display: none;
+    }
+
+    .write-post-btns {
+        font-size: 14px;
     }
 }

@@ -2,7 +2,7 @@
     <div class="content-groups py-0 pr-1">
         <div class="row border-bottom">
             <div class="col-4 pt-2 border-right">
-                <h5 class="text-secondary">Messaging</h5>
+                <h5 class="text-secondary custom-header">Messaging</h5>
             </div>
             <div class="col-8 masseges-head-user" *ngIf="userRoom != undefined">
                 <h6 class="text-secondary mx-1 my-2" *ngIf="userRoom.user != undefined">{{userRoom.user.firstName}}
@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <div class="container pr-0">
+        <div class="container pr-0 custom-list">
             <div class="d-flex justify-content-center" style="height: 74vh;">
                 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills users-list" orientation="vertical"
                     style="flex-flow:column; overflow-y: auto;">
@@ -36,7 +36,7 @@
                                     <div class="col-md-3 px-0">
                                         <img src="{{u.user.avatar}}" class="w-100 rounded-circle" alt="" srcset="">
                                     </div>
-                                    <div class="col-md-9 px-2 py-4">
+                                    <div class="col-md-9 px-2 py-4 custom-users-name">
                                         <h5>{{u.user.firstName}} {{u.user.lastName}}</h5>
                                     </div>
                                 </div>
@@ -50,25 +50,35 @@
                                             style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10), 0 6px 10px 0 rgba(0, 0, 0, 0.01); ">
                                             <div class="card border-0 m-0 p-0">
                                                 <div id="sohbet" class="card border-0 m-0 p-0 position-relative"
-                                                    style="overflow-y: auto; height: 70vh; min-height:70vh;" #scrollMe
-                                                    [scrollTop]="scrollMe.scrollHeight">
-
+                                                    style="overflow-y: auto; height: 70vh; min-height:70vh;" #scrollMe>
                                                     <div *ngFor="let m of allMsgs">
                                                         <div *ngIf="m.sendBy == userID">
                                                             <div class="sender p-2 py-3 m-0 position-relative">
-                                                                <small>{{m.sentAt.toDate() | date:'medium'}}</small>
-                                                                <a class="float-right">
+                                                                <a class="float-right mb-1">
                                                                     {{m.Body}}
+                                                                    <small class="pt-1">{{m.sentAt.toDate() |
+                                                                        date:'medium'}}</small>
                                                                 </a>
                                                             </div>
                                                         </div>
                                                         <div *ngIf="m.sendBy != userID">
                                                             <div class="reciever p-3 m-0 position-relative">
-                                                                <small>{{m.sentAt.toDate() | date:'medium'}}</small>
-                                                                <a class="float-left sohbet2">
+                                                                <a class="float-left sohbet2 mb-1">
                                                                     {{m.Body}}
+                                                                    <small class="pt-1">{{m.sentAt.toDate() |
+                                                                        date:'medium'}}</small>
                                                                 </a>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="allMsgs.length == 0">
+                                                        <div [ngClass]="{'text-right': Lang == 'ar'}" class="p-2">
+                                                            <ngb-alert class="text-center">
+                                                                <p style="font-weight: bold;">There is no Masseges yet
+                                                                </p>
+                                                                <img src="../../../../assets/msgs.jpg"
+                                                                    class="img-responsive img-fluid" alt="" srcset="">
+                                                            </ngb-alert>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -91,6 +101,7 @@
                                                 </div>
                                             </form>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

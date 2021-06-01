@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { PostCommentService } from '../Services/post-comment.service';
+import { ToastServiceService } from '../toasterMsg/toastService.service';
 
 @Component({
   selector: 'app-post-comments',
@@ -20,7 +21,8 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
   Lang: string
   constructor(
     public commentService: PostCommentService,
-    private us: UserService
+    private us: UserService,
+    private toastService: ToastServiceService
   ) { }
 
   identify(index, c) {
@@ -81,9 +83,16 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
   }
 
   deleteComment(id, postId) {
+    this.showMsg()
     this.commentService.deleteComment(id, postId);
   }
-
+  showMsg() {
+    if (this.Lang == 'en') {
+      this.toastService.show('Comment Deleted', { classname: 'bg-danger text-light', delay: 5000 });
+    } else {
+      this.toastService.show('تم حذف التعليق', { classname: 'bg-danger text-right text-light', delay: 5000 });
+    }
+  }
   ngOnDestroy(): void {
     for (let sub of this.subscriptions) {
       sub.unsubscribe();

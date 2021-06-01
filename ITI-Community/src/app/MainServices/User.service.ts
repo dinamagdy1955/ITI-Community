@@ -40,7 +40,7 @@ export class UserService {
           .doc(res.uid)
           .snapshotChanges()
           .subscribe((res) => {
-            console.log('AppInitService.init() called');
+            // console.log('AppInitService.init() called');
             this.setlocalUserData({
               id: res.payload.id,
               firstName: res.payload.data()['firstName'],

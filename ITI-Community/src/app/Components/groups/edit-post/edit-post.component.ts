@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GroupPostsService } from '../Services/group-posts.service';
+import { ToastServiceService } from '../toasterMsg/toastService.service';
 
 @Component({
   selector: 'app-edit-post',
@@ -16,7 +17,7 @@ export class EditPostComponent implements OnInit {
   Lang: string
   constructor(private model: NgbModal,
     private FB: FormBuilder,
-    private postService: GroupPostsService) {
+    private postService: GroupPostsService, private toastService: ToastServiceService) {
     this.editPostForm = this.FB.group({
       Body: ''
     })
@@ -35,6 +36,7 @@ export class EditPostComponent implements OnInit {
   }
 
   updatePost() {
+    this.showMsg()
     this.postService.editPost(this.postID, this.editPostForm.value.Body);
     this.editPostForm = this.FB.group({
       Body: ''
@@ -48,7 +50,13 @@ export class EditPostComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-
+  showMsg() {
+    if (this.Lang == 'en') {
+      this.toastService.show('Edited Succeeded', { classname: 'bg-info text-light', delay: 5000 });
+    } else {
+      this.toastService.show('تم التعديل', { classname: 'bg-info text-right text-light', delay: 5000 });
+    }
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
