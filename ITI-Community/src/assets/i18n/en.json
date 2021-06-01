@@ -6,7 +6,7 @@
   "Messaging": "Messaging",
   "Notifications": "Notifications",
   "Me": "Me",
-  "Social": "Socialmedia",
+  "Work": "Work",
   "Account": "Account",
   "Settings": "Settings",
   "Help": "Help",
@@ -112,5 +112,9 @@
   "Withdraw": "Withdraw",
   "Discover Groups": "Discover Groups",
   "Request To Join": "Request To Join",
-  "Searching For ?...": "Searching For ?..."
+  "Searching For ?...": "Searching For ?...",
+  "Notes : ": "Notes : ",
+  "There is no posts yet": "There is no posts yet",
+  "Your Request Has Been Sent": "Your Request Has Been Sent",
+  "Massege": "Massege"
 }

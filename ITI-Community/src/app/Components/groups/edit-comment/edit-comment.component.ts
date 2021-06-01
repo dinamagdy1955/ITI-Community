@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PostCommentService } from '../Services/post-comment.service';
+import { ToastServiceService } from '../toasterMsg/toastService.service';
 
 @Component({
   selector: 'app-edit-comment',
@@ -15,7 +16,7 @@ export class EditCommentComponent implements OnInit {
   @Input() postID
   singleComment
   Lang: string
-  constructor(private model: NgbModal, private FB: FormBuilder, private commentService: PostCommentService) {
+  constructor(private model: NgbModal, private FB: FormBuilder, private commentService: PostCommentService, private toastService: ToastServiceService) {
     this.editCommentForm = this.FB.group({
       Body: ''
     })
@@ -41,6 +42,7 @@ export class EditCommentComponent implements OnInit {
     this.editCommentForm = this.FB.group({
       Body: ''
     })
+    this.showMsg()
   }
 
 
@@ -51,7 +53,13 @@ export class EditCommentComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-
+  showMsg() {
+    if (this.Lang == 'en') {
+      this.toastService.show('Comment Edited', { classname: 'bg-info text-light', delay: 5000 });
+    } else {
+      this.toastService.show('تم تعديل التعليق', { classname: 'bg-info text-right text-light', delay: 5000 });
+    }
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

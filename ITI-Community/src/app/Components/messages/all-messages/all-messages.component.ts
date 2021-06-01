@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { ChatsService } from '../Service/chats.service';
@@ -10,7 +11,7 @@ import { ChatsService } from '../Service/chats.service';
   templateUrl: './all-messages.component.html',
   styleUrls: ['./all-messages.component.scss']
 })
-export class AllMessagesComponent implements OnInit, OnDestroy {
+export class AllMessagesComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   chatRoom: string
   data: Observable<any>;
@@ -28,9 +29,9 @@ export class AllMessagesComponent implements OnInit, OnDestroy {
   msgGroup: FormGroup;
 
   searchKeyWord;
-
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   private subscription: Subscription[] = [];
-  constructor(private chat: ChatsService, private route: ActivatedRoute, private router: Router, private us: UserService, private fb: FormBuilder) {
+  constructor(private chat: ChatsService, private route: ActivatedRoute, private router: Router, private us: UserService, private fb: FormBuilder, private alertConfig: NgbAlertConfig) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -44,8 +45,12 @@ export class AllMessagesComponent implements OnInit, OnDestroy {
       sendBy: this.userID,
       Body: ''
     })
+    alertConfig.type = 'white';
+    alertConfig.dismissible = false;
 
-
+  }
+  ngAfterViewChecked(): void {
+    this.scrollMeBottom();
   }
   ngOnDestroy(): void {
     for (var i of this.subscription) {
@@ -54,6 +59,7 @@ export class AllMessagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
     let param = this.route.paramMap.subscribe(res => {
       this.chatRoom = res.get('id')
       this.getMassege(this.chatRoom)
@@ -104,6 +110,14 @@ export class AllMessagesComponent implements OnInit, OnDestroy {
       sendBy: this.userID,
       Body: ''
     })
+    this.scrollMeBottom();
+  }
+
+
+  scrollMeBottom() {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight
+    } catch (ee) { }
   }
 
   getMassege(id) {

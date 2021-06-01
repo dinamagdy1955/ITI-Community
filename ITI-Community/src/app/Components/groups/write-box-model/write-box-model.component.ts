@@ -4,6 +4,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { GroupPostsService } from '../Services/group-posts.service';
+import { ToastServiceService } from '../toasterMsg/toastService.service';
 
 @Component({
   selector: 'app-write-box-model',
@@ -27,7 +28,8 @@ export class WriteBoxModelComponent implements OnInit {
     private model: NgbModal,
     private grpService: GroupPostsService,
     private fb: FormBuilder,
-    private us: UserService
+    private us: UserService,
+    private toastService: ToastServiceService
   ) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
@@ -134,5 +136,16 @@ export class WriteBoxModelComponent implements OnInit {
       },
       postImg: [[]],
     });
+
+    this.showMsg()
+  }
+
+
+  showMsg() {
+    if (this.Lang == 'en') {
+      this.toastService.show('You Have New Post', { classname: 'bg-success text-light', delay: 5000 });
+    } else {
+      this.toastService.show('لقد قمت بوضع منشور جديد', { classname: 'bg-success text-right text-light', delay: 5000 });
+    }
   }
 }

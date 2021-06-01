@@ -30,10 +30,10 @@
             *ngIf="admin.includes(userID) || member.includes(userID); else messegeBlock">
             <div class="media border p-3 postcontainer" style="background-color: white;  border-radius: .5em">
                 <div class="media-body" style="  align-items: center;">
-                    <img [src]="avatar" style="width:10%;height: auto;" alt="John Doe" class="mx-3 mt-2 rounded-circle">
+                    <img [src]="avatar" style="width:10%;height: auto;" class="mx-3 mt-2 rounded-circle logged-img">
                     <app-write-box-model [SelectedGroupId]="GroupId"></app-write-box-model>
                     <div class="W-100%"><br></div>
-                    <div style="width: 100%; text-align:center;">
+                    <div style="width: 100%; text-align:center;" class="write-post-btns">
                         <a class="postIconsHover">
                             <div class="diviconsize" style=" width: 20%; display: inline-block;">
                                 <i class="far fa-image writeposticons" style="color: #70b5f9;"></i>
@@ -85,6 +85,7 @@
                         <span *ngIf="!subscribe.includes(userID)">{{'Join Us' | translate}}</span>
                     </a>
                 </ng-template>
+                <img src="../../../../assets/wait-approve.jpg" class="img-fluid pt-2" alt="" srcset="">
             </ngb-alert>
         </p>
     </ng-template>

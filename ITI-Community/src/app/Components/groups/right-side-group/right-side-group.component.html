@@ -1,4 +1,5 @@
 <div *ngIf="Group != undefined">
+    <app-toasterMsg aria-live="polite" aria-atomic="true"></app-toasterMsg>
     <div class="card">
         <div class="card-body" [ngClass]="{'text-right': Lang == 'ar'}">
             <h6 class="card-title"><span>{{users.length}}</span> {{'members' | translate}}</h6>
@@ -36,7 +37,8 @@
                             <div class="mb-3 px-3" [ngClass]="{'d-flex align-items-center': Lang =='ar'}"
                                 *ngIf="a.Role == 1">
                                 <img [src]="a.avatar" width="60">
-                                <a href="#" class="font-weight-bold btn">
+                                <a href="#" class="font-weight-bold btn" routerLink="/profile/{{a.id}}"
+                                    (click)="modal.dismiss('Cross click')">
                                     {{a.firstName}} {{a.lastName}}
                                     <span class="badge badge-secondary ml-2">{{'Admin' | translate}}</span>
                                 </a>
@@ -83,7 +85,8 @@
                             <div *ngIf="a.Role == 2" class="mb-3 px-3"
                                 [ngClass]="{'d-flex align-items-center': Lang =='ar'}">
                                 <img [src]="a.avatar" width="60">
-                                <a href="#" class="font-weight-bold btn">
+                                <a href="#" class="font-weight-bold btn" routerLink="/profile/{{a.id}}"
+                                    (click)="modal.dismiss('Cross click')">
                                     {{a.firstName}} {{a.lastName}}
                                     <span class="badge badge-secondary ml-2">{{'Member' | translate}}</span>
                                 </a>
@@ -130,7 +133,8 @@
                             <div *ngIf="a.Role == 0" class="mb-3 px-3"
                                 [ngClass]="{'d-flex align-items-center': Lang =='ar'}">
                                 <img [src]="a.avatar" width="60">
-                                <a href="#" class="font-weight-bold btn">
+                                <a href="#" class="font-weight-bold btn" routerLink="/profile/{{a.id}}"
+                                    (click)="modal.dismiss('Cross click')">
                                     {{a.firstName}} {{a.lastName}}
                                     <span class="badge badge-secondary ml-2">{{'Subscriber' | translate}}</span>
                                 </a>

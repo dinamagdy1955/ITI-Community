@@ -54,6 +54,30 @@ section.groups-page .content-groups .Groups-content-display2 {
 }
 
 
+@media screen and (max-width: 450px){ 
+    .custom-users-name {
+        display: none;
+    }
+    .custom-list {
+        padding-left: 0;
+    }
+    .custom-header{
+        font-size: 14px;
+    }
+
+    #sohbet {
+        height: 66vh !important;
+        min-height: 66vh !important;
+    }
+}
+
+@media screen and (max-width: 1024px){ 
+    #sohbet {
+        height: 65vh !important;
+        min-height: 65vh !important;
+    }
+}
+
 .has-search .form-control {
     padding-left: 2.375rem;
 }
@@ -101,16 +125,14 @@ section.groups-page .content-groups .Groups-content-display2 {
     max-width: 75%;
     padding: 7px 13px 7px 13px;
     text-decoration: none;
+    text-align: right;
 }
 
-.sender>small {
-    content: attr(data-is);
-    position: absolute;
-    right: 8px;
-    bottom: -3.4em;
+.sender small {
     display: block;
     font-size: .700rem;
-    color: #a4bac4;
+    color: #ddd;
+    font-weight: bold;
 }
 
 .reciever a {
@@ -123,14 +145,11 @@ section.groups-page .content-groups .Groups-content-display2 {
     text-decoration: none;
 }
 
-.reciever>small {
-    content: attr(data-is);
-    position: absolute;
-    left: 16px;
-    bottom: -3.4em;
+.reciever small {
     display: block;
     font-size: .700rem;
     color: #a4bac4;
+    font-weight: bold;
 }
 
 
@@ -142,11 +161,6 @@ section.groups-page .content-groups .Groups-content-display2 {
     outline: none;
     box-shadow: none;
   }
-
-
-.left-side-messages {
-}
-
 
   .users-list {
       max-width: 30%;

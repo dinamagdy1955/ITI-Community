@@ -6,7 +6,7 @@
   "Messaging": "الرسائل",
   "Notifications": "الاشعارات",
   "Me": "Me",
-  "Social": "التواصل الإجتماعي",
+  "Work": "عمل",
   "Account": "الحساب",
   "Settings": "الاعدادات",
   "Help": "مساعدة",
@@ -112,5 +112,9 @@
   "Withdraw": "تراجع",
   "Discover Groups": "اكتشف مجموعات جديده",
   "Request To Join": "طلب انضمام",
-  "Searching For ?...": "ابحث عن ؟..."
+  "Searching For ?...": "ابحث عن ؟...",
+  "Notes : ": "ملحوظة : ",
+  "There is no posts yet": "لا يوجد منشورات في الوقت الحالى",
+  "Your Request Has Been Sent": "لقد تم ارسال طلبك",
+  "Massege": "رسالة"
 }

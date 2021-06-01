@@ -11,3 +11,23 @@
     outline: none;
     box-shadow: none;
 }
+
+@media screen and (max-width: 450px){ 
+    .img-fluid {
+        height: 40px;
+    }
+
+    .user-titles{
+        font-size: 14px;
+    }
+
+    .comment-text {
+        font-size: 13px;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    .custom-btn-link-more{
+        font-size: 13px;
+    }
+    
+}

@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { GroupService } from '../Services/group.service';
+import { ToastServiceService } from '../toasterMsg/toastService.service';
 
 @Component({
   selector: 'app-request-group-page',
@@ -16,13 +18,16 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
   users = [];
   data: Observable<any>;
   subscription: Subscription[] = [];
-  Lang: string
+  Lang: string;
   keyWordsSearch;
 
-  constructor(private GrpServ: GroupService, private us: UserService) { }
+  constructor(private GrpServ: GroupService, private us: UserService, alertConfig: NgbAlertConfig, private toastService: ToastServiceService) {
+    alertConfig.type = 'warning';
+    alertConfig.dismissible = false;
+  }
 
   ngOnInit(): void {
-    this.Lang = localStorage.getItem('lang')
+    this.Lang = localStorage.getItem('lang');
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -42,6 +47,7 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
       this.subscribers = [];
       this.GroupList = [];
       this.users = [];
+
       for (let i of this.GroupList2) {
         let sub = this.GrpServ.getGroupsUsers(i.id).subscribe((res) => {
           this.users = res.map((e) => {
@@ -50,18 +56,35 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
               ...e.payload.doc.data(),
             };
           });
-          for (let u of this.users) {
-            if (u.id == this.userID && u.Role > 0) {
-              if (!this.GroupList.includes(i))
-                this.GroupList.push(i);
-            } else if (u.id == this.userID && u.Role == 0) {
-              if (!this.subscribers.includes(i))
-                this.subscribers.push(i);
+          this.users = this.users.filter((ss) => ss.id == this.userID);
+          if (this.users.length > 0) {
+            let flag = false;
+            if (this.users[0].id == this.userID && this.users[0].Role > 0) {
+              this.GroupList.find((e) => {
+                if (e.id == i.id) {
+                  flag = true;
+                }
+              });
+              if (!flag) this.GroupList.push(i);
+            } else if (
+              this.users[0].id == this.userID &&
+              this.users[0].Role == 0
+            ) {
+              this.subscribers.find((e) => {
+                if (e.id == i.id) {
+                  flag = true;
+                }
+              });
+              if (!flag) this.subscribers.push(i);
             } else {
               this.GroupList = this.GroupList.filter((ele) => ele.id != i.id);
-              this.subscribers = this.subscribers.filter((ele) => ele.id != i.id);
+              this.subscribers = this.subscribers.filter(
+                (ele) => ele.id != i.id
+              );
             }
-
+          } else {
+            this.GroupList = this.GroupList.filter((ele) => ele.id != i.id);
+            this.subscribers = this.subscribers.filter((ele) => ele.id != i.id);
           }
         });
         this.subscription.push(sub);
@@ -71,7 +94,16 @@ export class RequestGroupPageComponent implements OnInit, OnDestroy {
   }
 
   leaveGroup(user, id) {
+    this.showMsg()
     this.GrpServ.DeleteMembers(user, id);
+  }
+
+  showMsg() {
+    if (this.Lang == 'en') {
+      this.toastService.show('You Have Been Left The Group', { classname: 'bg-danger text-light', delay: 5000 });
+    } else {
+      this.toastService.show('لقد قمت بمغادرة المجموعة', { classname: 'bg-danger text-right text-light', delay: 5000 });
+    }
   }
 
   ngOnDestroy(): void {

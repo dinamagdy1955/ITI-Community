@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { GroupService } from '../Services/group.service';
+import { ToastServiceService } from '../toasterMsg/toastService.service';
 
 @Component({
   selector: 'app-discover',
@@ -17,7 +18,10 @@ export class DiscoverComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   Lang: string;
   keyWordsSearch;
-  constructor(private groupService: GroupService, private us: UserService) {
+  show = true;
+
+
+  constructor(private groupService: GroupService, private us: UserService, private toastService: ToastServiceService) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -62,8 +66,19 @@ export class DiscoverComponent implements OnInit, OnDestroy {
   }
 
   sendRequest(user, id) {
+    this.showSuccess()
     this.groupService.sendRequest(user, id);
   }
+
+  showSuccess() {
+    if (this.Lang == 'en') {
+      this.toastService.show('Your Request Has Been Sent', { classname: 'bg-success text-light', delay: 5000 });
+    } else {
+      this.toastService.show('لقد تم ارسال طلبك', { classname: 'bg-success text-light text-right', delay: 5000 });
+    }
+  }
+
+
   identify(index, g) {
     return g.id;
   }

@@ -38,6 +38,7 @@ export class UserService {
           .doc(res.uid)
           .snapshotChanges()
           .subscribe((res) => {
+
             console.log('AppInitService.init() called');
             if (res.payload.exists)
               this.setlocalUserData({
