@@ -1,4 +1,4 @@
-<div class="media border p-3 mt-4">
+<div class="media border p-3 mt-4" *ngIf="usersinCardData.length > 0">
   <div class="media-body" style="align-items: center;color: #68161ad5; " [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
     {{'ITI Community Members' | translate }}
     
@@ -29,4 +29,16 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="usersinCardData.length==0" class="col-md-9 mt-4" style="margin: auto;">
+  <div class="noAboutImg" style="background-color: rgb(255, 255, 255); border-radius: .5em;
+  box-shadow: 2px 2px 5px gray  ;">
+    <br>
+    <p style="margin: 20px;">{{'there is no Members in Community to add them untill Now' | translate }} </p>
+    <img
+      src= "https://utopia.ps/wp-content/uploads/2019/10/Team-work2-1024x788.png" 
+      style="width:50%;height: auto; border-radius: 50%;display: block;margin: auto;">
+     
+  </div>
+ 
 </div>

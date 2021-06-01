@@ -21,16 +21,21 @@
                         
                             <div class="notificationTextContent">
                                 <div>
-                                    Your friend  <a routerLink="/profile/{{notify.data.Auther.id}}" >{{notify.data.Auther.firstName}} {{notify.data.Auther.lastName}}</a>
+                                     {{'Your friend' | translate }} <a routerLink="/profile/{{notify.data.Auther.id}}" >
+                                        {{notify.data.Auther.firstName}} {{notify.data.Auther.lastName}}</a>
                                   <small >
-                                    puplish new post in {{notify.data.PostedDate.toDate() | date}}
+                                     {{'puplish new post in' | translate }} {{notify.data.PostedDate.toDate() | date}}
                                   </small>  
-                                    Go  to your Home to see <a [routerLink]="['/Home']"  >Go Home</a>
+                                     {{'Go to your Home to see' | translate }} <a [routerLink]="['/Home']" >
+                                        {{'Go Home' | translate }}</a>
 
                                 </div>
                             </div>
                        
-                       <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
+                       <div 
+                       class=" btnMoreDetails"
+                        placement="bottom-right"
+                        [ngClass]="{'en': selectedLang==='en', 'arra': selectedLang=== 'ar'}">
                            
                             
        <button name="" id="" class="btn mt-1"  role="button"  (click)="DeleteNotification(notify.id)"
@@ -83,14 +88,13 @@
         <div class="noAboutImg" style="background-color: rgb(255, 255, 255); border-radius: .5em;
         box-shadow: 2px 2px 5px gray  ;">
           <br>
-          <p style="margin: 20px;">OOPS...! you Dont have any Notifications 
-            go and grow Up your Network Now </p>
+          <p style="margin: 20px;">{{'you Dont have any Notifications go and grow Up your Network Now' | translate }} </p>
           <img
             src="https://economictimes.indiatimes.com/thumb/msid-69417800,width-1200,height-900,resizemode-4,imgsize-205855/ai-in-social-media.jpg?from=mdr" 
             style="width:50%;height: auto; border-radius: 50%;display: block;margin: auto;">
             <a name="" id="" class="btn mb-3" [routerLink]="['/FullNetwork']" role="button" 
             style="border-radius: 5px;color: white;background-color: brown; margin-left: 40%; margin-top: 5px;">
-            Go To Network</a>
+            {{'Go To Network' | translate }}</a>
         </div>
        
       </div>

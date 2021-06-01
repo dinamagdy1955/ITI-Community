@@ -1,4 +1,4 @@
-<section class="container sec_container mt-3" style="background-color: white">
+<section class="container sec_container mt-3" style="background-color: white" *ngIf="sentRequests.length > 0">
   <div class="container" style="background-color: white" [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
     <div class="row rowBB">
       <h5 class="pt-3" style="color: #b4272d">
@@ -74,3 +74,18 @@
     </div>
   </div>
 </section>
+
+<div *ngIf="sentRequests.length==0" class="col-md-7 mt-2" style="margin: auto;">
+  <div class="noAboutImg" style="background-color: rgb(255, 255, 255); border-radius: .5em;
+  box-shadow: 2px 2px 5px gray  ;">
+    <br>
+    <p style="margin: 20px;">{{'you Dont have any sent friend request go and grow Up your Network Now' | translate }} </p>
+    <img
+      src="https://motiongraphics-eg.com/wp-content/uploads/2020/08/%D8%A7%D8%A8%D8%AA%D9%83%D8%A7%D8%B1-%D9%81%D9%83%D8%B1%D8%A9-%D9%85%D9%88%D8%B4%D9%86-%D8%AC%D8%B1%D8%A7%D9%81%D9%8A%D9%83.png" 
+      style="width:50%;height: auto; border-radius: 50%;display: block;margin: auto;">
+      <a name="" id="" class="btn mb-3" [routerLink]="['/FullNetwork']" role="button" 
+      style="border-radius: 5px;color: white;background-color: brown; margin-left: 40%; margin-top: 5px;">
+      {{'Go To Network' | translate }}</a>
+  </div>
+ 
+</div>

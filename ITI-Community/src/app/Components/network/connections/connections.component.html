@@ -1,5 +1,21 @@
-<section class="container sec_container mt-3" style="background-color: white" >
-  <div class="container" style="background-color: white"[ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
+<div *ngIf="frindsList.length==0" class="col-md-7 mt-3" style="margin: auto;">
+  <div class="noAboutImg" style="background-color: rgb(255, 255, 255); border-radius: .5em;
+  box-shadow: 2px 2px 5px gray  ;">
+    <br>
+    <p style="margin: 20px;">{{'you Dont have any Connections go and grow Up your Network Now' | translate }} </p>
+    <img
+      src="https://economictimes.indiatimes.com/thumb/msid-69417800,width-1200,height-900,resizemode-4,imgsize-205855/ai-in-social-media.jpg?from=mdr" 
+      style="width:50%;height: auto; border-radius: 50%;display: block;margin: auto;">
+      <a name="" id="" class="btn mb-3" [routerLink]="['/FullNetwork']" role="button" 
+      style="border-radius: 5px;color: white;background-color: brown; margin-left: 40%; margin-top: 5px;">
+      {{'Go To Network' | translate }}</a>
+  </div>
+ 
+</div>
+<section class="container sec_container mt-3" style="background-color: white" *ngIf="frindsList.length > 0" >
+ 
+  <div 
+   class="container" style="background-color: white"[ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
     <div class="row rowBB">
       <h5 class="pt-3" style="color: #b4272d">{{frindsList.length}} {{'connects' | translate }}</h5>
       <ul _ngcontent-exd-c114="" class="list-group list-group-flush">
@@ -26,7 +42,13 @@
       </ul>
     </div>
 
-    <div>
+    <div
+      data-infinite-scroll
+    debounce
+    [infiniteScrollDistance]="scrollDistance"
+    [infiniteScrollUpDistance]="scrollUpDistance"
+    [infiniteScrollThrottle]="throttle"
+    (scrolled)="onScrollDown()" >
       <div *ngFor="let item of frindsList | filter:keyWordsSearch" class="row rowBB">
         <ul _ngcontent-exd-c114="" class="list-group list-group-flush">
           <li _ngcontent-exd-c114="" class="list-group-item">

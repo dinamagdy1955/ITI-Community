@@ -1,4 +1,17 @@
-<section class="container sec_container mt-3" style="background-color: white">
+<div *ngIf="invitaions.length==0" class="col-md-7 mt-4" style="margin: auto;">
+  <div class="noAboutImg" style="background-color: rgb(255, 255, 255); border-radius: .5em;
+  box-shadow: 2px 2px 5px gray  ;">
+    <br>
+    <p style="margin: 20px;">{{'you Dont have any invitaions untill Now' | translate }} </p>
+    <img
+      src= "https://utopia.ps/wp-content/uploads/2019/10/Team-work2-1024x788.png" 
+      style="width:50%;height: auto; border-radius: 50%;display: block;margin: auto;">
+     
+  </div>
+ 
+</div>
+
+<section *ngIf="invitaions.length > 0" class="container sec_container mt-3" style="background-color: white">
   <div class="container" style="background-color: white" [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
     <div class="row rowBB">
       <h5 class="pt-3" style="color: #b4272d">
@@ -47,7 +60,13 @@
       </ul>
     </div>
 
-    <div>
+    <div 
+    data-infinite-scroll
+    debounce
+    [infiniteScrollDistance]="scrollDistance"
+    [infiniteScrollUpDistance]="scrollUpDistance"
+    [infiniteScrollThrottle]="throttle"
+    (scrolled)="onScrollDown()">
       <div
         *ngFor="let item of invitaions | filter: keyWordsSearch"
         class="row rowBB"

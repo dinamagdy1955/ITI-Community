@@ -11,6 +11,12 @@ import { NetworkService } from '../Services/network.service';
   styleUrls: ['./connections.component.scss'],
 })
 export class ConnectionsComponent implements OnInit, OnDestroy {
+  throttle = 300;
+  scrollDistance = 1;
+  scrollUpDistance = 2;
+  direction = "";
+  counter: number = 0;
+  limits:number=10;
   frindsList: any[] = [];
   keyWordsSearch;
   selectedLang: string;
@@ -50,7 +56,8 @@ export class ConnectionsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    let sub2 = this.usrs.getAllFriendsList(this.uid).subscribe((data) => {
+    let sub2 = this.usrs.getAllFriendsList(this.uid,this.limits )
+    .subscribe((data) => {
       this.frindsList = data.map((e) => {
         return {
           id: e.payload.doc.id,
@@ -64,7 +71,24 @@ export class ConnectionsComponent implements OnInit, OnDestroy {
     });
     this.subscription.push(sub2);
   }
+  onScrollDown () { 
+    this.limits+=5;
+    let sub3= this.usrs.getAllFriendsList(this.uid, this.limits )
+    .subscribe((data) => {
+      this.frindsList = data.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          firstName: e.payload.doc.data()['firstName'],
+          lastName: e.payload.doc.data()['lastName'],
+          jobTitle: e.payload.doc.data()['jobTitle'],
+          avatar: e.payload.doc.data()['avatar'],
+          addedDate: e.payload.doc.data()['addedDate'],
+        };
+      });
+    }); this.subscription.push(sub3);
 
+ 
+}
   sortRecently() {
     this.frindsList = this.frindsList.sort((a, b) => {
       const date1 = a.addedDate;

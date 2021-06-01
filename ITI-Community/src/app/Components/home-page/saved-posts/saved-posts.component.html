@@ -2,7 +2,8 @@
     <div class="container">
         <div class="row savedJobContainer" >
             <div class="col-md-3 mainContainer">
-                <div class="list-group mySavedItems"[ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
+                <div class="list-group mySavedItems " style="width: 100%"
+                [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
                     <a  class="list-group-item disabled mySavedItemsHeader">
                         <i class="fas fa-bookmark"></i> {{'My Items' | translate }}
                     </a>
@@ -19,19 +20,11 @@
             </div>
 
 
-
-
-
-
-
-
-
-
-
             
-            <div class="col-md-9  mainContainer" >
+            <div class="col-md-9  mainContainer"  >
              <div *ngIf="savedPosts.length === 0"  style="align-content: center;width: 100%;
-             height:auto;border: 10px;background-color: white;padding: 20px;border-radius: .5em; box-shadow: 2px 2px 5px gray; ">
+             height:auto;border: 10px;background-color: white;padding: 20px;border-radius: .5em; 
+             box-shadow: 2px 2px 5px gray; ">
              
                 <div >
                     <div class="noAboutImg">
@@ -58,7 +51,9 @@
 
                 <div *ngIf="savedPosts.length > 0" 
                     [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}"
-                    class="list-group mySavedListItems">
+                    class="list-group mySavedListItems"
+                    style="width: 100%"
+                    >
 
 
                     <div href="#" class="list-group-item disabled mySavedItemsHeader">
@@ -68,7 +63,7 @@
 
 
                 <div                
-                class="search-results"
+               
                 data-infinite-scroll
                 debounce
                 [infiniteScrollDistance]="scrollDistance"
@@ -83,15 +78,18 @@
                             
                             <a  class="list-group-item-heading jobTitleLink">{{item.data.Auther.firstName}} {{item.data.Auther.lastName}}</a>
                             <div class="list-group-item-text companyName">{{'posted in' | translate }} {{item.data.PostedDate.toDate() | date}} </div>
-                            <div class="list-group-item-text jobLocation"> {{item.data.Body | slice : 0 : 85 }}.....
+                            <div class="list-group-item-text jobLocation"> {{item.data.Body | slice : 0 : 60 }}.....
 
                             </div>
                     
                           </div>
 
                        
-                            <div style="float: right " class="btnMoreDetails">
-                            <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4"
+                            <div style="float: right " class="btnMoreDetails"
+                             [ngClass]="{'en': selectedLang==='en', 'arra': selectedLang=== 'ar'}"  >
+                            <button type="button" 
+                            class="btn btn-outline-primary messageBtn btn-sm mt-4"
+                            
                                    (click)="unsave(item)">
                                        <i class="fas fa-bookmark"></i> {{'UnSave' | translate }}
                                                     </button>

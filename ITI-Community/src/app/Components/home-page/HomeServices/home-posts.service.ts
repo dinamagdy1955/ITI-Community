@@ -105,23 +105,15 @@ export class HomePostsService {
   }
 
   getAllNotifications(uid,param?) {
-    if (param != undefined) {
+   
     return this.db
       .collection('users-details')
       .doc(uid)
       .collection('Notifications', (ref) =>
-        ref.limit(8).startAfter(param)
+        ref.limit(param)
       )
       .snapshotChanges();
-    } else {
-      return this.db
-    .collection('users-details')
-    .doc(uid)
-    .collection('Notifications', (ref) =>
-      ref.limit(8)
-    )
-    .snapshotChanges();
-  }
+   
   }
 
   DeleteNotification(pid, uid) {
@@ -242,20 +234,14 @@ export class HomePostsService {
     }
   }
   getSavedPosts(uid,param?) {
-    if (param != undefined) {
+  
     return this.db
       .collection('users-details')
       .doc(uid)
-      .collection('MyHomePosts', (ref) => ref.where('savedState', '==', true).limit(8).startAfter(param)
+      .collection('MyHomePosts', (ref) => ref.where('savedState', '==', true).limit(param)
       )
       .snapshotChanges();
-    } else {
-      return this.db
-      .collection('users-details')
-      .doc(uid)
-      .collection('MyHomePosts', (ref) => ref.where('savedState', '==', true).limit(8))
-      .snapshotChanges();
-  }
+  
   }
 
   unSavePost(item, uid) {
