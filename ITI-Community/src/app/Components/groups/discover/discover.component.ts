@@ -15,7 +15,7 @@ export class DiscoverComponent implements OnInit, OnDestroy {
   allUsers = [];
   data: Observable<any>;
   subscription: Subscription[] = [];
-  Lang: string
+  Lang: string;
   keyWordsSearch;
   constructor(private groupService: GroupService, private us: UserService) {
     this.data = this.us.localUserData.asObservable();
@@ -25,10 +25,9 @@ export class DiscoverComponent implements OnInit, OnDestroy {
       }
     });
     this.subscription.push(sub);
-
   }
   ngOnInit(): void {
-    this.Lang = localStorage.getItem('lang')
+    this.Lang = localStorage.getItem('lang');
     this.GroupList = [];
     let sub1 = this.groupService.getGroups().subscribe((res) => {
       this.GroupList2 = res.map((e) => {
@@ -41,17 +40,23 @@ export class DiscoverComponent implements OnInit, OnDestroy {
       for (let i of this.GroupList2) {
         let sub = this.groupService.getGroupsUsers(i.id).subscribe((res) => {
           this.allUsers = [];
-          // this.GroupList = [];
+          let flag = false;
           this.allUsers = res.map((e) => e.payload.doc.id);
           if (!this.allUsers.includes(this.userID)) {
-            if (!this.GroupList.includes(i))
-              this.GroupList.push(i);
+            this.GroupList.find((e) => {
+              if (e.id == i.id) {
+                flag = true;
+                console.log('find');
+              }
+            });
+            if (!flag) this.GroupList.push(i);
           } else {
             this.GroupList = this.GroupList.filter((ele) => ele.id != i.id);
           }
         });
         this.subscription.push(sub);
       }
+      console.log(this.GroupList);
     });
     this.subscription.push(sub1);
   }

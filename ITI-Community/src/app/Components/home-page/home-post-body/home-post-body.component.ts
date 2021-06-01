@@ -13,9 +13,12 @@ export class HomePostBodyComponent implements OnInit, OnDestroy {
   throttle = 300;
   scrollDistance = 1;
   scrollUpDistance = 2;
-  direction = "";
+  direction = '';
   counter: number = 0;
+
   limits:number=5;
+
+
   postsCount: BehaviorSubject<number>;
   @ViewChild('pRef') pRef: ElementRef;
   selectedLang: string;
@@ -29,28 +32,28 @@ export class HomePostBodyComponent implements OnInit, OnDestroy {
   avatar;
   data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor( 
+  constructor(
     public translateService: TranslateService,
-    private homePostServ: HomePostsService, 
+    private homePostServ: HomePostsService,
     private us: UserService,
-    public commentService: HPostCommentService) 
-    {
-      this.postsCount = new BehaviorSubject<number>(5);
-      translateService.addLangs(['en', 'ar']);
-      if (
-        localStorage.getItem('lang') == undefined ||
-        localStorage.getItem('lang') == 'en'
-      ) {
-        translateService.use('en');
-        localStorage.setItem('lang', 'en');
-        this.selectedLang='en'
-        // document.dir = 'ltr';
-      } else if (localStorage.getItem('lang') == 'ar') {
-        translateService.use('ar');
-        localStorage.setItem('lang', 'ar');
-        this.selectedLang='ar'
-        // document.dir = 'rtl';
-      }
+    public commentService: HPostCommentService
+  ) {
+    this.postsCount = new BehaviorSubject<number>(5);
+    translateService.addLangs(['en', 'ar']);
+    if (
+      localStorage.getItem('lang') == undefined ||
+      localStorage.getItem('lang') == 'en'
+    ) {
+      translateService.use('en');
+      localStorage.setItem('lang', 'en');
+      this.selectedLang = 'en';
+      // document.dir = 'ltr';
+    } else if (localStorage.getItem('lang') == 'ar') {
+      translateService.use('ar');
+      localStorage.setItem('lang', 'ar');
+      this.selectedLang = 'ar';
+      // document.dir = 'rtl';
+    }
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -71,6 +74,7 @@ export class HomePostBodyComponent implements OnInit, OnDestroy {
     return post.id;
   }
   ngOnInit(): void {
+
    // this.AllPosts=[];
     let sub2 = this.homePostServ.getAllMyPosts(this.uid,this.limits).subscribe((data) => {
       this.AllPosts = data.map((e) => {
@@ -108,10 +112,16 @@ export class HomePostBodyComponent implements OnInit, OnDestroy {
         //     });
         //   });
           this.subscription.push(sub3);
-        });
+
+      
+      });
+
 
     
       
+
+
+
   }
 
   deletePost(pid, post) {
@@ -127,13 +137,13 @@ export class HomePostBodyComponent implements OnInit, OnDestroy {
   Like(uid, pid, autID) {
     this.homePostServ.giveLike(uid, pid, autID);
   }
+
   ReportPost(pid,post){
    
     this.homePostServ.ReportPost(pid, post, this.uid)
-  }
-  seeAllContent(){
-    this.x=1000;
 
   }
-
+  seeAllContent() {
+    this.x = 1000;
+  }
 }

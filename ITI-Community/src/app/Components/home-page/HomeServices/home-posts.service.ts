@@ -22,6 +22,7 @@ export class HomePostsService {
       .snapshotChanges();
   }
 
+
   getAllMyPosts(uid,param) {
 
    // if (param != undefined) {
@@ -44,7 +45,18 @@ export class HomePostsService {
     //   .snapshotChanges();
     // }
 
+
+
   }
+  // getLatestPost(uid) {
+  //   return this.db
+  //     .collection('users-details')
+  //     .doc(uid)
+  //     .collection('MyHomePosts', (ref) =>
+  //       ref.orderBy('PostedDate', 'desc').limit(2)
+  //     )
+  //     .snapshotChanges();
+  // }
 
   MyPostById(postid, uid) {
     return this.db

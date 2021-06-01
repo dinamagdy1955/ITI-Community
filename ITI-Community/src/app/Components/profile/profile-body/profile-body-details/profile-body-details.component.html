@@ -115,7 +115,19 @@
                 <a type="button" class="profile-Card-Edit pt-2" [routerLink]="['/Messages']"><i
                     class="fas fa-comment"></i></a>
                 <a type="button" class="profile-Card-Edit p-2" (click)="addRequset(userDetails)"
-                  *ngIf="!userDetails.request.includes(uidLocal);"><i class="fas fa-user-plus"></i></a>
+                  *ngIf="!userDetails.friends.includes(uidLocal);"><i class="fas fa-user-plus"></i></a>
+                <a type="button" class="profile-Card-Edit p-2" (click)="DeleteFriend(userDetails.id)"
+                  *ngIf="userDetails.friends.includes(uidLocal);"><i class="fas fa-user-check"></i></a>
+
+                <a type="button" class="profile-Card-Edit p-2" (click)="DeleteFriend(userDetails.id)"
+                  *ngIf="userDetails.mySentReq.includes(uidLocal);"><i class="fas fa-user-times"></i></a>
+                <!-- <a type="button" class="profile-Card-Edit p-2" (click)="DeleteFriend(userDetails.id)"
+                  *ngIf="!userDetails.mySentReq.includes(uidLocal);"><i class="fas fa-user-check"></i></a> -->
+
+                <!-- <a type="button" class="profile-Card-Edit p-2" (click)="DeleteFriend(userDetails.id)"
+                  *ngIf="userDetails.requests.includes(uidLocal);"><i class="fas fa-user-check"></i></a>
+                <a type="button" class="profile-Card-Edit p-2" (click)="DeleteFriend(userDetails.id)"
+                  *ngIf="!userDetails.requests.includes(uidLocal);"><i class="fas fa-user-check"></i></a> -->
               </div>
             </ng-template>
           </div>
