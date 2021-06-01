@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { HPostCommentService } from '../HomeServices/hpost-comment.service';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './home-post-comment.component.html',
   styleUrls: ['./home-post-comment.component.scss'],
 })
-export class HomePostCommentComponent implements OnInit {
+export class HomePostCommentComponent implements OnInit,OnDestroy {
   @Input() PostID: string;
   @Input() admins;
   @Input() AUTHId: string;
@@ -52,7 +52,7 @@ export class HomePostCommentComponent implements OnInit {
     return c.id;
   }
   ngOnInit(): void {
-    let sub = this.commentService
+    let sub2 = this.commentService
       .getPostComments2(this.PostID, this.uid)
       .subscribe((res) => {
         this.getComments = res.map((e) => {
@@ -64,7 +64,7 @@ export class HomePostCommentComponent implements OnInit {
         });
         this.hideBtn(res);
       });
-    this.subscription.push(sub);
+    this.subscription.push(sub2);
   }
 
   hideBtn(res) {
@@ -82,7 +82,7 @@ export class HomePostCommentComponent implements OnInit {
   loadMore() {
     this.counter += 5;
     let param = this.getComments[this.getComments.length - 1].doc;
-    this.commentService
+  let sub3=  this.commentService
       .getPostComments2(this.PostID, this.uid, param)
       .subscribe((res) => {
         res.map((e) => {
@@ -94,9 +94,16 @@ export class HomePostCommentComponent implements OnInit {
         });
         this.hideBtn(res);
       });
+      this.subscription.push(sub3);
   }
 
   deleteComment(Cid, postId) {
     this.commentService.deleteComment(Cid, postId, this.AUTHId);
   }
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
+  }
 }
+

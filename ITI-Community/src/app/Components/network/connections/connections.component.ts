@@ -50,7 +50,7 @@ export class ConnectionsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    let sub = this.usrs.getAllFriendsList(this.uid).subscribe((data) => {
+    let sub2 = this.usrs.getAllFriendsList(this.uid).subscribe((data) => {
       this.frindsList = data.map((e) => {
         return {
           id: e.payload.doc.id,
@@ -62,7 +62,7 @@ export class ConnectionsComponent implements OnInit, OnDestroy {
         };
       });
     });
-    this.subscription.push(sub);
+    this.subscription.push(sub2);
   }
 
   sortRecently() {

@@ -17,7 +17,7 @@ export class AllSentRequestesPageComponent implements OnInit, OnDestroy {
   data: Observable<any>;
   subscription: Subscription[] = [];
   page: number = 1;
-  total: number=5;
+  total: number=this.sentRequests.length;
   collection: any[] = []; 
   uid;
   constructor(
@@ -49,7 +49,7 @@ export class AllSentRequestesPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.usrs.getMySentfriendRequests(this.uid).subscribe((data) => {
+   let sub2= this.usrs.getMySentfriendRequests(this.uid).subscribe((data) => {
       this.sentRequests = data.map((e) => {
         return {
           id: e.payload.doc.id,
@@ -60,6 +60,7 @@ export class AllSentRequestesPageComponent implements OnInit, OnDestroy {
         };
       });
     });
+    this.subscription.push(sub2);
   }
   DeleteFriendRequest(req) {
     this.usrs.deleteSentFriendReq(req, this.uid);

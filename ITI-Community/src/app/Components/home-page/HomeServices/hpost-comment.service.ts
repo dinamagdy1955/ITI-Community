@@ -21,6 +21,7 @@ export class HPostCommentService {
   }
 
   writeComment(comment: IHomeComment, postId, AUTHId, uid) {
+    comment.CommentDate=new Date()
     let frindsList: any[] = [];
     this.getAllautIDList(AUTHId).subscribe((data) => {
       frindsList = data.map((e) => {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HomePostsService } from '../HomeServices/home-posts.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -9,13 +9,16 @@ import { HPostCommentService } from '../HomeServices/hpost-comment.service';
   templateUrl: './home-post-body.component.html',
   styleUrls: ['./home-post-body.component.scss'],
 })
-export class HomePostBodyComponent implements OnInit {
+export class HomePostBodyComponent implements OnInit, OnDestroy {
   throttle = 300;
   scrollDistance = 1;
   scrollUpDistance = 2;
   direction = '';
   counter: number = 0;
-  noPosts;
+
+  limits:number=5;
+
+
   postsCount: BehaviorSubject<number>;
   @ViewChild('pRef') pRef: ElementRef;
   selectedLang: string;
@@ -58,87 +61,67 @@ export class HomePostBodyComponent implements OnInit {
         this.avatar = res.avatar;
       }
     });
+   
     this.subscription.push(sub);
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 
   identify(index, post) {
     return post.id;
   }
   ngOnInit(): void {
-    if (this.AllPosts.length == 0) {
-      let sub = this.homePostServ
-        .getAllMyPosts(this.uid, 5)
-        .subscribe((data) => {
-          sub.unsubscribe();
-          this.counter += 5;
-          this.AllPosts = data.map((e) => {
+
+   // this.AllPosts=[];
+    let sub2 = this.homePostServ.getAllMyPosts(this.uid,this.limits).subscribe((data) => {
+      this.AllPosts = data.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          data: e.payload.doc.data(),
+         
+        };
+      }); this.subscription.push(sub2);
+    });
+   
+  }
+
+  onScrollDown () { 
+    this.limits+=5;
+   
+    // this.AllPosts[this.AllPosts.length - 1].doc;
+      let sub3 = this.homePostServ.getAllMyPosts(this.uid,this.limits)
+        .subscribe((res) => {
+          this.AllPosts = res.map((e) => {
             return {
               id: e.payload.doc.id,
               data: e.payload.doc.data(),
-              doc: e.payload.doc,
+            
             };
           });
-          this.noPosts = this.AllPosts.length;
-        });
-    } else {
-      this.homePostServ
-        .getAllMyPosts(this.uid, this.AllPosts.length)
-        .subscribe((data) => {
-          console.log('hello');
+         // sub3.unsubscribe()
+        
+        //   res.map((e) => {
 
-          data.map((e) => {
-            let flag = false;
-            this.AllPosts.find((post) => {
-              if (post.id == e.payload.doc.id) {
-                console.log('hello1');
-                flag = true;
-                post.id = e.payload.doc.id;
-                post.data = e.payload.doc.data();
-                post.doc = e.payload.doc;
-              }
-            });
-            if (!flag)
-              this.AllPosts.push({
-                id: e.payload.doc.id,
-                data: e.payload.doc.data(),
-                doc: e.payload.doc,
-              });
-            this.AllPosts = this.AllPosts.sort((a, b) => {
-              const date1 = a.data.PostedDate;
-              const date2 = b.data.PostedDate;
-              if (date1 > date2) {
-                return -1;
-              }
-              if (date1 < date2) {
-                return 1;
-              }
-              return 0;
-            });
-          });
-          this.noPosts = this.AllPosts.length;
-          console.log(this.AllPosts.length);
-        });
-    }
-  }
+        //     this.AllPosts.push({
+        //       id: e.payload.doc.id,
+        //       data: e.payload.doc.data(),
+        //       doc:e.payload.doc
+        //     });
+        //   });
+          this.subscription.push(sub3);
 
-  onScrollDown() {
-    this.counter += 5;
-    let param = this.AllPosts[this.AllPosts.length - 1].doc;
-    let sub = this.homePostServ
-      .getAllMyPosts(this.uid, 5, param)
-      .subscribe((res) => {
-        sub.unsubscribe();
-        res.map((e) => {
-          this.AllPosts.push({
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-            doc: e.payload.doc,
-          });
-        });
-        this.noPosts = this.AllPosts.length;
+      
       });
 
-    this.postsCount.next(this.postsCount.value + 5);
+
+    
+      
+
+
+
   }
 
   deletePost(pid, post) {
@@ -154,8 +137,11 @@ export class HomePostBodyComponent implements OnInit {
   Like(uid, pid, autID) {
     this.homePostServ.giveLike(uid, pid, autID);
   }
-  ReportPost(pid, post) {
-    this.homePostServ.ReportPost(pid, post, this.uid);
+
+  ReportPost(pid,post){
+   
+    this.homePostServ.ReportPost(pid, post, this.uid)
+
   }
   seeAllContent() {
     this.x = 1000;

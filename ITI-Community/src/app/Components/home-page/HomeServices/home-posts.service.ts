@@ -22,31 +22,31 @@ export class HomePostsService {
       .snapshotChanges();
   }
 
-  getAllMyPosts(uid, limit, param?) {
-    if (param != undefined) {
+
+  getAllMyPosts(uid,param) {
+
+   // if (param != undefined) {
       return this.db
-        .collection('users-details')
-        .doc(uid)
-        .collection('MyHomePosts', (ref) =>
-          ref
-            .where('PostedDate', '!=', null)
-            .orderBy('PostedDate', 'desc')
-            .limit(limit)
-            .startAfter(param)
-        )
-        .snapshotChanges();
-    } else {
-      return this.db
-        .collection('users-details')
-        .doc(uid)
-        .collection('MyHomePosts', (ref) =>
-          ref
-            .where('PostedDate', '!=', null)
-            .orderBy('PostedDate', 'desc')
-            .limit(limit)
-        )
-        .snapshotChanges();
-    }
+      .collection('users-details')
+      .doc(uid)
+      .collection('MyHomePosts', (ref) =>
+        ref.orderBy('PostedDate', 'desc').limit(param)
+      )
+      .snapshotChanges();
+         
+       
+    // } else {
+    //     return this.db
+    //   .collection('users-details')
+    //   .doc(uid)
+    //   .collection('MyHomePosts', (ref) =>
+    //     ref.orderBy('PostedDate', 'desc').limit(5)
+    //   )
+    //   .snapshotChanges();
+    // }
+
+
+
   }
   // getLatestPost(uid) {
   //   return this.db
@@ -68,6 +68,7 @@ export class HomePostsService {
   }
 
   writePost(post: IHomePost, uid) {
+    post.PostedDate=new Date();
     let frindsList: any[] = [];
     this.getAllFriends(uid).subscribe((data) => {
       frindsList = data.map((e) => {
@@ -103,14 +104,24 @@ export class HomePostsService {
     return;
   }
 
-  getAllNotifications(uid) {
+  getAllNotifications(uid,param?) {
+    if (param != undefined) {
     return this.db
       .collection('users-details')
       .doc(uid)
       .collection('Notifications', (ref) =>
-        ref.where('PostedDate', '!=', null).orderBy('PostedDate', 'desc')
+        ref.limit(8).startAfter(param)
       )
       .snapshotChanges();
+    } else {
+      return this.db
+    .collection('users-details')
+    .doc(uid)
+    .collection('Notifications', (ref) =>
+      ref.limit(8)
+    )
+    .snapshotChanges();
+  }
   }
 
   DeleteNotification(pid, uid) {
@@ -180,13 +191,24 @@ export class HomePostsService {
   }
 
   ReportPost(pid, post, uid) {
+    console.log(pid)
+    console.log(post)
+    console.log(uid)
     this.db
       .collection('users-details')
       .doc(uid)
       .collection('ReportedPosts')
       .doc(pid)
-      .set(post);
-    alert('you are Reported this post');
+      .set(post.data);
+     
+      this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('MyHomePosts')
+      .doc(pid)
+      .delete();
+      return
+   // alert('you are Reported this post');
   }
 
   SpamPost(pid, post, uid) {
@@ -219,12 +241,21 @@ export class HomePostsService {
         });
     }
   }
-  getSavedPosts(uid) {
+  getSavedPosts(uid,param?) {
+    if (param != undefined) {
     return this.db
       .collection('users-details')
       .doc(uid)
-      .collection('MyHomePosts', (ref) => ref.where('savedState', '==', true))
+      .collection('MyHomePosts', (ref) => ref.where('savedState', '==', true).limit(8).startAfter(param)
+      )
       .snapshotChanges();
+    } else {
+      return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('MyHomePosts', (ref) => ref.where('savedState', '==', true).limit(8))
+      .snapshotChanges();
+  }
   }
 
   unSavePost(item, uid) {

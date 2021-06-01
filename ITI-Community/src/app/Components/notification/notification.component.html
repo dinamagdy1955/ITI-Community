@@ -1,9 +1,16 @@
 <div class="container-fluid savedJobMain" >
-    <div >
+ <div >
         <div class="row savedJobContainer">
 
             <div  class="col-md-9 mainContainer  mt-3" style="display: block; margin:auto">
-                <div  class="list-group mySavedListItems" style="border-radius: .5em;">
+                <div  class="list-group mySavedListItems" style="border-radius: .5em;" 
+                class="search-results"
+                data-infinite-scroll
+                debounce
+                [infiniteScrollDistance]="scrollDistance"
+                [infiniteScrollUpDistance]="scrollUpDistance"
+                [infiniteScrollThrottle]="throttle"
+                (scrolled)="onScrollDown()">
                     <div *ngFor="let notify of Notifications"
                      style="margin: 1px;padding: 0px;border-radius: .5em;">
                     <div  class="list-group-item list-group-item-action mySavedItem newNotification" >

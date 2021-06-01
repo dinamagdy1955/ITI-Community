@@ -45,7 +45,7 @@ export class SentRequestesCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    let sub = this.usrs.getMySentfriendRequests(this.uid).subscribe((data) => {
+    let sub2 = this.usrs.getMySentfriendRequests(this.uid).subscribe((data) => {
       this.sentRequests = data.map((e) => {
         return {
           id: e.payload.doc.id,
@@ -57,7 +57,7 @@ export class SentRequestesCardComponent implements OnInit, OnDestroy {
         };
       });
     });
-    this.subscription.push(sub);
+    this.subscription.push(sub2);
   }
 
   cancelRequest(req) {

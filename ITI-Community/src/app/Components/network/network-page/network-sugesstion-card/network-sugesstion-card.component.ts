@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -11,7 +11,7 @@ import { NetworkService } from '../../Services/network.service';
   templateUrl:'./network-sugesstion-card.component.html',
   styleUrls: ['./network-sugesstion-card.component.scss'],
 })
-export class NetworkSugesstionCardComponent implements OnInit {
+export class NetworkSugesstionCardComponent implements OnInit,OnDestroy {
   sum = 100;
   throttle = 300;
   scrollDistance = 1;
