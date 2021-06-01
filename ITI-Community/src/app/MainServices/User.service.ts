@@ -38,15 +38,18 @@ export class UserService {
           .doc(res.uid)
           .snapshotChanges()
           .subscribe((res) => {
-            // console.log('AppInitService.init() called');
-            this.setlocalUserData({
-              id: res.payload.id,
-              firstName: res.payload.data()['firstName'],
-              lastName: res.payload.data()['lastName'],
-              jobTitle: res.payload.data()['jobTitle'],
-              avatar: res.payload.data()['avatar'],
-              avatarCover: res.payload.data()['avatarCover'],
-            });
+
+            console.log('AppInitService.init() called');
+            if (res.payload.exists)
+              this.setlocalUserData({
+                id: res.payload.id,
+                firstName: res.payload.data()['firstName'],
+                lastName: res.payload.data()['lastName'],
+                jobTitle: res.payload.data()['jobTitle'],
+                avatar: res.payload.data()['avatar'],
+                avatarCover: res.payload.data()['avatarCover'],
+              });
+            else this.localUserData.next(null);
           });
       } else {
         this.localUserData.next(null);
