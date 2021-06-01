@@ -1,44 +1,46 @@
-<div class="media border p-3 mt-4" *ngIf="usersinCardData.length > 0">
-  <div class="media-body" style="align-items: center;color: #68161ad5; " [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
-    {{'ITI Community Members' | translate }}
-    
-    <div class="W-100%"><br></div>
-    <div *ngIf="usersinCardData !=undefined" class="row">
-      <div *ngFor="let item of usersinCardData" class="col-md-6 " style="align-items: center;padding: 8px;">
-        <div class="card mb-3 " style="display: flex; flex-direction: column;">
-          <div
-            style="background: url({{item.avatarCover}}) no-repeat; background-size: cover; height: 70px;width: 100%;border-radius: .6em .6em 0 0 ;">
-          </div>
-          <img class="card-img-top mb-1" src={{item.avatar}} alt="Card image"
-            style="width: 70px;height: 70px; border-radius: 50% ;margin-top: -50px;">
-          <div style="text-align: center">
-            <a routerLink="/profile/{{item.id}}" style="color: black">
-              <strong class="Name">{{item.firstName}}</strong>
-            </a>
-            <br>
-            <span class="Job">{{item.jobTitle}}</span>
-            <br>
-            <div class="W-100%"><br></div>
-            <button style="width: 90px;" type="button" class="btn btn-outline-primary" (click)="sendRequest(item)">
-              {{'connect' | translate }}
-            </button>
-            <br>
-            <div class="W-100%"><br></div>
+<div *ngIf="usersinCardData != undefined">
+  <div class="media border p-3 mt-4" *ngIf="usersinCardData.length > 0">
+    <div class="media-body" style="align-items: center;color: #68161ad5; "
+      [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
+      {{'ITI Community Members' | translate }}
+
+      <div class="W-100%"><br></div>
+      <div *ngIf="usersinCardData !=undefined" class="row">
+        <div *ngFor="let item of usersinCardData" class="col-md-6 " style="align-items: center;padding: 8px;">
+          <div class="card mb-3 " style="display: flex; flex-direction: column;">
+            <div
+              style="background: url({{item.avatarCover}}) no-repeat; background-size: cover; height: 70px;width: 100%;border-radius: .6em .6em 0 0 ;">
+            </div>
+            <img class="card-img-top mb-1" src={{item.avatar}} alt="Card image"
+              style="width: 70px;height: 70px; border-radius: 50% ;margin-top: -50px;">
+            <div style="text-align: center">
+              <a routerLink="/profile/{{item.id}}" style="color: black">
+                <strong class="Name">{{item.firstName}}</strong>
+              </a>
+              <br>
+              <span class="Job">{{item.jobTitle}}</span>
+              <br>
+              <div class="W-100%"><br></div>
+              <button style="width: 90px;" type="button" class="btn btn-outline-primary" (click)="sendRequest(item)">
+                {{'connect' | translate }}
+              </button>
+              <br>
+              <div class="W-100%"><br></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div *ngIf="usersinCardData.length==0" class="col-md-9 mt-4" style="margin: auto;">
-  <div class="noAboutImg" style="background-color: rgb(255, 255, 255); border-radius: .5em;
+  <div *ngIf="usersinCardData.length==0" class="col-md-9 mt-4" style="margin: auto;">
+    <div class="noAboutImg" style="background-color: rgb(255, 255, 255); border-radius: .5em;
   box-shadow: 2px 2px 5px gray  ;">
-    <br>
-    <p style="margin: 20px;">{{'there is no Members in Community to add them untill Now' | translate }} </p>
-    <img
-      src= "https://utopia.ps/wp-content/uploads/2019/10/Team-work2-1024x788.png" 
-      style="width:50%;height: auto; border-radius: 50%;display: block;margin: auto;">
-     
+      <br>
+      <p style="margin: 20px;">{{'there is no Members in Community to add them untill Now' | translate }} </p>
+      <img src="https://utopia.ps/wp-content/uploads/2019/10/Team-work2-1024x788.png"
+        style="width:50%;height: auto; border-radius: 50%;display: block;margin: auto;">
+
+    </div>
+
   </div>
- 
 </div>
