@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   NgbModalConfig,
   NgbModal,
@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./home-post-model.component.scss'],
   providers: [NgbModalConfig, NgbModal],
 })
-export class HomePostModelComponent implements OnInit {
+export class HomePostModelComponent implements OnInit ,OnDestroy{
   selectedLang: string;
   closeResult = '';
   @Input() SelectedGroupId: string;
@@ -75,7 +75,7 @@ export class HomePostModelComponent implements OnInit {
       Likes: [[]],
       Body: '',
       savedState: false,
-      PostedDate: new Date(),
+      PostedDate: undefined,
       Auther: {
         id: this.uid,
         firstName: this.firstName,
@@ -114,7 +114,7 @@ export class HomePostModelComponent implements OnInit {
       Likes: [[]],
       Body: '',
       savedState: false,
-      PostedDate: new Date(),
+      PostedDate: undefined,
       Auther: {
         id: this.uid,
         firstName: this.firstName,
@@ -135,7 +135,7 @@ export class HomePostModelComponent implements OnInit {
       let Allimgs = [];
       let body = this.postForm.value.Body;
       for (let i = 0; i < img.ref.length; i++) {
-        await img.ref[i].getDownloadURL().subscribe(async (url) => {
+      await img.ref[i].getDownloadURL().subscribe(async (url) => {
           Allimgs.push(url);
           if (i == img.ref.length - 1) {
             this.postForm.value.postImg = Allimgs;
@@ -156,7 +156,7 @@ export class HomePostModelComponent implements OnInit {
       Likes: [[]],
       Body: '',
       savedState: false,
-      PostedDate: new Date(),
+      PostedDate: undefined,
       Auther: {
         id: this.uid,
         firstName: this.firstName,
@@ -167,5 +167,9 @@ export class HomePostModelComponent implements OnInit {
       postImg: [[]],
     });
   }
-  
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
+  } 
 }

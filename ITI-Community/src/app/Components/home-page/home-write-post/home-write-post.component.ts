@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NetworkService } from '../../network/Services/network.service';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -7,7 +7,7 @@ import { UserService } from 'src/app/MainServices/User.service';
   templateUrl: './home-write-post.component.html',
   styleUrls: ['./home-write-post.component.scss'],
 })
-export class HomeWritePostComponent implements OnInit {
+export class HomeWritePostComponent implements OnInit,OnDestroy {
   myData: any;
   uid;
   firstName;
@@ -41,5 +41,10 @@ export class HomeWritePostComponent implements OnInit {
       jobTitle: this.jobTitle,
       avatarCover: this.avatarCover,
     };
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }

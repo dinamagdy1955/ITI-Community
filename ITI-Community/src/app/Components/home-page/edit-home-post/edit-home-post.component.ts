@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HomePostsService } from '../HomeServices/home-posts.service';
@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './edit-home-post.component.html',
   styleUrls: ['./edit-home-post.component.scss'],
 })
-export class EditHomePostComponent implements OnInit {
+export class EditHomePostComponent implements OnInit,OnDestroy {
   selectedLang: string;
   closeResult = '';
   editPostForm: FormGroup;
@@ -56,7 +56,7 @@ export class EditHomePostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.postService.MyPostById(this.postID, this.uid).subscribe((res) => {
+   let sub2= this.postService.MyPostById(this.postID, this.uid).subscribe((res) => {
       this.singlePost = res.payload.data();
       if (this.singlePost != undefined) {
         this.editPostForm = this.FB.group({
@@ -64,6 +64,7 @@ export class EditHomePostComponent implements OnInit {
         });
       }
     });
+    this.subscription.push(sub2);
   }
 
   updatePost() {
@@ -97,5 +98,10 @@ export class EditHomePostComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }

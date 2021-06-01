@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { GroupService } from '../../groups/Services/group.service';
@@ -8,7 +8,7 @@ import { GroupService } from '../../groups/Services/group.service';
   templateUrl: './home-dropdowen.component.html',
   styleUrls: ['./home-dropdowen.component.scss'],
 })
-export class HomeDropdowenComponent implements OnInit {
+export class HomeDropdowenComponent implements OnInit,OnDestroy {
   groups: any[] = [];
   counter = 0;
   uid;
@@ -36,6 +36,11 @@ export class HomeDropdowenComponent implements OnInit {
             });
           });
       });
+    });
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
     });
   }
 }

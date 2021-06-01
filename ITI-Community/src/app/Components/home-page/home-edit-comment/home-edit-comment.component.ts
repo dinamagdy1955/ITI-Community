@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HPostCommentService } from '../HomeServices/hpost-comment.service';
@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './home-edit-comment.component.html',
   styleUrls: ['./home-edit-comment.component.scss'],
 })
-export class HomeEditCommentComponent implements OnInit {
+export class HomeEditCommentComponent implements OnInit,OnDestroy {
   closeResult = '';
   editCommentForm: FormGroup;
   selectedLang: string;
@@ -57,7 +57,7 @@ export class HomeEditCommentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.commentService
+    let sub2=this.commentService
       .getMyCommentsById(this.postID, this.commentID, this.uid)
       .subscribe((res) => {
         this.singleComment = res;
@@ -66,7 +66,7 @@ export class HomeEditCommentComponent implements OnInit {
             Body: this.singleComment.Body,
           });
         }
-      });
+      }); this.subscription.push(sub2);
   }
 
   updateComment() {
@@ -104,4 +104,10 @@ export class HomeEditCommentComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
+  }
+
 }

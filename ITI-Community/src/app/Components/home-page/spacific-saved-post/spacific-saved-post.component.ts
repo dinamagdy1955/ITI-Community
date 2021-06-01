@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HomePostsService } from '../HomeServices/home-posts.service';
 import { Observable, Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './spacific-saved-post.component.html',
   styleUrls: ['./spacific-saved-post.component.scss'],
 })
-export class SpacificSavedPostComponent implements OnInit {
+export class SpacificSavedPostComponent implements OnInit,OnDestroy {
   post: any;
   selectedLang: string;
   id;
@@ -49,9 +49,9 @@ export class SpacificSavedPostComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this._Activatedroute.snapshot.paramMap.get('id');
-    this.postsServ.MyPostById(this.id, this.uid).subscribe((data) => {
+   let sub2= this.postsServ.MyPostById(this.id, this.uid).subscribe((data) => {
       this.post = data.payload.data();
-    });
+    });this.subscription.push(sub2);
   }
 
   Like(uid, pid, autID) {
@@ -68,5 +68,10 @@ export class SpacificSavedPostComponent implements OnInit {
   }
   ReportPost(pid, post) {
     this.postsServ.ReportPost(pid, post, this.uid);
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HPostCommentService } from '../HomeServices/hpost-comment.service';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './hcomment-form.component.html',
   styleUrls: ['./hcomment-form.component.scss'],
 })
-export class HCommentFormComponent implements OnInit {
+export class HCommentFormComponent implements OnInit,OnDestroy {
   userID: string;
   selectedLang: string;
   uid;
@@ -60,7 +60,7 @@ export class HCommentFormComponent implements OnInit {
     this.userID = this.uid;
     this.commentForm = this.fb.group({
       Body: '',
-      CommentDate: new Date(),
+      CommentDate: undefined,
       User: {
         firstName: '',
         lastName: '',
@@ -74,7 +74,7 @@ export class HCommentFormComponent implements OnInit {
   ngOnInit(): void {
     this.commentForm = this.fb.group({
       Body: '',
-      CommentDate: new Date(),
+      CommentDate: undefined,
       User: {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -94,7 +94,7 @@ export class HCommentFormComponent implements OnInit {
     );
     this.commentForm = this.fb.group({
       Body: '',
-      CommentDate: new Date(),
+      CommentDate: undefined,
       User: {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -102,6 +102,11 @@ export class HCommentFormComponent implements OnInit {
         avatar: this.avatar,
         id: this.uid,
       },
+    });
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
     });
   }
 }
