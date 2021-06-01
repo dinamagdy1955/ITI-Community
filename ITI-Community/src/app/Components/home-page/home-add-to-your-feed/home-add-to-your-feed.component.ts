@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NetworkService } from '../../network/Services/network.service';
 import { UserService } from 'src/app/MainServices/User.service';
 import { Observable, Subscription } from 'rxjs';
@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './home-add-to-your-feed.component.html',
   styleUrls: ['./home-add-to-your-feed.component.scss'],
 })
-export class HomeAddToYourFeedComponent implements OnInit {
+export class HomeAddToYourFeedComponent implements OnInit,OnDestroy {
   selectedLang: string;
   usersData: any[] = [];
   uid;
@@ -59,24 +59,24 @@ export class HomeAddToYourFeedComponent implements OnInit {
     let friendData: any[];
     let Requests: any[];
     let SentfriendRequest: any[];
-    // let uid = localStorage.getItem('uid');
-    this.usrs.getAllFriendRequests(this.uid).subscribe((data) => {
+   let sub2= this.usrs.getAllFriendRequests(this.uid).subscribe((data) => {
       Requests = data.map((e) => {
         let id = e.payload.doc.id;
         return id;
       });
 
-      this.usrs.getMySentfriendRequests(this.uid).subscribe((data) => {
+     let sub3= this.usrs.getMySentfriendRequests(this.uid).subscribe((data) => {
         SentfriendRequest = data.map((e) => {
           return e.payload.doc.id;
         });
 
-        this.usrs.getAllFriendsList(this.uid).subscribe((data) => {
+      let sub4=  this.usrs.getAllFriendsList(this.uid).subscribe((data) => {
           friendData = data.map((e) => {
             let id = e.payload.doc.id;
             return id;
-          });
-          this.usrs
+          }); this.subscription.push(sub4);
+          
+        let sub5=  this.usrs
             .notINCard(Requests.concat(friendData, SentfriendRequest), this.uid)
             .subscribe((data) => {
               this.usersData = data.map((e) => {
@@ -91,10 +91,11 @@ export class HomeAddToYourFeedComponent implements OnInit {
                   avatarCover: e.payload.doc.data()['avatarCover'],
                 };
               });
-            });
-        });
-      });
+            });this.subscription.push(sub5);
+        });this.subscription.push(sub2);
+      });this.subscription.push(sub3);
     });
+   
   }
 
   sendRequest(item) {

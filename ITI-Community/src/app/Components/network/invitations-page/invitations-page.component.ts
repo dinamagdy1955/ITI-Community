@@ -56,7 +56,7 @@ export class InvitationsPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    let sub = this.usrs.getAllFriendRequests(this.uid).subscribe((data) => {
+    let sub2 = this.usrs.getAllFriendRequests(this.uid).subscribe((data) => {
       this.invitaions = data.map((e) => {
         return {
           id: e.payload.doc.id,
@@ -69,7 +69,7 @@ export class InvitationsPageComponent implements OnInit, OnDestroy {
         };
       });
     });
-    this.subscription.push(sub);
+    this.subscription.push(sub2);
   }
 
   sortRecently() {

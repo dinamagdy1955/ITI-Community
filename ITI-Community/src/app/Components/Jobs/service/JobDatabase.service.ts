@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { merge } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,19 +8,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class JobDatabaseService {
   constructor(private db: AngularFirestore) {}
   getJobs() {
-    let jobs = [];
-    this.db
-      .collection('jobs')
-      .get()
-      .subscribe((res) => {
-        res.docs.forEach((doc) => {
-          jobs.push({
-            id: doc.id,
-            data: doc.data(),
-          });
-        });
-      });
-    return jobs;
+    return this.db.collection('jobs').snapshotChanges();
   }
   getAppliedJobs(userId) {
     return this.db
@@ -29,58 +18,53 @@ export class JobDatabaseService {
       .snapshotChanges();
   }
   getJobById(id): any {
-    return this.db.collection('jobs').doc(id).get();
+    return this.db.collection('jobs').doc(id).snapshotChanges();
   }
   Company(name) {
-    return this.db
+    let en = this.db
       .collection('jobs', (ref) =>
         ref.where('company.en', '==', name).orderBy('postedDate', 'desc')
       )
       .snapshotChanges();
+    let ar = this.db
+      .collection('jobs', (ref) =>
+        ref.where('company.ar', '==', name).orderBy('postedDate', 'desc')
+      )
+      .snapshotChanges();
+    return merge(en, ar);
   }
   Job(name) {
-    return this.db
+    let en = this.db
       .collection('jobs', (ref) =>
         ref.where('position.en', '==', name).orderBy('postedDate', 'desc')
       )
       .snapshotChanges();
+    let ar = this.db
+      .collection('jobs', (ref) =>
+        ref.where('position.ar', '==', name).orderBy('postedDate', 'desc')
+      )
+      .snapshotChanges();
+    return merge(en, ar);
   }
   Location(name) {
-    return this.db
+    let en = this.db
       .collection('jobs', (ref) =>
         ref.where('location.en', '==', name).orderBy('postedDate', 'desc')
       )
       .snapshotChanges();
-  }
-  Location_Company(l, c) {
-    return this.db
+    let ar = this.db
       .collection('jobs', (ref) =>
-        ref
-          .where('location.en', '==', l)
-          .where('company.en', '==', c)
-          .orderBy('postedDate', 'desc')
+        ref.where('location.ar', '==', name).orderBy('postedDate', 'desc')
       )
       .snapshotChanges();
+    return merge(en, ar);
   }
-  Location_Job(l, j) {
-    return this.db
-      .collection('jobs', (ref) =>
-        ref
-          .where('location.en', '==', l)
-          .where('position.en', '==', j)
-          .orderBy('postedDate', 'desc')
-      )
-      .snapshotChanges();
-  }
-  Job_Company(j, c) {
-    return this.db
-      .collection('jobs', (ref) =>
-        ref
-          .where('position.en', '==', j)
-          .where('company.en', '==', c)
-          .orderBy('postedDate', 'desc')
-      )
-      .snapshotChanges();
+  mergeCLP(company, location, position) {
+    return merge(
+      this.Company(company),
+      this.Location(location),
+      this.Job(position)
+    );
   }
   favourite(userId, jobId, job) {
     this.db
@@ -104,11 +88,6 @@ export class JobDatabaseService {
       .doc(userId)
       .set(user);
   }
-  /* getUser(userId)
-{
-  return this.db.collection('users-details').doc(userId).snapshotChanges();
-
-} */
   getFavorite(userId) {
     return this.db
       .collection('users-details')
@@ -122,6 +101,32 @@ export class JobDatabaseService {
       .doc(userId)
       .collection('savedJobs')
       .doc(jobId)
+      .delete();
+  }
+  saveSearch(uid, company, location, position) {
+    return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('savedSearches')
+      .add({
+        company: company,
+        location: location,
+        position: position,
+      });
+  }
+  getSavedSearches(uid) {
+    return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('savedSearches')
+      .snapshotChanges();
+  }
+  deleteSavedSearches(uid, searchId) {
+    return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('savedSearches')
+      .doc(searchId)
       .delete();
   }
 }

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Job } from '../../viewModels/job';
 import { JobDatabaseService } from '../../service/JobDatabase.service';
-import { NgModule } from '@angular/core';
-import { AppModule } from 'src/app/app.module';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { UserService } from 'src/app/MainServices/User.service';
 
 @Component({
   selector: 'app-search-next-job',
@@ -12,158 +11,45 @@ import { Router } from '@angular/router';
   styleUrls: ['./search-next-job.component.scss'],
 })
 export class SearchNextJobComponent implements OnInit {
-  /*   companyName: String;
-  jobName: string;
-  city: string; */
-  searchItem: string;
-  foundJobs: Job[] | any;
   x;
-
-  constructor(private service: JobDatabaseService, private router: Router) {
-    this.searchItem = '';
-
-    this.foundJobs = [
-      {
-        id: '',
-        data: {
-          appliedUsers: {
-            closingDate: new Date(),
-          },
-          companyLogoAvatar: '',
-          company: {
-            ar: '',
-            en: '',
-          },
-          description: {
-            ar: '',
-            en: '',
-          },
-          employmentType: {
-            ar: '',
-            en: '',
-          },
-          location: {
-            ar: '',
-            en: '',
-          },
-          position: {
-            ar: '',
-            en: '',
-            postedDate: new Date(),
-          },
-          seniorityLevel: {
-            ar: '',
-            en: '',
-          },
-          worksFrom: {
-            ar: '',
-            en: '',
-          },
-        },
-      },
-    ];
+  city;
+  jobName;
+  companyName;
+  data: Observable<any>;
+  subscription: Subscription[] = [];
+  uid: string;
+  constructor(
+    private jobService: JobDatabaseService,
+    private router: Router,
+    private us: UserService
+  ) {
+    this.data = this.us.localUserData.asObservable();
+    let sub = this.data.subscribe((res) => {
+      if (res != null) {
+        this.uid = res.id;
+      }
+    });
+    this.subscription.push(sub);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.companyName = '';
+    this.jobName = '';
+    this.city = '';
+  }
+  search() {
+    this.jobService.saveSearch(
+      this.uid,
+      this.companyName,
+      this.city,
+      this.jobName
+    );
+    this.router.navigate(['/jobs/specificjob'], {
+      queryParams: {
+        company: this.companyName,
+        position: this.jobName,
+        location: this.city,
+      },
+    });
+  }
 }
-
-/*     if (
-      this.companyName.length !== 0 ||
-      this.jobName.length !== 0 ||
-      this.city.length !== 0
-    ) {
-
-    } else {
-      prompt('at least one field should be filled');
-    } */
-
-/*     filterC(){
-      this.service.Company(this.companyName).subscribe((res) => {
-        this.foundJobs = res.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-          };
-        });
-        console.log(this.foundJobs);
-      });
-    }
-  
-  
-    filterJ(){
-      this.service.Job(this.jobName).subscribe((res) => {
-        this.foundJobs = res.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-          };
-        });
-        console.log(this.foundJobs);
-      });
-    }
-  
-    filterL(){
-      this.service.Location(this.city).subscribe((res) => {
-        this.foundJobs = res.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-          };
-        });
-        console.log(this.foundJobs);
-      });
-    }
-    FilterLC(){
-      this.service.Location_Company(this.city,this.companyName).subscribe((res) => {
-        this.foundJobs = res.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-          };
-        });
-        console.log(this.foundJobs);
-      });
-      
-  
-    }
-    FilterLJ(){
-      this.service.Location_Job(this.city,this.jobName).subscribe((res) => {
-        this.foundJobs = res.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-          };
-        });
-        console.log(this.foundJobs);
-      });
-      
-  
-    }
-    FilterJC(){
-      this.service.Location_Job(this.jobName,this.companyName).subscribe((res) => {
-        this.foundJobs = res.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-          };
-        });
-        console.log(this.foundJobs);
-      });
-      
-  
-    }
-  
-  
-    find() {
-      this.router.navigate(['jobs/specificjob'],{queryParams:{company:this.companyName}})
-      this.router.navigate(['jobs/specificjob'],{queryParams:{company:this.jobName}})
-      
-       if (this.companyName.length !== 0&&this.city.length==0&&this.jobName.length==0) {this.filterC()}
-      else if (this.companyName.length == 0&&this.city.length !==0&&this.jobName.length ==0) {this.filterL()}
-      else if (this.companyName.length == 0&&this.city.length ==0&&this.jobName.length !==0) {this.filterJ()}
-  
-      else if (this.companyName.length !== 0&&this.city.length !==0&&this.jobName.length ==0) {this.FilterLC()}
-      else if (this.companyName.length !== 0&&this.city.length ==0&&this.jobName.length !==0) {this.FilterJC()}
-      else if (this.companyName.length == 0&&this.city.length !==0&&this.jobName.length !==0) {this.FilterLJ()}
-  
-    } */

@@ -5,7 +5,13 @@
         {{sentRequests.length}} {{'Sent Requests' | translate }} </h5>
     </div>
     <div>
-      <div *ngFor="let item of sentRequests" class="row rowBB">
+      <div *ngFor="let item of sentRequests  | paginate : {
+          id:'listingclients',
+          itemsPerPage:4,
+          currentPage: page,
+          totalItems: total
+        }" 
+        class="row rowBB">
         <ul _ngcontent-exd-c114="" class="list-group list-group-flush">
           <li _ngcontent-exd-c114="" class="list-group-item">
             <div _ngcontent-exd-c114="" class="media">
@@ -47,6 +53,23 @@
             </div>
           </li>
         </ul>
+      </div>
+      <div class="clearfix">
+        <pagination-controls
+          class="pagination"
+          id="listingclients"
+          (pageChange)="page = $event"
+          maxSize="10"
+          directionLinks="true"
+          autoHide="true"
+          responsive="true"
+          previousLabel="Previous"
+          nextLabel="Next"
+          screenReaderPaginationLabel="Pagination"
+          screenReaderPageLabel="page"
+          screenReaderCurrentLabel="You're on page"
+        >
+        </pagination-controls>
       </div>
     </div>
   </div>

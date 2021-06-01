@@ -1,23 +1,22 @@
 .dropdown-toggle::after {
-    display: none;
+  display: none;
 }
 
 .btn {
-    outline: none;
-    box-shadow: none;
+  outline: none;
+  box-shadow: none;
 }
 
 .users-post-groups {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.users-post-groups img{
-    max-height: 30vh;
+.users-post-groups img {
+  max-height: 30vh;
 }
 
- 
 .has-search .form-control {
     padding-left: 2.375rem;
     padding-right: 2.375rem;

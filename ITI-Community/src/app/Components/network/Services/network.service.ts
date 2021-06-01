@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
   providedIn: 'root',
 })
 export class NetworkService {
+  posts:any;
   constructor(private db: AngularFirestore) {}
 
   notINCard(arr: any[], uid) {
@@ -56,12 +57,45 @@ export class NetworkService {
       .collection('friendList')
       .doc(id)
       .delete();
+
+      this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('MyHomePosts', (ref) => ref.where('Auther.id', '==', id))
+      .snapshotChanges().subscribe((data) => {
+        console.log(data)
+      data.map(p=>{
+        if(p.payload.doc.data()['Auther'].id== id){
+          this.db.collection('users-details').doc(uid).collection('MyHomePosts').doc(p.payload.doc.id).delete()
+        }
+      })
+      })
+
+      this.db
+      .collection('users-details')
+      .doc(id)
+      .collection('MyHomePosts', (ref) => ref.where('Auther.id', '==', uid))
+      .snapshotChanges().subscribe((data) => {
+        console.log(data)
+      data.map(p=>{
+       
+       if(p.payload.doc.data()['Auther'].id== uid){
+          this.db.collection('users-details').doc(id).collection('MyHomePosts').doc(p.payload.doc.id).delete()
+        }
+      })
+      })
     this.db
       .collection('users-details')
       .doc(id)
       .collection('friendList')
       .doc(uid)
       .delete();
+
+     
+
+
+      
+      
     return;
   }
 
@@ -81,22 +115,22 @@ export class NetworkService {
     return;
   }
 
-  deleteInvitation(invit) {
-    let uid = localStorage.getItem('uid');
-    this.db
-      .collection('users-details')
-      .doc(uid)
-      .collection('friendRequest')
-      .doc(invit.id)
-      .delete();
-    this.db
-      .collection('users-details')
-      .doc(invit.id)
-      .collection('MySentfriendRequests')
-      .doc(uid)
-      .delete();
-    return;
-  }
+  // deleteInvitation(invit) {
+  //   let uid = localStorage.getItem('uid');
+  //   this.db
+  //     .collection('users-details')
+  //     .doc(uid)
+  //     .collection('friendRequest')
+  //     .doc(invit.id)
+  //     .delete();
+  //   this.db
+  //     .collection('users-details')
+  //     .doc(invit.id)
+  //     .collection('MySentfriendRequests')
+  //     .doc(uid)
+  //     .delete();
+  //   return;
+  // }
 
   // Accept friend Request
   AcceptRequest(item, uid, user) {

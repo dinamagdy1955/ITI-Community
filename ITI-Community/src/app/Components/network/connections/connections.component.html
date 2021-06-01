@@ -43,7 +43,11 @@
                   <span>{{item.jobTitle}}</span>
                   <br />Connected at {{item.addedDate.toDate() | date}}</small>
               </div>
-
+              <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4"
+              (click)="openChat(loggedUser, item); modal.dismiss('Cross click')"
+              > 
+                {{'Messege'| translate}}
+              </button>
               <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4"
                (click)="DeleteFriend(item.id)">
                 <i class="fas fa-trash-alt"> {{'Delete' | translate }} </i>

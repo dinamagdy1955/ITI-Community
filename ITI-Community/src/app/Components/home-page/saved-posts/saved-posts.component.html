@@ -1,5 +1,5 @@
 <div class="container-fluid savedJobMain">
-    <div class="container-xl">
+    <div class="container">
         <div class="row savedJobContainer" >
             <div class="col-md-3 mainContainer">
                 <div class="list-group mySavedItems"[ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
@@ -17,6 +17,18 @@
                     </a>
                 </div>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+            
             <div class="col-md-9  mainContainer" >
              <div *ngIf="savedPosts.length === 0"  style="align-content: center;width: 100%;
              height:auto;border: 10px;background-color: white;padding: 20px;border-radius: .5em; box-shadow: 2px 2px 5px gray; ">
@@ -42,34 +54,47 @@
        <a name="" id="" class="btn " [routerLink]="['/Home']" role="button" 
        style="border-radius: 5px;color: white;background-color: brown; margin-left: 45%;">Go Home</a> -->
                 </div>
+
+
                 <div *ngIf="savedPosts.length > 0" 
                     [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}"
                     class="list-group mySavedListItems">
+
+
                     <div href="#" class="list-group-item disabled mySavedItemsHeader">
                         <h3> {{'My Saved Posts' | translate }}</h3>
                     </div>
 
 
 
-
+                <div                
+                class="search-results"
+                data-infinite-scroll
+                debounce
+                [infiniteScrollDistance]="scrollDistance"
+                [infiniteScrollUpDistance]="scrollUpDistance"
+                [infiniteScrollThrottle]="throttle"
+                (scrolled)="onScrollDown()">
                     <div  *ngFor="let item of savedPosts" href="#" class="list-group-item mySavedItem">
                         <div class="mySavedItemContent">
                             <img [src]="item.data.Auther.avatar" class="logoImg">
-                        </div>
-                        <div class="mySavedItemContent" [routerLink]="['/savedPosts',item.id]"  >
+                           </div>
+                           <div class="mySavedItemContent" [routerLink]="['/savedPosts',item.id]"  >
                             
                             <a  class="list-group-item-heading jobTitleLink">{{item.data.Auther.firstName}} {{item.data.Auther.lastName}}</a>
                             <div class="list-group-item-text companyName">{{'posted in' | translate }} {{item.data.PostedDate.toDate() | date}} </div>
-                            <div class="list-group-item-text jobLocation"> {{item.data.Body | slice : 0 : 85 }}.....</div>
+                            <div class="list-group-item-text jobLocation"> {{item.data.Body | slice : 0 : 85 }}.....
+
+                            </div>
                     
-                        </div>
+                          </div>
 
                        
-<div style="float: right;">
-    <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4"
-    (click)="unsave(item)">
-    <i class="fas fa-bookmark"></i> {{'UnSave' | translate }}
-   </button>
+                            <div style="float: right " class="btnMoreDetails">
+                            <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4"
+                                   (click)="unsave(item)">
+                                       <i class="fas fa-bookmark"></i> {{'UnSave' | translate }}
+                                                    </button>
 </div>
 
                         <!-- <button type="button" 
@@ -103,8 +128,45 @@
 
                     </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
             </div>
            
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NetworkService } from '../../network/Services/network.service';
 import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './home-profile-card.component.html',
   styleUrls: ['./home-profile-card.component.scss'],
 })
-export class HomeProfileCardComponent implements OnInit {
+export class HomeProfileCardComponent implements OnInit,OnDestroy {
   selectedLang: string;
   myData: any;
   frindsList: any[] = [];
@@ -59,7 +59,7 @@ export class HomeProfileCardComponent implements OnInit {
       jobTitle: this.jobTitle,
       avatarCover: this.avatarCover,
     };
-    this.usrs.getAllFriendsList(this.myData.id).subscribe((data) => {
+  let sub2=  this.usrs.getAllFriendsList(this.myData.id).subscribe((data) => {
       this.frindsList = data.map((e) => {
         return {
           id: e.payload.doc.id,
@@ -68,14 +68,19 @@ export class HomeProfileCardComponent implements OnInit {
           jobTitle: e.payload.doc.data()['jobTitle'],
           avatar: e.payload.doc.data()['avatar'],
         };
-      });
-      this.usrs.getAllFriendRequests(this.myData.id).subscribe((data) => {
+      });  
+   let sub3= this.usrs.getAllFriendRequests(this.myData.id).subscribe((data) => {
         this.Requests = data.map((e) => {
           return e.payload.doc.id;
         });
-      });
-    });
+      });this.subscription.push(sub3);
+    });  this.subscription.push(sub2);
   }
 
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => {
+      sub.unsubscribe();
+    });
+  }
 
 }

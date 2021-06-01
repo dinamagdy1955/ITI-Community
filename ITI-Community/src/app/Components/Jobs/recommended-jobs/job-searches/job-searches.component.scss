@@ -1,6 +1,6 @@
-.postcontainer{
+.postcontainer {
   border-radius: 1em;
-  box-shadow:1px 1px 10px rgba(128, 128, 128, 0.452);
+  box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.452);
   background-color: white;
 }
 .kk:hover {
@@ -11,19 +11,27 @@
 .kk {
   color: black;
   padding: 5px;
- width:300px;
- text-align: left;
- margin-left: 20px;
- margin-bottom: 10px;
+  width: 300px;
+  text-align: left;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.452);
+  display: flex;
 }
-.appliedJobCard{
+.kk h6 {
+  color: grey;
+}
+.kk h6 span {
+  color: #b4272d;
+}
+.appliedJobCard {
   border: 1px solid lightgray;
   padding: 5px;
   margin: 5px;
-  border-radius: 25PX;
+  border-radius: 25px;
   background-color: white;
 }
-searchedjobs{
+.searchedjobs {
   border-radius: 1em;
-  box-shadow:1px 1px 10px rgba(128, 128, 128, 0.452);
+  box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.452);
 }

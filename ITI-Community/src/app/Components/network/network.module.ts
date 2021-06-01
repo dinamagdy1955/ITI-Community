@@ -16,6 +16,8 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppComponent } from 'src/app/app.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const networkRoutes: Routes = [
   { path: 'Network', component: NetworkPageComponent },
@@ -39,9 +41,11 @@ const networkRoutes: Routes = [
   ],
   imports: [
     CommonModule,
+    InfiniteScrollModule,
     RouterModule.forChild(networkRoutes),
     NgbModule,
     FormsModule,
+    NgxPaginationModule,
     Ng2SearchPipeModule,
     TranslateModule.forRoot({
       loader: {

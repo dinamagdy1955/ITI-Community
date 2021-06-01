@@ -26,15 +26,13 @@ export class UserService {
       this.stateObs();
       setTimeout(() => {
         resolve();
-      }, 1500);
+      }, 2000);
     });
   }
 
   stateObs() {
     this.auth.onAuthStateChanged((res) => {
       if (res != null || res != undefined) {
-        // console.log(this.localUserData.value);
-
         this.db
           .collection('users-details')
           .doc(res.uid)
@@ -52,7 +50,6 @@ export class UserService {
           });
       } else {
         this.localUserData.next(null);
-        // this.router.navigate(['/Login']);
       }
     });
     console.log(this.localUserData.value);

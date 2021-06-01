@@ -1,52 +1,39 @@
 <div class="container-fluid savedJobMain">
     <div class="container-xl">
         <div class="row savedJobContainer">
-            <div class="col-lg-3 mainContainer">
-                <div class="list-group mySavedItems">
-                    <a class="list-group-item disabled mySavedItemsHeader">
-                        <i class="fas fa-bookmark"></i> My Items
-                    </a>
-                    <div class="list-group-item list-group-item-action">
-                        Saved Jobs
-                        <span class="noOfItems">{{favoriteArray.length}}</span>
-                    </div>
-                    <a class="list-group-item list-group-item-action" [routerLink]="['/savedPosts']">
-                        Saved Posts
-                        <span class="noOfItems">{{noSavedPosts}}</span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-12 col-lg-9 mainContainer">
-                <div *ngIf="favoriteArray.length==0" class="p-4"
+            <div class="col-1"></div>
+            <div class="col-sm-12 col-md-12 col-lg-10 mainContainer">
+                <div *ngIf="appliedJobs.length==0" class="p-4"
                     style="background-color: white; border-radius: 15px; display: block; margin: auto;">
                     <img class="mt-4 mb-4"
                         src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/189-1896954_jobs-clipart-primary-data-clip-art-sources-of-data.png?alt=media&token=0de400d9-aa32-4f28-8763-caf8aa20178c"
                         alt="" style="width:50%; display: block; margin: auto;">
                     <div style="display: block; margin: auto; width: fit-content; font-size: 1.5rem; color: gray;">
-                        <div>Sorry you have no saved jobs ...</div>
+                        <div>Sorry you have applied jobs ...</div>
                         <div class="btn btn-sm p-2 btn-primary "
-                            style="background-color: #b4272d; color: white; font-size: 1rem;" routerLink="/jobs">
+                            style="background-color: #b4272d; color: white; font-size: 1rem;"
+                            routerLink="/jobs/specificjob">
                             explore new Jobs</div>
                     </div>
                 </div>
-                <div class="list-group mySavedListItems" *ngIf="favoriteArray.length!==0">
+                <div class="list-group mySavedListItems" *ngIf="appliedJobs.length!==0">
                     <div href="#" class="list-group-item disabled mySavedItemsHeader">
-                        <h3>My Saved Jobs</h3>
+                        <h3>My Applied Jobs</h3>
                     </div>
-                    <div class="list-group-item mySavedItem btn" *ngFor="let item of favoriteArray">
+                    <div class="list-group-item mySavedItem btn" *ngFor="let item of appliedJobs">
                         <div class="mySavedItemContent">
-                            <img [src]="item.data.companyLogoAvatar" class="logoImg">
+                            <img [src]="item.companyLogoAvatar" class="logoImg">
                         </div>
-                        <div class="mySavedItemContent " [routerLink]="['/jobs/specificjob']"
+                        <div class="mySavedItemContent" [routerLink]="['/jobs/specificjob']"
                             [queryParams]="{id: item.id}">
-                            <div class="list-group-item-heading jobTitleLink">{{item.data.position.en}}</div>
-                            <div class="list-group-item-text companyName">{{item.data.company.en}}</div>
-                            <div class="list-group-item-text jobLocation">{{item.data.location.en}}</div>
-                            <div class="list-group-item-text activelyRecruiting" *ngIf="item.data.closingDate == null">
+                            <div class="list-group-item-heading jobTitleLink">{{item.position.en}}</div>
+                            <div class="list-group-item-text companyName">{{item.company.en}}</div>
+                            <div class="list-group-item-text jobLocation">{{item.location.en}}</div>
+                            <div class="list-group-item-text activelyRecruiting" *ngIf="item.closingDate == null">
                                 <i class="fas fa-briefcase"></i> Actively recruiting
                             </div>
                             <div class="list-group-item-text">
-                                <span class="jobPostTime">Posted In {{item.data.postedDate.toDate()|date}} </span>
+                                <span class="jobPostTime">Posted In {{item.postedDate.toDate()|date}} </span>
                             </div>
                         </div>
                         <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
@@ -55,14 +42,11 @@
                                 <i class="fas fa-ellipsis-h"></i>
                             </a>
                             <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                                <div ngbDropdownItem (click)="unsave(item.id)">
-                                    <i class="fas fa-bookmark"></i> Unsave
-                                </div>
                                 <a ngbDropdownItem ngxClipboard
                                     cbContent="http://localhost:4200/jobs/specificjob?id={{item.id}}">
                                     <i class="fas fa-link"></i> CopyLink
                                 </a>
-                                <a ngbDropdownItem href="#">
+                                <a ngbDropdownItem (click)="openModal(item.id)">
                                     <i class="fas fa-envelope"></i> Send a message
                                 </a>
                             </div>
@@ -70,7 +54,22 @@
                     </div>
                 </div>
             </div>
+            <div class="col-1"></div>
         </div>
     </div>
 </div>
 <app-main-footer></app-main-footer>
+
+
+<ng-template #friends let-modal>
+    <div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark"
+                (click)="sendJobinMsg(reciId); modal.close('Close click')">
+                OK
+            </button>
+        </div>
+    </div>
+</ng-template>
