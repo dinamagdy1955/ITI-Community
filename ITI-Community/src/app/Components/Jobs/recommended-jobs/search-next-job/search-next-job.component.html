@@ -20,9 +20,8 @@
             </div>
             <div class="col-md-3 ">
                 <form class="form-inline my-2 my-lg-0">
-                    <button class="btn my-2 my-sm-0" type="button" [routerLink]="['/jobs/specificjob']"
-                        [queryParams]="{company: companyName,position:jobName,location:city}"
-                        style="width: 90%;border-radius: 1.2em; color: white; background-color: #b4272d;">Search</button>
+                    <button class="btn my-2 my-sm-0" type="button" (click)="search()" style="width: 90%;border-radius: 1.2em; color: white; background-color:
+                        #b4272d;">Search</button>
                 </form>
             </div>
         </div>

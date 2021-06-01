@@ -21,25 +21,43 @@ export class JobDatabaseService {
     return this.db.collection('jobs').doc(id).snapshotChanges();
   }
   Company(name) {
-    return this.db
+    let en = this.db
       .collection('jobs', (ref) =>
         ref.where('company.en', '==', name).orderBy('postedDate', 'desc')
       )
       .snapshotChanges();
+    let ar = this.db
+      .collection('jobs', (ref) =>
+        ref.where('company.ar', '==', name).orderBy('postedDate', 'desc')
+      )
+      .snapshotChanges();
+    return merge(en, ar);
   }
   Job(name) {
-    return this.db
+    let en = this.db
       .collection('jobs', (ref) =>
         ref.where('position.en', '==', name).orderBy('postedDate', 'desc')
       )
       .snapshotChanges();
+    let ar = this.db
+      .collection('jobs', (ref) =>
+        ref.where('position.ar', '==', name).orderBy('postedDate', 'desc')
+      )
+      .snapshotChanges();
+    return merge(en, ar);
   }
   Location(name) {
-    return this.db
+    let en = this.db
       .collection('jobs', (ref) =>
         ref.where('location.en', '==', name).orderBy('postedDate', 'desc')
       )
       .snapshotChanges();
+    let ar = this.db
+      .collection('jobs', (ref) =>
+        ref.where('location.ar', '==', name).orderBy('postedDate', 'desc')
+      )
+      .snapshotChanges();
+    return merge(en, ar);
   }
   mergeCLP(company, location, position) {
     return merge(
@@ -83,6 +101,32 @@ export class JobDatabaseService {
       .doc(userId)
       .collection('savedJobs')
       .doc(jobId)
+      .delete();
+  }
+  saveSearch(uid, company, location, position) {
+    return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('savedSearches')
+      .add({
+        company: company,
+        location: location,
+        position: position,
+      });
+  }
+  getSavedSearches(uid) {
+    return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('savedSearches')
+      .snapshotChanges();
+  }
+  deleteSavedSearches(uid, searchId) {
+    return this.db
+      .collection('users-details')
+      .doc(uid)
+      .collection('savedSearches')
+      .doc(searchId)
       .delete();
   }
 }

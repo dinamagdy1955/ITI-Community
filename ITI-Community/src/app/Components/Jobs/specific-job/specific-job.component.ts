@@ -36,6 +36,7 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
   userData: IUserDetails;
   userTrack: string;
   userBranch: string;
+  keyWordsSearch;
   constructor(
     private jobService: JobDatabaseService,
     private activatedRoute: ActivatedRoute,
@@ -120,7 +121,6 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
                 });
             });
             this.selectedJob = this.list[0];
-            // this.jobId = this.selectedJob.id;
           });
       } else {
         this.jobId = undefined;
@@ -133,11 +133,9 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
             };
           });
           this.selectedJob = this.list[0];
-          // this.jobId = this.selectedJob.id;
         });
       }
     });
-
     this.subscription.push(sub);
   }
 

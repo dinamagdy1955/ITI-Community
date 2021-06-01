@@ -1,142 +1,11 @@
 <div>
-    <header>
-        <div class="btn-group">
-            <button type="button" class="btn rounded-pill btn-success dropdown-toggle" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Most Relevant
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider" />
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </div>
-        <div class="btn-group">
-            <button type="button" class="btn rounded-pill btn-success dropdown-toggle" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Any Time
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider" />
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </div>
-        <div class="btn-group">
-            <button type="button" class="btn rounded-pill btn-success dropdown-toggle" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                25 mi (40 km)
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider" />
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </div>
-        <div class="btn-group">
-            <button type="button" class="
-          btn
-          rounded-pill
-          btn-light
-          border-secondary
-          text-secondary
-          dropdown-toggle
-        " data-bs-toggle="dropdown" aria-expanded="false">
-                Company
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider" />
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </div>
-        <div class="btn-group">
-            <button type="button" class="
-          btn
-          rounded-pill
-          btn-light
-          border-secondary
-          text-secondary
-          dropdown-toggle
-        " data-bs-toggle="dropdown" aria-expanded="false">
-                Location
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider" />
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </div>
-        <div class="btn-group">
-            <button type="button" class="
-          btn
-          rounded-pill
-          btn-light
-          border-secondary
-          text-secondary
-          dropdown-toggle
-        " data-bs-toggle="dropdown" aria-expanded="false">
-                Job Type
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider" />
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </div>
-        <div class="btn-group">
-            <button type="button" class="
-          btn
-          rounded-pill
-          btn-light
-          border-secondary
-          text-secondary
-          dropdown-toggle
-        " data-bs-toggle="dropdown" aria-expanded="false">
-                More Filters
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider" />
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </div>
-    </header>
-
     <div class="container">
         <div class="content row">
-            <div class="news col-6 pt-4" style="overflow-y: scroll; height: 600px">
-                <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="company">
-                <div *ngFor="let item of list" [ngClass]="{ selected: item.id === selectedJob.id}"
-                    (click)="showMore(item)" class="element mb-2 btn">
+            <div class="news col-6 pt-4" style="overflow-y: scroll; height: 660px">
+                <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyWordsSearch">
+                <div *ngFor="let item of list | filter:keyWordsSearch"
+                    [ngClass]="{ selected: item.id === selectedJob.id}" (click)="showMore(item)"
+                    class="element mb-2 btn">
                     <div class="img col-3 rounded-circle mr-2">
                         <img class="card-img-top" [src]="item.data.companyLogoAvatar" />
                     </div>
@@ -149,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div class="details position-sticky top-0 end-0 col-6 pt-4" style="overflow-y: scroll; height: 600px"
+            <div class="details position-sticky top-0 end-0 col-6 pt-4" style="overflow-y: scroll; height: 660px"
                 *ngIf="selectedJob != undefined">
                 <div class="elementCard mb-2">
                     <div class="img " style="width:150px;">

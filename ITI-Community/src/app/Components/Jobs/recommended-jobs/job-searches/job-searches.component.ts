@@ -13,6 +13,7 @@ export class JobSearchesComponent implements OnInit, OnDestroy {
   data: Observable<any>;
   subscription: Subscription[] = [];
   uid: string;
+  searches = [];
   constructor(private jobService: JobDatabaseService, private us: UserService) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
@@ -23,7 +24,20 @@ export class JobSearchesComponent implements OnInit, OnDestroy {
     this.subscription.push(sub);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.jobService.getSavedSearches(this.uid).subscribe((res) => {
+      this.searches = res.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          data: e.payload.doc.data(),
+        };
+      });
+    });
+  }
+
+  deleteSaved(searchId) {
+    this.jobService.deleteSavedSearches(this.uid, searchId);
+  }
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => {
