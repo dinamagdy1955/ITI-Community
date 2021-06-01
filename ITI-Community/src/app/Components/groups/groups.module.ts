@@ -19,6 +19,8 @@ import { DiscoverComponent } from './discover/discover.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ToasterMsgComponent } from './toasterMsg/toasterMsg.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const groupRoutes: Routes = [
   { path: 'all-groups', component: RequestGroupPageComponent },
@@ -46,6 +48,7 @@ export function translateFactory(httpClient: HttpClient) {
     EditPostComponent,
     EditCommentComponent,
     DiscoverComponent,
+    ToasterMsgComponent
   ],
   imports: [
     CommonModule,
@@ -62,6 +65,7 @@ export function translateFactory(httpClient: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    InfiniteScrollModule
   ],
   exports: [
     TranslateModule

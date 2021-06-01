@@ -1,4 +1,5 @@
 <section class="groups-page">
+    <app-toasterMsg aria-live="polite" aria-atomic="true"></app-toasterMsg>
     <div class="container">
         <div class="content-groups">
             <h1 class="text-muted py-2" [ngClass]="{'text-right': Lang == 'ar'}">{{'Discover Groups' | translate}}</h1>
@@ -8,6 +9,7 @@
                     placeholder="{{'What Do You Have Searching For ?...' | translate}}">
             </div>
             <div id="GroupsDiscover" class="Groups-content-display1">
+
                 <ul class="list-group list-group-flush"
                     *ngFor="let g of GroupList | filter:keyWordsSearch; trackBy:identify">
                     <li class="list-group-item" [ngClass]="{'text-right': Lang == 'ar'}">
@@ -21,10 +23,11 @@
                                         routerLink="/Group/group-profile/{{g.id}}">{{g.Name}}</a>
                                 </h6>
                                 <small class="text-muted">{{g.Specialty}}</small><br>
-                                <!-- <small class="text-muted"><span>{{g.users.length}}</span> members</small> -->
                             </div>
+
                             <button class="btn btn-outline-success btn-sm rounded-pill px-3 mt-3"
-                                (click)="sendRequest(userID, g.id)">{{'Request To Join' | translate}}</button>
+                                (click)="sendRequest(userID, g.id)"><i class="fas fa-user-plus"></i><span
+                                    class="custom-describe"> {{'Request To Join' | translate}}</span></button>
                         </div>
                     </li>
                 </ul>

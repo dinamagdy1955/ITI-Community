@@ -4,169 +4,92 @@
         placeholder="{{'Searching For ?...' | translate}}">
 </div>
 <div *ngIf="postGroupList.length == 0">
-    <div class="notFound">
-        <img src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/10_best_social_media_designers_jpg_XkLCgMOX.jpg?alt=media&token=394ca10d-4440-45a7-84d4-091444c54bba"
-            width="50%" class="rounded-circle">
-        <div>
-            There are no posts in the group yet ...<br />
-            Be the first to post here ...
-        </div>
+    <div [ngClass]="{'text-right': Lang == 'ar'}">
+        <ngb-alert>
+            <h5>{{'Notes : ' | translate}}</h5>
+            <p>{{'There is no posts yet' | translate}}</p>
+            <img src="../../../../assets/writepost.jpg" class="img-fluid">
+        </ngb-alert>
     </div>
 </div>
-<div class="card mt-3" *ngFor="let post of postGroupList | filter:keyWordsSearch; trackBy: identify">
-    <div class="card-body" [ngClass]="{'text-right': Lang == 'ar'}">
-        <div class="media">
-            <img class="mx-4 rounded-circle" [src]="post.data.Auther.avatar" alt="" width="64px">
-            <div class="media-body">
-                <h6 class="mt-1 mb-1">
-                    <a class="text-dark text-decoration-none" href="">
-                        {{post.data.Auther.firstName}} {{post.data.Auther.lastName}}
-                    </a>
-                </h6>
-                <small class="text-muted">{{post.data.Auther.jobTitle}}</small>
-                <small class="text-muted d-block">{{post.data.PostedDate.toDate() | date}}</small>
-            </div>
-            <div *ngIf="adminGroup.includes(userID) || post.data.Auther.id === userID">
-                <div ngbDropdown container="body" class="d-inline">
-                    <button type="button" class="btn btn-default" ngbDropdownToggle>
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
-                    <div ngbDropdownMenu>
-                        <div>
-                            <app-edit-post [postID]='post.id'></app-edit-post>
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        <button ngbDropdownItem (click)="deletePost(post.id)"
-                            [ngClass]="{'text-right': Lang == 'ar'}">{{'Delete' | translate}}</button>
+<app-toasterMsg aria-live="polite" aria-atomic="true"></app-toasterMsg>
+<div class="search-results" data-infinite-scroll debounce [infiniteScrollDistance]="scrollDistance"
+    [infiniteScrollUpDistance]="scrollUpDistance" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()">
+    <div class="card mt-3" *ngFor="let post of postGroupList | filter:keyWordsSearch; trackBy: identify">
+        <div class="card-body" [ngClass]="{'text-right': Lang == 'ar'}">
+            <div class="media align-items-center">
+                <img class="mx-3 rounded-circle" [src]="post.data.Auther.avatar" alt="" width="64px" height="64">
+                <div class="media-body">
+                    <h6 class="mt-1 mb-1">
+                        <a class="text-dark text-decoration-none" href="" routerLink="/profile/{{post.data.Auther.id}}">
+                            {{post.data.Auther.firstName}} {{post.data.Auther.lastName}}
+                        </a>
+                    </h6>
+                    <div class="custom-titles">
+                        <small class="text-muted">{{post.data.Auther.jobTitle}}</small>
+                        <small class="text-muted d-block">{{post.data.PostedDate.toDate() | date}}</small>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="p-1 my-2">
-            {{post.data.Body}}
-        </div>
-        <div class="row">
-            <div class="users-post-groups col-md-6" *ngFor="let img of post.data.postImg">
-                <img class="img-fluid" src="{{img}}" alt="" (click)="openLg(content)" />
-                <ng-template #content let-modal>
-                    <div class="modal-header">
-                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')"
-                            [ngClass]="{'m-0 p-0': Lang == 'ar'}">
-                            <span aria-hidden="true">&times;</span>
+                <div *ngIf="adminGroup.includes(userID) || post.data.Auther.id === userID">
+                    <div ngbDropdown container="body" class="d-inline">
+                        <button type="button" class="btn btn-default" ngbDropdownToggle>
+                            <i class="fas fa-ellipsis-h"></i>
                         </button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <img class="img-fluid" src="{{img}}" alt="" />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
-                            translate}}</button>
-                    </div>
-                </ng-template>
-            </div>
-        </div>
-        <div class="text-secondary pt-2">
-            <small>{{post.data.Likes.length}} {{'Likes' | translate}}</small>
-        </div>
-        <div class="post-actions-groups mt-2">
-            <button class="btn btn-default" (click)="Like(userID , post.id)">
-                <span *ngIf="!post.data.Likes.includes(userID)"><i class="far fa-thumbs-up mr-2"></i> {{'Like' |
-                    translate}}</span>
-                <span *ngIf="post.data.Likes.includes(userID)" class="font-weight-bold"><i
-                        class="fas fa-thumbs-up mx-2"></i>
-                    {{'Unlike' | translate}}</span>
-            </button>
-            <label class="btn mb-0"><i class="far fa-comment mx-2"></i>{{'Comment' |
-                translate}}</label>
-        </div>
-        <div class="user-right-comments row mt-3">
-            <img [src]="avatar" class="rounded-circle col-2">
-            <div class=" col-9 mt-md-4 mt-lg-2 mr-2 p-0">
-                <app-comment-form [defPostId]="post.id"></app-comment-form>
-            </div>
-        </div>
-        <app-post-comments [PostID]="post.id" [admins]="adminGroup"></app-post-comments>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-
-
-
-<div class="card mt-3" *ngFor="let post of postGroupList; let i = index">
-    <div class="card-body" *ngIf="usersData[i] !== undefined">
-        <div class="media">
-            <img class="mr-4 rounded-circle" src="../../../../assets/nav-img.png" alt="" width="64px">
-            <div class="media-body">
-                <h6 class="mt-1 mb-1">
-                    <a class="text-dark text-decoration-none" href="#">
-                        {{usersData[i].data.firstName}} {{usersData[i].data.lastName}}
-                    </a>
-                </h6>
-                <small class="text-muted">{{usersData[i].data.jobTitle}}</small>
-                <small class="text-muted d-block">{{post.PostedDate.toDate() | date}}</small>
-            </div>
-            <div *ngIf="adminGroup.includes(userID) || post.UserId === userID">
-                <div ngbDropdown container="body" class="d-inline">
-                    <button type="button" class="btn btn-default" ngbDropdownToggle>
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
-                    <div ngbDropdownMenu>
-                        <div>
-                            <app-edit-post [postID]='post.id'></app-edit-post>
+                        <div ngbDropdownMenu>
+                            <div>
+                                <app-edit-post [postID]='post.id'></app-edit-post>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <button ngbDropdownItem (click)="deletePost(post.id)"
+                                [ngClass]="{'text-right': Lang == 'ar'}">{{'Delete' | translate}}</button>
                         </div>
-                        <div class="dropdown-divider"></div>
-                        <button ngbDropdownItem (click)="deletePost(post.id)">Delete</button>
-                        <button ngbDropdownItem>Report</button>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="p-1 my-2">
-            {{post.Post}}
-        </div>
-        <div class="users-post-groups row" *ngFor="let img of post.postImg">
-            <img class="img-fluid col-md-6" [src]="img" alt="">
-        </div>
-        <div class="text-secondary pt-2">
-            <small>{{post.Likes.length}} Likes</small>
-        </div>
-        <div class="post-actions-groups mt-2">
-            <button class="btn btn-default" (click)="Like(userID , post.id)">
-                <span *ngIf="!post.Likes.includes(userID)"><i class="far fa-thumbs-up mr-2"></i> Like</span>
-                <span *ngIf="post.Likes.includes(userID)" class="font-weight-bold"><i class="fas fa-thumbs-up mr-2"></i>
-                    Like</span>
-            </button>
-            <label for="comment" class="btn mb-0"><i class="far fa-comment mr-2"></i>Comment</label>
-        </div>
-        <div class="user-right-comments row mt-3">
-            <img src="../../../../assets/nav-img.png" class="rounded-circle col-2">
-            <div class=" col-9 mt-md-4 mt-lg-2 mr-2">
-                <app-comment-form [defPostId]="post.id"></app-comment-form>
+            <div class="p-1 my-2 post-body">
+                {{post.data.Body}}
             </div>
+            <div class="row">
+                <div class="users-post-groups col-md-6" *ngFor="let img of post.data.postImg">
+                    <img class="img-fluid" src="{{img}}" alt="" (click)="openLg(content)" />
+                    <ng-template #content let-modal>
+                        <div class="modal-header">
+                            <button type="button" class="close" aria-label="Close"
+                                (click)="modal.dismiss('Cross click')" [ngClass]="{'m-0 p-0': Lang == 'ar'}">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <img class="img-fluid" src="{{img}}" alt="" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+                                translate}}</button>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="text-secondary pt-2">
+                <small>{{post.data.Likes.length}} {{'Likes' | translate}}</small>
+            </div>
+            <div class="post-actions-groups mt-2">
+                <button class="btn btn-default custom-btns" (click)="Like(userID , post.id)">
+                    <span *ngIf="!post.data.Likes.includes(userID)"><i class="far fa-thumbs-up mr-2"></i> {{'Like' |
+                        translate}}</span>
+                    <span *ngIf="post.data.Likes.includes(userID)" class="font-weight-bold"><i
+                            class="fas fa-thumbs-up mx-2"></i>
+                        {{'Unlike' | translate}}</span>
+                </button>
+                <label class="btn mb-0 custom-btns"><i class="far fa-comment mx-2"></i>{{'Comment' |
+                    translate}}</label>
+            </div>
+            <div class="user-right-comments row mt-3">
+                <img [src]="avatar" class="rounded-circle col-2 comment-avatar">
+                <div class=" col-9 mt-md-4 mt-lg-2 mr-2 p-0 comment-form">
+                    <app-comment-form [defPostId]="post.id"></app-comment-form>
+                </div>
+            </div>
+            <app-post-comments [PostID]="post.id" [admins]="adminGroup"></app-post-comments>
         </div>
-
-        <app-post-comments [PostID]="post.id"></app-post-comments>
-
     </div>
-</div> -->
+</div>

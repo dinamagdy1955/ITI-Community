@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { ChatsService } from '../../messages/Service/chats.service';
 import { GroupService } from '../Services/group.service';
+import { ToastServiceService } from '../toasterMsg/toastService.service';
 import { IGroup2 } from '../ViewModel/igroup';
 
 @Component({
@@ -27,7 +28,8 @@ export class RightSideGroupComponent implements OnInit, OnChanges, OnDestroy {
     private GrpServ: GroupService,
     private modalService: NgbModal,
     private us: UserService,
-    private chat: ChatsService
+    private chat: ChatsService,
+    private toastService: ToastServiceService
   ) { }
 
   ngOnInit(): void {
@@ -70,11 +72,29 @@ export class RightSideGroupComponent implements OnInit, OnChanges, OnDestroy {
     this.modalService.open(content, { size: 'lg' });
   }
 
+  showMsg() {
+    if (this.Lang == 'en') {
+      this.toastService.show('Member Updated', { classname: 'bg-info text-light', delay: 5000 });
+    } else {
+      this.toastService.show('تم تحديث العضو', { classname: 'bg-info text-right text-light', delay: 5000 });
+    }
+  }
+
+  showMsgDanger() {
+    if (this.Lang == 'en') {
+      this.toastService.show('Member Deleted', { classname: 'bg-danger text-light', delay: 5000 });
+    } else {
+      this.toastService.show('تم حذف العضو', { classname: 'bg-danger text-right text-light', delay: 5000 });
+    }
+  }
+
   Roles(uid, id, role) {
+    this.showMsg()
     this.GrpServ.MembersRole(uid, id, role);
   }
 
   deleteUser(uid, id) {
+    this.showMsgDanger()
     this.GrpServ.DeleteMembers(uid, id);
   }
 }

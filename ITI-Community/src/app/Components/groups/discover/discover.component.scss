@@ -8,7 +8,11 @@ section.groups-page .content-groups{
     margin-bottom: 50px;
 }
 
-
+@media screen and (max-width: 600px) {
+    .custom-describe {
+        display: none;
+    }
+}
 section.groups-page .content-groups .group-tabs a:not(:last-child){
     border:none;
     transition: 0.3s;

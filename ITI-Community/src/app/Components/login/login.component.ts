@@ -58,37 +58,41 @@ export class LoginComponent implements OnInit {
               let sub = this.profile
                 .getUserBasic(responce.user.uid)
                 .subscribe((res) => {
-                  let userProfileBasic = res.payload.data();
-                  if (
-                    userProfileBasic.isAccepted &&
-                    !userProfileBasic.isRemoved
-                  ) {
-                    let sub2 = this.profile
-                      .getUserData(responce.user.uid)
-                      .subscribe((res) => {
-                        sub2.unsubscribe();
-                        localStorage.setItem(
-                          'userToken',
-                          responce.user.refreshToken
-                        );
-                        //for behavioral subject
-                        let localUserData: LocalUserData = {
-                          id: res.payload.id,
-                          firstName: res.payload.data().firstName,
-                          lastName: res.payload.data().lastName,
-                          jobTitle: res.payload.data().jobTitle,
-                          avatar: res.payload.data().avatar,
-                          avatarCover: res.payload.data().avatarCover,
-                        };
-                        this.profile.setlocalUserData(localUserData);
-                        this.router.navigate(['/Home']);
-                        return SignInAuthError.Correct;
-                      });
+                  if (res.payload.exists) {
+                    let userProfileBasic = res.payload.data();
+                    if (
+                      userProfileBasic.isAccepted &&
+                      !userProfileBasic.isRemoved
+                    ) {
+                      let sub2 = this.profile
+                        .getUserData(responce.user.uid)
+                        .subscribe((res) => {
+                          sub2.unsubscribe();
+                          localStorage.setItem(
+                            'userToken',
+                            responce.user.refreshToken
+                          );
+                          //for behavioral subject
+                          let localUserData: LocalUserData = {
+                            id: res.payload.id,
+                            firstName: res.payload.data().firstName,
+                            lastName: res.payload.data().lastName,
+                            jobTitle: res.payload.data().jobTitle,
+                            avatar: res.payload.data().avatar,
+                            avatarCover: res.payload.data().avatarCover,
+                          };
+                          this.profile.setlocalUserData(localUserData);
+                          this.router.navigate(['/Home']);
+                          return SignInAuthError.Correct;
+                        });
+                    } else {
+                      this.loginErr = SignInAuthError.UserRemovedOrUnaccepted;
+                      this.openModal();
+                    }
+                    sub.unsubscribe();
                   } else {
-                    this.loginErr = SignInAuthError.UserRemovedOrUnaccepted;
                     this.openModal();
                   }
-                  sub.unsubscribe();
                 });
             } else {
               this.loginErr = SignInAuthError.EmailNotVerified;

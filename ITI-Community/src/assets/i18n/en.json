@@ -6,7 +6,7 @@
   "Messaging": "Messaging",
   "Notifications": "Notifications",
   "Me": "Me",
-  "Social": "Socialmedia",
+  "Work": "Work",
   "Account": "Account",
   "Settings": "Settings",
   "Help": "Help",
@@ -113,6 +113,7 @@
   "Discover Groups": "Discover Groups",
   "Request To Join": "Request To Join",
   "Searching For ?...": "Searching For ?...",
+
   "Your friend":"Your friend",
   "puplish new post in":" puplish new post in",
   "Go to your Home to see":"Go  to your Home to see",
@@ -122,5 +123,10 @@
   "you Dont have any Connections go and grow Up your Network Now":"you Dont have any Connections go and grow Up your Network Now",
   "you Dont have any invitaions untill Now":"you Dont have any invitaions untill Now",
   "there is no Members in Community to add them untill Now":"there is no Members in Community to add them untill Now",
-  "you Dont have any sent friend request go and grow Up your Network Now":"you Dont have any sent friend request go and grow Up your Network Now"
+  "you Dont have any sent friend request go and grow Up your Network Now":"you Dont have any sent friend request go and grow Up your Network Now",
+  "Notes : ": "Notes : ",
+  "There is no posts yet": "There is no posts yet",
+  "Your Request Has Been Sent": "Your Request Has Been Sent",
+  "Massege": "Massege"
 }
+

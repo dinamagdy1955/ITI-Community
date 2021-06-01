@@ -11,12 +11,12 @@ export class GroupPostsService {
   constructor(
     private db: AngularFirestore,
     private afStorage: AngularFireStorage
-  ) {}
+  ) { }
 
-  GroupPosts(id) {
+  GroupPosts(id, limit) {
     return this.db
       .collection('PostGroup', (ref) =>
-        ref.where('GroupId', '==', id).orderBy('PostedDate', 'desc')
+        ref.where('GroupId', '==', id).limit(limit).orderBy('PostedDate', 'desc')
       )
       .snapshotChanges();
   }
@@ -33,7 +33,7 @@ export class GroupPostsService {
 
 
 
-  
+
 
   writePost(post: IPost2) {
     return new Promise<any>((res, rej) => {
@@ -42,7 +42,7 @@ export class GroupPostsService {
         .add(post)
         .then(
           (res) => {
-            
+
           },
           (error) => rej(error)
         );
@@ -76,7 +76,7 @@ export class GroupPostsService {
 
 
 
-  
+
   giveLike(like, id) {
     let sub = this.PostById(id).subscribe((res) => {
       this.likes = res.payload.get('Likes');

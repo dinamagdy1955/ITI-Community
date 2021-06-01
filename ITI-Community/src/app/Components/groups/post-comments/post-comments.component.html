@@ -4,18 +4,21 @@
             <div class="col-md-12">
                 <div class="py-2 px-4 mt-2 comment-design">
                     <div class="">
-                        <div class="d-flex flex-row user">
+                        <div class="d-flex flex-row user align-items-center">
                             <img class="rounded-circle img-fluid img-responsive" [src]="c.User.avatar" width="40">
-                            <div class="d-flex flex-column mx-2 w-100">
+                            <div class="d-flex flex-column mx-2 w-100 user-titles">
                                 <span class="font-weight-bold">
-                                    {{c.User.firstName}} {{c.User.lastName}}
+                                    <a class="text-decoration-none text-dark" routerLink="/profile/{{c.User.id}}">
+                                        {{c.User.firstName}}
+                                        {{c.User.lastName}}
+                                    </a>
                                 </span>
                                 <small class="day text-muted">{{c.CommentDate.toDate() | date}}</small>
                             </div>
                             <div *ngIf="admins != undefined" class="d-flex flex-column ml-auto">
                                 <div *ngIf="admins.includes(userID) || c.User.id === userID">
                                     <div ngbDropdown container="body">
-                                        <a type="button" class="btn btn-default" ngbDropdownToggle>
+                                        <a type="button" class="btn btn-default p-0" ngbDropdownToggle>
                                             <i class="fas fa-ellipsis-h"></i>
                                         </a>
                                         <div ngbDropdownMenu>
@@ -39,7 +42,7 @@
     </div>
 </div>
 <div class="">
-    <button class="btn btn-link text-decoration-none" (click)="loadMore()"
+    <button class="btn btn-link text-decoration-none custom-btn-link-more" (click)="loadMore()"
         [ngClass]="{'d-none': turnOff == true}">{{'Load
         More Comments' | translate}}</button>
 </div>
