@@ -74,7 +74,6 @@ img {
 }
 .news {
   border-right: 1px solid rgb(192, 191, 191);
-
   overflow: auto;
 }
 .selected {
@@ -93,12 +92,17 @@ img {
 .applyBody i {
   font-size: 9rem;
 }
-.applyBody div {
-  font-size: 25px;
-  color: gray;
-}
 .apply {
   border-radius: 25px;
+}
+.userDetails {
+  text-align: left;
+  display: flex;
+  font-size: 1.2em !important;
+  color: gray;
+}
+.userDetails div {
+  margin: 0% 2%;
 }
 .img {
   flex-grow: 1;

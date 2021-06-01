@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { merge } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -40,35 +41,12 @@ export class JobDatabaseService {
       )
       .snapshotChanges();
   }
-  Location_Company(l, c) {
-    return this.db
-      .collection('jobs', (ref) =>
-        ref
-          .where('location.en', '==', l)
-          .where('company.en', '==', c)
-          .orderBy('postedDate', 'desc')
-      )
-      .snapshotChanges();
-  }
-  Location_Job(l, j) {
-    return this.db
-      .collection('jobs', (ref) =>
-        ref
-          .where('location.en', '==', l)
-          .where('position.en', '==', j)
-          .orderBy('postedDate', 'desc')
-      )
-      .snapshotChanges();
-  }
-  Job_Company(j, c) {
-    return this.db
-      .collection('jobs', (ref) =>
-        ref
-          .where('position.en', '==', j)
-          .where('company.en', '==', c)
-          .orderBy('postedDate', 'desc')
-      )
-      .snapshotChanges();
+  mergeCLP(company, location, position) {
+    return merge(
+      this.Company(company),
+      this.Location(location),
+      this.Job(position)
+    );
   }
   favourite(userId, jobId, job) {
     this.db

@@ -2,10 +2,12 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/MainServices/User.service';
-import { IUserBasics } from '../../registration/ViewModels/iuser-basics';
 import { Job } from '../viewModels/job';
 import { JobDatabaseService } from '../service/JobDatabase.service';
 import { Observable, Subscription } from 'rxjs';
+import { BranchDatabaseService } from '../../Branches/Services/database.service';
+import { TrackDatabaseService } from '../../Tracks/Services/database.service';
+import { IUserDetails } from '../../registration/ViewModels/iuser-details';
 
 ActivatedRoute;
 @Component({
@@ -16,7 +18,7 @@ ActivatedRoute;
 export class SpecificJobComponent implements OnInit, OnDestroy {
   x: number;
   showing: string;
-  list;
+  list = [];
   savedJobs = [];
   appliedJobs = [];
   jobId: string;
@@ -26,17 +28,22 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
   position: string;
   location: string;
   appliedJob: Job;
-  @ViewChild('err') myModal;
+  @ViewChild('sent') sentModal;
+  @ViewChild('details') detailsModal;
   data: Observable<any>;
   subscription: Subscription[] = [];
   uid: string;
-  userData;
+  userData: IUserDetails;
+  userTrack: string;
+  userBranch: string;
   constructor(
     private jobService: JobDatabaseService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private modalService: NgbModal,
-    private us: UserService
+    private us: UserService,
+    private bs: BranchDatabaseService,
+    private ts: TrackDatabaseService,
+    private router: Router
   ) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
@@ -48,6 +55,25 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
     this.subscription.push(sub);
     this.x = 800;
     this.showing = 'see More';
+    this.us.getUserData(this.uid).subscribe((res) => {
+      this.userData = res.payload.data();
+      this.ts
+        .getTrackById(this.userData.track)
+        .subscribe((res) => (this.userTrack = res.data()['name']));
+      this.bs
+        .getBrancheById(this.userData.branch)
+        .subscribe((res) => (this.userBranch = res.data()['name']));
+    });
+    this.jobService.getFavorite(this.uid).subscribe((res) => {
+      this.savedJobs = res.map((e) => {
+        return e.payload.doc.id;
+      });
+    });
+    this.jobService.getAppliedJobs(this.uid).subscribe((res) => {
+      this.appliedJobs = res.map((e) => {
+        return e.payload.doc.id;
+      });
+    });
   }
 
   ngOnInit(): void {
@@ -56,6 +82,8 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
       this.company = this.activatedRoute.snapshot.queryParams['company'];
       this.position = this.activatedRoute.snapshot.queryParams['position'];
       this.location = this.activatedRoute.snapshot.queryParams['location'];
+      this.showing = 'See More';
+      this.x = 800;
       if (this.jobId != undefined) {
         this.jobService.getJobById(this.jobId).subscribe((res) => {
           this.selectedJob = {
@@ -76,7 +104,26 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
         this.position != undefined ||
         this.location != undefined
       ) {
+        this.jobId = undefined;
+        this.jobService
+          .mergeCLP(this.company, this.location, this.position)
+          .subscribe((res) => {
+            res.map((e) => {
+              let found = false;
+              this.list.find((s) => {
+                if (s.id == e.payload.doc.id) found = true;
+              });
+              if (!found)
+                this.list.push({
+                  id: e.payload.doc.id,
+                  data: e.payload.doc.data(),
+                });
+            });
+            this.selectedJob = this.list[0];
+            // this.jobId = this.selectedJob.id;
+          });
       } else {
+        this.jobId = undefined;
         this.selectedJob = undefined;
         this.jobService.getJobs().subscribe((res) => {
           this.list = res.map((e) => {
@@ -85,34 +132,10 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
               data: e.payload.doc.data(),
             };
           });
+          this.selectedJob = this.list[0];
+          // this.jobId = this.selectedJob.id;
         });
       }
-      this.jobService.getFavorite(this.uid).subscribe((res) => {
-        this.savedJobs = res.map((e) => {
-          return e.payload.doc.id;
-        });
-      });
-      this.jobService.getAppliedJobs(this.uid).subscribe((res) => {
-        this.appliedJobs = res.map((e) => {
-          return e.payload.doc.id;
-        });
-      });
-
-      // console.log(this.jobId);
-      // console.log(this.company);
-      // console.log(this.location);
-      // console.log(this.position);
-
-      // if (this.jobId != null) {
-      //   sub = this.service.getJobById(this.jobId).subscribe((res) => {
-      //     this.selectedJob.data = res.data();
-      //   });
-      //   this.subscription.push(sub);
-      //   sub = this.us.getUserBasic(this.uid).subscribe((res) => {
-      //     this.user = res.payload.data();
-      //   });
-      //   this.subscription.push(sub);
-      // }
     });
 
     this.subscription.push(sub);
@@ -126,23 +149,30 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
       this.jobService.favourite(this.uid, favoriteJob.id, favoriteJob.data);
     }
   }
-  showMore(jid) {
-    this.jobId = jid;
+  showMore(job) {
+    if (this.jobId != undefined) {
+      this.router.navigate(['/jobs/specificjob'], {
+        queryParams: { id: job.id },
+      });
+    } else this.selectedJob = job;
     this.showing = 'See More';
     this.x = 800;
   }
   Apply() {
-    this.appliedJob = this.list.find((e) => e.id == this.jobId);
+    this.appliedJob = this.list.find((e) => e.id == this.selectedJob.id);
     this.jobService.Apply(
       this.uid,
-      this.jobId,
+      this.selectedJob.id,
       this.appliedJob.data,
       this.userData
     );
-    this.openModal();
+    this.openSentModal();
   }
-  openModal() {
-    this.modalService.open(this.myModal, { centered: true });
+  openSentModal() {
+    this.modalService.open(this.sentModal, { centered: true });
+  }
+  openDetailsModal() {
+    this.modalService.open(this.detailsModal, { centered: true, size: 'lg' });
   }
   clicked(id) {
     if (this.x > 800) {

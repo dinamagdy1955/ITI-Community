@@ -135,9 +135,8 @@
         <div class="content row">
             <div class="news col-6 pt-4" style="overflow-y: scroll; height: 600px">
                 <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="company">
-                <div *ngFor="let item of list | filter:company " [ngClass]="{ selected: item.id === jobId }"
-                    (click)="showMore(item.id)" [routerLink]="['/jobs/specificjob']" [queryParams]="{id: item.id}"
-                    class="element mb-2 btn">
+                <div *ngFor="let item of list" [ngClass]="{ selected: item.id === selectedJob.id}"
+                    (click)="showMore(item)" class="element mb-2 btn">
                     <div class="img col-3 rounded-circle mr-2">
                         <img class="card-img-top" [src]="item.data.companyLogoAvatar" />
                     </div>
@@ -180,8 +179,14 @@
                     </div>
                 </div>
                 <div style="border-bottom:1px solid rgb(192, 191, 191); text-align: center;" class="pb-2">
-                    <div class=" pl-3 pr-3 btn apply justify-content-around applyBtn" (click)="Apply()"> <i
+                    <div *ngIf="!appliedJobs.includes(selectedJob.id)"
+                        class=" pl-3 pr-3 btn apply justify-content-around applyBtn" (click)="openDetailsModal()"> <i
                             class="fas fa-share-square" style="font-size: 1rem;"></i> Apply Now
+                    </div>
+                    <div *ngIf="appliedJobs.includes(selectedJob.id)" class=" pl-1 pr-3 apply justify-content-around">
+                        <i class="fas fa-check-circle" style="color: green; font-size: 1rem;"></i> You applied
+                        successfully
+
                     </div>
                 </div>
                 <div class="mt-2">
@@ -189,7 +194,7 @@
                         More Information about the Job :
                     </h6>
                     <p>{{ selectedJob.data.description.en.slice(0, x) }}...
-                        <button (click)="clicked(jobId)" *ngIf="selectedJob.data.description.en.length > 800"
+                        <button (click)="clicked(selectedJob.id)" *ngIf="selectedJob.data.description.en.length > 800"
                             class="btn btn-link btn-sm p-0 mb-3 showLink">
                             {{ showing }}
                         </button>
@@ -199,17 +204,65 @@
         </div>
     </div>
 
-    <ng-template #err let-modal>
+    <ng-template #sent let-modal>
         <div>
             <div class="modal-body">
                 <div class="applyBody">
                     <i class="fas fa-check-circle"></i>
-                    <div>Your application sent successfully !!!</div>
+                    <div style="font-size: 25px; color: grey;">Your application sent successfully !!!</div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">
                     OK
+                </button>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #details let-modal>
+        <div>
+            <div class="modal-body">
+                <div class="applyBody">
+                    <div style="height: auto; width:40%; margin: auto;">
+                        <img class="rounded-circle" [src]="userData.avatar">
+                    </div>
+                    <div class="userDetails">
+                        <div style="flex-grow: 1;">
+                            <div><span style="color: brown;">First Name:</span><span>{{userData.firstName}}</span></div>
+                            <div><span style="color: brown;">Last Name:</span><span> {{userData.lastName}}</span></div>
+                            <div><span style="color: brown;">Branch Name:</span><span>{{userBranch}}</span></div>
+                            <div><span style="color: brown;">Track Name:</span><span> {{userTrack}}</span></div>
+                            <div><span style="color: brown;">Job Title:</span><span>{{userData.jobTitle || "not
+                                    found"}}</span>
+                            </div>
+                            <div><span style="color: brown;">About:</span><span> {{userData.about || "not
+                                    found"}}</span>
+                            </div>
+                        </div>
+                        <div style="flex-grow: 1; border-left: 1px solid grey; padding-left: 1%;">
+                            <span style="color: brown;">Experience:</span>
+                            <div style="margin-left: 10%;" *ngFor="let item of userData.experiences; let i = index">
+                                <div>Experience no {{i+1}}</div>
+                                <div style="margin-left: 15%;">
+                                    Company Name: {{item.companyName}}<br />
+                                    from: {{item.from}}<br />
+                                    to:{{item.to}}<br />
+                                    Location: {{item.location}}<br />
+                                    Degree:{{item.degree}}<br />
+                                    Description:{{item.description}}<br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="Apply();modal.close('Close click')">
+                    Submit Application
+                </button>
+                <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">
+                    Cancel
                 </button>
             </div>
         </div>
