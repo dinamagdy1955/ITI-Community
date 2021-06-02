@@ -1,23 +1,22 @@
-
 <div class="card mt-3 boo" style="width: 100%;">
-
-  <div class="card-body">
-    <h5 class="card-title mb-2 text-muted">Activity</h5>
+  <div *ngIf="homePosts.length > 0" class="card-body">
+    <div class="row">
+      <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <h5 class="card-title mb-2 text-muted">Activity</h5>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 btn" [routerLink]="['/Home']" style="color: rgb(161, 29, 29);">
+        show more
+      </div>
+    </div>
     <div class="container mt-4">
-      <div class="row">
-        <div class="col">
-          
-<app-activity-component></app-activity-component>
-<app-activity-component></app-activity-component>
-
-        </div>
-        <div class="col">
-          
-          <app-activity-component></app-activity-component>
-          <app-activity-component></app-activity-component>
-
+      <div class="d-flex" style="flex-wrap:wrap; 
+      align-content: space-between;">
+        <div *ngFor="let item of homePosts" style="width: 30%; margin: 1%;">
+          <app-activity-component [post]="item"></app-activity-component>
         </div>
       </div>
     </div>
+  </div>
+  <div *ngIf="homePosts.length == 0">
   </div>
 </div>
