@@ -183,9 +183,6 @@ export class HomePostsService {
   }
 
   ReportPost(pid, post, uid) {
-    console.log(pid);
-    console.log(post);
-    console.log(uid);
     this.db
       .collection('users-details')
       .doc(uid)

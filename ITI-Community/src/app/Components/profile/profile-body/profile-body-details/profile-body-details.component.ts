@@ -46,8 +46,6 @@ export class ProfileBodyDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.userDetails);
-
     this.editPersonalData = this.FB.group({
       firstName: new FormControl(this.userDetails.firstName, [
         Validators.required,

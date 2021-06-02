@@ -1,17 +1,17 @@
-<div class="container-fluid savedJobMain">
+<div class="container-fluid savedJobMain" [ngClass]="{'text-right': Lang=='ar'}">
     <div class="container-xl">
         <div class="row savedJobContainer">
             <div class="col-lg-3 mainContainer">
                 <div class="list-group mySavedItems">
                     <a class="list-group-item disabled mySavedItemsHeader">
-                        <i class="fas fa-bookmark"></i> My Items
+                        <i class="fas fa-bookmark"></i> {{'My Items'|translate}}
                     </a>
                     <div class="list-group-item list-group-item-action">
-                        Saved Jobs
+                        {{'Saved Jobs'|translate}}
                         <span class="noOfItems">{{favoriteArray.length}}</span>
                     </div>
                     <a class="list-group-item list-group-item-action" [routerLink]="['/savedPosts']">
-                        Saved Posts
+                        {{'Saved Posts'|translate}}
                         <span class="noOfItems">{{noSavedPosts}}</span>
                     </a>
                 </div>
@@ -19,51 +19,70 @@
             <div class="col-sm-12 col-md-12 col-lg-9 mainContainer">
                 <div *ngIf="favoriteArray.length==0" class="p-4"
                     style="background-color: white; border-radius: 15px; display: block; margin: auto;">
-                    <img class="mt-4 mb-4"
-                        src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/189-1896954_jobs-clipart-primary-data-clip-art-sources-of-data.png?alt=media&token=0de400d9-aa32-4f28-8763-caf8aa20178c"
-                        alt="" style="width:50%; display: block; margin: auto;">
+                    <div style="width: 300px;height: auto;"> <img class="mt-4 mb-4"
+                            src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/189-1896954_jobs-clipart-primary-data-clip-art-sources-of-data.png?alt=media&token=0de400d9-aa32-4f28-8763-caf8aa20178c"
+                            alt="" style="width:50%; display: block; margin: auto;"> </div>
                     <div style="display: block; margin: auto; width: fit-content; font-size: 1.5rem; color: gray;">
-                        <div>Sorry you have no saved jobs ...</div>
+                        <div>{{'Sorry you have no saved jobs ...'|translate}}</div>
                         <div class="btn btn-sm p-2 btn-primary "
                             style="background-color: #b4272d; color: white; font-size: 1rem;" routerLink="/jobs">
-                            explore new Jobs</div>
+                            {{'explore new Jobs'|translate}}</div>
                     </div>
                 </div>
-                <div class="list-group mySavedListItems" *ngIf="favoriteArray.length!==0">
+                <div [ngClass]="{'text-right': Lang=='ar'}" class="list-group mySavedListItems"
+                    *ngIf="favoriteArray.length!==0">
                     <div href="#" class="list-group-item disabled mySavedItemsHeader">
-                        <h3>My Saved Jobs</h3>
+                        <h3>{{'My Saved Jobs'|translate}}</h3>
                     </div>
-                    <div class="list-group-item mySavedItem btn" *ngFor="let item of favoriteArray">
+                    <div class="list-group-item mySavedItem btn" [ngClass]="{'text-right': Lang=='ar'}"
+                        *ngFor="let item of favoriteArray">
                         <div class="mySavedItemContent">
                             <img [src]="item.data.companyLogoAvatar" class="logoImg">
                         </div>
-                        <div class="mySavedItemContent " [routerLink]="['/jobs/specificjob']"
-                            [queryParams]="{id: item.id}">
-                            <div class="list-group-item-heading jobTitleLink">{{item.data.position.en}}</div>
-                            <div class="list-group-item-text companyName">{{item.data.company.en}}</div>
-                            <div class="list-group-item-text jobLocation">{{item.data.location.en}}</div>
+                        <div class="mySavedItemContent " [ngClass]="{'text-right': Lang=='ar'}"
+                            [routerLink]="['/jobs/specificjob']" [queryParams]="{id: item.id}">
+                            <div *ngIf="Lang=='en'" class="list-group-item-heading jobTitleLink">
+                                {{item.data.position.en}}</div>
+                            <div *ngIf="Lang=='ar'" class="list-group-item-heading jobTitleLink">
+                                {{item.data.position.ar}}</div>
+
+
+                            <div *ngIf="Lang=='en'" class="list-group-item-text companyName">{{item.data.company.en}}
+                            </div>
+                            <div *ngIf="Lang=='ar'" class="list-group-item-text companyName">{{item.data.company.ar}}
+                            </div>
+
+
+                            <div *ngIf="Lang=='en'" class="list-group-item-text jobLocation">{{item.data.location.en}}
+                            </div>
+                            <div *ngIf="Lang=='ar'" class="list-group-item-text jobLocation">{{item.data.location.ar}}
+                            </div>
+
+
                             <div class="list-group-item-text activelyRecruiting" *ngIf="item.data.closingDate == null">
-                                <i class="fas fa-briefcase"></i> Actively recruiting
+                                <i class="fas fa-briefcase"></i> {{'Actively recruiting'|translate}}
                             </div>
                             <div class="list-group-item-text">
-                                <span class="jobPostTime">Posted In {{item.data.postedDate.toDate()|date}} </span>
+                                <span class="jobPostTime">{{'Posted In'|translate}}
+                                    {{item.data.postedDate.toDate()|date}} </span>
                             </div>
                         </div>
-                        <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
+                        <div [ngClass]="{'text-right': Lang=='ar'}" ngbDropdown
+                            class="mySavedItemContent btnMoreDetails" placement="bottom-right">
                             <a ngbDropdownToggle type="text" class="btnMoreDetailsDots" id="dropdownMenuButton"
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-ellipsis-h"></i>
                             </a>
                             <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
-                                <div ngbDropdownItem (click)="unsave(item.id)">
-                                    <i class="fas fa-bookmark"></i> Unsave
+                                <div [ngClass]="{'text-right': Lang=='ar'}" ngbDropdownItem (click)="unsave(item.id)">
+                                    <i class="fas fa-bookmark"></i> {{'Unsave'|translate}}
                                 </div>
-                                <a ngbDropdownItem ngxClipboard
+                                <a [ngClass]="{'text-right': Lang=='ar'}" ngbDropdownItem ngxClipboard
                                     cbContent="{{location}}/jobs/specificjob?id={{item.id}}">
-                                    <i class="fas fa-link"></i> CopyLink
+                                    <i class="fas fa-link"></i> {{'CopyLink'|translate}}
                                 </a>
-                                <a ngbDropdownItem href="#">
-                                    <i class="fas fa-envelope"></i> Send a message
+                                <a [ngClass]="{'text-right': Lang=='ar'}" ngbDropdownItem href="#">
+                                    <i class="fas fa-envelope"></i> {{'Send a message'|translate}}
                                 </a>
                             </div>
                         </div>

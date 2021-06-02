@@ -37,6 +37,7 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
   userTrack: string;
   userBranch: string;
   keyWordsSearch;
+  Lang: string;
   constructor(
     private jobService: JobDatabaseService,
     private activatedRoute: ActivatedRoute,
@@ -46,6 +47,7 @@ export class SpecificJobComponent implements OnInit, OnDestroy {
     private ts: TrackDatabaseService,
     private router: Router
   ) {
+    this.Lang = localStorage.getItem('lang');
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {

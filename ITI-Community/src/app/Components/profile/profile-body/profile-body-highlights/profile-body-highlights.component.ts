@@ -25,9 +25,7 @@ export class ProfileBodyHighlightsComponent implements OnInit, OnDestroy {
     this.subscription.push(sub);
   }
 
-  ngOnInit() {
-    console.log(this.user);
-  }
+  ngOnInit() {}
   openChat(logged, reci) {
     this.chat.newChat(logged, reci);
   }

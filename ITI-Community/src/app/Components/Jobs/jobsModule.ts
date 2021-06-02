@@ -15,12 +15,20 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { MainfooterModule } from '../main-footer/mainfooter.module';
 import { AppliedJobsComponent } from './applied-jobs/applied-jobs.component';
 import { ClipboardModule } from 'ngx-clipboard';
-const routes: Routes = [
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+/* import { translateFactory } from 'src/app/app.module';
+ */ const routes: Routes = [
   { path: '', component: RecommendedJobsComponent },
   { path: 'savedjobs', component: SavedJobsComponent },
   { path: 'specificjob', component: SpecificJobComponent },
   { path: 'appliedJobs', component: AppliedJobsComponent },
 ];
+export function translateFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient, './assets/i18n', '.json');
+}
 @NgModule({
   declarations: [
     SpecificJobComponent,
@@ -40,6 +48,16 @@ const routes: Routes = [
     Ng2SearchPipeModule,
     MainfooterModule,
     ClipboardModule,
+    HttpClientModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: translateFactory,
+        deps: [HttpClient],
+      },
+    }),
+    InfiniteScrollModule,
   ],
+  exports: [TranslateModule],
 })
 export class jobsModule {}

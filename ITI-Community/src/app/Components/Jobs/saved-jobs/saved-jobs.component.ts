@@ -16,6 +16,7 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   uid;
   noSavedPosts: number;
+  Lang: string;
   location = window.location.origin;
   constructor(
     private jobService: JobDatabaseService,
@@ -23,6 +24,7 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
     private us: UserService,
     private postsService: HomePostsService
   ) {
+    this.Lang = localStorage.getItem('lang');
     this.favoriteArray = [];
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {

@@ -7,8 +7,12 @@ import { merge } from 'rxjs';
 })
 export class JobDatabaseService {
   constructor(private db: AngularFirestore) {}
-  getJobs() {
-    return this.db.collection('jobs').snapshotChanges();
+  getJobs(limit?) {
+    if (limit == undefined) return this.db.collection('jobs').snapshotChanges();
+    else
+      return this.db
+        .collection('jobs', (ref) => ref.limit(limit))
+        .snapshotChanges();
   }
   getAppliedJobs(userId) {
     return this.db

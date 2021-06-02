@@ -15,11 +15,17 @@ export class RecomendedForYouComponent implements OnInit {
   subscription: Subscription[] = [];
   uid;
   list = [];
+  Lang: string;
+  throttle = 300;
+  scrollDistance = 1;
+  scrollUpDistance = 2;
+  limits: number = 4;
   constructor(
     private jobService: JobDatabaseService,
     private router: Router,
     private us: UserService
   ) {
+    this.Lang = localStorage.getItem('lang');
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -29,7 +35,7 @@ export class RecomendedForYouComponent implements OnInit {
     this.subscription.push(sub);
   }
   ngOnInit(): void {
-    this.jobService.getJobs().subscribe((res) => {
+    this.jobService.getJobs(this.limits).subscribe((res) => {
       this.list = res.map((e) => {
         return {
           id: e.payload.doc.id,
@@ -40,6 +46,17 @@ export class RecomendedForYouComponent implements OnInit {
     this.jobService.getFavorite(this.uid).subscribe((res) => {
       this.savedJobs = res.map((e) => {
         return e.payload.doc.id;
+      });
+    });
+  }
+  onScrollDown() {
+    this.limits += 4;
+    let sub4 = this.jobService.getJobs(this.limits).subscribe((res) => {
+      this.list = res.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          data: e.payload.doc.data(),
+        };
       });
     });
   }

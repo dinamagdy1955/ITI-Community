@@ -2,26 +2,26 @@
 <div class="media border p-3 postcontainer3">
     <div class="media-body" style="align-items: center;">
         <h3 class="h3text" style="text-align: center; border: none; font-weight: lighter; color: white;">
-            Search for your next job
+            {{'Search for your next job'|translate}}
         </h3>
         <div class="W-100%"><br></div>
         <div class="row">
             <div class="col-md-3">
-                <input class="form-control mr-sm-2" type="text" [(ngModel)]="jobName" placeholder=" Search by job"
+                <input class="form-control mr-sm-2" type="text" [(ngModel)]="jobName" placeholder=" {{'Search by job'|translate}}"
                     aria-label="Search" style="width: 99%;">
             </div>
             <div class="col-md-3">
                 <input class="form-control mr-sm-2" type="text" [(ngModel)]="companyName"
-                    placeholder=" Search by company name" aria-label="Search" style="width: 99%;">
+                    placeholder=" {{'Search by company name'|translate}}" aria-label="Search" style="width: 99%;">
             </div>
             <div class="col-md-3">
-                <input class="form-control mr-sm-2" type="text" [(ngModel)]="city" placeholder=" Search by city"
+                <input class="form-control mr-sm-2" type="text" [(ngModel)]="city" placeholder=" {{'Search by city'|translate}}"
                     aria-label="Search" style="width: 99%;">
             </div>
             <div class="col-md-3 ">
                 <form class="form-inline my-2 my-lg-0">
                     <button class="btn my-2 my-sm-0" type="button" (click)="search()" style="width: 90%;border-radius: 1.2em; color: white; background-color:
-                        #b4272d;">Search</button>
+                        #b4272d;">{{'Search'|translate}}</button>
                 </form>
             </div>
         </div>

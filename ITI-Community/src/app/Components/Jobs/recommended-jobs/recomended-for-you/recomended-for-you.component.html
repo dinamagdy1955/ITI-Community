@@ -1,9 +1,9 @@
 <div class="W-100%"><br /></div>
 <div class="media border p-3 postcontainer">
     <div class="media-body" style="  align-items: center;">
-        <div class="row">
+        <div [ngClass]="{'text-right': Lang=='ar'}" class="row">
             <div class="col-10">
-                <h4> Recommended for you </h4>
+                <h4> {{'Recommended for you'|translate}} </h4>
                 <!-- <span class="txtt"> Based on your profile and search history </span> -->
             </div>
             <div class="btn text-secondary col-2 navBtns">
@@ -12,28 +12,37 @@
             </div>
         </div>
         <div class="W-100%"><br></div>
-        <div class="row mb-3 " style="border-bottom: 1px solid lightgray;">
+        <div class="row mb-3 " style="border-bottom: 1px solid lightgray;" data-infinite-scroll debounce
+            [infiniteScrollDistance]="scrollDistance" [infiniteScrollUpDistance]="scrollUpDistance"
+            [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()">
             <div class="col-md-3 mb-3" *ngFor="let item of list" style=" align-items: center;">
                 <div class="card" style="width:100%;height: auto; padding: 5px;">
                     <div class="mt-3">
-                        <i class="fas fa-bookmark b1 " (click)="saveUnsave(item.id)"
-                            style="float: right; padding-right: 1em;"
-                            [ngStyle]="{'color':savedJobs.includes(item.id) ?'goldenrod':'black'}"></i>
+                        <div [ngStyle]="{'float' : Lang=='ar'? 'left':'right'}">
+                            <i class="fas fa-bookmark b1 " (click)="saveUnsave(item.id)" style=" padding-right: 1em;"
+                                [ngStyle]="{'color':savedJobs.includes(item.id) ?'goldenrod':'black'}"></i>
+                        </div>
+
                         <img class="card-img-top" [src]="item.data.companyLogoAvatar" alt="Card image"
-                            style="width:80px;height: 80px; float: left; margin-left: 2px;">
+                            style="width:80px;height: 80px; margin-left: 2px;"
+                            [ngStyle]="{'float' : Lang=='ar'? 'right':'left'}">
                     </div>
-                    <div [routerLink]="['/jobs/specificjob']" [queryParams]="{id: item.id}">
-                        <div class="btn " style="color: black;"><strong> {{item.data.position.en}}</strong> </div>
+                    <div [ngClass]="{'text-right': Lang=='ar'}" [routerLink]="['/jobs/specificjob']"
+                        [queryParams]="{id: item.id}">
+
+                        <div [ngClass]="{'text-right': Lang=='ar'}" *ngIf="Lang=='ar'" class="btn "
+                            style="color: black;"><strong> {{item.data.position.ar}}</strong> </div>
+                        <div *ngIf="Lang=='en'" class="btn " style="color: black;"><strong>
+                                {{item.data.position.en}}</strong> </div>
                         <br />
-                        <span class="txtt btn"> {{item.data.company.en}}</span> <br />
-                        <span class="txtt btn">{{item.data.location.en}}</span>
+                        <span *ngIf="Lang=='en'" class="txtt btn"> {{item.data.company.en}}</span> <br />
+                        <span *ngIf="Lang=='ar'" class="txtt btn"> {{item.data.company.ar}}</span> <br />
+                        <span *ngIf="Lang=='en'" class="txtt btn">{{item.data.location.en}}</span>
+                        <span *ngIf="Lang=='ar'" class="txtt btn">{{item.data.location.ar}}</span>
                         <br />
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="mt-3" style="align-items: center; text-align: center;">
-            <a href="#" style="font-weight: bold; color: #b4272d;">Search for more jobs </a>
         </div>
     </div>
 </div>
