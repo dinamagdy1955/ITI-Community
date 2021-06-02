@@ -16,6 +16,7 @@ export class SavedJobsComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   uid;
   noSavedPosts: number;
+  location = window.location.origin;
   constructor(
     private jobService: JobDatabaseService,
     private router: Router,

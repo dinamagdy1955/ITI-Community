@@ -19,6 +19,7 @@ export class HomePostBodyComponent implements OnInit, OnDestroy {
   throttle = 300;
   scrollDistance = 1;
   scrollUpDistance = 2;
+  location = window.location.origin;
   direction = '';
   counter: number = 0;
   limits: number = 5;

@@ -43,7 +43,7 @@
                             </a>
                             <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
                                 <a ngbDropdownItem ngxClipboard
-                                    cbContent="http://localhost:4200/jobs/specificjob?id={{item.id}}">
+                                    cbContent="{{location}}/jobs/specificjob?id={{item.id}}">
                                     <i class="fas fa-link"></i> CopyLink
                                 </a>
                                 <a ngbDropdownItem (click)="openModal(item.id)">

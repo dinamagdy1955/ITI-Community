@@ -17,6 +17,7 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   uid: string;
   jobMsgId: string;
+  location = window.location.origin;
   constructor(
     private jobService: JobDatabaseService,
     private us: UserService,
