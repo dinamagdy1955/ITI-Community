@@ -10,6 +10,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { TranslateService } from '@ngx-translate/core';
 import { HPostCommentService } from '../HomeServices/hpost-comment.service';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-home-post-body',
   templateUrl: './home-post-body.component.html',
@@ -36,12 +37,14 @@ export class HomePostBodyComponent implements OnInit, OnDestroy {
   avatar;
   data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor(
+  constructor(config: NgbModalConfig, private modalService: NgbModal,
     public translateService: TranslateService,
     private homePostServ: HomePostsService,
     private us: UserService,
     public commentService: HPostCommentService
   ) {
+    config.backdrop = 'static';
+    config.keyboard = false;
     this.postsCount = new BehaviorSubject<number>(5);
     translateService.addLangs(['en', 'ar']);
     if (
@@ -72,6 +75,9 @@ export class HomePostBodyComponent implements OnInit, OnDestroy {
     this.subscription.forEach((sub) => {
       sub.unsubscribe();
     });
+  }
+  open(content) {
+    this.modalService.open(content);
   }
 
   identify(index, post) {

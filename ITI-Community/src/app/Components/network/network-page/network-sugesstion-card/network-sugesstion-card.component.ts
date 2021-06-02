@@ -32,7 +32,7 @@ export class NetworkSugesstionCardComponent implements OnInit, OnDestroy {
     private usrs: NetworkService,
     private us: UserService
   ) {
-    this.appendItems(0, this.sum);
+    
     translateService.addLangs(['en', 'ar']);
     if (
       localStorage.getItem('lang') == undefined ||
@@ -93,10 +93,8 @@ export class NetworkSugesstionCardComponent implements OnInit, OnDestroy {
                 this.usersinCardData = data.map((e) => {
                   return {
                     id: e.payload.doc.id,
-                    firstName:
-                      e.payload.doc.data()['firstName'] +
-                      ' ' +
-                      e.payload.doc.data()['lastName'],
+                    firstName: e.payload.doc.data()['firstName'] ,
+                    lastName: e.payload.doc.data()['lastName'],
                     jobTitle: e.payload.doc.data()['jobTitle'],
                     avatar: e.payload.doc.data()['avatar'],
                     avatarCover: e.payload.doc.data()['avatarCover'],
@@ -128,35 +126,7 @@ export class NetworkSugesstionCardComponent implements OnInit, OnDestroy {
       sub.unsubscribe();
     });
   }
-  addItems(startIndex, endIndex, _method) {
-    for (let i = 0; i < this.sum; ++i) {
-      this.array[_method]([i, ' ', this.generateWord()].join(''));
-    }
-  }
-  appendItems(startIndex, endIndex) {
-    this.addItems(startIndex, endIndex, 'push');
-  }
-  prependItems(startIndex, endIndex) {
-    this.addItems(startIndex, endIndex, 'unshift');
-  }
-  onScrollDown(ev) {
-    console.log('scrolled down!!', ev);
 
-    // add another 10 items
-    const start = this.sum;
-    this.sum += 2;
-    this.appendItems(start, this.sum);
 
-    this.direction = 'down';
-  }
 
-  onUp(ev) {
-    console.log('scrolled up!', ev);
-    const start = this.sum;
-    this.sum += 2;
-    this.prependItems(start, this.sum);
-
-    this.direction = 'up';
-  }
-  generateWord() {}
 }
