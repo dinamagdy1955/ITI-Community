@@ -1,10 +1,10 @@
 <div *ngIf="uid != undefined  ">
     <app-profile-body-details [userDetails]="UserDetails">
     </app-profile-body-details>
-    <app-profile-body-highlights *ngIf="uid != uidLocal" [firstName]="UserDetails.firstName">
+    <app-profile-body-highlights *ngIf="uid != uidLocal && UserDetails.friends.includes(uidLocal)" [user]="UserDetails">
     </app-profile-body-highlights>
     <app-profile-body-about [userAbout]="UserAbout"></app-profile-body-about>
-    <app-profile-body-activity></app-profile-body-activity>
+    <app-profile-body-activity [user]="uid"></app-profile-body-activity>
     <app-profile-body-exp [userExperiences]="UserExperiences"></app-profile-body-exp>
 </div>
 

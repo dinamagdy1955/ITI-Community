@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { HomePostsService } from 'src/app/Components/home-page/HomeServices/home-posts.service';
 import { UserService } from 'src/app/MainServices/User.service';
@@ -9,6 +9,7 @@ import { UserService } from 'src/app/MainServices/User.service';
   styleUrls: ['./profile-body-activity.component.scss'],
 })
 export class ProfileBodyActivityComponent implements OnInit {
+  @Input() user;
   subscriptions: Subscription[] = [];
   userID;
   data: Observable<any>;
@@ -27,7 +28,7 @@ export class ProfileBodyActivityComponent implements OnInit {
   }
 
   ngOnInit() {
-    let sub = this.homePostsServ.getMyPosts(this.userID).subscribe((res) => {
+    let sub = this.homePostsServ.getMyPosts(this.user).subscribe((res) => {
       this.homePosts = res.map((e) => {
         return {
           id: e.payload.doc.id,
