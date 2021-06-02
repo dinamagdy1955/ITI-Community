@@ -1,42 +1,45 @@
 <div class="container-fluid savedJobMain">
     <div class="container">
-        <div class="row savedJobContainer" >
+        <div class="row savedJobContainer">
             <div class="col-md-3 mainContainer">
                 <div class="list-group mySavedItems " style="width: 100%"
-                [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
-                    <a  class="list-group-item disabled mySavedItemsHeader">
+                    [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
+                    <a class="list-group-item disabled mySavedItemsHeader">
                         <i class="fas fa-bookmark"></i> {{'My Items' | translate }}
                     </a>
-                    <a  class="list-group-item list-group-item-action">
+                    <a class="list-group-item list-group-item-action" [routerLink]="['/jobs/savedjobs']">
                         {{'Saved Jobs' | translate }}
-                        <span [ngClass]="{'en': selectedLang==='en', 'arrr': selectedLang=== 'ar'}" class="noOfItems">5</span>
+                        <span [ngClass]="{'en': selectedLang==='en', 'arrr': selectedLang=== 'ar'}"
+                            class="noOfItems">{{jobsNo}}</span>
                     </a>
-                 
-                    <a  class="list-group-item list-group-item-action">
+
+                    <a class="list-group-item list-group-item-action">
                         {{'Saved Posts' | translate }}
-                        <span class="noOfItems" [ngClass]="{'en': selectedLang==='en', 'arrr': selectedLang=== 'ar'}"> {{savedPosts.length}}</span>
+                        <span class="noOfItems" [ngClass]="{'en': selectedLang==='en', 'arrr': selectedLang=== 'ar'}">
+                            {{savedPosts.length}}</span>
                     </a>
                 </div>
             </div>
 
 
-            
-            <div class="col-md-9  mainContainer"  >
-             <div *ngIf="savedPosts.length === 0"  style="align-content: center;width: 100%;
+
+            <div class="col-md-9  mainContainer">
+                <div *ngIf="savedPosts.length === 0" style="align-content: center;width: 100%;
              height:auto;border: 10px;background-color: white;padding: 20px;border-radius: .5em; 
              box-shadow: 2px 2px 5px gray; ">
-             
-                <div >
-                    <div class="noAboutImg">
-                      <p> {{'you Dont have any Saved posts till Now go to home and Explore more ' | translate }}</p>
-                      <img
-                        src="https://img.freepik.com/free-photo/3d-word-oops_58466-263.jpg?size=626&ext=jpg">
+
+                    <div>
+                        <div class="noAboutImg">
+                            <p> {{'you Dont have any Saved posts till Now go to home and Explore more ' | translate }}
+                            </p>
+                            <img src="https://img.freepik.com/free-photo/3d-word-oops_58466-263.jpg?size=626&ext=jpg">
+                        </div>
+                        <a name="" id="" class="btn " [routerLink]="['/Home']" role="button"
+                            style="border-radius: 5px;color: white;background-color: brown; margin-left: 45%; margin-top: 5px;">Go
+                            Home</a>
                     </div>
-                    <a name="" id="" class="btn " [routerLink]="['/Home']" role="button" 
-                    style="border-radius: 5px;color: white;background-color: brown; margin-left: 45%; margin-top: 5px;">Go Home</a>
-                </div>
-             
-                <!-- <div style=" align-items: center ;width: 100%;height:350px;
+
+                    <!-- <div style=" align-items: center ;width: 100%;height:350px;
                 background-image: url(https://img.freepik.com/free-photo/3d-word-oops_58466-263.jpg?size=626&ext=jpg);
                background-repeat: no-repeat;background-size:contain; ">
          <h4 style="color: brown;">
@@ -49,11 +52,8 @@
                 </div>
 
 
-                <div *ngIf="savedPosts.length > 0" 
-                    [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}"
-                    class="list-group mySavedListItems"
-                    style="width: 100%"
-                    >
+                <div *ngIf="savedPosts.length > 0" [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}"
+                    class="list-group mySavedListItems" style="width: 100%">
 
 
                     <div href="#" class="list-group-item disabled mySavedItemsHeader">
@@ -62,43 +62,38 @@
 
 
 
-                <div                
-               
-                data-infinite-scroll
-                debounce
-                [infiniteScrollDistance]="scrollDistance"
-                [infiniteScrollUpDistance]="scrollUpDistance"
-                [infiniteScrollThrottle]="throttle"
-                (scrolled)="onScrollDown()">
-                    <div  *ngFor="let item of savedPosts" href="#" class="list-group-item mySavedItem">
-                        <div class="mySavedItemContent">
-                            <img [src]="item.data.Auther.avatar" class="logoImg">
-                           </div>
-                           <div class="mySavedItemContent" [routerLink]="['/savedPosts',item.id]"  >
-                            
-                            <a  class="list-group-item-heading jobTitleLink">{{item.data.Auther.firstName}} {{item.data.Auther.lastName}}</a>
-                            <div class="list-group-item-text companyName">{{'posted in' | translate }} {{item.data.PostedDate.toDate() | date}} </div>
-                            <div class="list-group-item-text jobLocation"> {{item.data.Body | slice : 0 : 60 }}.....
+                    <div data-infinite-scroll debounce [infiniteScrollDistance]="scrollDistance"
+                        [infiniteScrollUpDistance]="scrollUpDistance" [infiniteScrollThrottle]="throttle"
+                        (scrolled)="onScrollDown()">
+                        <div *ngFor="let item of savedPosts" href="#" class="list-group-item mySavedItem">
+                            <div class="mySavedItemContent">
+                                <img [src]="item.data.Auther.avatar" class="logoImg">
+                            </div>
+                            <div class="mySavedItemContent" [routerLink]="['/savedPosts',item.id]">
+
+                                <a class="list-group-item-heading jobTitleLink">{{item.data.Auther.firstName}}
+                                    {{item.data.Auther.lastName}}</a>
+                                <div class="list-group-item-text companyName">{{'posted in' | translate }}
+                                    {{item.data.PostedDate.toDate() | date}} </div>
+                                <div class="list-group-item-text jobLocation"> {{item.data.Body | slice : 0 : 60 }}.....
+
+                                </div>
 
                             </div>
-                    
-                          </div>
 
-                       
+
                             <div style="float: right " class="btnMoreDetails"
-                             [ngClass]="{'en': selectedLang==='en', 'arra': selectedLang=== 'ar'}"  >
-                            <button type="button" 
-                            class="btn btn-outline-primary messageBtn btn-sm mt-4"
-                            
-                                   (click)="unsave(item)">
-                                       <i class="fas fa-bookmark"></i> {{'UnSave' | translate }}
-                                                    </button>
-</div>
+                                [ngClass]="{'en': selectedLang==='en', 'arra': selectedLang=== 'ar'}">
+                                <button type="button" class="btn btn-outline-primary messageBtn btn-sm mt-4"
+                                    (click)="unsave(item)">
+                                    <i class="fas fa-bookmark"></i> {{'UnSave' | translate }}
+                                </button>
+                            </div>
 
-                        <!-- <button type="button" 
+                            <!-- <button type="button" 
                         ngbDropdownItem (click)="unsave(item)">
                             <i class="fas fa-bookmark"></i> Unsave</button> -->
-                        <!-- <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
+                            <!-- <div ngbDropdown class="mySavedItemContent btnMoreDetails" placement="bottom-right">
                             <a ngbDropdownToggle type="text" class="btnMoreDetailsDots" id="dropdownMenuButton"
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-ellipsis-h"></i>
@@ -120,12 +115,12 @@
                                     <i class="fas fa-envelope"></i> Send a message
                                 </a> -->
                             <!-- </div>
-                        </div> --> 
+                        </div> -->
 
 
 
+                        </div>
                     </div>
-                </div>
 
 
 
@@ -151,7 +146,7 @@
 
 
             </div>
-           
+
 
 
 

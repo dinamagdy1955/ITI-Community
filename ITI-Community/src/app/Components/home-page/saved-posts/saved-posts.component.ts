@@ -3,20 +3,22 @@ import { HomePostsService } from '../HomeServices/home-posts.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { TranslateService } from '@ngx-translate/core';
+import { JobDatabaseService } from '../../Jobs/service/JobDatabase.service';
 @Component({
   selector: 'app-saved-posts',
   templateUrl: './saved-posts.component.html',
   styleUrls: ['./saved-posts.component.scss'],
 })
-export class SavedPostsComponent implements OnInit,OnDestroy {
-    throttle = 300;
+export class SavedPostsComponent implements OnInit, OnDestroy {
+  throttle = 300;
   scrollDistance = 1;
   scrollUpDistance = 2;
-  direction = "";
+  direction = '';
   counter: number = 0;
-  limits:number=8;
+  limits: number = 8;
   notificationsCount: BehaviorSubject<number>;
   savedPosts: any[] = [];
+  jobsNo;
   selectedLang: string;
   uid;
   data: Observable<any>;
@@ -24,7 +26,8 @@ export class SavedPostsComponent implements OnInit,OnDestroy {
   constructor(
     public translateService: TranslateService,
     private postsServ: HomePostsService,
-    private us: UserService
+    private us: UserService,
+    private jobServ: JobDatabaseService
   ) {
     this.notificationsCount = new BehaviorSubject<number>(5);
     translateService.addLangs(['en', 'ar']);
@@ -52,34 +55,37 @@ export class SavedPostsComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
-   let sub2= this.postsServ.getSavedPosts(this.uid, this.limits)
-   .subscribe((data) => {
-      this.savedPosts = data.map((e) => {
-        return {
-          id: e.payload.doc.id,
-          data: e.payload.doc.data(),
-        };
+    let sub2 = this.postsServ
+      .getSavedPosts(this.uid, this.limits)
+      .subscribe((data) => {
+        this.savedPosts = data.map((e) => {
+          return {
+            id: e.payload.doc.id,
+            data: e.payload.doc.data(),
+          };
+        });
       });
+    this.subscription.push(sub2);
+    sub2 = this.jobServ.getFavorite(this.uid).subscribe((res) => {
+      this.jobsNo = res.length;
     });
-     this.subscription.push(sub2);
+    this.subscription.push(sub2);
   }
 
-
-  onScrollDown () { 
-    this.limits+=5;
-    let sub3= this.postsServ.getSavedPosts(this.uid, this.limits )
-    .subscribe((data) => {
-      this.savedPosts = data.map((e) => {
-        return {
-          id: e.payload.doc.id,
-          data: e.payload.doc.data(),
-        };
+  onScrollDown() {
+    this.limits += 5;
+    let sub3 = this.postsServ
+      .getSavedPosts(this.uid, this.limits)
+      .subscribe((data) => {
+        this.savedPosts = data.map((e) => {
+          return {
+            id: e.payload.doc.id,
+            data: e.payload.doc.data(),
+          };
+        });
       });
-       
-      }); this.subscription.push(sub3);
-
- 
-}
+    this.subscription.push(sub3);
+  }
 
   unsave(item) {
     this.postsServ.unSavePost(item, this.uid);
@@ -91,4 +97,3 @@ export class SavedPostsComponent implements OnInit,OnDestroy {
     });
   }
 }
-
