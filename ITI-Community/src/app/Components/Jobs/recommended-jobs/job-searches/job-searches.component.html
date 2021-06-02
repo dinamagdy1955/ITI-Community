@@ -13,9 +13,10 @@
             </div>
         </div>
         <div class="W-100%"><br></div>
-        <div *ngIf="searches.length == 0" style="display: block; margin: auto;">
+        <div *ngIf="searches.length == 0">
             <img src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/Find-a-Job.png?alt=media&token=ac0c2c8d-3b90-47bb-896a-fe0356a5dd74"
-                width="50%" />
+                width="30%" style="display: block; margin: auto;" />
+            <h5 class="text-secondary text-center">You don't have any searches yet ...</h5>
         </div>
         <div style="display: flex;" *ngIf="searches.length > 0">
             <button type="button" class="btn kk" *ngFor="let item of searches">
