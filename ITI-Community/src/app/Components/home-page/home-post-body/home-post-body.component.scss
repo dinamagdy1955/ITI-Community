@@ -13,10 +13,12 @@
        line-height:15px;
 
         i{
-           font-size: 12px; color: #b4272d;
+           font-size: 12px; 
+           color: #b4272d !important;
         }
         small{
             font-size: 11px;
+            color: #b4272d !important;
         }
 
     }
@@ -33,6 +35,10 @@
 
 .en{
     text-align: left;
+}
+.enn{
+    text-align: left;
+    margin-top: -18px;
 }
 .arr{
     text-align: right;
