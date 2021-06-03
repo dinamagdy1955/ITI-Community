@@ -5,12 +5,6 @@
             <h5 [ngClass]="{'float-right': Lang =='ar'}" style=" float: left;">
                 {{'Job searches'|translate}}
             </h5>
-            <div [ngClass]="{'float-left': Lang =='ar'}" class="btn-group" style=" float: right;">
-                <button type="button" name="" id="" class="btn " btn-lg btn-block>
-                    <i class="fas fa-chevron-circle-left"></i></button>
-                <button type="button" name="" id="" class="btn " btn-lg btn-block>
-                    <i class="fas fa-chevron-circle-right"></i></button>
-            </div>
         </div>
         <div class="W-100%"><br></div>
         <div *ngIf="searches.length == 0">
@@ -23,7 +17,12 @@
         </div>
         <div style="display: flex;flex-wrap: wrap; justify-content: flex-start ;"
             [ngStyle]="{'justify-content: flex-start;': Lang=='ar'}" *ngIf="searches.length > 0">
-            <button type="button" class="btn kk" *ngFor="let item of searches">
+            <button type="button" class="btn kk" *ngFor="let item of searches | paginate : {
+                id:'listingclients',
+                itemsPerPage:3,
+                currentPage: page,
+                totalItems: total
+              }">
                 <div style="flex-grow: 8;" [routerLink]="['/jobs/specificjob']" [queryParams]="{company: item.data.company,position: item.data.position,
                         location: item.data.location}">
                     <h6 [ngClass]="{'text-right': Lang=='ar'}"><span>{{'Position'|translate}} :
@@ -37,6 +36,13 @@
                         (click)="deleteSaved(item.id)"></i>
                 </div>
             </button>
+            <div class="clearfix">
+                <pagination-controls class="pagination" id="listingclients" (pageChange)="page = $event" maxSize="10"
+                    directionLinks="true" autoHide="true" responsive="true" previousLabel="Previous" nextLabel="Next"
+                    screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                    screenReaderCurrentLabel="You're on page">
+                </pagination-controls>
+            </div>
         </div>
         <div class="W-100%"><br></div>
     </div>

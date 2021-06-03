@@ -19,6 +19,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxPaginationModule } from 'ngx-pagination';
 /* import { translateFactory } from 'src/app/app.module';
  */ const routes: Routes = [
   { path: '', component: RecommendedJobsComponent },
@@ -57,6 +58,7 @@ export function translateFactory(httpClient: HttpClient) {
       },
     }),
     InfiniteScrollModule,
+    NgxPaginationModule,
   ],
   exports: [TranslateModule],
 })

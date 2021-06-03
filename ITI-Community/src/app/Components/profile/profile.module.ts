@@ -20,6 +20,7 @@ import { ProfileSideKnowComponent } from './profile-side/profile-side-know/profi
 import { PeopleYouMayKnowComponent } from './profile-side/profile-side-know/people-you-may-know/people-you-may-know.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainfooterModule } from '../main-footer/mainfooter.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 const mainProfileRoute: Routes = [
   { path: '', component: MainProfileComponent },
@@ -31,6 +32,7 @@ const mainProfileRoute: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MainfooterModule,
+    NgxPaginationModule,
   ],
   declarations: [
     MainProfileComponent,
