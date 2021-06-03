@@ -74,17 +74,17 @@ export class RightSideGroupComponent implements OnInit, OnChanges, OnDestroy {
 
   showMsg() {
     if (this.Lang == 'en') {
-      this.toastService.show('Member Updated', { classname: 'bg-info text-light', delay: 5000 });
+      this.toastService.show('Member Updated', { classname: 'bg-info text-light top-center', delay: 5000 });
     } else {
-      this.toastService.show('تم تحديث العضو', { classname: 'bg-info text-right text-light', delay: 5000 });
+      this.toastService.show('تم تحديث العضو', { classname: 'bg-info text-right text-light top-center', delay: 5000 });
     }
   }
 
   showMsgDanger() {
     if (this.Lang == 'en') {
-      this.toastService.show('Member Deleted', { classname: 'bg-danger text-light', delay: 5000 });
+      this.toastService.show('Member Deleted', { classname: 'bg-danger text-light top-center', delay: 5000 });
     } else {
-      this.toastService.show('تم حذف العضو', { classname: 'bg-danger text-right text-light', delay: 5000 });
+      this.toastService.show('تم حذف العضو', { classname: 'bg-danger text-right text-light top-center', delay: 5000 });
     }
   }
 

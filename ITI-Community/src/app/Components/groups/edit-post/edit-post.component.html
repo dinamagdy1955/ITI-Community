@@ -13,6 +13,17 @@
                 <textarea class="form-control" name="Body" formControlName="Body" rows="5"
                     placeholder="Type Your Edit..." required></textarea>
             </div>
+            <div class="row">
+                <div class="col-6 py-2" *ngFor="let i of images; let id = index">
+                    <i class="far fa-times-circle text-danger" placement="top" ngbTooltip="Delete"
+                        (click)="deleteImg(id)"></i>
+                    <img src="{{i}}" alt="" class="img-fluid custom-img">
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="file" id="Img" multiple="true" name="postImg" class="form-control"
+                    formControlName="postImg">
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-outline-danger btn-sm" (click)="c('Save click')">{{'Cancel' |

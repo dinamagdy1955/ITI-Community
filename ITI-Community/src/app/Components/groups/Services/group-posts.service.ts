@@ -25,9 +25,10 @@ export class GroupPostsService {
     return this.db.collection('PostGroup').doc(postid).snapshotChanges();
   }
 
-  editPost(id, data) {
+  editPost(id, data, imgs) {
     return this.db.collection('PostGroup').doc(id).update({
       Body: data,
+      postImg: imgs
     });
   }
 
