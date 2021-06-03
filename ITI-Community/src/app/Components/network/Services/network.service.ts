@@ -187,6 +187,8 @@ export class NetworkService {
       reqState: false,
       addedDate: new Date(),
     };
+    console.log();
+
     this.db
       .collection('users-details')
       .doc(userData.id)

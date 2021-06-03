@@ -54,50 +54,45 @@ export class LoginComponent implements OnInit {
         .signInAuth(this.loginUser.value.email, this.loginUser.value.password)
         .then(
           (responce) => {
-            if (responce.user.emailVerified) {
-              let sub = this.profile
-                .getUserBasic(responce.user.uid)
-                .subscribe((res) => {
-                  if (res.payload.exists) {
-                    let userProfileBasic = res.payload.data();
-                    if (
-                      userProfileBasic.isAccepted &&
-                      !userProfileBasic.isRemoved
-                    ) {
-                      let sub2 = this.profile
-                        .getUserData(responce.user.uid)
-                        .subscribe((res) => {
-                          sub2.unsubscribe();
-                          localStorage.setItem(
-                            'userToken',
-                            responce.user.refreshToken
-                          );
-                          //for behavioral subject
-                          let localUserData: LocalUserData = {
-                            id: res.payload.id,
-                            firstName: res.payload.data().firstName,
-                            lastName: res.payload.data().lastName,
-                            jobTitle: res.payload.data().jobTitle,
-                            avatar: res.payload.data().avatar,
-                            avatarCover: res.payload.data().avatarCover,
-                          };
-                          this.profile.setlocalUserData(localUserData);
-                          this.router.navigate(['/Home']);
-                          return SignInAuthError.Correct;
-                        });
-                    } else {
-                      this.loginErr = SignInAuthError.UserRemovedOrUnaccepted;
-                      this.openModal();
-                    }
-                    sub.unsubscribe();
+            let sub = this.profile
+              .getUserBasic(responce.user.uid)
+              .subscribe((res) => {
+                if (res.payload.exists) {
+                  let userProfileBasic = res.payload.data();
+                  if (
+                    userProfileBasic.isAccepted &&
+                    !userProfileBasic.isRemoved
+                  ) {
+                    let sub2 = this.profile
+                      .getUserData(responce.user.uid)
+                      .subscribe((res) => {
+                        sub2.unsubscribe();
+                        localStorage.setItem(
+                          'userToken',
+                          responce.user.refreshToken
+                        );
+                        //for behavioral subject
+                        let localUserData: LocalUserData = {
+                          id: res.payload.id,
+                          firstName: res.payload.data().firstName,
+                          lastName: res.payload.data().lastName,
+                          jobTitle: res.payload.data().jobTitle,
+                          avatar: res.payload.data().avatar,
+                          avatarCover: res.payload.data().avatarCover,
+                        };
+                        this.profile.setlocalUserData(localUserData);
+                        this.router.navigate(['/Home']);
+                        return SignInAuthError.Correct;
+                      });
                   } else {
+                    this.loginErr = SignInAuthError.UserRemovedOrUnaccepted;
                     this.openModal();
                   }
-                });
-            } else {
-              this.loginErr = SignInAuthError.EmailNotVerified;
-              this.openModal();
-            }
+                  sub.unsubscribe();
+                } else {
+                  this.openModal();
+                }
+              });
           },
           (err) => {
             switch (err) {

@@ -32,7 +32,6 @@ export class NetworkSugesstionCardComponent implements OnInit, OnDestroy {
     private usrs: NetworkService,
     private us: UserService
   ) {
-    
     translateService.addLangs(['en', 'ar']);
     if (
       localStorage.getItem('lang') == undefined ||
@@ -93,7 +92,7 @@ export class NetworkSugesstionCardComponent implements OnInit, OnDestroy {
                 this.usersinCardData = data.map((e) => {
                   return {
                     id: e.payload.doc.id,
-                    firstName: e.payload.doc.data()['firstName'] ,
+                    firstName: e.payload.doc.data()['firstName'],
                     lastName: e.payload.doc.data()['lastName'],
                     jobTitle: e.payload.doc.data()['jobTitle'],
                     avatar: e.payload.doc.data()['avatar'],
@@ -126,7 +125,4 @@ export class NetworkSugesstionCardComponent implements OnInit, OnDestroy {
       sub.unsubscribe();
     });
   }
-
-
-
 }

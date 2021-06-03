@@ -20,12 +20,11 @@ export class NetworkFriendRequestComponent implements OnInit, OnDestroy {
   jobTitle;
   avatar;
   avatarCover;
-  constructor
-  (
+  constructor(
     public translateService: TranslateService,
     private usrs: NetworkService,
-     private us: UserService) 
-     {
+    private us: UserService
+  ) {
     translateService.addLangs(['en', 'ar']);
     if (
       localStorage.getItem('lang') == undefined ||
@@ -33,19 +32,19 @@ export class NetworkFriendRequestComponent implements OnInit, OnDestroy {
     ) {
       translateService.use('en');
       localStorage.setItem('lang', 'en');
-      this.selectedLang='en'
+      this.selectedLang = 'en';
       // document.dir = 'ltr';
     } else if (localStorage.getItem('lang') == 'ar') {
       translateService.use('ar');
       localStorage.setItem('lang', 'ar');
-      this.selectedLang='ar'
+      this.selectedLang = 'ar';
       // document.dir = 'rtl';
     }
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
         this.uid = res.id;
-        this.firstName = res.id;
+        this.firstName = res.firstName;
         this.lastName = res.lastName;
         this.jobTitle = res.jobTitle;
         this.avatar = res.avatar;
