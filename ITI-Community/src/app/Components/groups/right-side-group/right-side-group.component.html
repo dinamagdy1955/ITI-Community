@@ -1,5 +1,4 @@
 <div *ngIf="Group != undefined">
-    <app-toasterMsg aria-live="polite" aria-atomic="true"></app-toasterMsg>
     <div class="card">
         <div class="card-body" [ngClass]="{'text-right': Lang == 'ar'}">
             <h6 class="card-title"><span>{{users.length}}</span> {{'members' | translate}}</h6>

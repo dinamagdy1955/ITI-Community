@@ -11,7 +11,7 @@ import { ToastServiceService } from './toastService.service';
       [delay]="toast.delay || 5000"
       (hidden)="toastService.remove(toast)"
     >
-      <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
+      <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text" class="top-center">
         <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
       </ng-template>
 
