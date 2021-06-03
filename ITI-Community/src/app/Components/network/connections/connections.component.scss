@@ -108,3 +108,17 @@ h6{
     align-items: right;
     float: left !important;
 }
+.noAboutImg p {
+    display: block;
+    text-align: center;
+    font-size: 1.3rem;
+    color:brown;
+  }
+  
+  .noAboutImg img {
+    width: 65%;
+    height: auto;
+    display: block;
+    margin: auto;
+    border-radius: 50%;
+  }

@@ -69,7 +69,7 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-11">
-            <h4 class="user-Name card-title">{{userDetails.firstName}} {{userDetails.lastName}}</h4>
+            <h3 class="user-Name card-title">{{userDetails.firstName}} {{userDetails.lastName}}</h3>
             <p class="user-JobTitel">{{userDetails.jobTitle}}</p>
             <p class="user-JobTitel"><i class="fas fa-university"></i>{{userDetails.branch}} <i
                 class="fas fa-book-open"></i> {{userDetails.track}}</p>
@@ -112,22 +112,24 @@
               *ngIf="uidLocal == userDetails.id ;else visitorInvite"><i class="fas fa-user-edit"></i></a>
             <ng-template #visitorInvite>
               <div class="d-flex ">
-                <a type="button" class="profile-Card-Edit pt-2" [routerLink]="['/Messages']"><i
-                    class="fas fa-comment"></i></a>
+                <a type="button" *ngIf="userDetails.friends.includes(uidLocal)" class="profile-Card-Edit pt-2"
+                  (click)="openChat(userDataLocal, userDetails);"><i class="fas fa-comment"></i></a>
                 <a type="button" class="profile-Card-Edit p-2" (click)="addRequset(userDetails)"
-                  *ngIf="!userDetails.friends.includes(uidLocal);"><i class="fas fa-user-plus"></i></a>
+                  *ngIf="!userDetails.friends.includes(uidLocal)&&!userDetails.mySentReq.includes(uidLocal)&&!userDetails.requests.includes(uidLocal) "><i
+                    class="fas fa-user-plus"></i></a>
+
                 <a type="button" class="profile-Card-Edit p-2" (click)="DeleteFriend(userDetails.id)"
                   *ngIf="userDetails.friends.includes(uidLocal);"><i class="fas fa-user-check"></i></a>
 
-                <a type="button" class="profile-Card-Edit p-2" (click)="DeleteFriend(userDetails.id)"
-                  *ngIf="userDetails.mySentReq.includes(uidLocal);"><i class="fas fa-user-times"></i></a>
-                <!-- <a type="button" class="profile-Card-Edit p-2" (click)="DeleteFriend(userDetails.id)"
-                  *ngIf="!userDetails.mySentReq.includes(uidLocal);"><i class="fas fa-user-check"></i></a> -->
+                <!-- accept and delete request -->
+                <a type="button" class="profile-Card-Edit p-2" (click)="AcceptRequest(userDetails) "
+                  *ngIf="userDetails.mySentReq.includes(uidLocal);"><i class="fas fa-user-plus"></i></a>
+                <a type="button" class="profile-Card-Edit p-2" (click)="IgnoreRequest(userDetails.id)"
+                  *ngIf="userDetails.mySentReq.includes(uidLocal);"><i class="fas fa-user-minus"></i></a>
 
-                <!-- <a type="button" class="profile-Card-Edit p-2" (click)="DeleteFriend(userDetails.id)"
-                  *ngIf="userDetails.requests.includes(uidLocal);"><i class="fas fa-user-check"></i></a>
-                <a type="button" class="profile-Card-Edit p-2" (click)="DeleteFriend(userDetails.id)"
-                  *ngIf="!userDetails.requests.includes(uidLocal);"><i class="fas fa-user-check"></i></a> -->
+                <!-- cancel request -->
+                <a type="button" class="profile-Card-Edit p-2" (click)="DeleteFriendRequest(userDetails)"
+                  *ngIf="userDetails.requests.includes(uidLocal);"><i class="fas fa-user-times"></i></a>
               </div>
             </ng-template>
           </div>

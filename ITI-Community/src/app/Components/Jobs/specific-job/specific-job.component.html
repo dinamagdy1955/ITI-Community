@@ -1,43 +1,63 @@
-<div>
+<div [ngClass]="{'text-right': Lang=='ar'}" >
     <div class="container">
         <div class="content row">
             <div class="news col-6 pt-4" style="overflow-y: scroll; height: 660px">
-                <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="keyWordsSearch">
+                <input type="text" [ngClass]="{'text-right': Lang=='ar'}" class="form-control" placeholder=" {{'Searching For ?...' | translate}}" [(ngModel)]="keyWordsSearch">
                 <div *ngFor="let item of list | filter:keyWordsSearch"
                     [ngClass]="{ selected: item.id === selectedJob.id}" (click)="showMore(item)"
                     class="element mb-2 btn">
                     <div class="img col-3 rounded-circle mr-2">
                         <img class="card-img-top" [src]="item.data.companyLogoAvatar" />
                     </div>
-                    <div class="ml-2 info col-9 text-left">
-                        <h4 class="font-weight-normal">{{ item.data.position.en }}</h4>
-                        <h5 class="font-weight-light">{{ item.data.company.en }}</h5>
-                        <h5 class="font-weight-light">{{ item.data.location.en }}</h5>
-                        <div><span class="text-success" *ngIf="item.data.postedDate != null">Posted In : {{
+                    <div class="ml-2 info col-9 text-left" [ngClass]="{'text-right': Lang=='ar'}">
+                        <h4 *ngIf="Lang=='ar'" class="font-weight-normal text-right">{{ item.data.position.ar }}</h4>
+                        <h4 *ngIf="Lang=='en'" class="font-weight-normal">{{ item.data.position.en }}</h4>
+
+                        <h5 *ngIf="Lang=='ar'" class="font-weight-light text-right">{{ item.data.company.ar }}</h5>
+                        <h5 *ngIf="Lang=='en'" class="font-weight-light">{{ item.data.company.en }}</h5>
+
+                        <h5 *ngIf="Lang=='ar'" class="font-weight-light text-right">{{ item.data.location.ar }}</h5>
+                        <h5 *ngIf="Lang=='en'" class="font-weight-light">{{ item.data.location.en }}</h5>
+                        <div><span class="text-success" *ngIf="item.data.postedDate != null">{{'Posted In'|translate}} : {{
                                 item.data.postedDate.toDate() | date }} </span></div>
                     </div>
                 </div>
             </div>
-            <div class="details position-sticky top-0 end-0 col-6 pt-4" style="overflow-y: scroll; height: 660px"
+            <div class="details position-sticky top-0 end-0 col-6 pt-4" [ngClass]="{'text-right': Lang=='ar'}" style="overflow-y: scroll; height: 660px"
                 *ngIf="selectedJob != undefined">
                 <div class="elementCard mb-2">
                     <div class="img " style="width:150px;">
                         <img [src]="selectedJob.data.companyLogoAvatar" alt="" />
                     </div>
                     <div class="basics">
-                        <div class=" text-dark">
-                            <h4 class="font-weight-normal">{{ selectedJob.data.position.en }} <span
+                        <div [ngClass]="{'text-right': Lang=='ar'}" class=" text-dark">
+                            <h4  *ngIf="Lang=='en'" class="font-weight-normal">{{ selectedJob.data.position.en }} <span
                                     class="font-weight-light">( {{ selectedJob.data.worksFrom.en }})</span></h4>
+                            <h4  *ngIf="Lang=='ar'" class="font-weight-normal">{{ selectedJob.data.position.ar }} <span
+                                    class="font-weight-light">( {{ selectedJob.data.worksFrom.ar }})</span></h4>
                         </div>
-                        <div>
-                            <h5 class="font-weight-light">Work for {{ selectedJob.data.company.en }} in <span
+
+
+                        <div *ngIf="Lang=='en'" [ngClass]="{'text-right': Lang=='ar'}" >
+                            <h5  class="font-weight-light">{{'Work for'|translate}} {{ selectedJob.data.company.en }}  <span
                                     class="font-weight-light">{{ selectedJob.data.location.en }}</span></h5>
                         </div>
-                        <div *ngIf="selectedJob.data.closingDate != null">will expire in : {{
+
+                        <div *ngIf="Lang=='ar'" [ngClass]="{'text-right': Lang=='ar'}" >
+                            <h5  class="font-weight-light">{{'Work for'|translate}}  {{ selectedJob.data.company.ar }}  <span
+                                class="font-weight-light">{{ selectedJob.data.location.ar }}</span></h5>
+                        </div>
+
+                        <div *ngIf="selectedJob.data.closingDate != null">{{'will expire in'|translate}} : {{
                             selectedJob.data.closingDate.toDate() | date }}</div>
-                        <div>{{ selectedJob.data.employmentType.en }}</div>
-                        <div>Level of Experience :{{ selectedJob.data.seniorityLevel.en }}</div>
-                        <span class="text-success" *ngIf="selectedJob.data.postedDate != null">Posted In : {{
+                            
+                        <div *ngIf="Lang=='en'" >{{ selectedJob.data.employmentType.en }}</div>
+                        <div *ngIf="Lang=='ar'" >{{ selectedJob.data.employmentType.ar }}</div>
+
+
+                        <div *ngIf="Lang=='en'" >{{'Level of Experience'|translate}} :{{ selectedJob.data.seniorityLevel.en }}</div>
+                        <div *ngIf="Lang=='ar'" [ngClass]="{'text-right': Lang=='ar'}">{{'Level of Experience'|translate}} :{{ selectedJob.data.seniorityLevel.ar }}</div>
+                        <span class="text-success" *ngIf="selectedJob.data.postedDate != null">{{'Posted In'|translate}} : {{
                             selectedJob.data.postedDate.toDate() | date }} </span>
                     </div>
                     <div class="save btn">
@@ -48,26 +68,37 @@
                     </div>
                 </div>
                 <div style="border-bottom:1px solid rgb(192, 191, 191); text-align: center;" class="pb-2">
-                    <div *ngIf="!appliedJobs.includes(selectedJob.id)"
+                    <div [ngClass]="{'text-right': Lang == 'ar'}" *ngIf="!appliedJobs.includes(selectedJob.id)"
                         class=" pl-3 pr-3 btn apply justify-content-around applyBtn" (click)="openDetailsModal()"> <i
-                            class="fas fa-share-square" style="font-size: 1rem;"></i> Apply Now
+                            class="fas fa-share-square" style="font-size: 1rem;"></i> {{'Apply Now'| translate}}
                     </div>
                     <div *ngIf="appliedJobs.includes(selectedJob.id)" class=" pl-1 pr-3 apply justify-content-around">
-                        <i class="fas fa-check-circle" style="color: green; font-size: 1rem;"></i> You applied
-                        successfully
+                        <i class="fas fa-check-circle" style="color: green; font-size: 1rem;"></i> {{'You applied
+                        successfully'|translate}}
 
                     </div>
                 </div>
                 <div class="mt-2">
                     <h6 style="color: #b4272d;">
-                        More Information about the Job :
+                        {{'More Information about the Job'|translate}} :
                     </h6>
-                    <p>{{ selectedJob.data.description.en.slice(0, x) }}...
+
+
+                    <p *ngIf="Lang=='en'" >{{ selectedJob.data.description.en.slice(0, x) }}...
                         <button (click)="clicked(selectedJob.id)" *ngIf="selectedJob.data.description.en.length > 800"
                             class="btn btn-link btn-sm p-0 mb-3 showLink">
                             {{ showing }}
                         </button>
                     </p>
+
+                    <p *ngIf="Lang=='ar'" >{{ selectedJob.data.description.ar.slice(0, x) }}...
+                        <button (click)="clicked(selectedJob.id)" *ngIf="selectedJob.data.description.ar.length > 800"
+                            class="btn btn-link btn-sm p-0 mb-3 showLink">
+                            {{ showing }}
+                        </button>
+                    </p>
+
+
                 </div>
             </div>
         </div>
@@ -78,7 +109,7 @@
             <div class="modal-body">
                 <div class="applyBody">
                     <i class="fas fa-check-circle"></i>
-                    <div style="font-size: 25px; color: grey;">Your application sent successfully !!!</div>
+                    <div style="font-size: 25px; color: grey;">{{'Your application sent successfully'|translate}} !!!</div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -98,42 +129,58 @@
                     </div>
                     <div class="userDetails">
                         <div style="flex-grow: 1;">
-                            <div><span style="color: brown;">First Name:</span><span>{{userData.firstName}}</span></div>
-                            <div><span style="color: brown;">Last Name:</span><span> {{userData.lastName}}</span></div>
-                            <div><span style="color: brown;">Branch Name:</span><span>{{userBranch}}</span></div>
-                            <div><span style="color: brown;">Track Name:</span><span> {{userTrack}}</span></div>
-                            <div><span style="color: brown;">Job Title:</span><span>{{userData.jobTitle || "not
+                            <div [ngClass]="{'text-right': Lang=='ar'}" ><span style="color: brown;">{{'First Name'|translate}}:</span><span>{{userData.firstName}}</span></div>
+                            <div [ngClass]="{'text-right': Lang=='ar'}" ><span style="color: brown;">{{'Last Name'|translate}}:</span><span> {{userData.lastName}}</span></div>
+                            <div [ngClass]="{'text-right': Lang=='ar'}" ><span style="color: brown;">{{'Branch Name'|translate}}:</span><span>{{userBranch}}</span></div>
+                            <div [ngClass]="{'text-right': Lang=='ar'}" ><span style="color: brown;">{{'Track Name'|translate}}:</span><span> {{userTrack}}</span></div>
+                            <div [ngClass]="{'text-right': Lang=='ar'}" ><span style="color: brown;">{{'Job Title'|translate}}:</span><span>{{userData.jobTitle || "not
                                     found"}}</span>
                             </div>
-                            <div><span style="color: brown;">About:</span><span> {{userData.about || "not
+                            <div [ngClass]="{'text-right': Lang=='ar'}" ><span style="color: brown;">{{'About'|translate}}:</span><span> {{userData.about || "not
                                     found"}}</span>
                             </div>
                         </div>
-                        <div style="flex-grow: 1; border-left: 1px solid grey; padding-left: 1%;">
-                            <span style="color: brown;">Experience:</span>
+                        <div [ngClass]="{'text-right': Lang=='ar'}" style="flex-grow: 1; border-left: 1px solid grey; padding-left: 1%;">
+                            <span style="color: brown;">{{'Experience'|translate}}:</span>
                             <div style="margin-left: 10%;" *ngFor="let item of userData.experiences; let i = index">
-                                <div>Experience no {{i+1}}</div>
+                                <div>{{'Experience no'|translate}} {{i+1}}</div>
                                 <div style="margin-left: 15%;">
-                                    Company Name: {{item.companyName}}<br />
-                                    from: {{item.from}}<br />
-                                    to:{{item.to}}<br />
-                                    Location: {{item.location}}<br />
-                                    Degree:{{item.degree}}<br />
-                                    Description:{{item.description}}<br />
+                                    {{'Company Name'|translate}}: {{item.companyName}}<br />
+                                    {{'from'|translate}}: {{item.from}}<br />
+                                    {{'to'|translate}}:{{item.to}}<br />
+                                    {{'Location'|translate}}: {{item.location}}<br />
+                                    {{'Degree'|translate}}:{{item.degree}}<br />
+                                    {{'Description'|translate}}:{{item.description}}<br />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" [ngClass]="{'text-right': Lang=='ar'}" >
                 <button type="button" class="btn btn-success" (click)="Apply();modal.close('Close click')">
-                    Submit Application
+                    {{'Submit Application'|translate}}
                 </button>
                 <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">
-                    Cancel
+                    {{'Cancel'|translate}} 
                 </button>
             </div>
         </div>
     </ng-template>
 </div>
+
+<!-- companyName
+"Vodafone"
+(string)
+degree
+"Vodafone agent "
+description
+"Vodafone agent salesman"
+from
+"2019-01-01"
+id
+"F7yQXMgQeHn4nJfqh5Ko"
+location
+"Qena,qena"
+to
+"2020-01-10" -->

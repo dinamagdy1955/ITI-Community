@@ -10,12 +10,13 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './spacific-saved-post.component.html',
   styleUrls: ['./spacific-saved-post.component.scss'],
 })
-export class SpacificSavedPostComponent implements OnInit,OnDestroy {
+export class SpacificSavedPostComponent implements OnInit, OnDestroy {
   post: any;
   selectedLang: string;
   id;
   uid;
   data: Observable<any>;
+  location = window.location.origin;
   subscription: Subscription[] = [];
   constructor(
     public translateService: TranslateService,
@@ -49,9 +50,12 @@ export class SpacificSavedPostComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.id = this._Activatedroute.snapshot.paramMap.get('id');
-   let sub2= this.postsServ.MyPostById(this.id, this.uid).subscribe((data) => {
-      this.post = data.payload.data();
-    });this.subscription.push(sub2);
+    let sub2 = this.postsServ
+      .MyPostById(this.id, this.uid)
+      .subscribe((data) => {
+        this.post = data.payload.data();
+      });
+    this.subscription.push(sub2);
   }
 
   Like(uid, pid, autID) {

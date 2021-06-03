@@ -1,23 +1,35 @@
-
 <div class="card mt-3 boo" style="width: 100%;">
-
   <div class="card-body">
-    <h5 class="card-title mb-2 text-muted">Activity</h5>
+    <div class="row">
+      <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <h5 class="card-title mb-2 text-muted">Activity</h5>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 btn" [routerLink]="['/Home']" style="color: rgb(161, 29, 29);">
+        show more
+      </div>
+    </div>
     <div class="container mt-4">
-      <div class="row">
-        <div class="col">
-          
-<app-activity-component></app-activity-component>
-<app-activity-component></app-activity-component>
-
+      <div *ngIf="homePosts.length > 0">
+        <div class="d-flex" style="flex-wrap:wrap; align-content: space-between;">
+          <div *ngFor="let item of homePosts" style="width: 30%; margin: 1%;">
+            <app-activity-component [post]="item"></app-activity-component>
+          </div>
         </div>
-        <div class="col">
-          
-          <app-activity-component></app-activity-component>
-          <app-activity-component></app-activity-component>
-
+      </div>
+      <div *ngIf="homePosts.length == 0">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/10_best_social_media_designers_jpg_XkLCgMOX.jpg?alt=media&token=394ca10d-4440-45a7-84d4-091444c54bba"
+          width="30%" style="display: block;margin: auto;" class="rounded-circle" />
+        <div class="text-center">
+          <div *ngIf="user.id==userID">
+            <h5 class="text-secondary">You don't have any posts yet ...</h5>
+            <button [routerLink]="['/Home']">Go Home</button>
+          </div>
+          <h5 *ngIf="user.id!=userID" class="text-secondary">He/She don't have any posts yet ...</h5>
         </div>
       </div>
     </div>
+  </div>
+  <div *ngIf="homePosts.length == 0">
   </div>
 </div>

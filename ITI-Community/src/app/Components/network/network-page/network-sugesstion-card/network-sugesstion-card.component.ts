@@ -5,20 +5,19 @@ import { UserService } from 'src/app/MainServices/User.service';
 //import { userInfo } from 'node:os';
 import { NetworkService } from '../../Services/network.service';
 
-
 @Component({
   selector: 'app-network-sugesstion-card',
-  templateUrl:'./network-sugesstion-card.component.html',
+  templateUrl: './network-sugesstion-card.component.html',
   styleUrls: ['./network-sugesstion-card.component.scss'],
 })
-export class NetworkSugesstionCardComponent implements OnInit,OnDestroy {
+export class NetworkSugesstionCardComponent implements OnInit, OnDestroy {
   sum = 100;
   throttle = 300;
   scrollDistance = 1;
   scrollUpDistance = 2;
   direction = '';
   array = [];
-  usersinCardData: any[];
+  usersinCardData: any[] = [];
   selectedLang: string;
   uid;
   firstName;
@@ -30,24 +29,25 @@ export class NetworkSugesstionCardComponent implements OnInit,OnDestroy {
   subscription: Subscription[] = [];
   constructor(
     public translateService: TranslateService,
-    private usrs: NetworkService, 
-    private us: UserService) {
-      this.appendItems(0, this.sum);
-      translateService.addLangs(['en', 'ar']);
-      if (
-        localStorage.getItem('lang') == undefined ||
-        localStorage.getItem('lang') == 'en'
-      ) {
-        translateService.use('en');
-        localStorage.setItem('lang', 'en');
-        this.selectedLang='en'
-        // document.dir = 'ltr';
-      } else if (localStorage.getItem('lang') == 'ar') {
-        translateService.use('ar');
-        localStorage.setItem('lang', 'ar');
-        this.selectedLang='ar'
-        // document.dir = 'rtl';
-      }
+    private usrs: NetworkService,
+    private us: UserService
+  ) {
+    
+    translateService.addLangs(['en', 'ar']);
+    if (
+      localStorage.getItem('lang') == undefined ||
+      localStorage.getItem('lang') == 'en'
+    ) {
+      translateService.use('en');
+      localStorage.setItem('lang', 'en');
+      this.selectedLang = 'en';
+      // document.dir = 'ltr';
+    } else if (localStorage.getItem('lang') == 'ar') {
+      translateService.use('ar');
+      localStorage.setItem('lang', 'ar');
+      this.selectedLang = 'ar';
+      // document.dir = 'rtl';
+    }
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -93,10 +93,8 @@ export class NetworkSugesstionCardComponent implements OnInit,OnDestroy {
                 this.usersinCardData = data.map((e) => {
                   return {
                     id: e.payload.doc.id,
-                    firstName:
-                      e.payload.doc.data()['firstName'] +
-                      ' ' +
-                      e.payload.doc.data()['lastName'],
+                    firstName: e.payload.doc.data()['firstName'] ,
+                    lastName: e.payload.doc.data()['lastName'],
                     jobTitle: e.payload.doc.data()['jobTitle'],
                     avatar: e.payload.doc.data()['avatar'],
                     avatarCover: e.payload.doc.data()['avatarCover'],
@@ -128,37 +126,7 @@ export class NetworkSugesstionCardComponent implements OnInit,OnDestroy {
       sub.unsubscribe();
     });
   }
-  addItems(startIndex, endIndex, _method) {
-    for (let i = 0; i < this.sum; ++i) {
-      this.array[_method]([i, ' ', this.generateWord()].join(''));
-    }
-  }
-  appendItems(startIndex, endIndex) {
-    this.addItems(startIndex, endIndex, 'push');
-  }
-  prependItems(startIndex, endIndex) {
-    this.addItems(startIndex, endIndex, 'unshift');
-  }
-  onScrollDown (ev) {
-    console.log('scrolled down!!', ev);
 
-    // add another 10 items
-    const start = this.sum;
-    this.sum += 2;
-    this.appendItems(start, this.sum);
 
-    this.direction = 'down'
-  }
 
-  onUp(ev) {
-    console.log('scrolled up!', ev);
-    const start = this.sum;
-    this.sum += 2;
-    this.prependItems(start, this.sum);
-
-    this.direction = 'up';
-  }
-  generateWord() {
- 
-  }
 }

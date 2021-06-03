@@ -9,14 +9,15 @@
       </div>
 
       <hr>
-     
+
       <div *ngFor="let item of (Requests| slice: -2) " class="row">
         <div class="col-md-2" style="padding-right: 0px; align-items: center">
           <img src={{item.avatar}} style="width: 70%; height: auto" alt="John Doe" class="mr-3 mt-3 rounded-circle">
         </div>
-        <div class="col-md-6" style="padding-left: 0px" [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
+        <div class="col-md-6" style="padding-left: 0px"
+          [ngClass]="{'en': selectedLang==='en', 'arr': selectedLang=== 'ar'}">
           <br>
-          <a href="#">
+          <a routerLink="/profile/{{item.id}}">
             <span><strong class="name">{{item.firstName}} {{item.lastName}} </strong></span> </a><br>
           <span>{{item.jobTitle}}</span>
         </div>
@@ -24,7 +25,7 @@
           <div class="W-100%"><br></div>
 
           <button type="button" class="btn  btn-sm mr-2 ignoreBtn" (click)="IgnoreRequest(item.id)">
-           {{'ignore' | translate }}
+            {{'ignore' | translate }}
           </button>
           <button type="button" class="btn btn-outline-primary btn-sm AcceptBtn" (click)="AcceptRequest(item)">
             {{'Accept' | translate }}

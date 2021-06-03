@@ -18,11 +18,13 @@ export class SearchNextJobComponent implements OnInit {
   data: Observable<any>;
   subscription: Subscription[] = [];
   uid: string;
+  Lang:string;
   constructor(
     private jobService: JobDatabaseService,
     private router: Router,
     private us: UserService
   ) {
+    this.Lang=localStorage.getItem('Lang');
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {

@@ -14,7 +14,9 @@ export class JobSearchesComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   uid: string;
   searches = [];
+  Lang: string;
   constructor(private jobService: JobDatabaseService, private us: UserService) {
+    this.Lang = localStorage.getItem('lang');
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/MainServices/User.service';
 import { HomePostsService } from '../home-page/HomeServices/home-posts.service';
@@ -14,6 +15,8 @@ export class NotificationComponent implements OnInit,OnDestroy {
   scrollUpDistance = 2;
   direction = "";
   counter: number = 0;
+  limits:number=8;
+  selectedLang: string;
   notificationsCount: BehaviorSubject<number>;
   public isCollapsed = false;
   Notifications: any[] = [];
@@ -21,7 +24,25 @@ export class NotificationComponent implements OnInit,OnDestroy {
   avatar;
   data: Observable<any>;
   subscription: Subscription[] = [];
-  constructor(private homePostServ: HomePostsService, private us: UserService) {
+  constructor(
+    public translateService: TranslateService,
+    private homePostServ: HomePostsService,
+     private us: UserService) {
+      translateService.addLangs(['en', 'ar']);
+      if (
+        localStorage.getItem('lang') == undefined ||
+        localStorage.getItem('lang') == 'en'
+      ) {
+        translateService.use('en');
+        localStorage.setItem('lang', 'en');
+        this.selectedLang = 'en';
+        // document.dir = 'ltr';
+      } else if (localStorage.getItem('lang') == 'ar') {
+        translateService.use('ar');
+        localStorage.setItem('lang', 'ar');
+        this.selectedLang = 'ar';
+        // document.dir = 'rtl';
+      }
     this.notificationsCount = new BehaviorSubject<number>(5);
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
@@ -34,7 +55,8 @@ export class NotificationComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
-   let sub2= this.homePostServ.getAllNotifications(this.uid).subscribe((data) => {
+   let sub2= this.homePostServ.getAllNotifications(this.uid,this.limits)
+   .subscribe((data) => {
       this.Notifications = data.map((e) => {
         return {
           id: e.payload.doc.id,
@@ -42,25 +64,27 @@ export class NotificationComponent implements OnInit,OnDestroy {
           doc:e.payload.doc
         };
       });
-    });this.subscription.push(sub2);
+    });
+    this.subscription.push(sub2);
   }
 
   onScrollDown () { 
-    this.counter += 5;
-    let param = this.Notifications[this.Notifications.length - 1].doc;
-    let sub3=this.homePostServ.getAllNotifications(this.uid,param )
-      .subscribe((res) => {
-        res.map((e) => {
-          this.Notifications.push({
-            id: e.payload.doc.id,
-            data: e.payload.doc.data(),
-            doc:e.payload.doc
-          });
-        });
-       
-      });this.subscription.push(sub3);
+    this.limits+=5;
 
-    this.notificationsCount.next(this.notificationsCount.value + 5);
+    let sub3=this.homePostServ.getAllNotifications(this.uid,this.limits )
+    .subscribe((data) => {
+      this.Notifications = data.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          data: e.payload.doc.data(),
+          doc:e.payload.doc
+        };
+      });
+    });
+      
+      this.subscription.push(sub3);
+
+
  
 }
   DeleteNotification(postid) {

@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { UserService } from 'src/app/MainServices/User.service';
 import { Observable, Subscription } from 'rxjs';
+import { ChatsService } from 'src/app/Components/messages/Service/chats.service';
 @Component({
   selector: 'app-profile-body-details',
   templateUrl: './profile-body-details.component.html',
@@ -31,7 +32,8 @@ export class ProfileBodyDetailsComponent implements OnInit, OnDestroy {
     private usr: UserProfileService,
     private FB: FormBuilder,
     private us: UserService,
-    private NUS: NetworkService
+    private NUS: NetworkService,
+    private chat: ChatsService
   ) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
@@ -124,12 +126,28 @@ export class ProfileBodyDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
+  DeleteFriendRequest(req) {
+    this.NUS.deleteSentFriendReq(req, this.uidLocal);
+  }
+
   DeleteFriend(id) {
     this.NUS.deleteFriend(id, this.uidLocal);
   }
 
   cancelRequest(req) {
     this.NUS.deleteSentFriendReq(req, this.uidLocal);
+  }
+
+  IgnoreRequest(id) {
+    this.NUS.ignore(id, this.uidLocal);
+  }
+
+  AcceptRequest(item) {
+    this.NUS.AcceptRequest(item, this.uidLocal, this.userDataLocal);
+  }
+
+  openChat(logged, reci) {
+    this.chat.newChat(logged, reci);
   }
 
   ngOnDestroy(): void {

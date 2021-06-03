@@ -2,10 +2,10 @@
 <div class="media border p-3 postcontainer">
     <div class="media-body" style="  align-items: center;">
         <div class="mb-3">
-            <h5 style=" float: left;">
-                Job searches
+            <h5 [ngClass]="{'float-right': Lang =='ar'}" style=" float: left;">
+                {{'Job searches'|translate}}
             </h5>
-            <div class="btn-group" style=" float: right;">
+            <div [ngClass]="{'float-left': Lang =='ar'}" class="btn-group" style=" float: right;">
                 <button type="button" name="" id="" class="btn " btn-lg btn-block>
                     <i class="fas fa-chevron-circle-left"></i></button>
                 <button type="button" name="" id="" class="btn " btn-lg btn-block>
@@ -13,18 +13,25 @@
             </div>
         </div>
         <div class="W-100%"><br></div>
-        <div *ngIf="searches.length == 0" style="display: block; margin: auto;">
+        <div *ngIf="searches.length == 0">
             <img src="https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/Find-a-Job.png?alt=media&token=ac0c2c8d-3b90-47bb-896a-fe0356a5dd74"
-                width="50%" />
+                width="30%" style="display: block;  margin: auto; border-radius: 50%;" />
         </div>
-        <div style="display: flex;" *ngIf="searches.length > 0">
+        <div *ngIf="searches.length == 0" [ngClass]="{'text-right': Lang=='ar'}"
+            style="display: block; margin: auto; width: fit-content">
+            <h4 class="text-secondary">{{'Sorry you have no recent searches'|translate}} ... </h4>
+        </div>
+        <div style="display: flex;flex-wrap: wrap; justify-content: flex-start ;"
+            [ngStyle]="{'justify-content: flex-start;': Lang=='ar'}" *ngIf="searches.length > 0">
             <button type="button" class="btn kk" *ngFor="let item of searches">
-                <div style="flex-grow: 8;" [routerLink]="['/jobs/specificjob']" [queryParams]="{company: item.data.company,
-                position: item.data.position,
-                location: item.data.location}">
-                    <h6><span>Position : </span>{{item.data.position || "unspecified"}}</h6>
-                    <h6><span>Company : </span>{{item.data.company || "unspecified"}}</h6>
-                    <h6><span>Location : </span>{{item.data.location || "unspecified"}}</h6>
+                <div style="flex-grow: 8;" [routerLink]="['/jobs/specificjob']" [queryParams]="{company: item.data.company,position: item.data.position,
+                        location: item.data.location}">
+                    <h6 [ngClass]="{'text-right': Lang=='ar'}"><span>{{'Position'|translate}} :
+                        </span>{{item.data.position || "unspecified"}}</h6>
+                    <h6 [ngClass]="{'text-right': Lang=='ar'}"><span>{{'Company'|translate}} :
+                        </span>{{item.data.company || "unspecified"}}</h6>
+                    <h6 [ngClass]="{'text-right': Lang=='ar'}"><span>{{'Location'|translate}} :
+                        </span>{{item.data.location || "unspecified"}}</h6>
                 </div>
                 <div class="btn" style="flex-grow: 1;"><i class="fas fa-times-circle"
                         (click)="deleteSaved(item.id)"></i>

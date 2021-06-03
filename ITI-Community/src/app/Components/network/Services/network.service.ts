@@ -5,7 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
   providedIn: 'root',
 })
 export class NetworkService {
-  posts:any;
+  posts: any;
   constructor(private db: AngularFirestore) {}
 
   notINCard(arr: any[], uid) {
@@ -26,11 +26,11 @@ export class NetworkService {
       .snapshotChanges();
   }
 
-  getAllFriendRequests(uid) {
+  getAllFriendRequests(uid, limits?) {
     return this.db
       .collection('users-details')
       .doc(uid)
-      .collection('friendRequest')
+      .collection('friendRequest', (ref) => ref.limit(limits))
       .snapshotChanges();
   }
 
@@ -58,32 +58,41 @@ export class NetworkService {
       .doc(id)
       .delete();
 
-      this.db
+    this.db
       .collection('users-details')
       .doc(uid)
       .collection('MyHomePosts', (ref) => ref.where('Auther.id', '==', id))
-      .snapshotChanges().subscribe((data) => {
-        console.log(data)
-      data.map(p=>{
-        if(p.payload.doc.data()['Auther'].id== id){
-          this.db.collection('users-details').doc(uid).collection('MyHomePosts').doc(p.payload.doc.id).delete()
-        }
-      })
-      })
+      .snapshotChanges()
+      .subscribe((data) => {
+        data.map((p) => {
+          if (p.payload.doc.data()['Auther'].id == id) {
+            this.db
+              .collection('users-details')
+              .doc(uid)
+              .collection('MyHomePosts')
+              .doc(p.payload.doc.id)
+              .delete();
+          }
+        });
+      });
 
-      this.db
+    this.db
       .collection('users-details')
       .doc(id)
       .collection('MyHomePosts', (ref) => ref.where('Auther.id', '==', uid))
-      .snapshotChanges().subscribe((data) => {
-        console.log(data)
-      data.map(p=>{
-       
-       if(p.payload.doc.data()['Auther'].id== uid){
-          this.db.collection('users-details').doc(id).collection('MyHomePosts').doc(p.payload.doc.id).delete()
-        }
-      })
-      })
+      .snapshotChanges()
+      .subscribe((data) => {
+        data.map((p) => {
+          if (p.payload.doc.data()['Auther'].id == uid) {
+            this.db
+              .collection('users-details')
+              .doc(id)
+              .collection('MyHomePosts')
+              .doc(p.payload.doc.id)
+              .delete();
+          }
+        });
+      });
     this.db
       .collection('users-details')
       .doc(id)
@@ -91,11 +100,6 @@ export class NetworkService {
       .doc(uid)
       .delete();
 
-     
-
-
-      
-      
     return;
   }
 
@@ -157,19 +161,16 @@ export class NetworkService {
       .collection('friendList')
       .doc(uid)
       .set({ ...user });
-      // this.db.collection('users-details').doc(user).collection('Notifications')
-      // .doc(id).set(post)
-
-
-      
+    // this.db.collection('users-details').doc(user).collection('Notifications')
+    // .doc(id).set(post)
   }
 
   //friendList
-  getAllFriendsList(uid) {
+  getAllFriendsList(uid, limits?) {
     return this.db
       .collection('users-details')
       .doc(uid)
-      .collection('friendList')
+      .collection('friendList', (ref) => ref.limit(limits))
       .snapshotChanges();
   }
 

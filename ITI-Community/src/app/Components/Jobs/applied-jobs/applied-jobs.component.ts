@@ -17,12 +17,15 @@ export class AppliedJobsComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   uid: string;
   jobMsgId: string;
+  Lang: string;
+  location = window.location.origin;
   constructor(
     private jobService: JobDatabaseService,
     private us: UserService,
     private msgService: ChatsService,
     private modalService: NgbModal
   ) {
+    this.Lang = localStorage.getItem('lang');
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {

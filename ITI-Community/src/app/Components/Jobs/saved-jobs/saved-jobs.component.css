@@ -4,12 +4,12 @@
 
 .savedJobMain,
 .footerSavedJobs {
-    background-color: #e8e8e8;
+    background-color: #F3F2EF;
     width: 100%;
 }
 
 .savedJobContainer {
-   
+    margin: auto;
     padding-top: 4%;
 }
 
@@ -19,6 +19,7 @@
 }
 
 .mySavedListItems {
+    text-align: left;
     border-radius: 15px 15px 0px 0px;
 }
 
@@ -40,6 +41,8 @@
 
 .mySavedItemContent {
     margin: 0px 8px;
+    text-align: left;
+
 }
 
 .logoImg {
@@ -99,8 +102,8 @@
 }
 
 .btnMoreDetailsDots:hover {
-    
-    color: #94151b;
+    background-color: #e4e3e0;
+    color: white;
 }
 
 .itiBranchesHeader {
@@ -176,80 +179,4 @@
 
 .socialmediaLink:hover i {
     color: #94151b !important;
-}
-.noAboutImg p {
-    display: block;
-    text-align: center;
-    font-size: 1.3rem;
-    color:brown;
-  }
-  
-  .noAboutImg img {
-    width: 65%;
-    height: auto;
-    display: block;
-    margin: auto;
-    border-radius: 50%;
-  }
-  .messageBtn:hover{
- 
-    border-radius: 2em;
-    font-weight: bold;
-
-     padding-left: .9em; 
-     padding-right:.9em; 
-     color:white;
-     border: 2px solid #b4272d;
-     font-size: small;
-     background-color: #b4272d !important;
- 
-     span{
-         color: white;
-         font-weight: bold;
-     } 
-     i{
-         color: white;
-     }
-}
-.messageBtn{
-    border-radius: 2em;
-
-     padding-left: 1em; 
-     padding-right: 1em; 
-     border: 1px solid #b4272d;
-     color:#b4272d;
-     font-size: small;
-     background-color: white !important;
- 
-     span{
-         color:#b4272d;
-         font-weight: bold;
-     }
-   
- }
- .ar{
-    text-align: right;
-}
-
-.en{
-    text-align: left;
-}
-.arr{
-    text-align: right;
-    align-content:right;
-    align-items: right;
-    float: right !important;
-}
-.arrr{
-  
-    float: left !important;
-}
-.arra{
-  
-    justify-content: flex-start;
-    align-items: flex-end;
-    margin-right: auto;
-    float: left !important;
-    margin-left: 0px;
-
 }

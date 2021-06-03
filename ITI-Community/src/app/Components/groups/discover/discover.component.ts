@@ -20,8 +20,11 @@ export class DiscoverComponent implements OnInit, OnDestroy {
   keyWordsSearch;
   show = true;
 
-
-  constructor(private groupService: GroupService, private us: UserService, private toastService: ToastServiceService) {
+  constructor(
+    private groupService: GroupService,
+    private us: UserService,
+    private toastService: ToastServiceService
+  ) {
     this.data = this.us.localUserData.asObservable();
     let sub = this.data.subscribe((res) => {
       if (res != null) {
@@ -50,7 +53,6 @@ export class DiscoverComponent implements OnInit, OnDestroy {
             this.GroupList.find((e) => {
               if (e.id == i.id) {
                 flag = true;
-                console.log('find');
               }
             });
             if (!flag) this.GroupList.push(i);
@@ -60,24 +62,28 @@ export class DiscoverComponent implements OnInit, OnDestroy {
         });
         this.subscription.push(sub);
       }
-      console.log(this.GroupList);
     });
     this.subscription.push(sub1);
   }
 
   sendRequest(user, id) {
-    this.showSuccess()
+    this.showSuccess();
     this.groupService.sendRequest(user, id);
   }
 
   showSuccess() {
     if (this.Lang == 'en') {
-      this.toastService.show('Your Request Has Been Sent', { classname: 'bg-success text-light', delay: 5000 });
+      this.toastService.show('Your Request Has Been Sent', {
+        classname: 'bg-success text-light',
+        delay: 5000,
+      });
     } else {
-      this.toastService.show('لقد تم ارسال طلبك', { classname: 'bg-success text-light text-right', delay: 5000 });
+      this.toastService.show('لقد تم ارسال طلبك', {
+        classname: 'bg-success text-light text-right',
+        delay: 5000,
+      });
     }
   }
-
 
   identify(index, g) {
     return g.id;
