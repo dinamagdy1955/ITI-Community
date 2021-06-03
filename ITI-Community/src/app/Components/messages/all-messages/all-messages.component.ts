@@ -62,10 +62,12 @@ export class AllMessagesComponent implements OnInit, OnDestroy, AfterViewChecked
 
     let param = this.route.paramMap.subscribe(res => {
       this.chatRoom = res.get('id')
-      this.getMassege(this.chatRoom)
+      if (this.chatRoom != undefined) {
+        this.getMassege(this.chatRoom)
+      }
       this.active = this.chatRoom
     })
-
+    this.subscription.push(param)
     let sub1 = this.chat.getChats().subscribe(res => {
       this.chatList = res.map(e => {
         return {
